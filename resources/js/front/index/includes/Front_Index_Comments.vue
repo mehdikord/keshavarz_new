@@ -1,7 +1,7 @@
 
 <template>
     <section class="section">
-        <div class="container-fluid p-0">
+        <div class="container-fluid ">
             <div class="row">
                 <div class="col-12">
                     <div class="section-heading">
