@@ -7,6 +7,8 @@
     <index_new></index_new>
     <index_brands></index_brands>
     <index_comments></index_comments>
+    <index_posts></index_posts>
+    <index_subscription></index_subscription>
 </template>
 
 <style scoped>
@@ -24,6 +26,8 @@ import Front_Index_Features from "./includes/Front_Index_Features.vue";
 import Front_Index_New from "./includes/Front_Index_New.vue";
 import Front_Index_Brands from "./includes/Front_Index_Brands.vue";
 import Front_Index_Comments from "./includes/Front_Index_Comments.vue";
+import Front_Index_Posts from "./includes/Front_Index_Posts.vue";
+import Front_Index_Subscription from "./includes/Front_Index_Subscription.vue";
 
 export default defineComponent({
     name: "Front_Index",
@@ -35,7 +39,9 @@ export default defineComponent({
         'index_features' : Front_Index_Features,
         'index_new' : Front_Index_New,
         'index_brands' : Front_Index_Brands,
-        'index_comments' : Front_Index_Comments
+        'index_comments' : Front_Index_Comments,
+        'index_posts' : Front_Index_Posts,
+        'index_subscription' : Front_Index_Subscription,
     }
 })
 </script>

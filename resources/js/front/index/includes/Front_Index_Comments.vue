@@ -18,8 +18,9 @@
                         swipeable
                         animated
                         navigation
+                        control-type="regular"
+                        control-color="green"
                         padding
-                        arrows
                         class="bg-transparent"
                     >
 
