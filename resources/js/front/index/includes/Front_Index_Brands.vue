@@ -9,34 +9,10 @@
                     </div>
                 </div>
             </div>
-            <div class="">
-                <q-carousel
-                    v-model="slide"
-                    transition-prev="slide-right"
-                    transition-next="slide-left"
-                    swipeable
-                    animated
-                    navigation
-                    control-color="teal"
-                    control-type="unelevated"
-                    control-text-color="black"
-                    class="bg-transparent"
-                >
-                    <q-carousel-slide :name="1" class="column no-wrap">
-                        <div class="row fit">
-                         <div v-for="i in 6" class="col-md-2">
-                             <brands_one></brands_one>
-                         </div>
-                        </div>
-                    </q-carousel-slide>
-                    <q-carousel-slide :name="2" class="column no-wrap">
-                        <div class="row fit">
-                         <div v-for="i in 6" class="col-md-2">
-                             <brands_one></brands_one>
-                         </div>
-                        </div>
-                    </q-carousel-slide>
-                </q-carousel>
+            <div class="row justify-center mt-2 mb-2">
+                <div v-for="i in 6" class="col-lg-2 col-md-2 col-sm-3 col-xs-4 mt-2 p-1">
+                    <brands_one></brands_one>
+                </div>
             </div>
         </div>
     </section>
@@ -52,9 +28,7 @@
         font-size: 22px;
         font-weight: 600;
     }
-    .for-link-all{
-        font-size: 13px;
-    }
+
 }
 </style>
 <script>

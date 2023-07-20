@@ -10,54 +10,38 @@
                 </div>
             </div>
             <div class="row">
-                <div class="col-lg-12">
-                    <ul class="nav nav-tabs">
-                        <li>
-                            <a href="#top-order" class="tab-link active" data-bs-toggle="tab">
-                                <i class="icofont-price"></i>
-                                <span>top order</span>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="#top-rate" class="tab-link" data-bs-toggle="tab">
-                                <i class="icofont-star"></i>
-                                <span>top rating</span>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="#top-disc" class="tab-link" data-bs-toggle="tab">
-                                <i class="icofont-sale-discount"></i>
-                                <span>top discount</span>
-                            </a>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-            <div class="tab-pane fade show active" id="top-order">
-                <div class="row">
-                    <div v-for="i in 4" class="col-xl-3 col-lg-3 col-md-4 col-sm-6 col-xs-6">
-
-                        <product_single_one></product_single_one>
-
+                <div class="col-12 p-0">
+                    <div class="card mb-4">
+                        <div class="card-body pt-2 pb-4 row justify-center nav">
+                            <div v-for="i in 6" class="col-lg-2 col-md-2 col-sm-3 col-xs-4 mt-3">
+                                <a :href="'#tab_new_'+i" class="tab-link tab-link-title" :class="{'active' : i===1}"  data-bs-toggle="tab">
+                                    <i class="fas fa-list"></i>
+                                    <span>دسته بندی {{i}}</span>
+                                </a>
+                            </div>
+                        </div>
                     </div>
-
                 </div>
             </div>
-            <div class="tab-pane fade" id="top-rate">
-                <div class="row row-cols-2 row-cols-md-3 row-cols-lg-4 row-cols-xl-5">
 
-                </div>
-            </div>
-            <div class="tab-pane fade" id="top-disc">
-                <div class="row row-cols-2 row-cols-md-3 row-cols-lg-4 row-cols-xl-5">
-
+        </div>
+        <div class="container-fluid">
+            <div v-for="i in 6" class="tab-pane fade" :class="{'show active' : i===1}" :id="'tab_new_'+i">
+                <div class="row justify-center">
+                    <div v-for="i in 5" class="col-lg-2 col-md-3 col-sm-4 col-xs-6 p-1">
+                        <product_single_one></product_single_one>
+                    </div>
                 </div>
             </div>
         </div>
+
     </section>
 </template>
 
 <style scoped>
+.tab-link-title{
+    font-size: 15px;
+}
 .section-heading{
     font-size: 28px;
     font-weight: 600;
@@ -69,6 +53,9 @@
     }
     .for-link-all{
         font-size: 13px;
+    }
+    .tab-link-title{
+        font-size: 12px;
     }
 }
 </style>

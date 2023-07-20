@@ -10,14 +10,14 @@
                 </div>
             </div>
             <div class="row">
-                <div v-for="i in 4" class="col-md-3">
+                <div v-for="i in 4" class="col-md-3 col-sm-6 col-xs-12 p-1">
                     <post_single_one></post_single_one>
                 </div>
             </div>
             <div class="row">
                 <div class="col-lg-12">
                     <div class="section-btn-25">
-                        <a href="blog-grid.html" class="btn btn-outline">
+                        <a href="" class="btn btn-outline for-link-all">
                             <i class="fas fa-eye"></i><span>مشاهده همه نوشته ها</span>
                         </a>
                     </div>
@@ -28,9 +28,20 @@
 </template>
 
 <style scoped>
+
 .section-heading{
-    font-size: 40px;
-    font-weight: 700;
+    font-size: 28px;
+    font-weight: 600;
+}
+@media only screen and (max-width: 600px) {
+    .section-heading{
+        font-size: 22px;
+        font-weight: 600;
+    }
+    .for-link-all{
+           font-size: 13px;
+       }
+
 }
 </style>
 <script>

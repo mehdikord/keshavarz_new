@@ -9,7 +9,7 @@
                     </div>
                 </div>
             </div>
-            <div class="row">
+            <div class="row justify-center">
                 <div class="col-lg-2 col-md-3 col-sm-4 col-xs-6 p-1" v-for="i in 6">
                     <product_single_one></product_single_one>
                 </div>

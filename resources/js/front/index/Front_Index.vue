@@ -6,7 +6,7 @@
     <index_features></index_features>
     <index_new></index_new>
     <index_brands></index_brands>
-    <index_comments></index_comments>
+<!--    <index_comments></index_comments>-->
     <index_posts></index_posts>
     <index_subscription></index_subscription>
     <index_tools></index_tools>
@@ -14,11 +14,11 @@
 
 <style scoped>
 .section{
-    margin-bottom: 85px!important;
+    margin-bottom: 70px!important;
 }
 @media only screen and (max-width: 600px) {
     .section{
-        margin-bottom: 36px!important;
+        margin-bottom: 35px!important;
     }
 }
 </style>
