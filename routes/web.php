@@ -12,10 +12,6 @@ use Illuminate\Support\Facades\Route;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
-Route::get('/{any}', function () {
-    return view('front');
-})->where('any','(.*)');
-
 Route::get('management', function () {
     return redirect('management/dashboard');
 });
@@ -23,4 +19,9 @@ Route::get('management', function () {
 Route::get('management/{any}',static function (){
     return view('manage');
 })->where('any','(.*)');
+
+Route::get('/{any}', function () {
+    return view('front');
+})->where('any','(.*)');
+
 
