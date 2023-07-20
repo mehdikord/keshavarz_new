@@ -5,19 +5,19 @@
             <div class="row">
                 <div class="col-lg-12">
                     <div class="section-heading">
-                       پرطرفدار های کوکو
+                        پرطرفدار های کوکو
                     </div>
                 </div>
             </div>
             <div class="row">
-                <div class="col-md-2 col-sm-6 col-xs-6" v-for="i in 6">
+                <div class="col-lg-2 col-md-3 col-sm-4 col-xs-6 p-1" v-for="i in 6">
                     <product_single_one></product_single_one>
                 </div>
             </div>
             <div class="row">
                 <div class="col-lg-12">
                     <div class="section-btn-25">
-                        <a href="shop-4column.html" class="btn btn-outline">
+                        <a href="" class="btn btn-outline for-link-all">
                             <i class="fas fa-eye"></i><span>مشاهده همه محصولات</span>
                         </a>
                     </div>
@@ -29,8 +29,17 @@
 
 <style scoped>
 .section-heading{
-    font-size: 40px;
-    font-weight: 700;
+    font-size: 28px;
+    font-weight: 600;
+}
+@media only screen and (max-width: 600px) {
+    .section-heading{
+        font-size: 22px;
+        font-weight: 600;
+    }
+    .for-link-all{
+        font-size: 13px;
+    }
 }
 </style>
 <script>

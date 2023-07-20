@@ -16,6 +16,11 @@
 .section{
     margin-bottom: 85px!important;
 }
+@media only screen and (max-width: 600px) {
+    .section{
+        margin-bottom: 36px!important;
+    }
+}
 </style>
 <script>
 import {defineComponent} from 'vue'

@@ -35,7 +35,7 @@
             </div>
             <div class="tab-pane fade show active" id="top-order">
                 <div class="row">
-                    <div v-for="i in 4" class="col-lg-3">
+                    <div v-for="i in 4" class="col-xl-3 col-lg-3 col-md-4 col-sm-6 col-xs-6">
 
                         <product_single_one></product_single_one>
 
@@ -59,8 +59,17 @@
 
 <style scoped>
 .section-heading{
-    font-size: 40px;
-    font-weight: 700;
+    font-size: 28px;
+    font-weight: 600;
+}
+@media only screen and (max-width: 600px) {
+    .section-heading{
+        font-size: 22px;
+        font-weight: 600;
+    }
+    .for-link-all{
+        font-size: 13px;
+    }
 }
 </style>
 <script>

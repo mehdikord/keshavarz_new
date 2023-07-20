@@ -10,7 +10,7 @@
                 </div>
             </div>
             <div class="row">
-                <div v-for="i in 6" class="col-md-4">
+                <div v-for="i in 6" class="col-xl-4 col-lg-4 col-md-6 col-sm-12 col-xs-12 p-1">
                     <product_single_two></product_single_two>
                 </div>
 
@@ -18,7 +18,7 @@
             <div class="row">
                 <div class="col-lg-12">
                     <div class="section-btn-25">
-                        <a href="shop-4column.html" class="btn btn-outline">
+                        <a href="" class="btn btn-outline for-link-all">
                             <i class="fas fa-eye"></i><span>مشاهده همه محصولات کوکو</span>
                         </a>
                     </div>
@@ -30,8 +30,17 @@
 
 <style scoped>
 .section-heading{
-    font-size: 40px;
-    font-weight: 700;
+    font-size: 28px;
+    font-weight: 600;
+}
+@media only screen and (max-width: 600px) {
+    .section-heading{
+        font-size: 22px;
+        font-weight: 600;
+    }
+    .for-link-all{
+        font-size: 13px;
+    }
 }
 </style>
 <script>

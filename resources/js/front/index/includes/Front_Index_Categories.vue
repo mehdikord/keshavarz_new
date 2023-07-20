@@ -1,41 +1,11 @@
 <template>
     <section class="section q-mt-md">
         <div class="container">
-            <div class="row">
-                <div class="col-md-2">
-                    <a class="suggest-card" href="shop-4column.html">
-                        <img src="https://cafimafi.com/mag/wp-content/uploads/2020/01/what-is-syrup2.jpg" alt="suggest">
-                        <h5>دسته بندی  </h5>
-                    </a>
-                </div>
-                <div class="col-md-2">
-                    <a class="suggest-card" href="shop-4column.html">
-                        <img src="https://behdasht.news/images/news/234375/thumbs/234375.jpg" alt="suggest">
-                        <h5>دسته بندی  </h5>
-                    </a>
-                </div>
-                <div class="col-md-2">
+            <div class="row justify-center">
+                <div v-for="i in 6" class="col-lg-2 col-md-2 col-sm-3 col-xs-4 p-1">
                     <a class="suggest-card" href="shop-4column.html">
                         <img src="https://fooda.ir/wp-content/uploads/2015/02/chocolat.png" alt="suggest">
-                        <h5>دسته بندی  </h5>
-                    </a>
-                </div>
-                <div class="col-md-2">
-                    <a class="suggest-card" href="shop-4column.html">
-                        <img src="https://cafimafi.com/mag/wp-content/uploads/2020/01/what-is-syrup2.jpg" alt="suggest">
-                        <h5>دسته بندی  </h5>
-                    </a>
-                </div>
-                <div class="col-md-2">
-                    <a class="suggest-card" href="shop-4column.html">
-                        <img src="https://cafimafi.com/mag/wp-content/uploads/2020/01/what-is-syrup2.jpg" alt="suggest">
-                        <h5>دسته بندی  </h5>
-                    </a>
-                </div>
-                <div class="col-md-2">
-                    <a class="suggest-card" href="shop-4column.html">
-                        <img src="https://cafimafi.com/mag/wp-content/uploads/2020/01/what-is-syrup2.jpg" alt="suggest">
-                        <h5>دسته بندی  </h5>
+                        <h5 class="cat-title">دسته بندی  </h5>
                     </a>
                 </div>
             </div>
@@ -44,7 +14,17 @@
 </template>
 
 <style scoped>
-
+.suggest-card::before{
+    background: rgba(0,0,0,0.62);
+}
+.cat-title{
+    font-size: 16px;
+}
+@media only screen and (max-width: 600px) {
+    .cat-title{
+        font-size: 13px;
+    }
+}
 </style>
 <script>
 import {defineComponent} from 'vue'

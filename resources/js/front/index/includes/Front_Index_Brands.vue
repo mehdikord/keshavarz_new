@@ -44,8 +44,17 @@
 
 <style scoped>
 .section-heading{
-    font-size: 40px;
-    font-weight: 700;
+    font-size: 28px;
+    font-weight: 600;
+}
+@media only screen and (max-width: 600px) {
+    .section-heading{
+        font-size: 22px;
+        font-weight: 600;
+    }
+    .for-link-all{
+        font-size: 13px;
+    }
 }
 </style>
 <script>
