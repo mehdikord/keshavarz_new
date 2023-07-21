@@ -1,7 +1,7 @@
 <template>
     <section class="">
         <div class="container">
-            <div class="mt-2">
+            <div class="">
                 <h1 class="title">لیست محصولات کوکوکافی</h1>
             </div>
             <div class="row content-reverse mt-3 sm-hide xs-hide">
@@ -44,7 +44,6 @@
                     <div class="row">
                         <div class="col-lg-12">
                             <div class="bottom-paginate">
-                                <p class="page-info">Showing 12 of 60 Results</p>
                                 <ul class="pagination">
                                     <li class="page-item"><a class="page-link" href="#"><i
                                         class="fas fa-long-arrow-alt-right"></i></a></li>
@@ -62,6 +61,21 @@
                 </div>
 
             </div>
+            <div class="row xl-hide lg-hide md-hide">
+                <div class="col-12">
+                    <q-btn color="blue-grey-9" icon="fas fa-list" class="font-13" flat>فیلتر ها</q-btn>
+                    <q-btn color="blue-grey-9" icon="fas fa-sort" class="font-13" flat> پرفروش ترین</q-btn>
+                    <hr>
+                </div>
+                <div v-for="i in 2" class="col-12">
+                    <product_single_two></product_single_two>
+                </div>
+
+
+            </div>
+
+
+
         </div>
     </section>
 </template>
@@ -70,6 +84,12 @@
 .title{
     font-size: 18px;
     font-weight: 500;
+}
+@media only screen and (max-width: 600px) {
+    .title{
+        font-size: 15px;
+        font-weight: 500;
+    }
 }
 </style>
 <script>
@@ -80,6 +100,7 @@ import Front_Shop_Filter_Brand from "./includes/Front_Shop_Filter_Brand.vue";
 import Front_Shop_Filter_Rating from "./includes/Front_Shop_Filter_Rating.vue";
 import Front_Shop_Filter_Top from "./includes/Front_Shop_Filter_Top.vue";
 import Front_Product_Single_One from "../products/Front_Product_Single_One.vue";
+import Front_Product_Single_Two from "../products/Front_Product_Single_Two.vue";
 
 export default defineComponent({
     name: "Front_Shop_Index",
@@ -89,7 +110,8 @@ export default defineComponent({
         'filter_brand' : Front_Shop_Filter_Brand,
         'filter_rating' : Front_Shop_Filter_Rating,
         'filter_top' : Front_Shop_Filter_Top,
-        'product_single_one' : Front_Product_Single_One
+        'product_single_one' : Front_Product_Single_One,
+        'product_single_two' : Front_Product_Single_Two
     }
 })
 </script>
