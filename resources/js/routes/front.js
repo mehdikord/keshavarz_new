@@ -1,6 +1,7 @@
 import { createRouter, createWebHistory } from "vue-router";
 import Front_Index from "../front/index/Front_Index.vue";
 import test from "../front/test.vue";
+import Front_Shop_Index from "../front/shop/Front_Shop_Index.vue";
 
 const routes = [
     {
@@ -9,9 +10,9 @@ const routes = [
         component : Front_Index,
     },
     {
-        path : "/test",
-        name : "test",
-        component : test,
+        path : "/shop",
+        name : "shop",
+        component : Front_Shop_Index,
     },
 
 

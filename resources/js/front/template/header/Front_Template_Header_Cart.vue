@@ -12,31 +12,7 @@
         <ul class="cart-list">
 
             <li v-for="i in 4" class="cart-item">
-                <div class="cart-media">
-                    <a href="#">
-                        <img src="/front/images/product/06.jpg" alt="product"></a>
-                    <button class="cart-delete">
-                        <i class="far fa-trash-alt"></i>
-                    </button>
-                </div>
-                <div class="cart-info-group">
-                    <div class="cart-info">
-                        <h6><a href="product-single.html">نام محصول</a></h6>
-                        <p>تومان - 20,000</p>
-                    </div>
-                    <div class="cart-action-group">
-                        <div class="product-action">
-                            <button class="action-minus" title="Quantity Minus">
-                            <i class="icofont-minus"></i>
-                        </button>
-                            <input class="action-input" title="Quantity Number" type="text" name="quantity" value="1">
-                            <button class="action-plus" title="Quantity Plus">
-                                <i class="icofont-plus"></i>
-                            </button>
-                        </div>
-                        <h6>80,000</h6>
-                    </div>
-                </div>
+                <cart_single_one></cart_single_one>
             </li>
 
         </ul>
@@ -50,7 +26,7 @@
             </form>
             <a class="cart-checkout-btn" href="checkout.html">
                 <span class="checkout-label">ثبت نهایی سفارشات</span>
-                <span class="checkout-price">369.78</span>
+                <span class="checkout-price">385,000</span>
             </a>
         </div>
     </aside>
@@ -58,13 +34,27 @@
 </template>
 
 <style scoped>
+.checkout-price{
+   font-size: 17px;
+    font-weight: 600;
+}
+@media only screen and (max-width: 600px) {
+    .checkout-price{
+        font-size: 15px;
+        font-weight: 500;
+    }
+}
 
 </style>
 <script>
 import {defineComponent} from 'vue'
+import Front_Cart_Single_One from "../../cart/Front_Cart_Single_One.vue";
 
 export default defineComponent({
-    name: "Front_Template_Header_Cart"
+    name: "Front_Template_Header_Cart",
+    components :{
+        'cart_single_one' : Front_Cart_Single_One,
+    }
 })
 </script>
 

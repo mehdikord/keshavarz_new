@@ -41,6 +41,7 @@
         font-size: 13px;
     }
 }
+
 </style>
 <script>
 import {defineComponent} from 'vue'

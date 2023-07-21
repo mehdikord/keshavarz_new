@@ -2,14 +2,14 @@
 <template>
     <section class="section niche-part">
         <div class="container">
-            <div class="row">
+            <div class="row m-0">
                 <div class="col-lg-12">
                     <div class="section-heading">
                         محصولات جدید کوکو رو از دست نده
                     </div>
                 </div>
             </div>
-            <div class="row">
+            <div class="row m-0">
                 <div class="col-12 p-0">
                     <div class="card mb-4">
                         <div class="card-body pt-2 pb-4 row justify-center nav">

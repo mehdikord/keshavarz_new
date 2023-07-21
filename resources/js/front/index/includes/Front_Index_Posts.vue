@@ -10,7 +10,7 @@
                 </div>
             </div>
             <div class="row">
-                <div v-for="i in 4" class="col-md-3 col-sm-6 col-xs-12 p-1">
+                <div v-for="i in 4" class="col-md-3 col-sm-6 col-xs-12">
                     <post_single_one></post_single_one>
                 </div>
             </div>

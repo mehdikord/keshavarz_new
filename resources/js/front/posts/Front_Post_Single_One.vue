@@ -16,8 +16,8 @@ export default defineComponent({
         </div>
         <div class="blog-content">
             <ul class="blog-meta">
-                <li><i class="fas fa-user"></i><span>مدیر</span></li>
-                <li><i class="fas fa-calendar-alt"></i><span>جمعه 5 بهمن</span></li>
+                <li><i class="fas fa-user"></i><span class="own-text">مدیر</span></li>
+                <li><i class="fas fa-calendar-alt"></i><span class="own-text">جمعه 5 بهمن</span></li>
             </ul>
             <h4 class="blog-title">
                 <a href="">
@@ -28,7 +28,7 @@ export default defineComponent({
                 لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک است
             </p>
             <a class="blog-btn" href="#">
-                <span>مشاهده مطلب</span>
+                <span class="show-text">مشاهده مطلب</span>
                 <i class="icofont-arrow-left"></i>
             </a>
         </div>
@@ -43,4 +43,22 @@ export default defineComponent({
 .blog-desc{
     font-size: 14px;
 }
+.own-text{
+    font-size: 13px;
+}
+@media only screen and (max-width: 600px) {
+    .blog-title{
+        font-size: 14px;
+    }
+    .blog-desc{
+        font-size: 12px;
+    }
+    .own-text{
+        font-size: 12px;
+    }
+    .show-text{
+        font-size: 15px;
+    }
+}
+
 </style>

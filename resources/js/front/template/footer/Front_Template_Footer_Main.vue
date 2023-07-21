@@ -79,6 +79,13 @@
     font-size: 20px;
     font-weight: 600;
 }
+@media only screen and (max-width: 600px) {
+
+    .footer-title{
+        font-size: 16px;
+        font-weight: 600;
+    }
+}
 </style>
 <script>
 import {defineComponent} from 'vue'
