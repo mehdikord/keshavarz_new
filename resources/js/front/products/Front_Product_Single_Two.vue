@@ -3,9 +3,8 @@
     <div class="feature-card">
         <div class="feature-media">
             <div class="feature-label">
-                <label class="label-text feat">پیشنهاد ما</label>
+<!--                <label class="label-text feat">پیشنهاد ما</label>-->
             </div>
-            <button class="feature-wish wish"><i class="fas fa-heart"></i></button>
             <a class="feature-image" href="product-video.html">
                 <img src="https://tamkins.com/wp-content/uploads/2022/11/Layer-14-1200x1200.png" alt="product">
             </a>
@@ -40,6 +39,9 @@
                     <i class="icofont-plus"></i>
                 </button>
             </div>
+
+
+
         </div>
     </div>
 
@@ -71,20 +73,21 @@
 }
 @media only screen and (max-width: 600px) {
     .feature-image img {
-        width: 125px;
+        width: 90px;
     }
     .product-name{
-        font-size: 14px;
+        font-size: 13px;
     }
     .product-rating > i{
         font-size: 10px !important;
     }
     .product-price{
-        font-size: 14px;
+        font-size: 13px;
     }
     .mobile-price{
         font-size: 14px;
         font-weight: 500;
+        color: #1b9124;
     }
     .product-add{
         font-size: 12px;
@@ -97,8 +100,9 @@
         font-size: 13px !important;
     }
     .label-text{
-        font-size: 11px;
+        font-size: 10px;
     }
+
 }
 </style>
 <script>

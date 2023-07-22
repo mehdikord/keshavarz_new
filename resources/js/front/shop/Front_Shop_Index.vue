@@ -63,11 +63,47 @@
             </div>
             <div class="row xl-hide lg-hide md-hide">
                 <div class="col-12">
-                    <q-btn color="blue-grey-9" icon="fas fa-list" class="font-13" flat>فیلتر ها</q-btn>
-                    <q-btn color="blue-grey-9" icon="fas fa-sort" class="font-13" flat> پرفروش ترین</q-btn>
+                    <q-btn @click="filter_dialog = true" color="blue-grey-9" icon="fas fa-list" class="font-13" flat>فیلتر ها</q-btn>
+                    <q-dialog v-model="filter_dialog">
+                        <q-card>
+                            <q-card-section class="bg-teal">
+                                <h6 class="font-16 text-white">فیلتر ها</h6>
+                            </q-card-section>
+
+                            <q-separator />
+
+                            <q-card-section style="max-height: 65vh" class="scroll">
+                                <p v-for="n in 15" :key="n">Lorem ipsum dolor sit amet consectetur adipisicing elit. Rerum repellendus sit voluptate voluptas eveniet porro. Rerum blanditiis perferendis totam, ea at omnis vel numquam exercitationem aut, natus minima, porro labore.</p>
+                            </q-card-section>
+
+                            <q-separator />
+                            <q-card-section class="text-center">
+                                <q-btn flat color="dark" size="sm" class="font-12" icon-right="fas fa-times">حذف فیلترها</q-btn>
+                                <q-btn flat color="success" size="sm" class="font-12" icon-right="fas fa-check">اعمال فیلتر </q-btn>
+
+                            </q-card-section>
+                        </q-card>
+                    </q-dialog>
+                    <q-btn @click="sort_dialog = true" color="blue-grey-9" icon="fas fa-sort" class="font-13" flat> پرفروش ترین</q-btn>
+                    <q-dialog v-model="sort_dialog" full-width>
+                        <q-card>
+                            <q-card-section>
+                                <h6 class="font-16">مشاهده بر اساس </h6>
+                            </q-card-section>
+                            <q-separator />
+
+                            <q-card-section >
+
+                            </q-card-section>
+                        </q-card>
+                    </q-dialog>
+
                     <hr>
+
+
+
                 </div>
-                <div v-for="i in 2" class="col-12">
+                <div v-for="i in 2" class="col-12 p-1">
                     <product_single_two></product_single_two>
                 </div>
 
@@ -112,6 +148,15 @@ export default defineComponent({
         'filter_top' : Front_Shop_Filter_Top,
         'product_single_one' : Front_Product_Single_One,
         'product_single_two' : Front_Product_Single_Two
+    },
+    data(){
+        return{
+            filter_dialog : false,
+            sort_dialog : false,
+            options: [
+                'Google', 'Facebook', 'Twitter', 'Apple', 'Oracle'
+            ]
+        }
     }
 })
 </script>
