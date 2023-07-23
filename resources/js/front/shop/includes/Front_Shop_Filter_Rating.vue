@@ -71,13 +71,18 @@
             </li>
 
         </ul>
-        <button class="shop-widget-btn">
+        <button class="shop-widget-btn sm-hide xs-hide">
             <i class="far fa-trash-alt"></i><span>حذف فیلتر</span>
         </button>
     </form>
 </template>
 
 <style scoped>
+@media only screen and (max-width: 600px) {
+    .shop-widget-title{
+        font-size: 13px!important;
+    }
+}
 
 </style>
 <script>

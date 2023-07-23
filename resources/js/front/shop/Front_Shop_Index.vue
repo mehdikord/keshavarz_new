@@ -13,7 +13,7 @@
                         </a>
                     </div>
                     <div class="shop-widget">
-                        <filer_price></filer_price>
+                        <filter_price></filter_price>
                     </div>
                     <div class="shop-widget">
                         <filter_category></filter_category>
@@ -66,16 +66,20 @@
                     <q-btn @click="filter_dialog = true" color="blue-grey-9" icon="fas fa-list" class="font-13" flat>فیلتر ها</q-btn>
                     <q-dialog v-model="filter_dialog">
                         <q-card>
-                            <q-card-section class="bg-teal">
-                                <h6 class="font-16 text-white">فیلتر ها</h6>
+                            <q-card-section >
+                                <h6 class="font-16 ">فیلتر ها</h6>
                             </q-card-section>
-
                             <q-separator />
 
                             <q-card-section style="max-height: 65vh" class="scroll">
-                                <p v-for="n in 15" :key="n">Lorem ipsum dolor sit amet consectetur adipisicing elit. Rerum repellendus sit voluptate voluptas eveniet porro. Rerum blanditiis perferendis totam, ea at omnis vel numquam exercitationem aut, natus minima, porro labore.</p>
+                                <filter_price></filter_price>
+                                <q-separator />
+                                <filter_category></filter_category>
+                                <q-separator />
+                                <filter_brand></filter_brand>
+                                <q-separator/>
+                                <filter_rating></filter_rating>
                             </q-card-section>
-
                             <q-separator />
                             <q-card-section class="text-center">
                                 <q-btn flat color="dark" size="sm" class="font-12" icon-right="fas fa-times">حذف فیلترها</q-btn>
@@ -93,7 +97,14 @@
                             <q-separator />
 
                             <q-card-section >
-
+                                <select class="form-control">
+                                    <option>مرتبط ترین</option>
+                                    <option>جدید ترین</option>
+                                    <option>پرفروش ترین</option>
+                                    <option>پربازدید ترین</option>
+                                    <option>گران ترین</option>
+                                    <option>ارزان ترین</option>
+                                </select>
                             </q-card-section>
                         </q-card>
                     </q-dialog>
@@ -141,7 +152,7 @@ import Front_Product_Single_Two from "../products/Front_Product_Single_Two.vue";
 export default defineComponent({
     name: "Front_Shop_Index",
     components:{
-        'filer_price' : Front_Shop_Filter_Price,
+        'filter_price' : Front_Shop_Filter_Price,
         'filter_category' : Front_Shop_Filter_Category,
         'filter_brand' : Front_Shop_Filter_Brand,
         'filter_rating' : Front_Shop_Filter_Rating,
