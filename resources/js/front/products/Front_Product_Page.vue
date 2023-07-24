@@ -1,6 +1,7 @@
 
 <template>
-    <section class="inner-section">
+    <section class="inner-section mt-4">
+        sfsdfsfsd
         <div class="container">
             <div class="row">
                 <div class="col-lg-6">
@@ -8,28 +9,28 @@
                         <div class="details-label-group"><label class="details-label new">new</label><label
                             class="details-label off">-10%</label></div>
                         <ul class="details-preview">
-                            <li><img src="images/product/01.jpg" alt="product"></li>
-                            <li><img src="images/product/01.jpg" alt="product"></li>
-                            <li><img src="images/product/01.jpg" alt="product"></li>
-                            <li><img src="images/product/01.jpg" alt="product"></li>
-                            <li><img src="images/product/01.jpg" alt="product"></li>
+                            <li><img src="/front/images/product/01.jpg" alt="product"></li>
+                            <li><img src="/front/images/product/01.jpg" alt="product"></li>
+                            <li><img src="/front/images/product/01.jpg" alt="product"></li>
+                            <li><img src="/front/images/product/01.jpg" alt="product"></li>
+                            <li><img src="/front/images/product/01.jpg" alt="product"></li>
                         </ul>
                         <ul class="details-thumb">
-                            <li><img src="images/product/01.jpg" alt="product"></li>
-                            <li><img src="images/product/01.jpg" alt="product"></li>
-                            <li><img src="images/product/01.jpg" alt="product"></li>
-                            <li><img src="images/product/01.jpg" alt="product"></li>
-                            <li><img src="images/product/01.jpg" alt="product"></li>
+                            <li><img src="/front/images/product/01.jpg" alt="product"></li>
+                            <li><img src="/front/images/product/01.jpg" alt="product"></li>
+                            <li><img src="/front/images/product/01.jpg" alt="product"></li>
+                            <li><img src="/front/images/product/01.jpg" alt="product"></li>
+                            <li><img src="/front/images/product/01.jpg" alt="product"></li>
                         </ul>
                     </div>
                 </div>
                 <div class="col-lg-6">
                     <ul class="product-navigation">
                         <li class="product-nav-prev"><a href="#"><i class="icofont-arrow-left"></i>prev product <span
-                            class="product-nav-popup"><img src="images/product/02.jpg"
+                            class="product-nav-popup"><img src="/front/images/product/02.jpg"
                                                            alt="product"><small>green chilis</small></span></a></li>
                         <li class="product-nav-next"><a href="#">next product <i class="icofont-arrow-right"></i><span
-                            class="product-nav-popup"><img src="images/product/03.jpg"
+                            class="product-nav-popup"><img src="/front/images/product/03.jpg"
                                                            alt="product"><small>green chilis</small></span></a></li>
                     </ul>
                     <div class="details-content">
@@ -125,7 +126,7 @@
                         <ul class="review-list">
                             <li class="review-item">
                                 <div class="review-media"><a class="review-avatar" href="#"><img
-                                    src="images/avatar/01.jpg" alt="review"></a>
+                                    src="/front/images/avatar/01.jpg" alt="review"></a>
                                     <h5 class="review-meta"><a href="#">miron mahmud</a><span>June 02, 2020</span></h5>
                                 </div>
                                 <ul class="review-rating">
@@ -144,7 +145,7 @@
                                 <ul class="review-reply-list">
                                     <li class="review-reply-item">
                                         <div class="review-media"><a class="review-avatar" href="#"><img
-                                            src="images/avatar/02.jpg" alt="review"></a>
+                                            src="/front/images/avatar/02.jpg" alt="review"></a>
                                             <h5 class="review-meta"><a href="#">labonno khan</a><span><b>author
                                                         -</b>June 02, 2020</span></h5>
                                         </div>
@@ -157,7 +158,7 @@
                                     </li>
                                     <li class="review-reply-item">
                                         <div class="review-media"><a class="review-avatar" href="#"><img
-                                            src="images/avatar/03.jpg" alt="review"></a>
+                                            src="/front/images/avatar/03.jpg" alt="review"></a>
                                             <h5 class="review-meta"><a href="#">tahmina bonny</a><span>June 02,
                                                     2020</span></h5>
                                         </div>
@@ -172,7 +173,7 @@
                             </li>
                             <li class="review-item">
                                 <div class="review-media"><a class="review-avatar" href="#"><img
-                                    src="images/avatar/04.jpg" alt="review"></a>
+                                    src="/front/images/avatar/04.jpg" alt="review"></a>
                                     <h5 class="review-meta"><a href="#">shipu shikdar</a><span>June 02, 2020</span></h5>
                                 </div>
                                 <ul class="review-rating">
