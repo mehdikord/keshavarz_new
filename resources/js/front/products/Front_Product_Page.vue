@@ -27,7 +27,6 @@
                     </q-carousel>
                 </div>
                 <div class="col-lg-6">
-
                     <div class="details-content">
                         <h3 class="details-name"><a href="#">نام محصول اینجاست</a></h3>
                         <div class="">
@@ -44,22 +43,28 @@
                                 </strong>
                             </div>
                         </div>
-                        <div class="details-rating"><i class="active icofont-star"></i><i
-                            class="active icofont-star"></i><i class="active icofont-star"></i><i
-                            class="active icofont-star"></i><i class="icofont-star"></i><a href="#">(3 reviews)</a>
+                        <div class="details-rating mt-2">
+                            <i class="active icofont-star"></i>
+                            <i class="active icofont-star"></i>
+                            <i class="active icofont-star"></i>
+                            <i class="active icofont-star"></i>
+                            <i class="icofont-star"></i>
+                            <a class="rate-review" href="#">(3 دیدگاه)</a>
                         </div>
-                        <h3 class="details-price"><del>$38.00</del><span>$24.00<small>/per kilo</small></span></h3>
-                        <p class="details-desc">Lorem ipsum dolor sit amet consectetur adipisicing elit facere harum
-                            natus amet soluta fuga consectetur alias veritatis quisquam ab eligendi itaque eos maiores
-                            quibusdam.</p>
-                        <div class="details-list-group"><label class="details-list-title">tags:</label>
-                            <ul class="details-tag-list">
-                                <li><a href="#">organic</a></li>
-                                <li><a href="#">fruits</a></li>
-                                <li><a href="#">chilis</a></li>
-                            </ul>
+                        <h3 class="mt-2">
+                            <strong class="price me-3 text-success">185,000</strong>
+                            <del class="price-old text-danger">200,000</del>
+                            <span class="me-1 curency">تومان</span>
+                        </h3>
+                        <p class="details-desc mt-1 text-justify">
+                            قَهوه، گونه‌ای نوشیدنی رایج است که از دانه‌های بوداده و آسیاب‌شدهٔ گیاه قهوه به‌دست می‌آید. قهوه کمی اسیدی است و به‌علت داشتن کافئین بالا، یک ماده محرک است.[۱] این نوشیدنی، محبوب‌ترین نوشیدنی گرم در جهان است.[۲
+                        </p>
+                        <div class="details-list-group">
+                            <q-icon name="fas fa-thumbs-up" color="success"></q-icon>
+                            <small class="me-2">87% کاربران از خرید این محصول راضی هستند !</small>
+
                         </div>
-                        <div class="details-list-group"><label class="details-list-title">Share:</label>
+                        <div class="details-list-group"><label class="details-list-title">اشتراک گذاری : </label>
                             <ul class="details-share-list">
                                 <li><a href="#" class="icofont-facebook" title="Facebook"></a></li>
                                 <li><a href="#" class="icofont-twitter" title="Twitter"></a></li>
@@ -67,18 +72,34 @@
                                 <li><a href="#" class="icofont-instagram" title="Instagram"></a></li>
                             </ul>
                         </div>
-                        <div class="details-add-group"><button class="product-add" title="Add to Cart"><i
-                            class="fas fa-shopping-basket"></i><span>add to cart</span></button>
-                            <div class="product-action"><button class="action-minus" title="Quantity Minus"><i
-                                class="icofont-minus"></i></button><input class="action-input"
-                                                                          title="Quantity Number" type="text" name="quantity" value="1"><button
-                                class="action-plus" title="Quantity Plus"><i class="icofont-plus"></i></button>
+                        <div class="details-add-group">
+                            <div class="row ">
+                                <div class="col-9 m-0">
+                                    <button class="product-add" title="افزودن به سبد خرید">
+                                        <span>افزودن به سبد خرید</span>
+                                        <q-icon name="fas fa-cart-arrow-down" class="me-2" size="20px"></q-icon>
+                                    </button>
+                                    <div class="product-action">
+                                        <button class="action-minus" title="Quantity Minus">
+                                            <i class="icofont-minus"></i>
+                                        </button>
+                                        <input class="action-input" title="Quantity Number" type="text" name="quantity" value="1">
+                                        <button class="action-plus" title="Quantity Plus"><i class="icofont-plus"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                                <div class="col-3 m-0">
+                                    <button class="product-add" title="افزودن به سبد خرید">
+                                        <span>علاقه مندی</span>
+                                        <q-icon name="fas fa-cart-arrow-down" class="me-2" size="20px"></q-icon>
+
+                                    </button>
+
+                                </div>
                             </div>
+
                         </div>
-                        <div class="details-action-group"><a class="details-wish wish" href="#"
-                                                             title="Add Your Wishlist"><i class="icofont-heart"></i><span>add to wish</span></a><a
-                            class="details-compare" href="compare.html" title="Compare This Item"><i
-                            class="fas fa-random"></i><span>Compare This</span></a></div>
+
                     </div>
                 </div>
             </div>
@@ -237,8 +258,26 @@
     height: 600px;
 }
 .details-name{
-    font-size: 17px;
+    font-size: 18px;
     font-weight: 500;
+}
+.details-rating > i{
+    font-size: 14px;
+}
+.rate-review{
+    font-size: 12px;
+}
+.price{
+    font-size: 26px;
+}
+.price-old{
+    font-size: 24px;
+}
+.curency{
+    font-size: 14px;
+}
+.details-content{
+    padding-top: 18px;
 }
 </style>
 <script>
