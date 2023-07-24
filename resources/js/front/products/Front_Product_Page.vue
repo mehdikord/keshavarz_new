@@ -1,43 +1,48 @@
 
 <template>
-    <section class="inner-section mt-4">
-        sfsdfsfsd
+    <section class="inner-section">
+        <div class="container mt-4 mb-3">
+            <span class="text-muted">صفحه اصلی </span>
+            /
+            <span class="text-muted"> قهوه ها </span>
+            /
+            <span class="text-dark">قهوه ربستا</span>
+
+        </div>
         <div class="container">
             <div class="row">
                 <div class="col-lg-6">
-                    <div class="details-gallery">
-                        <div class="details-label-group"><label class="details-label new">new</label><label
-                            class="details-label off">-10%</label></div>
-                        <ul class="details-preview">
-                            <li><img src="/front/images/product/01.jpg" alt="product"></li>
-                            <li><img src="/front/images/product/01.jpg" alt="product"></li>
-                            <li><img src="/front/images/product/01.jpg" alt="product"></li>
-                            <li><img src="/front/images/product/01.jpg" alt="product"></li>
-                            <li><img src="/front/images/product/01.jpg" alt="product"></li>
-                        </ul>
-                        <ul class="details-thumb">
-                            <li><img src="/front/images/product/01.jpg" alt="product"></li>
-                            <li><img src="/front/images/product/01.jpg" alt="product"></li>
-                            <li><img src="/front/images/product/01.jpg" alt="product"></li>
-                            <li><img src="/front/images/product/01.jpg" alt="product"></li>
-                            <li><img src="/front/images/product/01.jpg" alt="product"></li>
-                        </ul>
-                    </div>
+                    <q-carousel
+                        swipeable
+                        animated
+                        v-model="slide"
+                        thumbnails
+                        infinite
+                        class="for-main-slider"
+                    >
+                        <q-carousel-slide :name="1" img-src="https://tamkins.com/wp-content/uploads/2022/11/Layer-7.png" />
+                        <q-carousel-slide :name="2" img-src="https://tamkins.com/wp-content/uploads/2022/11/Layer-6.png" />
+                        <q-carousel-slide :name="3" img-src="https://tamkins.com/wp-content/uploads/2022/11/Layer-12.png" />
+                        <q-carousel-slide :name="4" img-src="https://tamkins.com/wp-content/uploads/2022/11/Layer-11.png" />
+                    </q-carousel>
                 </div>
                 <div class="col-lg-6">
-                    <ul class="product-navigation">
-                        <li class="product-nav-prev"><a href="#"><i class="icofont-arrow-left"></i>prev product <span
-                            class="product-nav-popup"><img src="/front/images/product/02.jpg"
-                                                           alt="product"><small>green chilis</small></span></a></li>
-                        <li class="product-nav-next"><a href="#">next product <i class="icofont-arrow-right"></i><span
-                            class="product-nav-popup"><img src="/front/images/product/03.jpg"
-                                                           alt="product"><small>green chilis</small></span></a></li>
-                    </ul>
+
                     <div class="details-content">
-                        <h3 class="details-name"><a href="#">existing product name</a></h3>
-                        <div class="details-meta">
-                            <p>SKU:<span>1234567</span></p>
-                            <p>BRAND:<a href="#">radhuni</a></p>
+                        <h3 class="details-name"><a href="#">نام محصول اینجاست</a></h3>
+                        <div class="">
+                            <div>
+                                <span>دسته بندی : </span>
+                                <strong>
+                                    قهوه ها
+                                </strong>
+                            </div>
+                            <div class="mt-2">
+                                <span>برند : </span>
+                                <strong>
+                                    تام کینز
+                                </strong>
+                            </div>
                         </div>
                         <div class="details-rating"><i class="active icofont-star"></i><i
                             class="active icofont-star"></i><i class="active icofont-star"></i><i
@@ -228,12 +233,23 @@
 </template>
 
 <style scoped>
-
+.for-main-slider{
+    height: 600px;
+}
+.details-name{
+    font-size: 17px;
+    font-weight: 500;
+}
 </style>
 <script>
 import {defineComponent} from 'vue'
 
 export default defineComponent({
-    name: "Front_Product_Page"
+    name: "Front_Product_Page",
+    data(){
+        return {
+            slide : 1,
+        }
+    }
 })
 </script>
