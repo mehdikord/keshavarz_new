@@ -7,26 +7,56 @@
             <span class="text-muted"> قهوه ها </span>
             /
             <span class="text-dark">قهوه ربستا</span>
-
         </div>
         <div class="container">
             <div class="row">
-                <div class="col-lg-6">
+                <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
                     <q-carousel
                         swipeable
                         animated
                         v-model="slide"
                         thumbnails
                         infinite
-                        class="for-main-slider"
+                        class="for-main-slider sm-hide xs-hide"
                     >
                         <q-carousel-slide :name="1" img-src="https://tamkins.com/wp-content/uploads/2022/11/Layer-7.png" />
                         <q-carousel-slide :name="2" img-src="https://tamkins.com/wp-content/uploads/2022/11/Layer-6.png" />
                         <q-carousel-slide :name="3" img-src="https://tamkins.com/wp-content/uploads/2022/11/Layer-12.png" />
                         <q-carousel-slide :name="4" img-src="https://tamkins.com/wp-content/uploads/2022/11/Layer-11.png" />
                     </q-carousel>
+                    <q-carousel
+                        animated
+                        v-model="slide"
+                        ref="carousel"
+                        infinite
+                        :autoplay="true"
+                        transition-prev="slide-right"
+                        transition-next="slide-left"
+                        control-color="black"
+                        control-type="outline"
+                    >
+                        <q-carousel-slide :name="1" img-src="https://tamkins.com/wp-content/uploads/2022/11/Layer-7.png" />
+                        <q-carousel-slide :name="2" img-src="https://tamkins.com/wp-content/uploads/2022/11/Layer-7.png" />
+                        <q-carousel-slide :name="3" img-src="https://tamkins.com/wp-content/uploads/2022/11/Layer-7.png" />
+                        <q-carousel-slide :name="4" img-src="https://tamkins.com/wp-content/uploads/2022/11/Layer-7.png" />
+
+
+                        <template v-slot:control>
+
+                            <q-carousel-control
+
+                                class="q-gutter-sm"
+                                position="bottom"
+                            >
+                                <q-btn class="font-12" glossy  round dense color="success" text-color="white" icon="fas fa-arrow-right" @click="$refs.carousel.next()"/>
+
+                                <q-btn  class="font-12" glossy round dense color="success" text-color="white" icon="fas fa-arrow-left" @click="$refs.carousel.previous()"/>
+                            </q-carousel-control>
+                        </template>
+
+                    </q-carousel>
                 </div>
-                <div class="col-lg-6">
+                <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
                     <div class="details-content">
                         <h3 class="details-name"><a href="#">نام محصول اینجاست</a></h3>
                         <div class="">
@@ -79,12 +109,12 @@
                             </ul>
                         </div>
                         <div class="details-add-group">
-                            <div class="row ">
-                                <div class="col-9 m-0">
-                                <q-btn  color="success" icon-right="fas fa-cart-arrow-down" class="w-100"> افرودن به سبد خرید</q-btn>
+                            <div class="row text-center">
+                                <div class="col-11">
+                                <q-btn  color="success" icon-right="fas fa-cart-arrow-down" class="w-100 pt-2 pb-2"> افرودن به سبد خرید</q-btn>
                                 </div>
-                                <div class="col-3 m-0">
-                                    <q-btn icon-right="fas fa-heart" color="dark">علاقه مندی</q-btn>
+                                <div class="col-1">
+                                    <q-icon name="fas fa-heart" size="lg" color="blue-grey-8 pointer"></q-icon>
                                 </div>
                             </div>
 
@@ -128,35 +158,54 @@
                 <div class="col-lg-12 mt-4">
                     <div class="product-details-frame p-4">
                         <strong class=" font-16">دیدگاه های کاربران :</strong>
-                        <q-btn outline color="success" icon-right="fas fa-comment" class="pe-4 float-right">ثبت دیدگاه برای این محصول</q-btn>
-
-                        <div class="mt-4">
-                            <ul class="review-list">
-                                <li v-for="i in 3" class="review-item p-3">
-                                    <div class="review-media">
-                                        <a class="review-avatar" href="#">
-                                            <img src="/front/images/user.png" alt="review">
-                                        </a>
-                                        <h5 class="review-meta">
-                                            <strong class="font-14">مهدی کرد</strong>
-                                            <span class="font-12">11 خرداد 1402</span>
-                                        </h5>
+                        <q-btn @click="setcomment = !setcomment" outline color="success" icon-right="fas fa-comment" class="pe-4 float-right">ثبت دیدگاه برای این محصول</q-btn>
+                            <div class="mt-4">
+                            <q-slide-transition>
+                                <div v-show="setcomment" class="row justify-center mb-5">
+                                <div class="col-md-7">
+                                    <div class="card shadow">
+                                        <div class="card-body pt-4">
+                                            <strong>
+                                                تجربه خودتان را درمورد خرید و استفاده از این محصول با ما و کاربران کوکوکافی به اشتراک بگذارید
+                                            </strong>
+                                            <div class="mt-5">
+                                               <textarea rows="7" class="form-control pt-2" placeholder="دیدگاه خود را وارد کنید ..."></textarea>
+                                            </div>
+                                        </div>
+                                        <div class="card-footer text-right">
+                                            <q-btn icon-right="fas fa-check" color="success" outline class="pe-4">ثبت دیدگاه</q-btn>
+                                        </div>
                                     </div>
-                                    <ul class="review-rating">
-                                        <li class="icofont-ui-rating"></li>
-                                        <li class="icofont-ui-rating"></li>
-                                        <li class="icofont-ui-rating"></li>
-                                        <li class="icofont-ui-rating"></li>
-                                        <li class="icofont-ui-rate-blank"></li>
-                                    </ul>
-                                    <p class="review-desc">
-                                        با افتخار و از عمیق‌ترین اعماق لذت‌بخشی‌ها، فروشگاه آنلاین کوکو، به شما تمامی محصولاتی که در خوردن آن‌ها لذت و احساسات زیبایی را تجربه خواهید کرد، ارائه می‌دهد؛ از آرامش بخش‌ترین دم‌کننده‌های قهوه تا شکلات‌های دلنشین و شگفت‌انگیز
-                                    </p>
-                                </li>
-                                <li>
-                                    <strong class="text-success">مشاهده 18 دیدگاه دیگر ...</strong>
-                                </li>
-                            </ul>
+                                </div>
+                                </div>
+                            </q-slide-transition>
+
+                            <ul class="review-list">
+                            <li v-for="i in 3" class="review-item p-3">
+                                <div class="review-media">
+                                    <a class="review-avatar" href="#">
+                                        <img src="/front/images/user.png" alt="review">
+                                    </a>
+                                    <h5 class="review-meta">
+                                        <strong class="font-14">مهدی کرد</strong>
+                                        <span class="font-12">11 خرداد 1402</span>
+                                    </h5>
+                                </div>
+                                <ul class="review-rating">
+                                    <li class="icofont-ui-rating"></li>
+                                    <li class="icofont-ui-rating"></li>
+                                    <li class="icofont-ui-rating"></li>
+                                    <li class="icofont-ui-rating"></li>
+                                    <li class="icofont-ui-rate-blank"></li>
+                                </ul>
+                                <p class="review-desc">
+                                    با افتخار و از عمیق‌ترین اعماق لذت‌بخشی‌ها، فروشگاه آنلاین کوکو، به شما تمامی محصولاتی که در خوردن آن‌ها لذت و احساسات زیبایی را تجربه خواهید کرد، ارائه می‌دهد؛ از آرامش بخش‌ترین دم‌کننده‌های قهوه تا شکلات‌های دلنشین و شگفت‌انگیز
+                                </p>
+                            </li>
+                            <li>
+                                <strong class="text-success">مشاهده 18 دیدگاه دیگر ...</strong>
+                            </li>
+                        </ul>
                         </div>
                     </div>
                 </div>
@@ -170,7 +219,7 @@
     height: 600px;
 }
 .details-name{
-    font-size: 18px;
+    font-size: 16px;
     font-weight: 500;
 }
 .details-rating > i{
@@ -194,6 +243,12 @@
 .review-avatar img {
     width: 56px;
 }
+.pointer{
+    cursor: pointer;
+}
+textarea{
+    height: 150px;
+}
 </style>
 <script>
 import {defineComponent} from 'vue'
@@ -203,6 +258,7 @@ export default defineComponent({
     data(){
         return {
             slide : 1,
+            setcomment:false,
         }
     }
 })
