@@ -3,6 +3,7 @@ import Front_Index from "../front/index/Front_Index.vue";
 import test from "../front/test.vue";
 import Front_Shop_Index from "../front/shop/Front_Shop_Index.vue";
 import Front_Product_Page from "../front/products/Front_Product_Page.vue";
+import Front_Profile_Index from "../front/profile/Front_Profile_Index.vue";
 
 const routes = [
     {
@@ -20,7 +21,11 @@ const routes = [
         name : "product",
         component : Front_Product_Page,
     },
-
+    {
+        path : "/profile",
+        name : "profile",
+        component : Front_Profile_Index,
+    },
 
 
 ]

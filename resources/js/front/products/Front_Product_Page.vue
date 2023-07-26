@@ -119,6 +119,10 @@
                                                     <input type="radio" name="rating" id="star-5">
                                                     <label for="star-5"></label>
                                                 </div>
+
+                                                <div class="mt-4 mb-4 text-center">
+                                                    <q-btn color="yellow-10" class="pe-4" text-color="white" icon-right="fas fa-check font-16">ثبت امتیاز</q-btn>
+                                                </div>
                                             </q-card-section>
                                         </q-card>
                                     </div>
@@ -196,7 +200,7 @@
                             <div class="mt-4">
 
                             <q-slide-transition>
-                                <div v-show="setcomment" class="row justify-center mb-5">
+                                <div v-show="set_comment" class="row justify-center mb-5">
                                 <div class="col-md-7">
                                     <div class="card shadow">
                                         <div class="card-body pt-4">
@@ -237,8 +241,8 @@
                                     با افتخار و از عمیق‌ترین اعماق لذت‌بخشی‌ها، فروشگاه آنلاین کوکو، به شما تمامی محصولاتی که در خوردن آن‌ها لذت و احساسات زیبایی را تجربه خواهید کرد، ارائه می‌دهد؛ از آرامش بخش‌ترین دم‌کننده‌های قهوه تا شکلات‌های دلنشین و شگفت‌انگیز
                                 </p>
                             </li>
-                            <li>
-                                <strong class="text-success">مشاهده 18 دیدگاه دیگر ... </strong>
+                            <li class="pb-4 text-center">
+                                <strong class="text-success">مشاهده 18 دیدگاه دیگر </strong>
                             </li>
                         </ul>
                         </div>
@@ -247,9 +251,29 @@
             </div>
         </div>
     </div>
+    <section class="section mt-5">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="section-heading">
+                        محصولات مرتبط
+                    </div>
+                </div>
+            </div>
+            <div class="row justify-center">
+                <div class="col-lg-2 col-md-3 col-sm-4 col-xs-6 p-1" v-for="i in 4">
+                    <product_single_one></product_single_one>
+                </div>
+            </div>
+        </div>
+    </section>
 </template>
 
 <style scoped>
+.section-heading{
+    font-size: 28px;
+    font-weight: 600;
+}
 .for-main-slider{
     height: 600px;
 }
@@ -293,8 +317,15 @@ textarea{
 }
 @media only screen and (max-width: 600px) {
 
+    .section-heading{
+        font-size: 22px;
+        font-weight: 600;
+    }
+    .for-link-all{
+        font-size: 13px;
+    }
     .details-name{
-        font-size: 14px;
+        font-size: 15px;
         font-weight: 500;
     }
     .details-rating > i{
@@ -361,7 +392,7 @@ textarea{
         margin-bottom: 10px;
     }
     .rate_title{
-        font-size: 14px;
+        font-size: 15px;
     }
 }
 
@@ -369,9 +400,11 @@ textarea{
 </style>
 <script>
 import {defineComponent} from 'vue'
+import product_single_one from "./Front_Product_Single_One.vue";
 
 export default defineComponent({
     name: "Front_Product_Page",
+    components: {product_single_one},
     data(){
         return {
             slide : 1,

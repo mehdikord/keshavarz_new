@@ -1,6 +1,7 @@
 <template>
     <footer class="footer-part">
-        <div class="container">
+        <hr>
+        <div class="container mt-2">
             <div class="row">
                 <div class="col-sm-6 col-xl-3">
                     <div class="footer-widget"><a class="footer-logo" href="#">
