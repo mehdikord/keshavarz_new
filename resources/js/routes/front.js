@@ -26,6 +26,11 @@ const routes = [
         name : "profile",
         component : Front_Profile_Index,
     },
+    {
+        path : "/profile/orders",
+        name : "profile_orders",
+        component : Front_Profile_Index,
+    },
 
 
 ]

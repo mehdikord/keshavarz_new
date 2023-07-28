@@ -26,42 +26,42 @@
                             </div>
                             <hr>
                             <q-list>
-                                <q-item clickable v-ripple class="pt-3 pb-3 bg-teal-7 text-white">
+                                <q-item :to="{name : 'profile'}" clickable v-ripple class="pt-3 pb-3 text-dark " :class="{'bg-teal-7 text-white' : this.$route.name === 'profile'}">
                                     <q-item-section avatar>
                                         <q-img src="/front/images/home.png" size="24px" />
                                     </q-item-section>
                                     <q-item-section class="menu-text">خلاصه فعالیت ها</q-item-section>
                                 </q-item>
                                 <q-separator color="grey"/>
-                                <q-item clickable v-ripple class="pt-3 pb-3">
+                                <q-item :to="{name : 'profile_orders'}" clickable v-ripple class="pt-3 pb-3 text-dark" :class="{'bg-teal-7 text-white' : this.$route.name === 'profile_orders'}">
                                     <q-item-section avatar>
                                         <q-img src="/front/images/shopping-bags.png" size="24px" />
                                     </q-item-section>
                                     <q-item-section class="menu-text">سفارش ها</q-item-section>
                                 </q-item>
                                 <q-separator color="grey"/>
-                                <q-item clickable v-ripple class="pt-3 pb-3">
+                                <q-item clickable v-ripple class="pt-3 pb-3 text-dark">
                                     <q-item-section avatar>
                                         <q-img src="/front/images/favorite.png" size="24px" />
                                     </q-item-section>
                                     <q-item-section class="menu-text">علاقه‌مندی ها</q-item-section>
                                 </q-item>
                                 <q-separator color="grey"/>
-                                <q-item clickable v-ripple class="pt-3 pb-3">
+                                <q-item clickable v-ripple class="pt-3 pb-3 text-dark">
                                     <q-item-section avatar>
                                         <q-img src="/front/images/location.png" size="24px" />
                                     </q-item-section>
                                     <q-item-section class="menu-text">آدرس ها</q-item-section>
                                 </q-item>
                                 <q-separator color="grey"/>
-                                <q-item clickable v-ripple class="pt-3 pb-3">
+                                <q-item clickable v-ripple class="pt-3 pb-3 text-dark">
                                     <q-item-section avatar>
                                         <q-img src="/front/images/comments.png" size="24px" />
                                     </q-item-section>
                                     <q-item-section class="menu-text">دیدگاه‌ ها</q-item-section>
                                 </q-item>
                                 <q-separator color="grey"/>
-                                <q-item clickable v-ripple class="pt-3 pb-3">
+                                <q-item clickable v-ripple class="pt-3 pb-3 text-dark">
                                     <q-item-section avatar>
                                         <q-img src="/front/images/user-setting.png" size="24px" />
                                     </q-item-section>
@@ -74,12 +74,8 @@
                     </div>
                 </div>
                 <div class="col-lg-9 p-1">
-                    <div class="card">
-                        <div class="card-body">
-                            sdsdsddsdd
-                        </div>
-                    </div>
-
+                    <profile_main v-if="this.$route.name === 'profile'"></profile_main>
+                    <profile_orders v-if="this.$route.name === 'profile_orders'"></profile_orders>
                 </div>
 
             </div>
@@ -104,11 +100,18 @@
 <script>
 import {defineComponent} from 'vue'
 import Front_Profile_Auth from "./includes/Front_Profile_Auth.vue";
+import Front_Profile_Orders_Index from "./includes/orders/Front_Profile_Orders_Index.vue";
+import Front_Profile_Orders_Recent from "./includes/orders/Front_Profile_Orders_Recent.vue";
+import Front_Profile_Main from "./includes/Front_Profile_Main.vue";
+import Front_Profile_Orders from "./includes/Front_Profile_Orders.vue";
 
 export default defineComponent({
     name: "Front_Profile_Index",
     components:{
         'profile_auth' : Front_Profile_Auth,
+        'profile_main' : Front_Profile_Main,
+        'profile_orders' : Front_Profile_Orders
+
     }
 })
 </script>
