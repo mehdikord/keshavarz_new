@@ -12,7 +12,6 @@
                 dense
                 indicator-color="red"
                 active-color="red"
-
                 align="justify"
             >
                 <q-tab name="active" icon="fas fa-clock" label="سفارشات جاری">
@@ -28,6 +27,10 @@
             </q-tabs>
             </div>
             <div class="mt-3">
+
+                <tab_active v-if="tab === 'active'"></tab_active>
+
+
 
 
             </div>
@@ -48,12 +51,14 @@
 </style>
 <script>
 import {defineComponent} from 'vue'
+import Front_Profile_Orders_Tab_Active from "@/front/profile/includes/orders/Front_Profile_Orders_Tab_Active.vue";
 
 export default defineComponent({
     name: "Front_Profile_Orders",
     components:{
+        'tab_active' : Front_Profile_Orders_Tab_Active,
 
-    }
+    },
     data(){
         return{
             tab:'active'
