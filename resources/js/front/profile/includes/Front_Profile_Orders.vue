@@ -31,8 +31,6 @@
                 <tab_active v-if="tab === 'active'"></tab_active>
 
 
-
-
             </div>
 
         </div>
