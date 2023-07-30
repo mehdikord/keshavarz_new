@@ -1,6 +1,6 @@
 <template>
     <div class="row">
-        <div v-for="i in 2" class="col-lg-12 col-md-12 mt-3">
+        <div v-for="i in 2" class="col-lg-12 col-md-12 mt-4">
             <orders_single_active></orders_single_active>
         </div>
 

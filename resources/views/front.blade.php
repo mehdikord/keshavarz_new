@@ -12,9 +12,7 @@
     <link rel="stylesheet" href="{{asset('front/fonts/flaticon/flaticon.css')}}">
     <link rel="stylesheet" href="{{asset('front/fonts/icofont/icofont.min.css')}}">
     <link rel="stylesheet" href="{{asset('front/fonts/fontawesome/fontawesome.min.css')}}">
-{{--    <link rel="stylesheet" href="{{asset('front/vendor/venobox/venobox.min.css')}}">--}}
-{{--    <link rel="stylesheet" href="{{asset('front/vendor/slickslider/slick.min.css')}}">--}}
-{{--    <link rel="stylesheet" href="{{asset('front/vendor/niceselect/nice-select.min.css')}}">--}}
+
     <link rel="stylesheet" href="{{asset('front/vendor/bootstrap/bootstrap.min.css')}}">
     <link rel="stylesheet" href="{{asset('front/css/font.css')}}">
 
