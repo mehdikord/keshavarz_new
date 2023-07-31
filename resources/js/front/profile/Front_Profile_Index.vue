@@ -68,7 +68,6 @@
                                     <q-item-section class="menu-text">تنظیمات حساب کاربری</q-item-section>
                                 </q-item>
 
-
                             </q-list>
                         </div>
                     </div>
@@ -76,6 +75,7 @@
                 <div class="col-lg-9 p-1">
                     <profile_main v-if="this.$route.name === 'profile'"></profile_main>
                     <profile_orders v-if="this.$route.name === 'profile_orders'"></profile_orders>
+                    <profile_orders_details v-if="$route.name === 'profile_orders_detail'"></profile_orders_details>
                 </div>
 
             </div>
@@ -104,13 +104,15 @@ import Front_Profile_Orders_Index from "./includes/orders/Front_Profile_Orders_I
 import Front_Profile_Orders_Recent from "./includes/orders/Front_Profile_Orders_Recent.vue";
 import Front_Profile_Main from "./includes/Front_Profile_Main.vue";
 import Front_Profile_Orders from "./includes/Front_Profile_Orders.vue";
+import Front_Profile_Orders_Detail from "./includes/orders/Front_Profile_Orders_Detail.vue";
 
 export default defineComponent({
     name: "Front_Profile_Index",
     components:{
         'profile_auth' : Front_Profile_Auth,
         'profile_main' : Front_Profile_Main,
-        'profile_orders' : Front_Profile_Orders
+        'profile_orders' : Front_Profile_Orders,
+        'profile_orders_details' : Front_Profile_Orders_Detail,
 
     }
 })

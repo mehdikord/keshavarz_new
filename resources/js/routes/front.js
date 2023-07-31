@@ -31,6 +31,11 @@ const routes = [
         name : "profile_orders",
         component : Front_Profile_Index,
     },
+    {
+        path : "/profile/orders/:code",
+        name : "profile_orders_detail",
+        component : Front_Profile_Index,
+    },
 
 
 ]
