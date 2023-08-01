@@ -13,7 +13,13 @@ return new class extends Migration
     {
         Schema::create('media', function (Blueprint $table) {
             $table->id();
+            $table->string('admin_id')->nullable();
+            $table->string('title')->nullable();
+            $table->string('url')->nullable();
+            $table->string('file')->nullable();
+            $table->longText('description')->nullable();
             $table->timestamps();
+            $table->foreign('admin_id')->references('id')->on('admins')->cascadeOnUpdate()->nullOnDelete();
         });
     }
 

@@ -13,7 +13,12 @@ return new class extends Migration
     {
         Schema::create('user_coupons', function (Blueprint $table) {
             $table->id();
+            $table->unsignedBigInteger('user_id');
+            $table->unsignedBigInteger('coupon_id');
+            $table->boolean('is_active')->default(1);
             $table->timestamps();
+            $table->foreign('user_id')->references('id')->on('users')->cascadeOnUpdate()->cascadeOnDelete();
+            $table->foreign('coupon_id')->references('id')->on('coupons')->cascadeOnUpdate()->cascadeOnDelete();
         });
     }
 
