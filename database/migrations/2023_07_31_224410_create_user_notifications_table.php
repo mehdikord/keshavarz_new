@@ -13,7 +13,13 @@ return new class extends Migration
     {
         Schema::create('user_notifications', function (Blueprint $table) {
             $table->id();
+            $table->unsignedBigInteger('user_id');
+            $table->string('title')->nullable();
+            $table->text('text')->nullable();
+            $table->string('link')->nullable();
+            $table->boolean('is_read')->default(0);
             $table->timestamps();
+            $table->foreign('user_id')->references('id')->on('users')->cascadeOnUpdate()->cascadeOnDelete();
         });
     }
 

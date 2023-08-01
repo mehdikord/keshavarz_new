@@ -13,6 +13,13 @@ return new class extends Migration
     {
         Schema::create('system_logs', function (Blueprint $table) {
             $table->id();
+            $table->string('title')->nullable();
+            $table->string('level')->nullable();
+            $table->string('route')->nullable();
+            $table->longText('request')->nullable();
+            $table->longText('params')->nullable();
+            $table->integer('status')->nullable();
+            $table->longText('errors')->nullable();
             $table->timestamps();
         });
     }
