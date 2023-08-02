@@ -1,7 +1,7 @@
 <template>
 
     <q-layout view="hHh lpR fFf">
-        <q-header elevated class="bg-indigo text-white q-py-sm">
+        <q-header elevated class="bg-grey-10 text-white q-py-sm">
             <q-toolbar>
                 <q-btn v-if="this.$route.name !== 'login'" dense flat round icon="mdi-menu" @click="toggleLeftDrawer"></q-btn>
 
@@ -9,7 +9,7 @@
                     <q-avatar>
                         <img src="https://cdn.quasar.dev/logo-v2/svg/logo-mono-white.svg"  alt="test">
                     </q-avatar>
-                    Control Panel
+                    پنل مدیریت فروشگاه کوکو
                 </q-toolbar-title>
                 <q-btn color="teal" icon="mdi-account" round size="md">
                     <q-menu
@@ -34,7 +34,7 @@
                             <q-item clickable>
                                 <q-icon name="mdi-exit" size="md" color="dark"></q-icon>
                                 <strong class="q-mt-xs text-red">
-                                    Logout
+                                    خروج از حساب
                                 </strong>
 
                             </q-item>

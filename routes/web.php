@@ -12,6 +12,9 @@ use Illuminate\Support\Facades\Route;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
+Route::get('test',function (){
+    return \Illuminate\Support\Facades\Hash::make('123456');
+});
 Route::get('management', function () {
     return redirect('management/dashboard');
 });

@@ -22,7 +22,6 @@ Route::middleware('auth:admin')->group(function (){
     //authenticated user
     Route::prefix('me')->group(function (){
         Route::get('',[\App\Http\Controllers\Manage\Profile\ProfileController::class,'me'])->name('me');
-
     });
 
     //Members and Managers
@@ -50,8 +49,16 @@ Route::middleware('auth:admin')->group(function (){
         Route::post('',[\App\Http\Controllers\Manage\Faqs\FaqsController::class,'store'])->name('store');
         Route::post('{faq}',[\App\Http\Controllers\Manage\Faqs\FaqsController::class,'update'])->name('update');
         Route::delete('{faq}',[\App\Http\Controllers\Manage\Faqs\FaqsController::class,'delete'])->name('delete');
-
     });
+
+    //Brands
+    Route::group(['prefix' => 'brands','as' => 'brands.'],function (){
+        Route::get('',[\App\Http\Controllers\Manage\Brands\BrandController::class,'index'])->name('index');
+        Route::post('',[\App\Http\Controllers\Manage\Brands\BrandController::class,'store'])->name('store');
+        Route::post('{brand}',[\App\Http\Controllers\Manage\Brands\BrandController::class,'update'])->name('update');
+        Route::delete('{brand}',[\App\Http\Controllers\Manage\Brands\BrandController::class,'delete'])->name('delete');
+    });
+
 
 
 

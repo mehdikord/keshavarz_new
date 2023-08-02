@@ -91,16 +91,16 @@ App.mixin({
             }
         },
         NotifyCreate(){
-          this.NotifyMessage('the item created success','positive')
+          this.NotifyMessage('آیتم باموفقیت ایجاد شد','positive')
         },
         NotifyUpdate(){
-            this.NotifyMessage('the item updated success','positive')
+            this.NotifyMessage('آیتم باموفقیت ویرایش شد','positive')
         },
         NotifyDelete(){
-            this.NotifyMessage('the item deleted success','positive')
+            this.NotifyMessage('آیتم باموفقیت حذف شد','positive')
         },
         NotifyServerError(){
-            this.NotifyError('Server error');
+            this.NotifyError('خطای سرور !');
         },
         NotifySuccess(message){
             this.NotifyMessage(message,'positive')
