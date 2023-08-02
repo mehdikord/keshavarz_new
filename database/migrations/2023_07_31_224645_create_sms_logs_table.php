@@ -13,6 +13,8 @@ return new class extends Migration
     {
         Schema::create('sms_logs', function (Blueprint $table) {
             $table->id();
+            $table->string('phone')->nullable();
+            $table->longText('message')->nullable();
             $table->timestamps();
         });
     }

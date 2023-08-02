@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::table('users', function (Blueprint $table) {
             $table->unsignedBigInteger('province_id')->nullable()->after('id');
             $table->unsignedBigInteger('city_id')->nullable()->after('province_id');
-            $table->foreign('province_id')->on('provinces')->cascadeOnUpdate()->nullOnDelete();
+            $table->foreign('province_id')->references('id')->on('provinces')->cascadeOnUpdate()->nullOnDelete();
             $table->foreign('city_id')->references('id')->on('cities')->cascadeOnUpdate()->nullOnDelete();
         });
     }

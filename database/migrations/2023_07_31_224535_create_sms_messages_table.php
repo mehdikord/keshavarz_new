@@ -13,6 +13,10 @@ return new class extends Migration
     {
         Schema::create('sms_messages', function (Blueprint $table) {
             $table->id();
+            $table->string('code')->nullable();
+            $table->longText('message')->nullable();
+            $table->boolean('is_active')->default(1);
+            $table->bigInteger('used')->default(0);
             $table->timestamps();
         });
     }

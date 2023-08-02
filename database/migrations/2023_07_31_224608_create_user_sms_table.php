@@ -13,7 +13,10 @@ return new class extends Migration
     {
         Schema::create('user_sms', function (Blueprint $table) {
             $table->id();
+            $table->unsignedBigInteger('user_id');
+            $table->longText('message')->nullable();
             $table->timestamps();
+            $table->foreign('user_id')->references('id')->on('users')->cascadeOnUpdate()->cascadeOnDelete();
         });
     }
 

@@ -13,6 +13,8 @@ return new class extends Migration
     {
         Schema::create('shop_contents', function (Blueprint $table) {
             $table->id();
+            $table->string('code')->nullable();
+            $table->longText('content')->nullable();
             $table->timestamps();
         });
     }
