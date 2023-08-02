@@ -5,7 +5,6 @@
             <q-btn @click="dialog_add=true" color="deep-orange-7" icon="mdi-plus" push class="float-right" label="افزودن آیتم"></q-btn>
             <q-dialog
                 v-model="dialog_add"
-
                 transition-show="scale"
                 transition-hide="scale"
                 position="top"
@@ -15,15 +14,26 @@
                         <div class="text-h6">افزودن آیتم جدید</div>
                     </q-card-section>
                     <q-card-section >
-                        <q-input v-model="add.name"  lazy-rules type="text" outlined label="عنوان برند" color="primary" class="q-my-xs" :error="this.MixinValidationCheck(errors,'title')">
+                        <q-input v-model="add.name"  lazy-rules type="text" outlined label="عنوان برند" color="primary" class="q-my-xs" :error="this.MixinValidationCheck(errors,'name')">
                             <template v-slot:error>
-                                <Error_Validation :errors="this.MixinValidation(errors,'title')"></Error_Validation>
+                                <Error_Validation :errors="this.MixinValidation(errors,'name')"></Error_Validation>
                             </template>
                         </q-input>
 
-                        <q-input v-model="add.description"  lazy-rules type="textarea" outlined label="توضیحات" color="primary" class="q-my-xs" :error="this.MixinValidationCheck(errors,'answer')">
+                        <q-file class="q-mb-md" outlined bottom-slots v-model="add.image" label="انتخاب تصویر" counter>
+                            <template v-slot:prepend>
+                                <q-icon name="mdi-image" @click.stop.prevent />
+                            </template>
+                            <template v-slot:append>
+                                <q-icon name="mdi-close" @click.stop.prevent="add.image = null" class="cursor-pointer" />
+                            </template>
+                        </q-file>
+
+
+
+                        <q-input v-model="add.description"  lazy-rules type="textarea" outlined label="توضیحات" color="primary" class="q-my-xs" :error="this.MixinValidationCheck(errors,'description')">
                             <template v-slot:error>
-                                <Error_Validation :errors="this.MixinValidation(errors,'answer')"></Error_Validation>
+                                <Error_Validation :errors="this.MixinValidation(errors,'description')"></Error_Validation>
                             </template>
                         </q-input>
 
@@ -144,33 +154,25 @@ export default {
                     sortable: true
                 },
                 {
-                    name:'title',
+                    name:'name',
                     required: true,
-                    label: 'Title',
+                    label: 'عنوان برند',
                     align: 'left',
-                    field: row => row.title,
+                    field: row => row.name,
                     sortable: true
                 },
                 {
-                    name:'question',
+                    name:'description',
                     required: true,
-                    label: 'Question',
+                    label: 'توضیحات',
                     align: 'left',
-                    field: row => row.question,
-                    sortable: true
-                },
-                {
-                    name:'answer',
-                    required: true,
-                    label: 'Answer',
-                    align: 'left',
-                    field: row => row.answer,
+                    field: row => row.description,
                     sortable: true
                 },
                 {
                     name:'tools',
                     required: true,
-                    label: 'Tools',
+                    label: 'تنظیمات',
                     align: 'left',
 
                 },
@@ -179,15 +181,14 @@ export default {
     },
     methods:{
         ...mapActions([
-            "FaqsIndex",
-            "FaqsStore",
-            "FaqsDelete",
-            "FaqsEdit"
+            "BrandsIndex",
+            "BrandsStore",
+            "BrandsDelete",
+            "BrandsEdit"
 
         ]),
         GetItems(){
-
-            this.FaqsIndex().then(res => {
+            this.BrandsIndex().then(res => {
                 this.items = res.data.result;
                 this.loading_get=false;
             }).catch(error => {
@@ -196,7 +197,7 @@ export default {
         },
         AddItem(){
             this.loading_add=true;
-            this.FaqsStore(this.add).then(res => {
+            this.BrandsStore(this.add).then(res => {
                 this.items.unshift(res.data.result);
                 this.loading_add=false;
                 this.dialog_add=false;
@@ -208,12 +209,11 @@ export default {
                     return this.errors = error.response.data
                 }
                 return  this.NotifyServerError();
-
             })
         },
         EditItem(item){
             this.loading_add=true;
-            this.FaqsEdit(item).then(res => {
+            this.BrandsEdit(item).then(res => {
                 this.loading_add=false;
                 this.items = this.items.filter(item_get =>{
                     if (item_get.id === item.id){
@@ -234,8 +234,8 @@ export default {
         },
         DeleteItem (id) {
             this.$q.dialog({
-                title: 'Confirm',
-                message: 'Are you sure to delete this item?',
+                title: 'هشدار !',
+                message: 'آیا مطمئن هستید آیتم مورد نظر حذف شود ؟',
 
                 ok: {
                     push: true,
@@ -247,7 +247,7 @@ export default {
                 },
                 persistent: true
             }).onOk(() => {
-                this.FaqsDelete(id).then(res => {
+                this.BrandsDelete(id).then(res => {
                     this.items = this.items.filter(item =>{
                         return item.id !== id;
                     })

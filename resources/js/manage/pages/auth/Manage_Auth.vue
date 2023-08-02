@@ -94,7 +94,7 @@ export default {
 
 .top-img{
 
-    width: 320px !important;
+    width: 130px !important;
 
 }
 

@@ -57,6 +57,7 @@ class UsersRepository implements UsersInterface
             'name' => $request->name,
             'email' => $request->email,
             'phone' => $request->phone,
+            'is_active' => true,
             'password' => Hash::make($request->password),
         ]);
         return response_success($item);
