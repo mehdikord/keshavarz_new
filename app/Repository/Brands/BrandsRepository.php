@@ -17,7 +17,7 @@ class BrandsRepository implements BrandsInterface
     {
         $image=null;
         if ($request->file('image')){
-            $image = (new MediaService())->store_image_resize($request->file('image'),500,500,'brands');
+            $image = (new MediaService())->store_image($request->file('image'),'brands');
         }
 
         $item = Brand::create([
@@ -35,6 +35,15 @@ class BrandsRepository implements BrandsInterface
             'description' => $request->description,
         ]);
         return response_success($item);
+    }
+
+    public function update_image($request,$item)
+    {
+        if ((new MediaService)->update_model_image($request,$item,'image','brands')){
+
+            return response_success($item);
+        }
+           return response_custom_error('image file update error');
     }
 
     public function delete($item)

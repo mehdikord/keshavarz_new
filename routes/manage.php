@@ -57,6 +57,7 @@ Route::middleware('auth:admin')->group(function (){
         Route::post('',[\App\Http\Controllers\Manage\Brands\BrandController::class,'store'])->name('store');
         Route::post('{brand}',[\App\Http\Controllers\Manage\Brands\BrandController::class,'update'])->name('update');
         Route::delete('{brand}',[\App\Http\Controllers\Manage\Brands\BrandController::class,'delete'])->name('delete');
+        Route::post('image/{brand}',[\App\Http\Controllers\Manage\Brands\BrandController::class,'update_image'])->name('update_image');
     });
 
 

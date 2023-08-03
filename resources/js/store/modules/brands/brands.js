@@ -45,6 +45,15 @@ export default {
                 })
             } )
         },
+        BrandsDeleteImage(_,item){
+            return new Promise((resolve,reject) => {
+                axios.post('brands/image/'+item).then((result) => {
+                    resolve(result);
+                }).catch(error => {
+                    reject(error);
+                })
+            } )
+        },
 
     }
 
