@@ -138,7 +138,7 @@
                                 </div>
                                 <div class="q-mt-sm q-gutter-sm">
                                     <q-btn glossy icon="mdi-pen" color="indigo" >ویرایش تصویر</q-btn>
-                                    <q-btn glossy icon="mdi-delete-forever" color="red" >حذف تصویر</q-btn>
+                                    <q-btn glossy icon="mdi-delete-forever" @click="DeleteItemImage(props.row.id)" color="red" >حذف تصویر</q-btn>
                                 </div>
 
                             </q-card-section>
@@ -279,7 +279,6 @@ export default {
                     return this.errors = error.response.data
                 }
                 return  this.NotifyServerError();
-
             })
         },
         DeleteItem (id) {
@@ -316,13 +315,15 @@ export default {
             this.BrandsDeleteImage(id).then( res => {
                 this.items = this.items.filter(item_get =>{
                     if (item_get.id === id){
-                        item_get=res.data.result
+                        item_get.image=null
                     }
                     return item_get;
                 })
-
+                this.dialog_edit_image[id]=false;
+                return this.NotifyDelete();
             }).catch(error => {
 
+                return  this.NotifyServerError();
 
             })
         },
