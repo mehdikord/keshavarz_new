@@ -178,6 +178,7 @@ export default {
             errors:[],
             dialog_add:false,
             dialog_edit:[],
+            image_edit:[],
             dialog_edit_image:[],
             add:{
                 name:null,
