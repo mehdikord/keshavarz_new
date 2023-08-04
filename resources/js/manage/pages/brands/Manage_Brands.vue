@@ -233,6 +233,7 @@ export default {
             "BrandsIndex",
             "BrandsStore",
             "BrandsDelete",
+            "BrandsDeleteImage",
             "BrandsEdit"
 
         ]),
@@ -312,33 +313,17 @@ export default {
             })
         },
         DeleteItemImage (id) {
-            this.$q.dialog({
-                title: 'هشدار !',
-                message: 'آیا مطمئن هستید تصویر آیتم مورد نظر حذف شود ؟',
-
-                ok: {
-                    push: true,
-                    color:'green-9',
-                },
-                cancel: {
-                    push: true,
-                    color: 'negative'
-                },
-                persistent: true
-            }).onOk(() => {
-                this.BrandsDelete(id).then(res => {
-                    this.items = this.items.filter(item =>{
-                        return item.id !== id;
-                    })
-                    return this.NotifyDelete();
-                }).catch(error => {
-                    return  this.NotifyServerError();
+            this.BrandsDeleteImage(id).then( res => {
+                this.items = this.items.filter(item_get =>{
+                    if (item_get.id === id){
+                        item_get=res.data.result
+                    }
+                    return item_get;
                 })
 
-            }).onCancel(() => {
-                // console.log('>>>> Cancel')
-            }).onDismiss(() => {
-                // console.log('I am triggered on both OK and Cancel')
+            }).catch(error => {
+
+
             })
         },
 
