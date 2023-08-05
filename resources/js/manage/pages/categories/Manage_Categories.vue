@@ -14,11 +14,43 @@
                         <div class="text-h6">افزودن آیتم جدید</div>
                     </q-card-section>
                     <q-card-section >
-                        <q-input v-model="add.name"  lazy-rules type="text" outlined label="عنوان برند" color="primary" class="q-my-xs" :error="this.MixinValidationCheck(errors,'name')">
+                        <q-input v-model="add.name"  lazy-rules type="text" outlined label="نام دسته بندی" color="primary" class="q-my-xs" :error="this.MixinValidationCheck(errors,'name')">
                             <template v-slot:error>
                                 <Error_Validation :errors="this.MixinValidation(errors,'name')"></Error_Validation>
                             </template>
                         </q-input>
+                        {{add.parent_id}}
+                        <q-select
+                            class="q-mb-md"
+                            @click="Categories_Select()"
+                            outlined
+                            transition-show="flip-up"
+                            transition-hide="flip-down"
+                            v-model="add.parent_id"
+                            use-input
+                            label="انتخاب سرگروه"
+                            :options="categories_option"
+                            emit-value
+                            behavior="menu"
+                        >
+                            <template v-slot:no-option>
+                                <q-item>
+                                    <q-item-section class="text-grey">
+                                        No results
+                                    </q-item-section>
+                                </q-item>
+                            </template>
+                            <template v-slot:option="scope">
+                                <q-item v-bind="scope.itemProps">
+                                    <q-item-section avatar>
+                                        <Global_Show_Image :image="scope.opt.image"></Global_Show_Image>
+                                    </q-item-section>
+                                    <q-item-section>
+                                        <q-item-label>{{ scope.opt.name }}</q-item-label>
+                                    </q-item-section>
+                                </q-item>
+                            </template>
+                        </q-select>
 
                         <q-file class="q-mb-md" outlined bottom-slots v-model="add.image" label="انتخاب تصویر" counter>
                             <template v-slot:prepend>
@@ -28,8 +60,6 @@
                                 <q-icon name="mdi-close" @click.stop.prevent="add.image = null" class="cursor-pointer" />
                             </template>
                         </q-file>
-
-
 
                         <q-input v-model="add.description"  lazy-rules type="textarea" outlined label="توضیحات" color="primary" class="q-my-xs" :error="this.MixinValidationCheck(errors,'description')">
                             <template v-slot:error>
@@ -168,7 +198,7 @@
 import {mapActions} from "vuex";
 
 export default {
-    name: "Manage_Brands",
+    name: "Manage_Categories",
     created() {
         this.GetItems();
 
@@ -183,8 +213,10 @@ export default {
             dialog_add:false,
             dialog_edit:[],
             dialog_edit_image:[],
+            categories_option:[],
             add:{
                 name:null,
+                parent_id:null,
                 image:null,
                 description:null,
 
@@ -235,16 +267,17 @@ export default {
     },
     methods:{
         ...mapActions([
-            "BrandsIndex",
-            "BrandsStore",
-            "BrandsDelete",
-            "BrandsDeleteImage",
-            "BrandsEdit",
-            "BrandsEditImage"
+            "CategoriesIndex",
+            "CategoriesStore",
+            "CategoriesDelete",
+            "CategoriesDeleteImage",
+            "CategoriesEdit",
+            "CategoriesEditImage",
+            "CategoriesSelect"
 
         ]),
         GetItems(){
-            this.BrandsIndex().then(res => {
+            this.CategoriesIndex().then(res => {
                 this.items = res.data.result;
                 this.loading_get=false;
             }).catch(error => {
@@ -253,7 +286,7 @@ export default {
         },
         AddItem(){
             this.loading_add=true;
-            this.BrandsStore(this.add).then(res => {
+            this.CategoriesStore(this.add).then(res => {
                 this.items.unshift(res.data.result);
                 this.loading_add=false;
                 this.dialog_add=false;
@@ -269,7 +302,7 @@ export default {
         },
         EditItem(item){
             this.loading_add=true;
-            this.BrandsEdit(item).then(res => {
+            this.CategoriesEdit(item).then(res => {
                 this.loading_add=false;
                 this.items = this.items.filter(item_get =>{
                     if (item_get.id === item.id){
@@ -289,7 +322,7 @@ export default {
         },
         EditImage(id){
             this.loading_image=true;
-            this.BrandsEditImage({id:id,image:this.edit_image[id]}).then(res => {
+            this.CategoriesEditImage({id:id,image:this.edit_image[id]}).then(res => {
                 this.items = this.items.filter(item_get =>{
                     if (item_get.id === id){
                         item_get.image=res.data.result.image
@@ -323,7 +356,7 @@ export default {
                 },
                 persistent: true
             }).onOk(() => {
-                this.BrandsDelete(id).then(res => {
+                this.CategoriesDelete(id).then(res => {
                     this.items = this.items.filter(item =>{
                         return item.id !== id;
                     })
@@ -339,7 +372,7 @@ export default {
             })
         },
         DeleteItemImage (id) {
-            this.BrandsDeleteImage(id).then( res => {
+            this.CategoriesDeleteImage(id).then( res => {
                 this.items = this.items.filter(item_get =>{
                     if (item_get.id === id){
                         item_get.image=null
@@ -354,6 +387,14 @@ export default {
 
             })
         },
+        Categories_Select(){
+            this.CategoriesSelect().then(res => {
+                this.categories_option = res;
+            }).catch(e => {
+                return  this.NotifyServerError();
+
+            })
+        }
 
     }
 }

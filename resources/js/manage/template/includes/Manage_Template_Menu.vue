@@ -81,7 +81,7 @@ export default {
                         },
                         {
                             title : "دسته بندی ها",
-                            link : "users_members",
+                            link : "categories",
                             icon  : "mdi-bluetooth",
                         },
 

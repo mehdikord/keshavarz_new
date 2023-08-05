@@ -65,6 +65,6 @@ export default defineComponent({
           show : false,
       }
     },
-    props :['image']
+    props :['image','width']
 })
 </script>
