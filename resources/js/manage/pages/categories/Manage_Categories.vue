@@ -14,11 +14,45 @@
                         <div class="text-h6">افزودن آیتم جدید</div>
                     </q-card-section>
                     <q-card-section >
-                        <q-input v-model="add.name"  lazy-rules type="text" outlined label="عنوان برند" color="primary" class="q-my-xs" :error="this.MixinValidationCheck(errors,'name')">
+                        <q-input v-model="add.name"  lazy-rules type="text" outlined label="نام دسته بندی" color="primary" class="q-my-xs" :error="this.MixinValidationCheck(errors,'name')">
                             <template v-slot:error>
                                 <Error_Validation :errors="this.MixinValidation(errors,'name')"></Error_Validation>
                             </template>
                         </q-input>
+
+                        <q-select
+                            class="q-mb-md"
+                            outlined
+                            transition-show="flip-up"
+                            transition-hide="flip-down"
+                            v-model="add.parent_id"
+                            use-input
+                            label="انتخاب سرگروه"
+                            :options="categories_option"
+                            emit-value
+                            map-options
+                            @filter="Filter_Select_Category"
+                            :loading="loading_select_category"
+                            behavior="menu"
+                        >
+                            <template v-slot:no-option>
+                                <q-item>
+                                    <q-item-section class="text-grey">
+                                        No results
+                                    </q-item-section>
+                                </q-item>
+                            </template>
+                            <template v-slot:option="scope">
+                                <q-item v-bind="scope.itemProps">
+                                    <q-item-section avatar>
+                                        <Global_Show_Image :image="scope.opt.image"></Global_Show_Image>
+                                    </q-item-section>
+                                    <q-item-section>
+                                        <q-item-label>{{ scope.opt.label }}</q-item-label>
+                                    </q-item-section>
+                                </q-item>
+                            </template>
+                        </q-select>
 
                         <q-file class="q-mb-md" outlined bottom-slots v-model="add.image" label="انتخاب تصویر" counter>
                             <template v-slot:prepend>
@@ -28,8 +62,6 @@
                                 <q-icon name="mdi-close" @click.stop.prevent="add.image = null" class="cursor-pointer" />
                             </template>
                         </q-file>
-
-
 
                         <q-input v-model="add.description"  lazy-rules type="textarea" outlined label="توضیحات" color="primary" class="q-my-xs" :error="this.MixinValidationCheck(errors,'description')">
                             <template v-slot:error>
@@ -61,12 +93,17 @@
                 <template v-slot:loading>
                     <Global_Loading></Global_Loading>
                 </template>
+
                 <template v-slot:body-cell-image="props">
                     <q-td :props="props">
                         <Global_Show_Image :image="props.row.image"></Global_Show_Image>
                     </q-td>
                 </template>
-
+                <template v-slot:body-cell-parent="props">
+                    <q-td :props="props">
+                        <span v-if="props.row.parent" class="text-red">{{props.row.parent.name}}</span>
+                    </q-td>
+                </template>
                 <template v-slot:body-cell-tools="props">
                     <q-td :props="props">
                         <q-btn @click="dialog_edit[props.row.id] = true;errors=[]" glossy color="primary" size="sm" icon="mdi-pen" class="q-mx-xs">
@@ -96,6 +133,41 @@
                                         <Error_Validation :errors="this.MixinValidation(errors,'name')"></Error_Validation>
                                     </template>
                                 </q-input>
+
+                                <q-select
+                                    class="q-mb-md"
+                                    outlined
+                                    transition-show="flip-up"
+                                    transition-hide="flip-down"
+                                    v-model="props.row.parent_id"
+                                    use-input
+                                    label="انتخاب سرگروه"
+                                    :options="categories_option"
+                                    emit-value
+                                    map-options
+                                    :option-disable="opt => Object(opt) === opt ? opt.value === props.row.id : true"
+                                    @filter="Filter_Select_Category"
+                                    :loading="loading_select_category"
+                                    behavior="menu"
+                                >
+                                    <template v-slot:no-option>
+                                        <q-item>
+                                            <q-item-section class="text-grey">
+                                                No results
+                                            </q-item-section>
+                                        </q-item>
+                                    </template>
+                                    <template v-slot:option="scope">
+                                        <q-item v-bind="scope.itemProps">
+                                            <q-item-section avatar>
+                                                <Global_Show_Image :image="scope.opt.image"></Global_Show_Image>
+                                            </q-item-section>
+                                            <q-item-section>
+                                                <q-item-label>{{ scope.opt.label }}</q-item-label>
+                                            </q-item-section>
+                                        </q-item>
+                                    </template>
+                                </q-select>
 
                                 <q-input v-model="props.row.description"  lazy-rules type="textarea" outlined label="توضیحات" color="primary" class="q-my-xs" :error="this.MixinValidationCheck(errors,'description')">
                                     <template v-slot:error>
@@ -168,10 +240,13 @@
 import {mapActions} from "vuex";
 
 export default {
-    name: "Manage_Brands",
+    name: "Manage_Categories",
     created() {
         this.GetItems();
 
+    },
+    mounted() {
+        this.Categories_Select();
     },
     data(){
         return{
@@ -179,13 +254,15 @@ export default {
             loading_get:true,
             loading_add:false,
             loading_image:false,
+            loading_select_category:false,
             errors:[],
             dialog_add:false,
             dialog_edit:[],
-            image_edit:[],
             dialog_edit_image:[],
+            categories_option:[],
             add:{
                 name:null,
+                parent_id:null,
                 image:null,
                 description:null,
 
@@ -217,6 +294,14 @@ export default {
                     sortable: true
                 },
                 {
+                    name:'parent',
+                    required: true,
+                    label: 'سر گروه',
+                    align: 'left',
+                    field: row => row.parent,
+                    sortable: true
+                },
+                {
                     name:'description',
                     required: true,
                     label: 'توضیحات',
@@ -236,16 +321,17 @@ export default {
     },
     methods:{
         ...mapActions([
-            "BrandsIndex",
-            "BrandsStore",
-            "BrandsDelete",
-            "BrandsDeleteImage",
-            "BrandsEdit",
-            "BrandsEditImage"
+            "CategoriesIndex",
+            "CategoriesStore",
+            "CategoriesDelete",
+            "CategoriesDeleteImage",
+            "CategoriesEdit",
+            "CategoriesEditImage",
+            "CategoriesSelectNoParent"
 
         ]),
         GetItems(){
-            this.BrandsIndex().then(res => {
+            this.CategoriesIndex().then(res => {
                 this.items = res.data.result;
                 this.loading_get=false;
             }).catch(error => {
@@ -254,7 +340,7 @@ export default {
         },
         AddItem(){
             this.loading_add=true;
-            this.BrandsStore(this.add).then(res => {
+            this.CategoriesStore(this.add).then(res => {
                 this.items.unshift(res.data.result);
                 this.loading_add=false;
                 this.dialog_add=false;
@@ -270,7 +356,7 @@ export default {
         },
         EditItem(item){
             this.loading_add=true;
-            this.BrandsEdit(item).then(res => {
+            this.CategoriesEdit(item).then(res => {
                 this.loading_add=false;
                 this.items = this.items.filter(item_get =>{
                     if (item_get.id === item.id){
@@ -290,7 +376,7 @@ export default {
         },
         EditImage(id){
             this.loading_image=true;
-            this.BrandsEditImage({id:id,image:this.edit_image[id]}).then(res => {
+            this.CategoriesEditImage({id:id,image:this.edit_image[id]}).then(res => {
                 this.items = this.items.filter(item_get =>{
                     if (item_get.id === id){
                         item_get.image=res.data.result.image
@@ -324,7 +410,7 @@ export default {
                 },
                 persistent: true
             }).onOk(() => {
-                this.BrandsDelete(id).then(res => {
+                this.CategoriesDelete(id).then(res => {
                     this.items = this.items.filter(item =>{
                         return item.id !== id;
                     })
@@ -340,7 +426,7 @@ export default {
             })
         },
         DeleteItemImage (id) {
-            this.BrandsDeleteImage(id).then( res => {
+            this.CategoriesDeleteImage(id).then( res => {
                 this.items = this.items.filter(item_get =>{
                     if (item_get.id === id){
                         item_get.image=null
@@ -355,8 +441,28 @@ export default {
 
             })
         },
+        Categories_Select(){
+            this.loading_select_category = true;
+            this.CategoriesSelectNoParent().then(res => {
+                this.categories_option = res;
+                this.loading_select_category=false;
+            }).catch(e => {
+                return  this.NotifyServerError();
 
-    }
+            })
+        },
+        Filter_Select_Category (val, update, abort) {
+            update(() => {
+                if (val){
+                    this.categories_option =  this.categories_option.filter(item => {
+                        return item.label !== null && item.label.match(val)
+                    })
+                }else {
+                    this.Categories_Select();
+                }
+            })
+        }
+    },
 }
 </script>
 

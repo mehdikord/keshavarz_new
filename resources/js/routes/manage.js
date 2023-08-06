@@ -6,6 +6,8 @@ import Manage_Users_Managers from "@/manage/pages/users/Manage_Users_Managers.vu
 import Manage_Users_Members from "../manage/pages/users/Manage_Users_Members.vue";
 import Manage_Faqs from "@/manage/pages/faqs/Manage_Faqs.vue";
 import Manage_Brands from "../manage/pages/brands/Manage_Brands.vue";
+import Manage_Categories from "../manage/pages/categories/Manage_Categories.vue";
+import Manage_Products from "../manage/pages/products/Manage_Products.vue";
 
 const routes = [
 
@@ -36,8 +38,14 @@ const routes = [
     {
         path : "/management/categories",
         name : "categories",
-        component : Manage_Brands,
+        component : Manage_Categories ,
         meta : { title : "دسته بندی ها"}
+    },
+    {
+        path : "/management/products",
+        name : "products",
+        component : Manage_Products ,
+        meta : { title : "محصولات"}
     },
     {
         path : "/management/users/members",

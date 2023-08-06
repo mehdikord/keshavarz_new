@@ -60,6 +60,15 @@ Route::middleware('auth:admin')->group(function (){
         Route::post('image/{brand}',[\App\Http\Controllers\Manage\Brands\BrandController::class,'update_image'])->name('update_image');
     });
 
+    //Brands
+    Route::group(['prefix' => 'categories','as' => 'categories.'],function (){
+        Route::get('',[\App\Http\Controllers\Manage\Categories\CategoryController::class,'index'])->name('index');
+        Route::post('',[\App\Http\Controllers\Manage\Categories\CategoryController::class,'store'])->name('store');
+        Route::post('{category}',[\App\Http\Controllers\Manage\Categories\CategoryController::class,'update'])->name('update');
+        Route::delete('{category}',[\App\Http\Controllers\Manage\Categories\CategoryController::class,'delete'])->name('delete');
+        Route::post('image/{category}',[\App\Http\Controllers\Manage\Categories\CategoryController::class,'update_image'])->name('update_image');
+    });
+
 
 
 
