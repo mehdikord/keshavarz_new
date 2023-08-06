@@ -65,6 +65,19 @@ export default {
                 })
             } )
         },
+        BrandsSelect(){
+            return new Promise((resolve,reject) => {
+                axios.get('brands').then((result) => {
+                    let data = [];
+                    result.data.result.forEach(item => {
+                        data.push({label : item.name , image:item.image , value : item.id})
+                    })
+                    resolve(data);
+                }).catch(error => {
+                    reject(error);
+                })
+            } )
+        },
 
 
     }

@@ -60,7 +60,7 @@ Route::middleware('auth:admin')->group(function (){
         Route::post('image/{brand}',[\App\Http\Controllers\Manage\Brands\BrandController::class,'update_image'])->name('update_image');
     });
 
-    //Brands
+    //Categories
     Route::group(['prefix' => 'categories','as' => 'categories.'],function (){
         Route::get('',[\App\Http\Controllers\Manage\Categories\CategoryController::class,'index'])->name('index');
         Route::post('',[\App\Http\Controllers\Manage\Categories\CategoryController::class,'store'])->name('store');
@@ -69,6 +69,12 @@ Route::middleware('auth:admin')->group(function (){
         Route::post('image/{category}',[\App\Http\Controllers\Manage\Categories\CategoryController::class,'update_image'])->name('update_image');
     });
 
+    Route::group(['prefix' => 'products','as' => 'products.'],function (){
+        Route::get('',[\App\Http\Controllers\Manage\Products\ProductController::class,'index'])->name('index');
+        Route::post('',[\App\Http\Controllers\Manage\Products\ProductController::class,'store'])->name('store');
+        Route::post('{product}',[\App\Http\Controllers\Manage\Products\ProductController::class,'update'])->name('update');
+        Route::delete('{product}',[\App\Http\Controllers\Manage\Products\ProductController::class,'delete'])->name('delete');
+    });
 
 
 

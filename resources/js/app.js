@@ -135,6 +135,25 @@ App.mixin({
 
 // ++++++++++++++++++++
 
+// ++++++++++ Global Filters ++++++++++
+
+App.config.globalProperties.$filters = {
+    // date(value,format) {
+    //     return moment(value).format(format='jYYYY/jM/jD')
+    // },
+    numbers(number){
+        return new Intl.NumberFormat().format(number);
+    },
+    short_text(text,len = 20){
+        var extra='';
+        if (text.length > len){
+            extra = "..."
+        }
+        return text.substring(0,len) + extra;
+    }
+}
+
+// ++++++++++++++++++++
 
 
 App.mount('#app')

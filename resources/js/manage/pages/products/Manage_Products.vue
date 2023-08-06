@@ -17,7 +17,7 @@
                     </q-card-section>
                     <q-card-section >
                         <div class="row">
-                            <div class="col-md-6 q-px-md">
+                            <div class="col-md-12 q-px-md">
                                 <q-input v-model="add.name"  lazy-rules type="text" outlined label="نام محصول" color="primary" :error="this.MixinValidationCheck(errors,'name')">
                                     <template v-slot:error>
                                         <Error_Validation :errors="this.MixinValidation(errors,'name')"></Error_Validation>
@@ -30,7 +30,7 @@
                                     outlined
                                     transition-show="flip-up"
                                     transition-hide="flip-down"
-                                    v-model="add.parent_id"
+                                    v-model="add.category_id"
                                     use-input
                                     label="انتخاب دسته بندی محصول"
                                     :options="categories_option"
@@ -39,6 +39,7 @@
                                     @filter="Filter_Select_Category"
                                     :loading="loading_select_category"
                                     behavior="menu"
+                                    :error="this.MixinValidationCheck(errors,'category_id')"
                                 >
                                     <template v-slot:no-option>
                                         <q-item>
@@ -56,6 +57,49 @@
                                                 <q-item-label>{{ scope.opt.label }}</q-item-label>
                                             </q-item-section>
                                         </q-item>
+                                    </template>
+                                    <template v-slot:error>
+                                        <Error_Validation :errors="this.MixinValidation(errors,'category_id')"></Error_Validation>
+                                    </template>
+                                </q-select>
+                            </div>
+                            <div class="col-md-6 q-px-md">
+                                <q-select
+                                    class="q-mb-md"
+                                    outlined
+                                    transition-show="flip-up"
+                                    transition-hide="flip-down"
+                                    v-model="add.brand_id"
+                                    use-input
+                                    label="انتخاب برند محصول"
+                                    :options="brands_option"
+                                    emit-value
+                                    map-options
+                                    @filter="Filter_Select_Brand"
+                                    :loading="loading_select_brand"
+                                    behavior="menu"
+                                    :error="this.MixinValidationCheck(errors,'brand_id')"
+
+                                >
+                                    <template v-slot:no-option>
+                                        <q-item>
+                                            <q-item-section class="text-grey">
+                                                No results
+                                            </q-item-section>
+                                        </q-item>
+                                    </template>
+                                    <template v-slot:option="scope">
+                                        <q-item v-bind="scope.itemProps">
+                                            <q-item-section avatar>
+                                                <Global_Show_Image :image="scope.opt.image"></Global_Show_Image>
+                                            </q-item-section>
+                                            <q-item-section>
+                                                <q-item-label>{{ scope.opt.label }}</q-item-label>
+                                            </q-item-section>
+                                        </q-item>
+                                    </template>
+                                    <template v-slot:error>
+                                        <Error_Validation :errors="this.MixinValidation(errors,'brand_id')"></Error_Validation>
                                     </template>
                                 </q-select>
                             </div>
@@ -175,7 +219,6 @@
                                 >
                                 </q-select>
                             </div>
-
                         </div>
 
                     </q-card-section>
@@ -201,17 +244,37 @@
                 <template v-slot:loading>
                     <Global_Loading></Global_Loading>
                 </template>
-
                 <template v-slot:body-cell-image="props">
                     <q-td :props="props">
-                        <Global_Show_Image :image="props.row.image"></Global_Show_Image>
+                        image
                     </q-td>
                 </template>
-                <template v-slot:body-cell-parent="props">
+                <template v-slot:body-cell-category="props">
                     <q-td :props="props">
-                        <span v-if="props.row.parent" class="text-red">{{props.row.parent.name}}</span>
+                        <span v-if="props.row.category" class="text-red">{{props.row.category.name}}</span>
                     </q-td>
                 </template>
+                <template v-slot:body-cell-brand="props">
+                    <q-td :props="props">
+                        <span v-if="props.row.brand" class="text-red">{{props.row.brand.name}}</span>
+                    </q-td>
+                </template>
+                <template v-slot:body-cell-price="props">
+                    <q-td :props="props">
+                        <strong class="text-green-7">{{this.$filters.numbers(props.row.price)}}</strong>
+                    </q-td>
+                </template>
+                <template v-slot:body-cell-sale="props">
+                    <q-td :props="props">
+                        <strong v-if="props.row.sale" class="text-red">{{this.$filters.numbers(props.row.sale)}}</strong>
+                    </q-td>
+                </template>
+                <template v-slot:body-cell-qunatity="props">
+                   <q-chip color="red" size="md">
+                       {{props.row.qunatity}}
+                   </q-chip>
+                </template>
+
                 <template v-slot:body-cell-tools="props">
                     <q-td :props="props">
                         <q-btn @click="dialog_edit[props.row.id] = true;errors=[]" glossy color="primary" size="sm" icon="mdi-pen" class="q-mx-xs">
@@ -346,7 +409,6 @@
 
 <script>
 import {mapActions} from "vuex";
-import {ad} from "../../../../../public/build/assets/quasar-34768482";
 
 export default {
     name: "Manage_Products",
@@ -356,6 +418,7 @@ export default {
     },
     mounted() {
         this.Categories_Select();
+        this.Brand_Select();
     },
     data(){
         return{
@@ -364,14 +427,17 @@ export default {
             loading_add:false,
             loading_image:false,
             loading_select_category:false,
+            loading_select_brand:false,
             errors:[],
             dialog_add:false,
             dialog_edit:[],
             dialog_edit_image:[],
             categories_option:[],
+            brands_option:[],
             add:{
                 name:null,
                 category_id:null,
+                brand_id:null,
                 short_description:null,
                 long_description:null,
                 price:null,
@@ -382,43 +448,59 @@ export default {
             edit_image:[],
             item_columns:[
                 {
-                    name:'id',
-                    required: true,
-                    label: 'ID',
-                    align: 'left',
-                    field: row => row.id,
-                    sortable: true
-                },
-                {
                     name:'image',
                     required: true,
                     label: 'تصویر',
                     align: 'left',
-                    field: row => row.image,
+                    field: row => row.images,
                     sortable: false
                 },
                 {
                     name:'name',
                     required: true,
-                    label: 'عنوان برند',
+                    label: 'نام محصول',
                     align: 'left',
                     field: row => row.name,
                     sortable: true
                 },
                 {
-                    name:'parent',
+                    name:'category',
                     required: true,
-                    label: 'سر گروه',
+                    label: 'دسته بندی',
                     align: 'left',
-                    field: row => row.parent,
+                    field: row => row.category,
                     sortable: true
                 },
                 {
-                    name:'description',
+                    name:'brand',
                     required: true,
-                    label: 'توضیحات',
+                    label: 'برند',
                     align: 'left',
-                    field: row => row.description,
+                    field: row => row.brand,
+                    sortable: true
+                },
+                {
+                    name:'price',
+                    required: true,
+                    label: 'قیمت',
+                    align: 'left',
+                    field: row => row.brand,
+                    sortable: true
+                },
+                {
+                    name:'sale',
+                    required: true,
+                    label: 'باتخفیف',
+                    align: 'left',
+                    field: row => row.sale,
+                    sortable: true
+                },
+                {
+                    name:'quantity',
+                    required: true,
+                    label: 'موجودی انبار',
+                    align: 'left',
+                    field: row => row.quantity,
                     sortable: true
                 },
                 {
@@ -442,19 +524,17 @@ export default {
         }
     },
     methods:{
-        ad,
         ...mapActions([
-            "CategoriesIndex",
-            "CategoriesStore",
-            "CategoriesDelete",
-            "CategoriesDeleteImage",
-            "CategoriesEdit",
-            "CategoriesEditImage",
-            "CategoriesSelectWithParent"
+            "ProductsIndex",
+            "ProductsStore",
+            "ProductsDelete",
+            "ProductsEdit",
+            "CategoriesSelectWithParent",
+            "BrandsSelect"
 
         ]),
         GetItems(){
-            this.CategoriesIndex().then(res => {
+            this.ProductsIndex().then(res => {
                 this.items = res.data.result;
                 this.loading_get=false;
             }).catch(error => {
@@ -463,7 +543,7 @@ export default {
         },
         AddItem(){
             this.loading_add=true;
-            this.CategoriesStore(this.add).then(res => {
+            this.ProductsStore(this.add).then(res => {
                 this.items.unshift(res.data.result);
                 this.loading_add=false;
                 this.dialog_add=false;
@@ -479,7 +559,7 @@ export default {
         },
         EditItem(item){
             this.loading_add=true;
-            this.CategoriesEdit(item).then(res => {
+            this.ProductsEdit(item).then(res => {
                 this.loading_add=false;
                 this.items = this.items.filter(item_get =>{
                     if (item_get.id === item.id){
@@ -491,27 +571,6 @@ export default {
                 return this.NotifyUpdate();
             }).catch(error => {
                 this.loading_add=false;
-                if (error.response.status === 422) {
-                    return this.errors = error.response.data
-                }
-                return  this.NotifyServerError();
-            })
-        },
-        EditImage(id){
-            this.loading_image=true;
-            this.CategoriesEditImage({id:id,image:this.edit_image[id]}).then(res => {
-                this.items = this.items.filter(item_get =>{
-                    if (item_get.id === id){
-                        item_get.image=res.data.result.image
-                    }
-                    return item_get;
-                })
-                this.loading_image=false;
-                this.dialog_edit_image[id]=false;
-                this.edit_image[id]=null;
-                return this.NotifyUpdate();
-            }).catch(error => {
-                this.loading_image=false;
                 if (error.response.status === 422) {
                     return this.errors = error.response.data
                 }
@@ -533,7 +592,7 @@ export default {
                 },
                 persistent: true
             }).onOk(() => {
-                this.CategoriesDelete(id).then(res => {
+                this.ProductsDelete(id).then(res => {
                     this.items = this.items.filter(item =>{
                         return item.id !== id;
                     })
@@ -546,22 +605,6 @@ export default {
                 // console.log('>>>> Cancel')
             }).onDismiss(() => {
                 // console.log('I am triggered on both OK and Cancel')
-            })
-        },
-        DeleteItemImage (id) {
-            this.CategoriesDeleteImage(id).then( res => {
-                this.items = this.items.filter(item_get =>{
-                    if (item_get.id === id){
-                        item_get.image=null
-                    }
-                    return item_get;
-                })
-                this.dialog_edit_image[id]=false;
-                return this.NotifyDelete();
-            }).catch(error => {
-
-                return  this.NotifyServerError();
-
             })
         },
         Categories_Select(){
@@ -582,6 +625,27 @@ export default {
                     })
                 }else {
                     this.Categories_Select();
+                }
+            })
+        },
+        Brand_Select(){
+            this.loading_select_brand = true;
+            this.BrandsSelect().then(res => {
+                this.brands_option = res;
+                this.loading_select_brand=false;
+            }).catch(e => {
+                return  this.NotifyServerError();
+
+            })
+        },
+        Filter_Select_Brand (val, update, abort) {
+            update(() => {
+                if (val){
+                    this.brands_option =  this.brands_option.filter(item => {
+                        return item.label !== null && item.label.match(val)
+                    })
+                }else {
+                    this.Brand_Select();
                 }
             })
         }
