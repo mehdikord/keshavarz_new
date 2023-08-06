@@ -66,12 +66,25 @@ export default {
                 })
             } )
         },
-        CategoriesSelect(){
+        CategoriesSelectNoParent(){
             return new Promise((resolve,reject) => {
-                axios.get('categories').then((result) => {
+                axios.get('categories?with_parent=false').then((result) => {
                     let data = [];
                     result.data.result.forEach(item => {
-                        data.push({name : item.name , image:item.image , value : item.id})
+                        data.push({label : item.name , image:item.image , value : item.id})
+                    })
+                    resolve(data);
+                }).catch(error => {
+                    reject(error);
+                })
+            } )
+        },
+        CategoriesSelectWithParent(){
+            return new Promise((resolve,reject) => {
+                axios.get('categories?with_parent=true').then((result) => {
+                    let data = [];
+                    result.data.result.forEach(item => {
+                        data.push({label : item.name , image:item.image , value : item.id})
                     })
                     resolve(data);
                 }).catch(error => {

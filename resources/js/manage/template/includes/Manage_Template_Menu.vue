@@ -88,6 +88,19 @@ export default {
                     ]
                 },
                 {
+                    title : "محصولات و فروشگاه ",
+                    link : "",
+                    icon  : "mdi-shopping",
+                    subs:[
+                        {
+                            title : "محصولات",
+                            link : "products",
+                            icon  : "mdi-package",
+                        },
+
+                    ]
+                },
+                {
                     title : "سوالات متداول",
                     link : "faqs",
                     icon  : "mdi-help",

@@ -8,76 +8,184 @@
                 transition-show="scale"
                 transition-hide="scale"
                 position="top"
+                full-width
             >
-                <q-card style="max-width: 700px;width: 700px">
+                <q-card>
+
                     <q-card-section class="bg-deep-orange-9 text-white">
-                        <div class="text-h6">افزودن آیتم جدید</div>
+                        <div class="text-h6">افزودن محصول جدید</div>
                     </q-card-section>
                     <q-card-section >
-                        <q-input v-model="add.name"  lazy-rules type="text" outlined label="نام دسته بندی" color="primary" class="q-my-xs" :error="this.MixinValidationCheck(errors,'name')">
-                            <template v-slot:error>
-                                <Error_Validation :errors="this.MixinValidation(errors,'name')"></Error_Validation>
-                            </template>
-                        </q-input>
+                        <div class="row">
+                            <div class="col-md-6 q-px-md">
+                                <q-input v-model="add.name"  lazy-rules type="text" outlined label="نام محصول" color="primary" :error="this.MixinValidationCheck(errors,'name')">
+                                    <template v-slot:error>
+                                        <Error_Validation :errors="this.MixinValidation(errors,'name')"></Error_Validation>
+                                    </template>
+                                </q-input>
+                            </div>
+                            <div class="col-md-6 q-px-md">
+                                <q-select
+                                    class="q-mb-md"
+                                    outlined
+                                    transition-show="flip-up"
+                                    transition-hide="flip-down"
+                                    v-model="add.parent_id"
+                                    use-input
+                                    label="انتخاب دسته بندی محصول"
+                                    :options="categories_option"
+                                    emit-value
+                                    map-options
+                                    @filter="Filter_Select_Category"
+                                    :loading="loading_select_category"
+                                    behavior="menu"
+                                >
+                                    <template v-slot:no-option>
+                                        <q-item>
+                                            <q-item-section class="text-grey">
+                                                No results
+                                            </q-item-section>
+                                        </q-item>
+                                    </template>
+                                    <template v-slot:option="scope">
+                                        <q-item v-bind="scope.itemProps">
+                                            <q-item-section avatar>
+                                                <Global_Show_Image :image="scope.opt.image"></Global_Show_Image>
+                                            </q-item-section>
+                                            <q-item-section>
+                                                <q-item-label>{{ scope.opt.label }}</q-item-label>
+                                            </q-item-section>
+                                        </q-item>
+                                    </template>
+                                </q-select>
+                            </div>
+                            <div class="col-md-12 q-px-md">
+                                <q-input v-model="add.short_description" rows="3"  lazy-rules type="textarea" outlined label="توضیحات کوتاه " color="primary" :error="this.MixinValidationCheck(errors,'short_description')">
+                                    <template v-slot:error>
+                                        <Error_Validation :errors="this.MixinValidation(errors,'short_description')"></Error_Validation>
+                                    </template>
+                                </q-input>
+                            </div>
+                            <div class="col-md-6 q-px-md">
+                                <q-input v-model="add.price"  lazy-rules type="number" outlined label="قیمت (تومان)" color="primary" :error="this.MixinValidationCheck(errors,'price')">
+                                    <template v-slot:error>
+                                        <Error_Validation :errors="this.MixinValidation(errors,'price')"></Error_Validation>
+                                    </template>
+                                </q-input>
+                            </div>
+                            <div class="col-md-6 q-px-md">
+                                <q-input v-model="add.sale"  lazy-rules type="text" outlined label="قیمت با تخفیف (تومان)" color="primary" :error="this.MixinValidationCheck(errors,'sale')">
+                                    <template v-slot:error>
+                                        <Error_Validation :errors="this.MixinValidation(errors,'sale')"></Error_Validation>
+                                    </template>
+                                </q-input>
+                            </div>
+                            <div class="col-md-12 q-px-md q-mb-lg">
+                                <q-editor
+                                    v-model="add.long_description"
+                                    toolbar-outline
+                                    toolbar-bg="blue-grey-9"
+                                    toolbar-text-color="white"
+                                    height="350px"
+                                    :toolbar="[
+                                                [
+                                                  {
+                                                    label: $q.lang.editor.align,
+                                                    icon: $q.iconSet.editor.align,
+                                                    fixedLabel: true,
+                                                    options: ['left', 'center', 'right', 'justify']
+                                                  }
+                                                ],
+                                                ['bold', 'italic', 'strike', 'underline', 'subscript', 'superscript'],
+                                                ['token', 'hr', 'link', 'custom_btn'],
+                                                ['print', 'fullscreen'],
+                                                [
+                                                  {
+                                                    label: $q.lang.editor.formatting,
+                                                    icon: $q.iconSet.editor.formatting,
+                                                    list: 'no-icons',
+                                                    options: [
+                                                      'p',
+                                                      'h1',
+                                                      'h2',
+                                                      'h3',
+                                                      'h4',
+                                                      'h5',
+                                                      'h6',
+                                                      'code'
+                                                    ]
+                                                  },
+                                                  {
+                                                    label: $q.lang.editor.fontSize,
+                                                    icon: $q.iconSet.editor.fontSize,
+                                                    fixedLabel: true,
+                                                    fixedIcon: true,
+                                                    list: 'no-icons',
+                                                    options: [
+                                                      'size-1',
+                                                      'size-2',
+                                                      'size-3',
+                                                      'size-4',
+                                                      'size-5',
+                                                      'size-6',
+                                                      'size-7'
+                                                    ]
+                                                  },
+                                                  {
+                                                    label: $q.lang.editor.defaultFont,
+                                                    icon: $q.iconSet.editor.font,
+                                                    fixedIcon: true,
+                                                    list: 'no-icons',
+                                                    options: [
+                                                      'default_font',
+                                                    ]
+                                                  },
+                                                  'removeFormat'
+                                                ],
+                                                ['quote', 'unordered', 'ordered', 'outdent', 'indent'],
 
-                        <q-select
-                            class="q-mb-md"
-                            outlined
-                            transition-show="flip-up"
-                            transition-hide="flip-down"
-                            v-model="add.parent_id"
-                            use-input
-                            label="انتخاب سرگروه"
-                            :options="categories_option"
-                            emit-value
-                            map-options
-                            @filter="Filter_Select_Category"
-                            :loading="loading_select_category"
-                            behavior="menu"
-                        >
-                            <template v-slot:no-option>
-                                <q-item>
-                                    <q-item-section class="text-grey">
-                                        No results
-                                    </q-item-section>
-                                </q-item>
-                            </template>
-                            <template v-slot:option="scope">
-                                <q-item v-bind="scope.itemProps">
-                                    <q-item-section avatar>
-                                        <Global_Show_Image :image="scope.opt.image"></Global_Show_Image>
-                                    </q-item-section>
-                                    <q-item-section>
-                                        <q-item-label>{{ scope.opt.label }}</q-item-label>
-                                    </q-item-section>
-                                </q-item>
-                            </template>
-                        </q-select>
+                                                ['undo', 'redo'],
+                                                ['viewsource']
+                                              ]"
+                                    :fonts="{
+                                        vazir: 'Vazirmatn',
+                                      }"
 
-                        <q-file class="q-mb-md" outlined bottom-slots v-model="add.image" label="انتخاب تصویر" counter>
-                            <template v-slot:prepend>
-                                <q-icon name="mdi-image" @click.stop.prevent />
-                            </template>
-                            <template v-slot:append>
-                                <q-icon name="mdi-close" @click.stop.prevent="add.image = null" class="cursor-pointer" />
-                            </template>
-                        </q-file>
+                                />
+                            </div>
+                            <div class="col-md-6 q-px-md">
+                                <q-input v-model="add.quantity"  lazy-rules type="number" outlined label="موجودی در انبار" color="primary" :error="this.MixinValidationCheck(errors,'quantity')">
+                                    <template v-slot:error>
+                                        <Error_Validation :errors="this.MixinValidation(errors,'quantity')"></Error_Validation>
+                                    </template>
+                                </q-input>
+                            </div>
+                            <div class="col-md-6 q-px-md">
+                                <q-select
+                                    class="q-mb-md"
+                                    outlined
+                                    transition-show="flip-up"
+                                    transition-hide="flip-down"
+                                    v-model="add.commenting"
+                                    label="قابلیت ثبت دیدگاه"
+                                    :options="comment_options"
+                                    emit-value
+                                    map-options
+                                    behavior="menu"
+                                >
+                                </q-select>
+                            </div>
 
-                        <q-input v-model="add.description"  lazy-rules type="textarea" outlined label="توضیحات" color="primary" class="q-my-xs" :error="this.MixinValidationCheck(errors,'description')">
-                            <template v-slot:error>
-                                <Error_Validation :errors="this.MixinValidation(errors,'description')"></Error_Validation>
-                            </template>
-                        </q-input>
+                        </div>
 
                     </q-card-section>
-
                     <q-card-actions align="right">
                         <q-btn  label="بستن" color="red" v-close-popup />
-                        <q-btn @click="AddItem" :loading="loading_add" label="افزودن آیتم" color="green-9"/>
+                        <q-btn @click="AddItem" :loading="loading_add" label="افزودن محصول جدید" color="green-9"/>
                     </q-card-actions>
                 </q-card>
             </q-dialog>
-            <strong class="font-16">لیست همه برند ها</strong>
+            <strong class="font-16">لیست همه محصولات در فروشگاه</strong>
         </q-card-section>
 
         <q-card-section>
@@ -238,9 +346,10 @@
 
 <script>
 import {mapActions} from "vuex";
+import {ad} from "../../../../../public/build/assets/quasar-34768482";
 
 export default {
-    name: "Manage_Categories",
+    name: "Manage_Products",
     created() {
         this.GetItems();
 
@@ -262,10 +371,13 @@ export default {
             categories_option:[],
             add:{
                 name:null,
-                parent_id:null,
-                image:null,
-                description:null,
-
+                category_id:null,
+                short_description:null,
+                long_description:null,
+                price:null,
+                sale:null,
+                quantity:10,
+                commenting:1,
             },
             edit_image:[],
             item_columns:[
@@ -316,10 +428,21 @@ export default {
                     align: 'left',
 
                 },
-            ]
+            ],
+            comment_options : [
+                {
+                    label:"بله",
+                    value :1,
+                },
+                {
+                    label:"خیر",
+                    value :0,
+                }
+            ],
         }
     },
     methods:{
+        ad,
         ...mapActions([
             "CategoriesIndex",
             "CategoriesStore",
@@ -327,7 +450,7 @@ export default {
             "CategoriesDeleteImage",
             "CategoriesEdit",
             "CategoriesEditImage",
-            "CategoriesSelectNoParent"
+            "CategoriesSelectWithParent"
 
         ]),
         GetItems(){
@@ -443,7 +566,7 @@ export default {
         },
         Categories_Select(){
             this.loading_select_category = true;
-            this.CategoriesSelectNoParent().then(res => {
+            this.CategoriesSelectWithParent().then(res => {
                 this.categories_option = res;
                 this.loading_select_category=false;
             }).catch(e => {
