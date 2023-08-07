@@ -41,6 +41,15 @@ export default {
                 })
             } )
         },
+        ProductsChangeActive(_,item){
+            return new Promise((resolve,reject) => {
+                axios.get('products/activation/'+item).then((result) => {
+                    resolve(result);
+                }).catch(error => {
+                    reject(error);
+                })
+            } )
+        },
 
     }
 

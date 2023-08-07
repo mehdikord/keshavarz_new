@@ -144,6 +144,15 @@ App.config.globalProperties.$filters = {
     numbers(number){
         return new Intl.NumberFormat().format(number);
     },
+    quantity_color(quantity){
+        if (quantity >= 5){
+            return "green";
+        }else if (quantity < 5 && quantity >=3){
+            return "yellow-9";
+        }else {
+            return "red";
+        }
+    },
     short_text(text,len = 20){
         var extra='';
         if (text.length > len){

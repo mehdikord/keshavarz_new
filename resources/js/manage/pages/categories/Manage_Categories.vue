@@ -77,7 +77,7 @@
                     </q-card-actions>
                 </q-card>
             </q-dialog>
-            <strong class="font-16">لیست همه برند ها</strong>
+            <strong class="font-16">لیست همه دسته بندی ها</strong>
         </q-card-section>
 
         <q-card-section>

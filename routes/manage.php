@@ -71,6 +71,7 @@ Route::middleware('auth:admin')->group(function (){
 
     Route::group(['prefix' => 'products','as' => 'products.'],function (){
         Route::get('',[\App\Http\Controllers\Manage\Products\ProductController::class,'index'])->name('index');
+        Route::get('activation/{product}',[\App\Http\Controllers\Manage\Products\ProductController::class,'activation'])->name('activation');
         Route::post('',[\App\Http\Controllers\Manage\Products\ProductController::class,'store'])->name('store');
         Route::post('{product}',[\App\Http\Controllers\Manage\Products\ProductController::class,'update'])->name('update');
         Route::delete('{product}',[\App\Http\Controllers\Manage\Products\ProductController::class,'delete'])->name('delete');

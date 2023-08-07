@@ -12,6 +12,8 @@ interface ProductsInterface
 
     public function delete($item);
 
+    public function activation($item);
+
 
 
 

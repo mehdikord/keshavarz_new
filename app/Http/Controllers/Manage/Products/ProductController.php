@@ -35,4 +35,9 @@ class ProductController extends Controller
     {
         return $this->repository->delete($product);
     }
+
+    public function activation(Product $product)
+    {
+        return $this->repository->activation($product);
+    }
 }

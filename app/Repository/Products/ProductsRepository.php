@@ -21,6 +21,7 @@ class ProductsRepository implements ProductsInterface
     {
         $item = Product::create([
             'category_id' => $request->category_id,
+            'brand_id' => $request->brand_id,
             'name' => $request->name,
             'short_description' => $request->short_description,
             'long_description' => $request->long_description,
@@ -36,6 +37,8 @@ class ProductsRepository implements ProductsInterface
         $item->update(['code' => core_random_code($item->id)]);
 
 
+        $item->load('category');
+        $item->load('brand');
         return response_success($item);
     }
 
@@ -43,6 +46,7 @@ class ProductsRepository implements ProductsInterface
     {
         $item->update([
             'category_id' => $request->category_id,
+            'brand_id' => $request->brand_id,
             'name' => $request->name,
             'short_description' => $request->short_description,
             'long_description' => $request->long_description,
@@ -59,6 +63,12 @@ class ProductsRepository implements ProductsInterface
         $item->delete();
         return response_success(true,'item deleted success');
 
+    }
+
+    public function activation($item)
+    {
+        $item->update(['is_active' => !$item->is_active]);
+        return response_success(true,'item activation changed');
     }
 
 
