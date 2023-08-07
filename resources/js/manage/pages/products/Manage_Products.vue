@@ -288,6 +288,7 @@
                         />
                     </q-td>
                 </template>
+
                 <template v-slot:body-cell-tools="props">
                     <q-td :props="props">
                         <q-btn @click="dialog_edit[props.row.id] = true;errors=[]" glossy color="primary" size="sm" icon="mdi-pen" class="q-mx-xs">
@@ -524,32 +525,14 @@
                         transition-show="scale"
                         transition-hide="scale"
                         position="top"
+                        full-width
                     >
-                        <q-card style="max-width: 700px;width: 700px">
+                        <q-card>
                             <q-card-section class="bg-deep-orange text-white">
-                                <div class="text-h6">ویرایش تصویر : {{props.row.name}}</div>
+                                <div class="text-h6">ویرایش تصاویر : {{props.row.name}}</div>
                             </q-card-section>
                             <q-card-section>
-                                <div>
-                                    برای ویرایش تصویر ، فایل جدید را انتخاب کنید و دکمه ویرایش تصویر را کلیک کنید و برای حذف تصویر دکمه حذف تصویر را کلیک کنید
-                                </div>
-                                <div class="q-mt-lg">
-                                    <q-file class="q-mb-md" outlined bottom-slots v-model="edit_image[props.row.id]" label="انتخاب تصویر" counter>
-                                        <template v-slot:prepend>
-                                            <q-icon name="mdi-image" @click.stop.prevent />
-                                        </template>
-                                        <template v-slot:append>
-                                            <q-icon name="mdi-close" @click.stop.prevent="edit_image[props.row.id] = null" class="cursor-pointer" />
-                                        </template>
-                                        <template v-slot:error>
-                                            <Error_Validation :errors="this.MixinValidation(errors,'image')"></Error_Validation>
-                                        </template>
-                                    </q-file>
-                                </div>
-                                <div class="q-mt-sm q-gutter-sm">
-                                    <q-btn glossy icon="mdi-pen" color="indigo" @click="EditImage(props.row.id)">ویرایش تصویر</q-btn>
-                                    <q-btn  glossy icon="mdi-delete-forever" @click="DeleteItemImage(props.row.id)" color="red" :disable="!props.row.image">حذف تصویر</q-btn>
-                                </div>
+
 
                             </q-card-section>
                             <q-card-actions align="right">
