@@ -70,6 +70,15 @@ export default {
                 })
             } )
         },
+        ProductsImagesDelete(_,item){
+            return new Promise((resolve,reject) => {
+                axios.delete('products/'+item.id+"/images/"+item.image).then((result) => {
+                    resolve(result);
+                }).catch(error => {
+                    reject(error);
+                })
+            } )
+        },
 
 
     }

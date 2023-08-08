@@ -555,13 +555,21 @@
                             </q-card-section>
                             <hr />
                             <q-card-section>
-                                <div class="row justify-center">
-
+                                <div class="row justify-center q-gutter-lg">
                                     <div v-if="!props.row.images.length" class="col-md-7">
                                         <q-banner class="bg-yellow-9 text-dark text-center" rounded>
                                             هیچ تصویری برای این محصول ثبت نشده است ، برای ثبت تصویر جدید از دکمه افزودن تصویر جدید استفاده کنید.
                                         </q-banner>
                                     </div>
+                                    <template v-else>
+                                        <div v-for="image in props.row.images" class="col-md-2 text-center">
+                                            <q-img class="shadow" :src="image.image">
+                                                <div class="absolute-bottom-right images-captions">
+                                                    <q-icon name="mdi-delete" color="red-13" size="sm"></q-icon>
+                                                </div>
+                                            </q-img>
+                                        </div>
+                                    </template>
 
 
 
@@ -810,7 +818,6 @@ export default {
                return this.NotifyServerError();
 
            })
-
         },
         AddImage(item){
             if (!this.images_new){
@@ -820,11 +827,13 @@ export default {
             this.ProductsImagesStore({id : item,image : this.images_new}).then(res => {
                 this.images_loading=false;
                 this.items = this.items.filter(item_get =>{
-                    if (item_get.id === item.id){
+                    if (item_get.id === item){
                         item_get.images=res.data.result
                     }
                     return item_get;
                 })
+                this.images_new=null;
+                this.images_show=false;
                 return this.NotifySuccess('تصویر جدید باموفقیت اضافه شد');
             }).catch(error => {
                 this.images_loading=false;
@@ -832,11 +841,9 @@ export default {
                     return this.errors = error.response.data
                 }
                 return  this.NotifyServerError();
-
             })
 
         },
-
 
 
         Categories_Select(){
@@ -886,5 +893,9 @@ export default {
 </script>
 
 <style scoped>
-
+.images-captions{
+    padding: 4px 4px;
+    cursor: pointer;
+    background: rgba(19, 18, 18, 0.88);
+}
 </style>
