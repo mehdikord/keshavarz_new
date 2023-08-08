@@ -75,6 +75,13 @@ Route::middleware('auth:admin')->group(function (){
         Route::post('',[\App\Http\Controllers\Manage\Products\ProductController::class,'store'])->name('store');
         Route::post('{product}',[\App\Http\Controllers\Manage\Products\ProductController::class,'update'])->name('update');
         Route::delete('{product}',[\App\Http\Controllers\Manage\Products\ProductController::class,'delete'])->name('delete');
+        Route::group(['prefix' => '{product}/images','as' => 'images'],function (){
+            Route::get('',[\App\Http\Controllers\Manage\Products\ProductController::class,'images_index'])->name('index');
+            Route::post('',[\App\Http\Controllers\Manage\Products\ProductController::class,'images_store'])->name('store');
+
+
+
+        });
     });
 
 

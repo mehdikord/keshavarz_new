@@ -533,8 +533,41 @@
                             </q-card-section>
                             <q-card-section>
 
+                                <strong>لیست تصاویر محصول :</strong>
+                                <q-btn  color="indigo" glossy class="float-right" icon-right="mdi-plus" @click="images_show = !images_show"> افزودن تصویر جدید</q-btn>
+                                <div v-show="images_show" class="row q-mt-lg justify-center">
+                                    <div class="col-md-5">
+                                        <q-file class="q-mb-sm" outlined bottom-slots v-model="images_new" label="انتخاب تصویر" counter>
+                                            <template v-slot:prepend>
+                                                <q-icon name="mdi-image" @click.stop.prevent />
+                                            </template>
+                                            <template v-slot:append>
+                                                <q-icon name="mdi-close" @click.stop.prevent="images_new = null" class="cursor-pointer" />
+                                            </template>
+                                            <template v-slot:error>
+                                                <Error_Validation :errors="this.MixinValidation(errors,'image')"></Error_Validation>
+                                            </template>
+                                        </q-file>
+                                        <q-btn color="green" icon-right="mdi-check" @click="AddImage(props.row.id)" :loading="images_loading"> افزودن تصویر</q-btn>
+                                    </div>
+                                </div>
 
                             </q-card-section>
+                            <hr />
+                            <q-card-section>
+                                <div class="row justify-center">
+
+                                    <div v-if="!props.row.images.length" class="col-md-7">
+                                        <q-banner class="bg-yellow-9 text-dark text-center" rounded>
+                                            هیچ تصویری برای این محصول ثبت نشده است ، برای ثبت تصویر جدید از دکمه افزودن تصویر جدید استفاده کنید.
+                                        </q-banner>
+                                    </div>
+
+
+
+                                </div>
+                            </q-card-section>
+
                             <q-card-actions align="right">
                                 <q-btn  label="بستن" color="dark" v-close-popup />
                             </q-card-actions>
@@ -676,6 +709,10 @@ export default {
                     value :0,
                 }
             ],
+            images_new:null,
+            images_show:false,
+            images_loading:false,
+
         }
     },
     methods:{
@@ -684,11 +721,14 @@ export default {
             "ProductsStore",
             "ProductsDelete",
             "ProductsEdit",
+            "ProductsImagesIndex",
+            "ProductsImagesStore",
             "ProductsChangeActive",
             "CategoriesSelectWithParent",
             "BrandsSelect"
 
         ]),
+
         GetItems(){
             this.ProductsIndex().then(res => {
                 this.items = res.data.result;
@@ -772,6 +812,33 @@ export default {
            })
 
         },
+        AddImage(item){
+            if (!this.images_new){
+                return this.NotifyError('برای افزودن عکس جدید ابتدا فایل مورد نطر را انتخاب کنید');
+            }
+            this.images_loading=true;
+            this.ProductsImagesStore({id : item,image : this.images_new}).then(res => {
+                this.images_loading=false;
+                this.items = this.items.filter(item_get =>{
+                    if (item_get.id === item.id){
+                        item_get.images=res.data.result
+                    }
+                    return item_get;
+                })
+                return this.NotifySuccess('تصویر جدید باموفقیت اضافه شد');
+            }).catch(error => {
+                this.images_loading=false;
+                if (error.response.status === 422) {
+                    return this.errors = error.response.data
+                }
+                return  this.NotifyServerError();
+
+            })
+
+        },
+
+
+
         Categories_Select(){
             this.loading_select_category = true;
             this.CategoriesSelectWithParent().then(res => {

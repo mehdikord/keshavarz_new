@@ -14,6 +14,9 @@ interface ProductsInterface
 
     public function activation($item);
 
+    public function images_index($item);
+    public function images_store($item,$request);
+
 
 
 

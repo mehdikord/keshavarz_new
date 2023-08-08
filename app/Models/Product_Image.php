@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 class Product_Image extends Model
 {
     use HasFactory;
-    protected $table='product_id';
+    protected $table='product_images';
     protected $guarded=[];
 
     public function media(): BelongsTo

@@ -50,6 +50,27 @@ export default {
                 })
             } )
         },
+        ProductsImagesIndex(_,item){
+            return new Promise((resolve,reject) => {
+                axios.get('products/'+item+'/images').then((result) => {
+                    resolve(result);
+                }).catch(error => {
+                    reject(error);
+                })
+            } )
+        },
+        ProductsImagesStore(_,item){
+            return new Promise((resolve,reject) => {
+                var data = new  FormData();
+                if (item.image){data.append('image',item.image,item.image.name)};
+                axios.post('products/'+item.id+"/images",data,{headers: {'Content-Type': 'multipart/form-data'}}).then((result) => {
+                    resolve(result);
+                }).catch(error => {
+                    reject(error);
+                })
+            } )
+        },
+
 
     }
 

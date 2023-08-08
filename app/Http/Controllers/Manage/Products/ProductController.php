@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Manage\Products;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Products\ProductsStoreRequest;
 use App\Http\Requests\Products\ProductsUpdateRequest;
+use App\Http\Requests\Single\SingleImageUpdateRequest;
 use App\Interfaces\Products\ProductsInterface;
 use App\Models\Product;
 use Illuminate\Http\Request;
@@ -39,5 +40,15 @@ class ProductController extends Controller
     public function activation(Product $product)
     {
         return $this->repository->activation($product);
+    }
+
+    public function images_index(Product $product)
+    {
+        return $this->repository->images_index($product);
+    }
+
+    public function images_store(Product $product,SingleImageUpdateRequest $request)
+    {
+        return $this->repository->images_store($product,$request);
     }
 }

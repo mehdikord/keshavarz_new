@@ -3,7 +3,9 @@ namespace App\Repository\Products;
 
 
 use App\Interfaces\Products\ProductsInterface;
+use App\Models\Media;
 use App\Models\Product;
+use App\Services\MediaServices\MediaService;
 
 class ProductsRepository implements ProductsInterface
 {
@@ -12,6 +14,7 @@ class ProductsRepository implements ProductsInterface
         $data = Product::query();
         $data->with('category');
         $data->with('brand');
+        $data->with('images');
 
         $data->orderByDesc('id');
         return response_success($data->get());
@@ -69,6 +72,25 @@ class ProductsRepository implements ProductsInterface
     {
         $item->update(['is_active' => !$item->is_active]);
         return response_success(true,'item activation changed');
+    }
+
+    public function images_index($item)
+    {
+        return response_success($item->images);
+    }
+
+    public function images_store($item,$request)
+    {
+        if ($request->file('image')){
+            $image = (new MediaService())->store_image($request->file('image'),'products');
+            $media = Media::where('url',$image)->first();
+            $item->images()->create([
+                'image' => $image,
+                'media_id' => $media->id
+            ]);
+            return response_success($item->images);
+        }
+        return response_custom_error('no image');
     }
 
 
