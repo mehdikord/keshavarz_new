@@ -1,41 +1,14 @@
 import { createRouter, createWebHistory } from "vue-router";
-import Front_Index from "../front/index/Front_Index.vue";
-import test from "../front/test.vue";
-import Front_Shop_Index from "../front/shop/Front_Shop_Index.vue";
-import Front_Product_Page from "../front/products/Front_Product_Page.vue";
-import Front_Profile_Index from "../front/profile/Front_Profile_Index.vue";
+import Front_Template from "../front/template/Front_Template.vue";
 
 const routes = [
     {
         path : "/",
         name : "index",
-        component : Front_Index,
+        component : Front_Template,
     },
-    {
-        path : "/shop",
-        name : "shop",
-        component : Front_Shop_Index,
-    },
-    {
-        path : "/product",
-        name : "product",
-        component : Front_Product_Page,
-    },
-    {
-        path : "/profile",
-        name : "profile",
-        component : Front_Profile_Index,
-    },
-    {
-        path : "/profile/orders",
-        name : "profile_orders",
-        component : Front_Profile_Index,
-    },
-    {
-        path : "/profile/orders/:code",
-        name : "profile_orders_detail",
-        component : Front_Profile_Index,
-    },
+
+
 
 
 ]
