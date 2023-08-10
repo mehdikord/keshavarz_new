@@ -4,9 +4,10 @@ import './bootstrap-front';
 import Front from "./routes/front";
 import Front_Template from "./front/template/Front_Template.vue";
 import { Quasar , Notify,Dialog} from 'quasar';
-import quasarIconSet from 'quasar/icon-set/mdi-v7';
-import quasarLang from 'quasar/lang/fa-IR'
+import quasarIconSet from 'quasar/icon-set/fontawesome-v6';
+import quasarLang from 'quasar/lang/fa-IR';
 import 'quasar/dist/quasar.css';
+import '@quasar/extras/fontawesome-v6/fontawesome-v6.css'
 
 
 const App=createApp(Front_Template);
