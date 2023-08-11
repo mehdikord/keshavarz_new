@@ -14,13 +14,23 @@ export default {
 
                 </div>
                 <div class="col text-center">
-                    <q-icon name="fas fa-magnifying-glass" class="icon-size"></q-icon>
-                    <div class="menu-text">جستجو خدمات</div>
+                    <router-link :to="{name : 'search'}">
+                        <div  :class="{'text-positive' : this.$route.name === 'search'}">
+                            <q-icon name="fas fa-magnifying-glass" class="icon-size"></q-icon>
+                            <div class="menu-text">جستجو خدمات</div>
+                        </div>
+                    </router-link>
 
                 </div>
-                <div class="col text-center" :class="{'text-positive' : this.$route.name === 'index'}">
-                    <q-icon name="fab fa-pagelines" class="icon-size"></q-icon>
-                    <div class="menu-text">کشاورز</div>
+                <div class="col text-center" >
+                    <router-link :to="{name : 'index'}">
+                        <div  :class="{'text-positive' : this.$route.name === 'index'}">
+                            <q-icon name="fab fa-pagelines" class="icon-size"></q-icon>
+                            <div class="menu-text">کشاورز</div>
+                        </div>
+
+                    </router-link>
+
                 </div>
                 <div class="col text-center">
                     <q-icon name="fas fa-tractor" class="icon-size"></q-icon>
@@ -63,7 +73,9 @@ export default {
         font-weight: 500;
     }
 }
-
+a{
+    color: white!important;
+}
 
 
 

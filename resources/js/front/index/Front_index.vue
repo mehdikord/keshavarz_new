@@ -36,7 +36,7 @@ export default {
 <template>
     <div class="row justify-center">
         <div class="col-lg-9 col-sm-12 col-xs-12 ">
-          <div class="row q-mt-sm">
+          <div class="row q-mt-sm items-center">
               <div class="col-md-4 col-sm-12 col-xs-12 q-px-sm mobile-padding">
                   <q-card>
                       <q-img class="shadow-8" src="https://www.agrivi.com/wp-content/uploads/2021/05/Best-Farm-Practices-for-Profitable-Farming-1200x565.jpeg">
