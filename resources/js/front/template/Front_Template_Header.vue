@@ -25,8 +25,15 @@ export default {
                 <q-avatar>
                     <img src="/logo.png">
                 </q-avatar>
-                <strong class="text-green-4">کشاورز</strong>
+                <strong class="text-positive q-ml-sm page-title">کشاورز</strong>
+                <span class="q-ml-sm q-mr-sm">
+                    <q-icon name="fas fa-arrow-left" class="font-16"></q-icon>
+                </span>
+                <span class="page-text">
+                    {{this.$route.meta.title}}
+                </span>
             </q-toolbar-title>
+
         </q-toolbar>
     </q-header>
 
@@ -37,5 +44,17 @@ export default {
 </template>
 
 <style scoped>
-
+.page-text{
+    font-size: 16px;
+    font-weight: 600;
+}
+@media only screen and (max-width: 600px) {
+    .page-text{
+        font-size: 13px;
+        font-weight: 500;
+    }
+    .page-title{
+        font-size: 18px;
+    }
+}
 </style>

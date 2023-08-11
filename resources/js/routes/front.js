@@ -1,11 +1,13 @@
 import { createRouter, createWebHistory } from "vue-router";
 import Front_Template from "../front/template/Front_Template.vue";
+import Front_index from "../front/index/Front_index.vue";
 
 const routes = [
     {
         path : "/",
         name : "index",
-        component : Front_Template,
+        component : Front_index,
+        meta : {title : 'صفحه اصلی'}
     },
 
 

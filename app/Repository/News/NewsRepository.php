@@ -1,15 +1,15 @@
 <?php
-namespace App\Repository\Faqs;
+namespace App\Repository\News;
 
 
-use App\Interfaces\News\FaqsInterface;
-use App\Models\Faq;
+use App\Interfaces\News\NewsInterface;
+use App\Models\News;
 
-class FaqsRepository implements FaqsInterface
+class NewsRepository implements NewsInterface
 {
     public function index()
     {
-        return response_success(Faq::OrderbyDesc('id')->get());
+        return response_success(News::OrderbyDesc('id')->get());
     }
 
     public function store($request)
@@ -36,6 +36,12 @@ class FaqsRepository implements FaqsInterface
     {
         $item->delete();
         return response_success(true,'item deleted success');
+
+    }
+
+    public function latest()
+    {
+        return response_success(News::OrderbyDesc('id')->take(6)->get());
 
     }
 

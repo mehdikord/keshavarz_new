@@ -8,6 +8,7 @@ import quasarIconSet from 'quasar/icon-set/fontawesome-v6';
 import quasarLang from 'quasar/lang/fa-IR';
 import 'quasar/dist/quasar.css';
 import '@quasar/extras/fontawesome-v6/fontawesome-v6.css'
+import {mapGetters} from "vuex";
 
 
 const App=createApp(Front_Template);
@@ -32,5 +33,111 @@ App.use(Quasar, {
 })
 App.use(Store)
 App.use(Front)
+
+// ++++++++++ Global Functions (Mixin) ++++++++++
+
+App.mixin({
+    beforeCreate() {
+        this.$store.commit('AuthManageSync');
+    },
+    created() {
+        axios.defaults.headers.common['Authorization'] ="Bearer "+this.AuthToken
+
+    },
+    //Methods
+    methods:{
+        NotifyMessage(message=null,type=null,icon=null,color=null){
+            if (icon || color){
+                this.$q.notify({
+                    type: type,
+                    message: message,
+                    icon : icon,
+                    color : color,
+                    progress : true,
+                    position: "bottom"
+
+                });
+            }else {
+                this.$q.notify({
+                    type: type,
+                    iconSize:'md',
+                    message: message,
+                    progress : true,
+                    position: "bottom"
+                });
+            }
+        },
+        NotifyCreate(){
+            this.NotifyMessage('آیتم باموفقیت ایجاد شد','positive')
+        },
+        NotifyUpdate(){
+            this.NotifyMessage('آیتم باموفقیت ویرایش شد','positive')
+        },
+        NotifyDelete(){
+            this.NotifyMessage('آیتم باموفقیت حذف شد','positive')
+        },
+        NotifyServerError(){
+            this.NotifyError('خطای سرور !');
+        },
+        NotifySuccess(message){
+            this.NotifyMessage(message,'positive')
+        },
+        NotifyWarning(message){
+            this.NotifyMessage(message,'warning')
+        },
+        NotifyError(message){
+            this.NotifyMessage(message,'negative')
+        },
+        NotifyInfo(message){
+            this.NotifyMessage(message,'','mdi-bell','indigo')
+        },
+        MixinValidation(errors,field){
+            return Helper.HelperValidationErrors(errors,field);
+        },
+        MixinValidationCheck(errors,field){
+            return Helper.HelperValidationCheck(errors,field);
+
+        },
+    },
+    computed : {
+        ...mapGetters({
+            AuthToken : "AutManageToken",
+        })
+    }
+
+
+})
+
+// ++++++++++++++++++++
+
+// ++++++++++ Global Filters ++++++++++
+
+App.config.globalProperties.$filters = {
+    // date(value,format) {
+    //     return moment(value).format(format='jYYYY/jM/jD')
+    // },
+    numbers(number){
+        return new Intl.NumberFormat().format(number);
+    },
+    quantity_color(quantity){
+        if (quantity >= 5){
+            return "green";
+        }else if (quantity < 5 && quantity >=3){
+            return "yellow-9";
+        }else {
+            return "red";
+        }
+    },
+    short_text(text,len = 20){
+        var extra='';
+        if (text.length > len){
+            extra = "..."
+        }
+        return text.substring(0,len) + extra;
+    }
+}
+
+// ++++++++++++++++++++
+
 
 App.mount('#app')

@@ -5,7 +5,9 @@
         <Front_Template_Header/>
 
         <q-page-container>
-            <router-view />
+            <q-page padding>
+                <router-view />
+            </q-page>
         </q-page-container>
 
         <Front_Template_Footer/>
