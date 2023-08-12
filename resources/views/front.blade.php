@@ -9,7 +9,6 @@
     <link rel="icon" href="logo.png">
     <link rel="stylesheet" href="{{asset('front/css/font.css')}}">
 
-
     @vite(['resources/js/front.js'])
 </head>
 

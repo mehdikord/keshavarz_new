@@ -1,6 +1,102 @@
 <script>
+import {mapActions} from "vuex";
 export default {
-    name: "Front_Search"
+    name: "Front_Search",
+    mounted() {
+      this.Get_Categories();
+      this.Get_Implements();
+    },
+    components: {
+
+    },
+    data(){
+        return{
+            errors:[],
+            show_form:true,
+            category_id: null,
+            implement_id: null,
+            category_name: null,
+            implement_name: null,
+            loading_select_category:false,
+            loading_select_implements:false,
+            categories :[],
+            implements :[],
+        }
+    },
+
+    methods:{
+        ...mapActions([
+            "ImplementsCategoriesSelectIndex",
+            "ImplementsSelectIndex"
+
+        ]),
+        Get_Categories(){
+                this.loading_select_category=true;
+                this.ImplementsCategoriesSelectIndex().then(res => {
+                this.categories = res;
+                this.loading_select_category=false;
+                }).catch(error => {
+                    this.loading_select_category=false;
+                    return  this.NotifyServerError();
+            })
+        },
+        Get_Implements(){
+                this.loading_select_implements=true;
+                this.ImplementsSelectIndex(this.category_id).then(res => {
+                this.implements = res;
+                this.loading_select_implements=false;
+                }).catch(error => {
+                    this.loading_select_implements=false;
+                    return  this.NotifyServerError();
+            })
+        },
+        Do_Search(){
+            this.show_form=false;
+        },
+        Filter_Select_Category (val, update, abort) {
+            update(() => {
+                if (val){
+                    this.categories =  this.categories.filter(item => {
+                        return item.label !== null && item.label.match(val)
+                    })
+                }else {
+                    this.Get_Categories();
+                }
+            })
+        },
+        Filter_Select_Implement (val, update, abort) {
+            update(() => {
+                if (val){
+                    this.implements =  this.implements.filter(item => {
+                        return item.label !== null && item.label.match(val)
+                    })
+                }else {
+                    this.Get_Implements();
+                }
+            })
+        },
+
+
+
+    },
+    computed:{
+        Get_Select_Name(){
+            if (this.category_id){
+                this.categories.forEach(item => {
+                    if (item.value === this.category_id){
+                    this.category_name = item.label
+                    }
+                })
+            }
+            if (this.implements){
+                this.implements.forEach(item => {
+                    if (item.value === this.implement_id){
+                        this.implement_name = item.label
+                    }
+                })
+            }
+        }
+    }
 }
 </script>
 
@@ -9,7 +105,8 @@ export default {
     <div class="row justify-center">
         <div class="col-lg-9 col-sm-12 col-xs-12 ">
             <div class="q-mt-md">
-                <strong class="text-green-7 title">
+                <q-img class="search-img" src="/front/images/search.png"></q-img>
+                <strong class="text-green-7 title q-ml-sm">
                     جستجو خدمات کشاورز
                 </strong>
                 <p class="text-justify q-mt-md">
@@ -19,9 +116,109 @@ export default {
                 </p>
             </div>
             <div class="q-mt-xl">
-                <q-select color="green-7" outlined v-model="model"  label="انتخاب دسته بندی ادوات">
+                <template v-if="show_form">
+                    <div class="form-box">
+                        <q-select
+                            outlined
+                            color="green-7"
+                            transition-show="flip-up"
+                            transition-hide="flip-down"
+                            v-model="category_id"
+                            use-input
+                            label="انتخاب دسته بندی ادوات"
+                            :options="categories"
+                            emit-value
+                            map-options
+                            @filter="Filter_Select_Category"
+                            :loading="loading_select_category"
+                            behavior="menu"
+                            @change="Get_Select_Name"
+                        >
+                            <template v-slot:no-option>
+                                <q-item>
+                                    <q-item-section class="text-red">
+                                        گزینه ای یافت نشد
+                                    </q-item-section>
+                                </q-item>
+                            </template>
+                            <template v-slot:option="scope">
+                                <q-item v-bind="scope.itemProps">
+                                    <q-item-section avatar>
+                                        <global_image_categories :image="scope.opt.image"></global_image_categories>
+                                    </q-item-section>
+                                    <q-item-section>
+                                        <q-item-label>{{ scope.opt.label }}</q-item-label>
+                                    </q-item-section>
+                                </q-item>
+                            </template>
+                            <template v-slot:error>
+                            </template>
+                        </q-select>
+                    </div>
+                    <div class="form-box">
+                        <q-select
+                            outlined
+                            color="green-7"
+                            transition-show="flip-up"
+                            transition-hide="flip-down"
+                            v-model="implement_id"
+                            use-input
+                            label="انتخاب ادوات"
+                            :options="implements"
+                            emit-value
+                            map-options
+                            @filter="Filter_Select_Implement"
+                            :loading="loading_select_implements"
+                            behavior="menu"
+                            @change="Get_Select_Name"
+                        >
+                            <template v-slot:no-option>
+                                <q-item>
+                                    <q-item-section class="text-red">
+                                        گزینه ای یافت نشد
+                                    </q-item-section>
+                                </q-item>
+                            </template>
+                            <template v-slot:option="scope">
+                                <q-item v-bind="scope.itemProps">
+                                    <q-item-section avatar>
+                                        <global_image_implements :image="scope.opt.image"></global_image_implements>
+                                    </q-item-section>
+                                    <q-item-section>
+                                        <q-item-label>{{ scope.opt.label }}</q-item-label>
+                                    </q-item-section>
+                                </q-item>
+                            </template>
+                            <template v-slot:error>
+                            </template>
+                        </q-select>
 
-                </q-select>
+                    </div>
+                    <div class="map-text text-center text-indigo">
+                        با استفاده از نقشه زیر ، موقعیت مکانی زمین خود را انتخاب کنید تا ما بتوانیم نزدیک ترین خدمات را برای شما پیدا کنیم
+                    </div>
+                    <div class="text-center q-mt-lg">
+                        <q-btn glossy rounded color="indigo" class="open-map-btn">باز کردن نقشه</q-btn>
+                    </div>
+                    <div class="q-mt-lg q-mb-lg">
+                        <q-separator/>
+                    </div>
+                    <div class="text-center q-mt-xl">
+                        <q-btn @click="Do_Search" glossy rounded color="green"  class="open-map-btn" icon="fas fa-search q-mr-sm"> جستجو خدمات کشاورزی </q-btn>
+                    </div>
+                </template>
+                <template v-else>
+                    <div>
+                        <span class="result-title q-mr-sm">نتایج جستجو برای : </span>
+                        <span class="result-info text-red">{{category_name}}</span> / <span class="result-info text-red">{{implement_name}}</span>
+                        <q-btn @click="category_id=null;implement_id=null;show_form=true" class="float-right" color="indigo" rounded icon="fas fa-search q-mr-sm"> جستجو مجدد </q-btn>
+                    </div>
+                    <div class="q-mt-lg">
+                        <q-separator></q-separator>
+                    </div>
+
+                </template>
+
             </div>
 
 
@@ -33,5 +230,29 @@ export default {
 <style scoped>
 .title{
     font-size: 18px;
+}
+.search-img{
+    width: 60px;
+}
+.form-box{
+    margin-bottom: 45px;
+}
+.map-text {
+    margin-top: 20px;
+    font-size: 16px;
+    font-weight: 500;
+}
+
+.open-map-btn{
+    padding: 10px 40px;
+    font-size: 16px;
+}
+.result-title{
+    font-size: 14px;
+    font-weight: 500;
+}
+.result-info{
+    font-size: 15px;
+    font-weight: 550;
 }
 </style>

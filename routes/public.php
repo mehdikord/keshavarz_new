@@ -11,6 +11,7 @@ Route::prefix('news')->group(function (){
 
 Route::prefix('implements')->group(function (){
     Route::get('categories',[\App\Http\Controllers\Public\ImplementController::class,'categories']);
+    Route::get('implements',[\App\Http\Controllers\Public\ImplementController::class,'implements']);
 
 
 });

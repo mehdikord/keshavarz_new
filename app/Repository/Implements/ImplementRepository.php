@@ -4,6 +4,7 @@ namespace App\Repository\Implements;
 
 use App\Interfaces\Implements\ImplementInterface;
 use App\Models\Faq;
+use App\Models\Implement;
 use App\Models\Implement_Category;
 
 class ImplementRepository implements ImplementInterface
@@ -44,6 +45,16 @@ class ImplementRepository implements ImplementInterface
     public function categories_index()
     {
         return response_success(Implement_Category::orderBy('num','ASC')->get());
+    }
+
+    public function implement_index()
+    {
+        $data=Implement::query();
+
+        if (request()->filled('category')){
+            $data->where('implement_category_id',request('category'));
+        }
+        return response_success($data->get());
     }
 
 

@@ -12,8 +12,9 @@ interface ImplementInterface
 
     public function delete($item);
 
-
     public function categories_index();
+
+    public function implement_index();
 
 
 

@@ -14,4 +14,14 @@ class ImplementController extends Controller
     {
         $this->repository=$implement;
     }
+
+    public function categories()
+    {
+        return $this->repository->categories_index();
+    }
+
+    public function implements()
+    {
+        return $this->repository->implement_index();
+    }
 }

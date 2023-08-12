@@ -9,6 +9,9 @@ import quasarLang from 'quasar/lang/fa-IR';
 import 'quasar/dist/quasar.css';
 import '@quasar/extras/fontawesome-v6/fontawesome-v6.css'
 import {mapGetters} from "vuex";
+import Front_Global_Images_Categories from "./front/globals/Front_Global_Images_Categories.vue";
+import Front_Global_Images_Implements from "./front/globals/Front_Global_Images_Implements.vue";
+
 
 
 const App=createApp(Front_Template);
@@ -33,6 +36,13 @@ App.use(Quasar, {
 })
 App.use(Store)
 App.use(Front)
+
+// ++++++++++ Global Components ++++++++++
+App.component("global_image_categories",Front_Global_Images_Categories)
+App.component("global_image_implements",Front_Global_Images_Implements)
+
+
+
 
 // ++++++++++ Global Functions (Mixin) ++++++++++
 
