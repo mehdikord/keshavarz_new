@@ -1,6 +1,7 @@
 <script>
 import {mapActions} from "vuex";
 import NeshanMap from "@neshan-maps-platform/vue3-openlayers"
+import Front_Search_Profile from "@/front/search/Front_Search_Profile.vue";
 
 export default {
     name: "Front_Search",
@@ -10,6 +11,7 @@ export default {
     },
     components: {
         NeshanMap,
+        'search_profile' : Front_Search_Profile,
 
     },
     data(){
@@ -63,7 +65,7 @@ export default {
             if (!this.implement_id){
                 return this.NotifyError("ادوات برای جستجو انتخاب نشده")
             }
-            this.search_loading=true;
+            // this.search_loading=true;
             this.show_form=false;
         },
         Filter_Select_Category (val, update, abort) {
@@ -245,13 +247,21 @@ export default {
                     <div>
                         <span class="result-title q-mr-sm">نتایج جستجو برای : </span>
                         <span class="result-info text-red">{{category_name}}</span> / <span class="result-info text-red">{{implement_name}}</span>
-                        <q-btn @click="category_id=null;implement_id=null;show_form=true" class="float-right" color="indigo" rounded icon="fas fa-search q-mr-sm"> جستجو مجدد </q-btn>
+                        <q-btn @click="category_id=null;implement_id=null;show_form=true" class="float-right research" color="deep-orange" rounded icon="fas fa-search q-mr-sm"> جستجو مجدد </q-btn>
                     </div>
                     <div class="q-mt-lg">
                         <q-separator></q-separator>
                     </div>
                     <div class="q-mt-xl">
-                        <global_search_loading></global_search_loading>
+                        <global_search_loading v-if="search_loading"></global_search_loading>
+                        <template v-else>
+                            <div class="q-mb-md search-text text-indigo">
+                                13 کاربر برای ارائه این خدمت یافت شد
+                            </div>
+                            <search_profile v-for="i in 7" class="q-mb-md"></search_profile>
+                        </template>
+
+
 
                     </div>
 
@@ -266,7 +276,10 @@ export default {
 </template>
 
 <style scoped>
-
+.search-text{
+    font-size: 15px;
+    font-weight: 600;
+}
 .map{
     width: 100%;
     height: 400px;
@@ -301,5 +314,52 @@ export default {
 .location-select{
     font-size: 15px;
     font-weight: 550;
+}
+
+@media only screen and (max-width: 600px) {
+
+    .search-text{
+        font-size: 14px;
+        font-weight: 600;
+    }
+    .map{
+        width: 100%;
+        height: 400px;
+    }
+    .title{
+        font-size: 15px;
+    }
+    .search-img{
+        width: 45px;
+    }
+    .form-box{
+        margin-bottom: 30px;
+    }
+    .map-text {
+        margin-top: 20px;
+        font-size: 13px;
+        font-weight: 500;
+    }
+
+    .open-map-btn{
+        padding: 10px 40px;
+        font-size: 12px;
+    }
+    .result-title{
+        font-size: 14px;
+        font-weight: 500;
+    }
+    .result-info{
+        font-size: 13px;
+        font-weight: 550;
+    }
+    .location-select{
+        font-size: 14px;
+        font-weight: 550;
+    }
+    .research{
+        font-size: 11px;
+    }
+
 }
 </style>

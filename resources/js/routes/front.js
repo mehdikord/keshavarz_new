@@ -3,6 +3,7 @@ import Front_Template from "../front/template/Front_Template.vue";
 import Front_index from "../front/index/Front_index.vue";
 import Front_Search from "@/front/search/Front_Search.vue";
 import Front_News from "@/front/news/Front_News.vue";
+import Front_Provider_Profile from "@/front/provider/Front_Provider_Profile.vue";
 
 const routes = [
     {
@@ -16,6 +17,12 @@ const routes = [
         name : "search",
         component : Front_Search,
         meta : {title : 'جستجو خدمات'}
+    },
+    {
+        path : "/provider/:code",
+        name : "provider_profile",
+        component : Front_Provider_Profile,
+        meta : {title : 'پروفایل خدمات دهنده'}
     },
     {
         path : "/news",

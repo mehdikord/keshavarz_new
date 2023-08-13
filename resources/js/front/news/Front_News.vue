@@ -80,4 +80,13 @@ export default {
 .search-img{
     width: 80px;
 }
+@media only screen and (max-width: 600px) {
+
+    .title{
+        font-size: 15px;
+    }
+    .search-img{
+        width: 70px;
+    }
+}
 </style>
