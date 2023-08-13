@@ -245,7 +245,7 @@ export default {
 
 .open-map-btn{
     padding: 10px 40px;
-    font-size: 16px;
+    font-size: 14px;
 }
 .result-title{
     font-size: 14px;

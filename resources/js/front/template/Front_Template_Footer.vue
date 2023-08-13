@@ -38,8 +38,12 @@ export default {
 
                 </div>
                 <div class="col text-center">
-                    <q-icon name="fas fa-newspaper" class="icon-size"></q-icon>
-                    <div class="menu-text">اخبار روز</div>
+                    <router-link :to="{name : 'news'}">
+                        <div  :class="{'text-positive' : this.$route.name === 'news'}">
+                            <q-icon name="fas fa-newspaper" class="icon-size"></q-icon>
+                            <div class="menu-text">اخبار روز</div>
+                        </div>
+                    </router-link>
 
                 </div>
             </div>
@@ -49,14 +53,14 @@ export default {
 
 <style scoped>
 .footer-padding{
-    padding: 12px 2px;
+    padding: 10px 2px;
 }
 .icon-size{
-    font-size: 25px;
+    font-size: 20px;
 }
 .menu-text{
-    margin-top: 6px;
-    font-size: 16px;
+    margin-top: 4px;
+    font-size: 14px;
     font-weight: 600;
 }
 @media only screen and (max-width: 600px) {
