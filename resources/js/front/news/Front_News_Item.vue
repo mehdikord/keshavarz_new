@@ -12,7 +12,8 @@ export default {
         <q-card-section class="q-pa-xs">
             <div class="row">
                 <div class="col-lg-2 col-sm-2 col-xs-2 q-pa-sm mobile-padding">
-                    <q-img :src="item.image" class="image"/>
+                    <q-img v-if="item.image" :src="item.image" class="image"/>
+                    <q-img v-else src="/front/images/news.jpg" class="image" />
                 </div>
                 <div class="col-lg-10 col-sm-10 col-xs-10">
                     <div class="q-pa-sm">

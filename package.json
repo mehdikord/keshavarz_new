@@ -12,6 +12,7 @@
         "vite": "^4.0.0"
     },
     "dependencies": {
+        "@neshan-maps-platform/vue3-openlayers": "^1.0.6",
         "@quasar/extras": "^1.16.3",
         "@vdcrea/vue-leaflet": "gitlab:vdcrea/vue-leaflet",
         "@vitejs/plugin-vue": "^4.2.1",

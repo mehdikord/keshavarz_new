@@ -8,9 +8,11 @@ import quasarIconSet from 'quasar/icon-set/fontawesome-v6';
 import quasarLang from 'quasar/lang/fa-IR';
 import 'quasar/dist/quasar.css';
 import '@quasar/extras/fontawesome-v6/fontawesome-v6.css'
+import  '@neshan-maps-platform/vue3-openlayers/dist/style.css'
 import {mapGetters} from "vuex";
 import Front_Global_Images_Categories from "./front/globals/Front_Global_Images_Categories.vue";
 import Front_Global_Images_Implements from "./front/globals/Front_Global_Images_Implements.vue";
+import Front_Global_Search_Loading from "./front/globals/Front_Global_Search_Loading.vue";
 
 
 
@@ -40,6 +42,7 @@ App.use(Front)
 // ++++++++++ Global Components ++++++++++
 App.component("global_image_categories",Front_Global_Images_Categories)
 App.component("global_image_implements",Front_Global_Images_Implements)
+App.component("global_search_loading",Front_Global_Search_Loading)
 
 
 

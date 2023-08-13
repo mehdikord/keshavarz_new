@@ -1,5 +1,7 @@
 <script>
 import {mapActions} from "vuex";
+import NeshanMap from "@neshan-maps-platform/vue3-openlayers"
+
 export default {
     name: "Front_Search",
     mounted() {
@@ -7,16 +9,20 @@ export default {
       this.Get_Implements();
     },
     components: {
+        NeshanMap,
 
     },
     data(){
         return{
             errors:[],
             show_form:true,
+            show_map:false,
             category_id: null,
             implement_id: null,
+            location: [],
             category_name: null,
             implement_name: null,
+            search_loading:false,
             loading_select_category:false,
             loading_select_implements:false,
             categories :[],
@@ -51,6 +57,13 @@ export default {
             })
         },
         Do_Search(){
+            if (!this.location.length){
+                return this.NotifyError("مختصات از نقشه انتخاب نشده")
+            }
+            if (!this.implement_id){
+                return this.NotifyError("ادوات برای جستجو انتخاب نشده")
+            }
+            this.search_loading=true;
             this.show_form=false;
         },
         Filter_Select_Category (val, update, abort) {
@@ -75,8 +88,12 @@ export default {
                 }
             })
         },
-
-
+        Map_Marker(e){
+            if (e.coords){
+                this.location.push(e.coords[1]);
+                this.location.push(e.coords[0]);
+            }
+        }
 
     },
     computed:{
@@ -198,7 +215,24 @@ export default {
                         با استفاده از نقشه زیر ، موقعیت مکانی زمین خود را انتخاب کنید تا ما بتوانیم نزدیک ترین خدمات را برای شما پیدا کنیم
                     </div>
                     <div class="text-center q-mt-lg">
-                        <q-btn glossy rounded color="indigo" class="open-map-btn">باز کردن نقشه</q-btn>
+                        <q-btn @click="show_map=!show_map" glossy rounded color="indigo" class="open-map-btn">باز کردن نقشه</q-btn>
+                    </div>
+                    <div v-show="location.length" class="q-mt-md text-positive text-center location-select">
+                        <q-icon name="fas fa-check"/>
+                        <span class="q-ml-sm">مختصات انتخاب شده است</span>
+                    </div>
+                    <div class="q-mt-md q-mb-md">
+                           <div v-if="show_map" class="map">
+                               <NeshanMap
+                                   mapKey="web.eaf4d6d0f42a400bb9583fbd8496947f"
+                                   :center="{ latitude: 35.70222201840939, longitude: 51.35178336960962 }"
+                                   :zoom="10"
+                                   hide-layers
+                                   :hide-search-container="true"
+                                   @on-click="Map_Marker"
+
+                               />
+                           </div>
                     </div>
                     <div class="q-mt-lg q-mb-lg">
                         <q-separator/>
@@ -216,6 +250,10 @@ export default {
                     <div class="q-mt-lg">
                         <q-separator></q-separator>
                     </div>
+                    <div class="q-mt-xl">
+                        <global_search_loading></global_search_loading>
+
+                    </div>
 
                 </template>
 
@@ -228,6 +266,11 @@ export default {
 </template>
 
 <style scoped>
+
+.map{
+    width: 100%;
+    height: 400px;
+}
 .title{
     font-size: 18px;
 }
@@ -252,6 +295,10 @@ export default {
     font-weight: 500;
 }
 .result-info{
+    font-size: 15px;
+    font-weight: 550;
+}
+.location-select{
     font-size: 15px;
     font-weight: 550;
 }
