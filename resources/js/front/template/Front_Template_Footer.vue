@@ -9,9 +9,12 @@ export default {
         <div class="footer-padding">
             <div class="row no-wrap justify-center">
                 <div class="col text-center">
-                    <q-icon name="fas fa-user" class="icon-size"></q-icon>
-                    <div class="menu-text">حساب کاربری</div>
-
+                    <router-link :to="{name : 'profile'}">
+                        <div  :class="{'text-positive' : this.$route.name === 'profile'}">
+                        <q-icon name="fas fa-user" class="icon-size"></q-icon>
+                        <div class="menu-text">حساب کاربری</div>
+                        </div>
+                    </router-link>
                 </div>
                 <div class="col text-center">
                     <router-link :to="{name : 'search'}">
@@ -28,7 +31,6 @@ export default {
                             <q-icon name="fab fa-pagelines" class="icon-size"></q-icon>
                             <div class="menu-text">کشاورز</div>
                         </div>
-
                     </router-link>
 
                 </div>

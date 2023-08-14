@@ -10,6 +10,7 @@ const store = createStore({
     state(){
         return {
             Auth_Manage : [],
+            Auth_User : [],
 
         }
     },
@@ -45,7 +46,15 @@ const store = createStore({
                 }
                 state.Auth_Manage = item
             }
+        },
+        AuthUserLogin(state,item){
+            state.Auth_Manage = item
+            localStorage.setItem('user_auth_token',item.access_token)
+            localStorage.setItem('user_auth_user',JSON.stringify(item.user))
         }
+
+
+
     },
     getters : {
         AuthManageCheck : state => {
@@ -57,6 +66,15 @@ const store = createStore({
         AutManageToken : state => {
             return state.Auth_Manage.token;
         },
+        AuthUserCheck : state => {
+            return !!state.Auth_User.token;
+        },
+        AuthUserUser : state => {
+            return state.Auth_User.user;
+        },
+        AutUserToken : state => {
+            return state.Auth_User.token;
+        },
 
     },
     actions : {
@@ -65,7 +83,14 @@ const store = createStore({
         },
         Auth_Manage_Logout(state){
             state.commit('AuthManageLogout')
-        }
+        },
+        Auth_User_Login(state,item){
+            state.commit('AuthUserLogin',item)
+        },
+        Auth_User_Logout(state){
+            state.commit('AuthUserLogout')
+        },
+
     }
 });
 

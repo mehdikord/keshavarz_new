@@ -4,6 +4,7 @@ import Front_index from "../front/index/Front_index.vue";
 import Front_Search from "@/front/search/Front_Search.vue";
 import Front_News from "@/front/news/Front_News.vue";
 import Front_Provider_Profile from "@/front/provider/Front_Provider_Profile.vue";
+import Front_Profile from "../front/profile/Front_Profile.vue";
 
 const routes = [
     {
@@ -29,6 +30,12 @@ const routes = [
         name : "news",
         component : Front_News,
         meta : {title : 'اخبار کشاورزی'}
+    },
+    {
+        path : "/profile",
+        name : "profile",
+        component : Front_Profile,
+        meta : {title : 'حساب کاربری'}
     },
 
 
