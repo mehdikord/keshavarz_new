@@ -55,10 +55,10 @@ App.component('Error_Validation',Error_Validation)
 
 App.mixin({
     beforeCreate() {
-        this.$store.commit('AuthManageSync');
+        this.$store.commit('AuthUserSync');
     },
     created() {
-        axios.defaults.headers.common['Authorization'] ="Bearer "+this.AuthToken
+        axios.defaults.headers.common['Authorization'] ="Bearer "+this.UserToken
 
     },
     //Methods
@@ -119,6 +119,7 @@ App.mixin({
     computed : {
         ...mapGetters({
             AuthToken : "AutManageToken",
+            UserToken : "AutUserToken",
         })
     }
 

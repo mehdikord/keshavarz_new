@@ -51,14 +51,14 @@ const store = createStore({
             if (localStorage.getItem('user_auth_token') && localStorage.getItem('user_auth_user.')){
                 var item;
                 item = {
-                    token : localStorage.getItem('manage_auth_token'),
-                    user : JSON.parse(localStorage.getItem('manage_auth_user')),
+                    token : localStorage.getItem('user_auth_token'),
+                    user : JSON.parse(localStorage.getItem('user_auth_user')),
                 }
-                state.Auth_Manage = item
+                state.Auth_User = item
             }
         },
         AuthUserLogin(state,item){
-            state.Auth_Manage = item
+            state.Auth_User = item
             localStorage.setItem('user_auth_token',item.token)
             localStorage.setItem('user_auth_user',JSON.stringify(item.user))
         }
