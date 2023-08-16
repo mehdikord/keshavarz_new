@@ -68,7 +68,6 @@ export default {
         Login() {
             this.loading = true;
             axios.post('auth/login', this.login).then(res => {
-                console.log(res.data)
                 this.Auth_Manage_Login(res.data)
                 this.NotifySuccess('You have successfully logged into your account');
                 return this.$router.push({name:'dashboard'})

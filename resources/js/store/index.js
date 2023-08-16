@@ -47,9 +47,19 @@ const store = createStore({
                 state.Auth_Manage = item
             }
         },
+        AuthUserSync(state){
+            if (localStorage.getItem('user_auth_token') && localStorage.getItem('user_auth_user.')){
+                var item;
+                item = {
+                    token : localStorage.getItem('manage_auth_token'),
+                    user : JSON.parse(localStorage.getItem('manage_auth_user')),
+                }
+                state.Auth_Manage = item
+            }
+        },
         AuthUserLogin(state,item){
             state.Auth_Manage = item
-            localStorage.setItem('user_auth_token',item.access_token)
+            localStorage.setItem('user_auth_token',item.token)
             localStorage.setItem('user_auth_user',JSON.stringify(item.user))
         }
 

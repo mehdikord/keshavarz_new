@@ -23,7 +23,7 @@ class AuthUserLoginCheckRequest extends FormRequest
     {
 
         return [
-            'phone' => 'required|numeric|regex:^(?:989|09)9\d{8}$',
+            'phone' => 'required|numeric|regex:/^09[0-9]{9}$/',
             'code' => 'required|numeric',
         ];
     }

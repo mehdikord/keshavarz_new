@@ -13,6 +13,8 @@ import {mapGetters} from "vuex";
 import Front_Global_Images_Categories from "./front/globals/Front_Global_Images_Categories.vue";
 import Front_Global_Images_Implements from "./front/globals/Front_Global_Images_Implements.vue";
 import Front_Global_Search_Loading from "./front/globals/Front_Global_Search_Loading.vue";
+import Error_Validation from "./manage/errors/Error_Validation.vue";
+import Helper from "./helpers/Helper";
 
 
 
@@ -38,11 +40,13 @@ App.use(Quasar, {
 })
 App.use(Store)
 App.use(Front)
+window.Helper = Helper
 
 // ++++++++++ Global Components ++++++++++
 App.component("global_image_categories",Front_Global_Images_Categories)
 App.component("global_image_implements",Front_Global_Images_Implements)
 App.component("global_search_loading",Front_Global_Search_Loading)
+App.component('Error_Validation',Error_Validation)
 
 
 
@@ -147,7 +151,31 @@ App.config.globalProperties.$filters = {
             extra = "..."
         }
         return text.substring(0,len) + extra;
+    },
+    persianDigitsToEnglish(persianNumber) {
+    const persianDigits = ["۰", "۱", "۲", "۳", "۴", "۵", "۶", "۷", "۸", "۹"];
+    const englishDigits = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"];
+    if (!persianNumber){
+        return persianNumber;
     }
+    const persianNumberStr = persianNumber.toString();
+    let englishNumberStr = "";
+
+    for (let i = 0; i < persianNumberStr.length; i++) {
+        const digit = persianNumberStr[i];
+        const digitIndex = persianDigits.indexOf(digit);
+
+        if (digitIndex !== -1) {
+            englishNumberStr += englishDigits[digitIndex];
+        } else {
+            englishNumberStr += digit;
+        }
+    }
+
+    return englishNumberStr;
+}
+
+
 }
 
 // ++++++++++++++++++++
