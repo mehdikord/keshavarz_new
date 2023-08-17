@@ -95,6 +95,8 @@ export default {
             axios.post('users/auth/check',data).then(res => {
                 console.log(res.data.result);
                 this.Auth_User_Login(res.data.result)
+                localStorage.removeItem('login_phone')
+                localStorage.removeItem('login_referral')
                 this.NotifySuccess('باموفقیت وارد حساب کاربریتان شدید');
                 return this.$router.push({name:'index'})
 
@@ -229,7 +231,43 @@ export default {
     font-size: 15px;
     padding: 14px 5px;
 }
+@media only screen and (max-width: 600px) {
 
+    .login-title{
+        font-size: 16px;
+    }
+    .image{
+        width: 120px;
+    }
+    .info-text{
+        font-size: 14px;
+    }
+    .input-box{
+        margin-top: 30px;
+        margin-bottom: 40px;
+        padding: 0 2px;
+    }
+    .sms-input-box{
+        margin-top: 40px;
+        margin-bottom: 18px;
+        padding: 0 2px;
+    }
+    .referral{
+        margin-top: 20px;
+    }
+    .btn-box{
+        padding: 0 2px;
+        margin-bottom: 25px;
+
+    }
+    .btn-class{
+        width: 100%;
+        font-size: 14px;
+        padding: 14px 5px;
+    }
+
+
+}
 
 
 </style>

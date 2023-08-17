@@ -15,6 +15,7 @@ import Front_Global_Images_Implements from "./front/globals/Front_Global_Images_
 import Front_Global_Search_Loading from "./front/globals/Front_Global_Search_Loading.vue";
 import Error_Validation from "./manage/errors/Error_Validation.vue";
 import Helper from "./helpers/Helper";
+import Front_Global_Info_Loading from "./front/globals/Front_Global_Info_Loading.vue";
 
 
 
@@ -46,6 +47,7 @@ window.Helper = Helper
 App.component("global_image_categories",Front_Global_Images_Categories)
 App.component("global_image_implements",Front_Global_Images_Implements)
 App.component("global_search_loading",Front_Global_Search_Loading)
+App.component("global_info_loading",Front_Global_Info_Loading)
 App.component('Error_Validation',Error_Validation)
 
 
@@ -115,11 +117,15 @@ App.mixin({
             return Helper.HelperValidationCheck(errors,field);
 
         },
+        AuthUserCheck(){
+            return this.UserCheck;
+        }
     },
     computed : {
         ...mapGetters({
             AuthToken : "AutManageToken",
             UserToken : "AutUserToken",
+            UserCheck : "AuthUserCheck"
         })
     }
 

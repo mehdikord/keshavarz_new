@@ -50,7 +50,7 @@ class AuthRepository implements AuthInterface
             if (!helpers_check_auth_sms_time($request->phone)){
                 return response_custom_error("مدت زمان ارسال پیام به پایان رسیده است");
             }
-            $user = User::where('phone',$request->phone)->first();
+            $user = User::where('phone',$request->phone)->select(['id','name','email','phone','profile','is_active'])->first();
             $token =  Auth::guard('users')->login($user);
             helper_remove_auth_code($request->phone);
             return response_success(

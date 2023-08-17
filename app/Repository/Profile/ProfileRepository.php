@@ -12,4 +12,23 @@ class ProfileRepository implements ProfileInterface
         return response_success(auth('admin')->user(),'management profile');
     }
 
+    public function user_me()
+    {
+        $user = auth('users')->user();
+        $user->load('province')->load('city');
+        return response_success($user);
+    }
+
+    public function user_update($request)
+    {
+
+    }
+
+    public function user_update_image($request)
+    {
+
+    }
+
+
+
 }

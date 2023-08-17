@@ -4,8 +4,9 @@ import members from "./modules/users/members";
 import faqs from "./modules/faqs/faqs";
 import brands from "./modules/brands/brands";
 import categories from "./modules/categories/categories";
-import products from "./modules/products/products"
-import implement from "./modules/implements/implements"
+import products from "./modules/products/products";
+import implement from "./modules/implements/implements";
+import profiles from "./modules/profiles/Profiles";
 const store = createStore({
     state(){
         return {
@@ -22,7 +23,8 @@ const store = createStore({
         brands,
         categories,
         products,
-        implement
+        implement,
+        profiles
 
     },
 
@@ -48,7 +50,7 @@ const store = createStore({
             }
         },
         AuthUserSync(state){
-            if (localStorage.getItem('user_auth_token') && localStorage.getItem('user_auth_user.')){
+            if (localStorage.getItem('user_auth_token') && localStorage.getItem('user_auth_user')){
                 var item;
                 item = {
                     token : localStorage.getItem('user_auth_token'),
