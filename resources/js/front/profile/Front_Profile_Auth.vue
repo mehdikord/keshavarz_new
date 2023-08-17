@@ -121,8 +121,8 @@ export default {
 </script>
 
 <template>
-    <div class="row q-mt-xl justify-center">
-        <div class="col-xl-3 col-lg-3 col-md-4 col-sm-12 col-xs-12">
+    <div class="row justify-center">
+        <div class="col-xl-3 col-lg-4 col-md-5 col-sm-12 col-xs-12">
             <q-slide-transition>
                 <q-card v-if="login_form" class="shadow-5">
                 <q-card-section class="bg-green-7 text-center text-white">

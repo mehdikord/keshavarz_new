@@ -1,10 +1,10 @@
 <template>
-    <div class="text-center q-my-xl">
+    <div class="text-center q-my-md">
         <q-spinner-hourglass
             color="positive"
-            size="90px"
+            size="50px"
         />
-        <h6 class="text-center q-mt-md size">درحال جستجو خدمات</h6>
+        <h6 class="text-center q-mt-md size"> درحال دریافت اطلاعات </h6>
     </div>
 </template>
 

@@ -8,7 +8,7 @@ name: "Front_Profile",
     'profile_auth' : Front_Profile_Auth,
     },
     mounted() {
-    // this.GetProfile();
+    this.GetProfile();
     },
     data(){
         return {
@@ -53,7 +53,7 @@ name: "Front_Profile",
                         <template v-if="!user">
                             <global_info_loading></global_info_loading>
                         </template>
-                        <div v-else class="row">
+                        <div v-else class="row items-center">
                             <div class="col-xl-1 col-lg-1 col-md-1">
                                 <q-img src="/front/images/user.png" class="profile-image">
                                     <div @click="EditImageDialog=true" class="absolute-bottom-left edit-icon cursor-pointer">
@@ -90,12 +90,34 @@ name: "Front_Profile",
                                     </q-card>
                                 </q-dialog>
                             </div>
-                            <div class="col-xl-11 col-lg-11 col-md-11 q-px-md">
+                            <div class="col-xl-11 col-lg-11 col-md-11 q-px-lg">
 
                               <div class="row q-gutter-xl">
                                   <div class="col-auto">
-                                      <span class="profile-title text-grey-8">نام کامل : </span>
-                                      <span class="profile-text q-ml-xs">مهدی کرد</span>
+                                      <span class="profile-title text-blue-8">نام کامل : </span>
+                                      <span class="profile-text q-ml-xs">{{user.name}}</span>
+                                  </div>
+                                  <div class="col-auto">
+                                      <span class="profile-title text-blue-8">شماره موبایل : </span>
+                                      <span class="profile-text q-ml-xs">{{user.phone}}</span>
+                                  </div>
+                                  <div class="col-auto">
+                                      <span class="profile-title text-blue-8">کد ملی : </span>
+                                      <span class="profile-text q-ml-xs">{{user.national_code ?? '---'}}</span>
+                                  </div>
+                                  <div class="col-auto">
+                                      <span class="profile-title text-blue-8">استان : </span>
+                                      <span class="profile-text q-ml-xs">
+                                          <template v-if="user.province">{{user.province.name}}</template>
+                                          <template v-else>---</template>
+                                      </span>
+                                  </div>
+                                  <div class="col-auto">
+                                      <span class="profile-title text-blue-8">شهر : </span>
+                                      <span class="profile-text q-ml-xs">
+                                          <template v-if="user.city">{{user.city.name}}</template>
+                                          <template v-else>---</template>
+                                      </span>
                                   </div>
 
                               </div>
