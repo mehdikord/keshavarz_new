@@ -4,7 +4,7 @@
             color="positive"
             size="50px"
         />
-        <h6 class="text-center q-mt-md size"> درحال دریافت اطلاعات </h6>
+        <h6 class="text-center q-mt-xs size"> درحال دریافت اطلاعات </h6>
     </div>
 </template>
 
@@ -16,6 +16,8 @@ export default {
 
 <style scoped>
 .size{
-    font-size: 14px!important;
+    font-size: 13px!important;
 }
+
+
 </style>

@@ -177,26 +177,26 @@ export default {
                         <div class="col-xl-11 col-lg-11 col-md-11 q-px-lg">
 
                             <div class="row q-gutter-x-xl q-gutter-y-lg q-px-md">
-                                <div class="col-auto col-sm-12 col-xs-12">
+                                <div class="col-auto col-md-3 col-sm-12 col-xs-12">
                                     <span class="profile-title text-blue-8">نام کامل : </span>
                                     <span class="profile-text q-ml-xs">{{user.name}}</span>
                                 </div>
-                                <div class="col-auto col-sm-12 col-xs-12">
+                                <div class="col-auto col-md-3 col-sm-12 col-xs-12">
                                     <span class="profile-title text-blue-8">شماره موبایل : </span>
                                     <span class="profile-text q-ml-xs">{{user.phone}}</span>
                                 </div>
-                                <div class="col-auto col-sm-12 col-xs-12">
+                                <div class="col-auto col-md-3 col-sm-12 col-xs-12">
                                     <span class="profile-title text-blue-8">کد ملی : </span>
                                     <span class="profile-text q-ml-xs">{{user.national_code ?? '---'}}</span>
                                 </div>
-                                <div class="col-auto col-sm-12 col-xs-12">
+                                <div class="col-auto col-md-3 col-sm-12 col-xs-12">
                                     <span class="profile-title text-blue-8">استان : </span>
                                     <span class="profile-text q-ml-xs">
                                           <template v-if="user.province">{{user.province.name}}</template>
                                           <template v-else>---</template>
                                       </span>
                                 </div>
-                                <div class="col-auto col-sm-12 col-xs-12">
+                                <div class="col-auto col-md-3 col-sm-12 col-xs-12">
                                     <span class="profile-title text-blue-8">شهر : </span>
                                     <span class="profile-text q-ml-xs">
                                           <template v-if="user.city">{{user.city.name}}</template>
@@ -210,7 +210,7 @@ export default {
                                     </p>
                                 </div>
                                 <div class="col-12 text-right">
-                                    <q-btn @click="EditInfoDialog = true" color="orange-9" dense icon="fas fa-edit q-mr-sm" class="profile-edit-btn">ویرایش اطلاعات کاربری</q-btn>
+                                    <q-btn @click="EditInfoDialog = true" color="indigo" glossy dense icon="fas fa-edit q-mr-sm" class="profile-edit-btn">ویرایش اطلاعات کاربری</q-btn>
                                 </div>
 
                             </div>
@@ -244,8 +244,8 @@ export default {
                             </template>
                         </q-file>
                         <div class="edit-btn-box">
-                            <q-btn @click="UpdateImage" :loading="edit_image_loading" color="green-7" class="edit-btn" icon="fas fa-edit q-mr-sm">ویرایش تصویر</q-btn>
-                            <q-btn @click="RemoveImage" :loading="remove_image_loading" color="red" class="edit-btn q-ml-sm" icon="fas fa-times q-mr-sm" :disable="!user.profile">حذف تصویر</q-btn>
+                            <q-btn glossy @click="UpdateImage" :loading="edit_image_loading" color="green-7" class="edit-btn" icon="fas fa-edit q-mr-sm">ویرایش تصویر</q-btn>
+                            <q-btn glossy @click="RemoveImage" :loading="remove_image_loading" color="red" class="edit-btn q-ml-sm" icon="fas fa-times q-mr-sm" :disable="!user.profile">حذف تصویر</q-btn>
                         </div>
                     </q-card-section>
 
@@ -321,8 +321,8 @@ export default {
                             </q-input>
                         </div>
                         <div class="btn-box text-right">
-                            <q-btn :loading="edit_loading" @click="UpdateInfo" class="edit-form-btn" color="green-7" icon="fas fa-check q-mr-xs">ویرایش اطلاعات</q-btn>
-                            <q-btn v-close-popup color="grey-7" icon="fas fa-times q-mr-xs" class="q-ml-sm edit-form-btn">بستن</q-btn>
+                            <q-btn glossy :loading="edit_loading" @click="UpdateInfo" class="edit-form-btn" color="green-7" icon="fas fa-check q-mr-xs">ویرایش اطلاعات</q-btn>
+                            <q-btn glossy v-close-popup color="grey-7" icon="fas fa-times q-mr-xs" class="q-ml-sm edit-form-btn">بستن</q-btn>
                         </div>
                     </q-card-section>
 

@@ -7,6 +7,7 @@ import categories from "./modules/categories/categories";
 import products from "./modules/products/products";
 import implement from "./modules/implements/implements";
 import profiles from "./modules/profiles/Profiles";
+import plans from "./modules/plans/Plans";
 const store = createStore({
     state(){
         return {
@@ -24,7 +25,8 @@ const store = createStore({
         categories,
         products,
         implement,
-        profiles
+        profiles,
+        plans
 
     },
 
