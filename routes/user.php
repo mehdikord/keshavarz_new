@@ -17,6 +17,22 @@ Route::middleware(['auth:users'])->group(function (){
 
     });
 
+    Route::prefix('plans')->group(function (){
+
+        Route::prefix('customer')->group(function (){
+            Route::get('buy/{plan}',[\App\Http\Controllers\User\Plans\PlanController::class,'customer_buy']);
+            Route::get('active',[\App\Http\Controllers\User\Plans\PlanController::class,'customer_active']);
+            Route::get('all',[\App\Http\Controllers\User\Plans\PlanController::class,'customer_all']);
+        });
+
+        Route::prefix('provider')->group(function (){
+            Route::get('buy/{plan}',[\App\Http\Controllers\User\Plans\PlanController::class,'provider_buy']);
+            Route::get('active',[\App\Http\Controllers\User\Plans\PlanController::class,'provider_active']);
+            Route::get('all',[\App\Http\Controllers\User\Plans\PlanController::class,'provider_all']);
+
+        });
+
+    });
 
 
 

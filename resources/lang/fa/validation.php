@@ -194,6 +194,7 @@ return [
         'province_id' => 'استان',
         'city_id' => 'شهر',
         'national_code' => 'کد ملی',
+        'image' => 'تصویر انتخاب شده',
     ],
 
 ];

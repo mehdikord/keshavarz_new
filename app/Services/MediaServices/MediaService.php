@@ -48,6 +48,17 @@ class MediaService{
         return true;
     }
 
+    public function update_auth_user_profile($request)
+    {
+        $image=null;
+        if ($request->hasFile('image')){
+            $file = $request->file('image');
+            $image = $this->store_image($file,'users/profile');
+        }
+        auth('users')->user()->update(['profile' => $image]);
+        return $image;
+    }
+
 
 
 

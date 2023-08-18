@@ -68,6 +68,41 @@ class User extends Authenticatable implements JWTSubject
     }
 
 
+    public function gallery()
+    {
+        return $this->hasMany(User_Gallery::class,'user_id');
+    }
+
+
+    public function customer_plans()
+    {
+        return $this->hasMany(User_Customer_Plan::class,'user_id');
+    }
+
+    public function provider_plans()
+    {
+        return $this->hasMany(User_Provider_Plan::class,'user_id');
+    }
+    public function customer_plan_active_check()
+    {
+        return $this->customer_plans()->where('is_active',true)->exists();
+    }
+    public function customer_plan_active()
+    {
+        return $this->customer_plans()->where('is_active',true)->first();
+    }
+
+    public function provider_plan_active_check()
+    {
+        return $this->provider_plans()->where('is_active',true)->exists();
+    }
+
+    public function provider_plan_active()
+    {
+        return $this->provider_plans()->where('is_active',true)->first();
+    }
+
+
     /**
      * Get the identifier that will be stored in the subject claim of the JWT.
      *

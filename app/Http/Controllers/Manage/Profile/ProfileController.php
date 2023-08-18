@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Manage\Profile;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Single\SingleImageUpdateRequest;
 use App\Interfaces\Profile\ProfileInterface;
 use Illuminate\Http\Request;
 
@@ -18,4 +19,6 @@ class ProfileController extends Controller
     {
         return $this->repository->manage_me();
     }
+
+
 }
