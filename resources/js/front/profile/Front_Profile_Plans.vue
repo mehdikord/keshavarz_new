@@ -16,7 +16,9 @@ export default {
                         <global_info_loading></global_info_loading>
                     </template>
                     <div v-else class="row">
-
+                        <div class="plan-title text-deep-orange-9">
+                            اشتراک دریافت خدمات :
+                        </div>
                     </div>
                 </q-card-section>
             </q-card>
@@ -31,6 +33,10 @@ export default {
     font-size: 16px;
     font-weight: 700;
 }
+.plan-title{
+    font-size: 14px;
+    font-weight: 500;
+}
 
 @media only screen and (max-width: 600px) {
 
@@ -38,6 +44,10 @@ export default {
         font-size: 14px;
         font-weight: 600;
         text-align: center;
+    }
+    .plan-title{
+        font-size: 13px;
+        font-weight: 450;
     }
 
 
