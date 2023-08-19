@@ -1,8 +1,11 @@
 @import url('https://fonts.googleapis.com/css2?family=Vazirmatn:wght@100;200;300;400;500;600;700;800;900&display=swap');
-
+@import url('https://db.onlinewebfonts.com/c/71cdabe63e937be602d7924d36838344?family=IRANSansDN');
 body{
     font-family: 'Vazirmatn', sans-serif !important;
 
+}
+.font-iransans{
+    font-family: 'IRANSansDN', sans-serif !important;
 }
 /* width */
 /*::-webkit-scrollbar {*/
