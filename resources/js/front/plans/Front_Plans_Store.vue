@@ -1,10 +1,12 @@
 <script>
 import Front_Plans_Customers from "./Front_Plans_Customers.vue";
+import Front_Plans_Providers from "@/front/plans/Front_Plans_Providers.vue";
 
 export default {
     name: "Front_Plans_Store",
     components:{
-      'customer_plans' : Front_Plans_Customers,
+        'customer_plans' : Front_Plans_Customers,
+        'provider_plans' : Front_Plans_Providers,
 
     },
     data(){
@@ -61,8 +63,12 @@ export default {
                 </div>
             </div>
             <div class="q-mt-lg">
-                <customer_plans></customer_plans>
-
+                <q-slide-transition>
+                    <customer_plans v-show="plan_select==='customer'"></customer_plans>
+                </q-slide-transition>
+                <q-slide-transition>
+                    <provider_plans v-show="plan_select==='provider'"></provider_plans>
+                </q-slide-transition>
             </div>
 
         </div>
