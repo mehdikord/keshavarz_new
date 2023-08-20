@@ -14,11 +14,22 @@ class PlansRepository implements PlansInterface
 {
 
     public ZarinpalService $zarinpal_service;
+
     public function __construct()
     {
         $this->zarinpal_service = new ZarinpalService();
     }
 
+    public function index_customer()
+    {
+        return Customer_Plan::OrderByDesc('id')->withCount('invoices')->get();
+    }
+
+    public function index_provider()
+    {
+        return Provider_Plan::OrderByDesc('id')->withCount('invoices')->get();
+
+    }
 
 
     public function customer_buy_plan($plan)

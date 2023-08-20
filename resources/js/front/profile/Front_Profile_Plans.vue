@@ -40,7 +40,7 @@ export default {
                 <q-card-section class="bg-green-6">
                     <div class="head-title text-white">اشتراک های فعال</div>
                 </q-card-section>
-                <q-card-section>
+                <q-card-section class="mobile-plan-card-top">
                     <div class="plan-title text-indigo text-center">
                         اشتراک دریافت خدمات
                     </div>
@@ -57,18 +57,18 @@ export default {
                                         <q-icon class="card-active-icon" name="fas fa-check-circle fa-beat"/>
                                     </q-card-section>
                                 </q-card>
-                                <q-card v-else class="bg-indigo-3 shadow-8 cursor-pointer">
+                                <q-card v-else class="bg-teal-7 shadow-8 cursor-pointer">
                                     <router-link :to="{name : 'plans'}">
-                                        <q-card-section>
+                                        <q-card-section class="mobile-plan-card">
                                             <div class="row">
-                                                <div class="col-lg-3 text-center">
+                                                <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3 text-center">
                                                     <q-img src="/front/images/tractor.png" class="buy-img" />
                                                 </div>
-                                                <div class="col-lg-9 q-pl-md">
-                                                    <div class="text-black buy-card-title font-iransans">
+                                                <div class="col-lg-9 col-md-3 col-sm-9 col-xs-9 q-pl-md">
+                                                    <div class="text-white buy-card-title font-iransans">
                                                         خرید اشتراک دریافت خدمات
                                                     </div>
-                                                    <div class="buy-card-subtitle text-grey-8">
+                                                    <div class="buy-card-subtitle text-grey-3 text-justify">
                                                         با خرید اشتراک دریافت خدمات کشاورز ، از امکانات کامل سیستم کشاورز برای جستجو و دریافت ادوات و خدمات کشاورزی بهره‌مند شوید
                                                     </div>
                                                 </div>
@@ -112,7 +112,7 @@ export default {
     font-weight: 500;
 }
 .buy-img{
-    width: 125px;
+    width: 100px;
 }
 .card-active-icon{
     font-size: 28px;
@@ -120,6 +120,12 @@ export default {
 
 @media only screen and (max-width: 600px) {
 
+    .mobile-plan-card{
+        padding: 0 8px;
+    }
+    .mobile-plan-card-top{
+        padding: 15px 5px;
+    }
     .head-title{
         font-size: 14px;
         font-weight: 600;
@@ -130,14 +136,26 @@ export default {
         font-weight: 450;
     }
     .not-active{
-        font-size: 12px;
-        font-weight: 400;
-    }
-    .buy-btn{
         font-size: 13px;
-        font-weight: 600;
+        font-weight: 500;
     }
 
+    .buy-card-title{
+        font-size: 19px;
+        font-weight: 750;
+        margin-top: 8px;
+        margin-bottom: 8px;
+    }
+    .buy-card-subtitle{
+        font-size: 13px;
+        font-weight: 450;
+    }
+    .buy-img{
+        width: 85px;
+    }
+    .card-active-icon{
+        font-size: 19px;
+    }
 }
 
 

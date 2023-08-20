@@ -1,9 +1,35 @@
 <script>
+import {mapActions} from "vuex";
 import Front_Skeleton_Plans from "../skeleton/Front_Skeleton_Plans.vue";
 import Front_Plans_Item from "./Front_Plans_Item.vue";
 
 export default {
     name: "Front_Plans_Customers",
+    mounted() {
+        this.GetPlans();
+    },
+    data(){
+      return{
+          plans:[],
+          loading:false,
+      }
+    },
+    methods:{
+        ...mapActions([
+           "PlansStoreIndexCustomer",
+        ]),
+        GetPlans(){
+            this.loading=true;
+            this.PlansStoreIndexCustomer().then(res => {
+                this.loading=false;
+                this.plans = res.data.result;
+            }).catch(error => {
+                this.loading=false;
+                return this.NotifyServerError();
+
+            })
+        }
+    },
     components:{
         'skeleton' : Front_Skeleton_Plans,
         'plan_item' : Front_Plans_Item,
@@ -13,9 +39,15 @@ export default {
 
 <template>
     <div class="row">
-        <div v-for="i in 6" class="box-padding col-xl-3 col-lg-4 col-md-6 col-sm-12 col-xs-12">
-            <plan_item :item="{name:'اشتراک طلایی 6 ماهه',access:6}"/>
+
+        <div v-if="loading" v-for="i in 4" class="box-padding col-xl-3 col-lg-4 col-md-6 col-sm-12 col-xs-12">
+            <skeleton/>
         </div>
+
+        <div v-else v-for="plan in plans" class="box-padding col-xl-3 col-lg-4 col-md-6 col-sm-12 col-xs-12">
+            <plan_item :item="plan"/>
+        </div>
+
     </div>
 </template>
 

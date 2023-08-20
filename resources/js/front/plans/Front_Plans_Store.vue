@@ -32,7 +32,7 @@ export default {
             <hr>
             <div class="row">
                 <div class="col-12">
-                    <q-banner dense class="bg-teal text-white reserve-text">
+                    <q-banner dense class="bg-teal-8 text-white reserve-text">
                         <q-icon name="fas fa-info-circle"/>
                         چنانچه اشتراک فعالی داشته باشید ، اشتراک جدید خریداری شده به صورت <strong> رزرو </strong> برای شما ثبت و به صورت خودکار اعمال میشود.
                     </q-banner>
