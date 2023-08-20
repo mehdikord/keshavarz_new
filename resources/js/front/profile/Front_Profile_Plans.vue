@@ -121,13 +121,13 @@ export default {
 @media only screen and (max-width: 600px) {
 
     .mobile-plan-card{
-        padding: 0 8px;
+        padding: 18px 8px;
     }
     .mobile-plan-card-top{
         padding: 15px 5px;
     }
     .head-title{
-        font-size: 14px;
+        font-size: 16px;
         font-weight: 600;
         text-align: center;
     }
