@@ -210,7 +210,7 @@ export default {
                                     </p>
                                 </div>
                                 <div class="col-12 text-right">
-                                    <q-btn @click="EditInfoDialog = true" color="indigo" glossy dense icon="fas fa-edit q-mr-sm" class="profile-edit-btn">ویرایش اطلاعات کاربری</q-btn>
+                                    <q-btn @click="EditInfoDialog = true" color="indigo" glossy icon="fas fa-edit q-mr-sm" class="profile-edit-btn">ویرایش اطلاعات کاربری</q-btn>
                                 </div>
 
                             </div>
@@ -338,7 +338,7 @@ export default {
     font-size: 13px;
 }
 .head-title{
-    font-size: 16px;
+    font-size: 18px;
     font-weight: 700;
 }
 .profile-image{
@@ -392,7 +392,7 @@ export default {
         font-size: 12px;
     }
     .head-title{
-        font-size: 14px;
+        font-size: 16px;
         font-weight: 600;
         text-align: center;
     }
