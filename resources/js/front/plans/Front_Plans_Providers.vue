@@ -12,6 +12,7 @@ export default {
         return{
             plans:[],
             loading:false,
+            BuyDialog:[]
         }
     },
     methods:{
@@ -45,7 +46,33 @@ export default {
         </div>
 
         <div v-else v-for="plan in plans" class="box-padding col-xl-3 col-lg-4 col-md-6 col-sm-12 col-xs-12">
-            <plan_item :item="plan"/>
+            <plan_item @click="BuyDialog[plan.id] = true" :item="plan"/>
+            <q-dialog position="top" v-model="BuyDialog[plan.id]">
+                <q-card class="buy-card">
+                    <q-card-section class="text-center invoice-header bg-green-7 text-white">
+                        خرید {{plan.title}}
+                    </q-card-section>
+                    <q-card-section class="q-px-xs">
+                        <q-banner class="bg-teal-10 text-white" rounded>
+                            <q-icon name="fas fa-info-circle fa-2x q-mr-sm"></q-icon>
+                            <span class="invoice-text">
+                                کاربر گرامی بعد از خرید اشتراک ، خدمات اپلیکیشن کشاورز بلافاصله برای شما به صورت خودکار فعال میشود .
+                            </span>
+                        </q-banner>
+                        <div class="q-mt-md">
+                            <div class="invoice-info-title text-red text-center">
+                                اطلاعات پرداخت
+                            </div>
+                            <q-separator class="q-mt-sm"/>
+                            <div class="q-mt-sm row justify-center">
+                                <div class="col-lg-7">
+
+                                </div>
+                            </div>
+                        </div>
+                    </q-card-section>
+                </q-card>
+            </q-dialog>
         </div>
 
     </div>
@@ -55,5 +82,39 @@ export default {
 .box-padding{
     padding: 0 5px;
     margin-bottom: 15px;
+}
+.buy-card{
+    max-width: 900px;
+    width: 860px;
+}
+.invoice-header{
+    font-size: 16px;
+    font-weight: 600;
+}
+.invoice-text{
+    font-size: 14px;
+}
+.invoice-info-title{
+    font-size: 16px;
+    font-weight: 600;
+}
+
+@media only screen and (max-width: 600px) {
+    .box-padding{
+        padding: 0 5px;
+        margin-bottom: 15px;
+    }
+    .buy-card{
+        max-width: 900px;
+        width: 860px;
+    }
+    .invoice-header{
+        font-size: 14px;
+        font-weight: 600;
+    }
+    .invoice-text{
+        font-size: 12px;
+    }
+
 }
 </style>
