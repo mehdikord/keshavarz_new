@@ -3,6 +3,9 @@ namespace App\Interfaces\Plans;
 
 interface PlansInterface
 {
+    public function index_customer();
+    public function index_provider();
+
 
     public function customer_buy_plan($plan);
 

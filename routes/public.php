@@ -16,3 +16,11 @@ Route::prefix('implements')->group(function (){
 });
 
 Route::get('provinces',[\App\Http\Controllers\Public\PublicController::class,'provinces']);
+
+Route::prefix('plans')->group(function (){
+
+    Route::get('customer',[\App\Http\Controllers\Public\PublicController::class,'plans_customer']);
+    Route::get('provider',[\App\Http\Controllers\Public\PublicController::class,'plans_provider']);
+
+
+});
