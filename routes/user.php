@@ -34,6 +34,20 @@ Route::middleware(['auth:users'])->group(function (){
 
     });
 
+    Route::prefix('callbacks')->group(function (){
+        Route::prefix('plans/payments')->group(function (){
+            Route::get('customer',[\App\Http\Controllers\User\Plans\PlanController::class,'customer_by_verify'])->withoutMiddleware('auth:users');
+            Route::get('provider',[\App\Http\Controllers\User\Plans\PlanController::class,'provider_by_verify'])->withoutMiddleware('auth:users');
 
+        });
+
+    });
+
+    //Search provider
+    Route::prefix('search')->group(function (){
+        Route::post('providers',[\App\Http\Controllers\Search\SearchingController::class,'search_providers']);
+        Route::get('providers/profile/{user}',[\App\Http\Controllers\Search\SearchingController::class,'provider_profile']);
+        Route::get('providers/gallery/{user}',[\App\Http\Controllers\Search\SearchingController::class,'provider_gallery']);
+    });
 
 });

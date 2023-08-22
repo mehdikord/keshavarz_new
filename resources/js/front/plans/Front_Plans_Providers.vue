@@ -34,8 +34,10 @@ export default {
         },
         BuyPlan(plan){
          this.pay_loading=true;
-         axios.get('users/plans/customer/buy/'+plan.id).then(res => {
-             console.log(res.data)
+         axios.get('users/plans/provider/buy/'+plan.id).then(res => {
+             if (res.data.result){
+                 window.open(res.data.result,'_blank');
+             }
              this.pay_loading=false;
          }).catch(e => {
              this.pay_loading=false;
