@@ -1,4 +1,5 @@
 <script>
+import { useQuasar, QSpinnerGears } from 'quasar'
 import Front_Skeleton_Plans from "../skeleton/Front_Skeleton_Plans.vue";
 import {mapActions} from "vuex";
 import Front_Plans_Item from "./Front_Plans_Item.vue";
@@ -12,6 +13,7 @@ export default {
         return{
             plans:[],
             loading:false,
+            pay_loading:false,
             BuyDialog:[]
         }
     },
@@ -29,7 +31,18 @@ export default {
                 return this.NotifyServerError();
 
             })
+        },
+        BuyPlan(plan){
+         this.pay_loading=true;
+         axios.get('users/plans/customer/buy/'+plan.id).then(res => {
+             console.log(res.data)
+             this.pay_loading=false;
+         }).catch(e => {
+             this.pay_loading=false;
+             console.log(e.response)
+         })
         }
+
     },
     components:{
         'skeleton' : Front_Skeleton_Plans,
@@ -127,7 +140,18 @@ export default {
                                             <q-img src="/logo_name.png" class="invoice-img"></q-img>
                                         </div>
                                         <div class="col-12 q-mt-md q-mb-md text-center">
-                                            <q-btn color="green-7" glossy>پرداخت نهایی و فعالسازی</q-btn>
+                                            <q-btn @click="BuyPlan(plan)" color="green-7" glossy>پرداخت نهایی و فعالسازی</q-btn>
+
+                                            <q-dialog v-model="pay_loading" persistent transition-show="scale" transition-hide="scale">
+                                                <q-card class="bg-grey-10 text-white" style="width: 650px">
+                                                    <q-card-section>
+                                                        <global_info_loading></global_info_loading>
+                                                        <div class="q-mt-md q-mb-md text-center">
+                                                            <strong class="text-green-5">لطفا شکیبا باشید ، درحال اتصال به درگاه پرداخت ...</strong>
+                                                        </div>
+                                                    </q-card-section>
+                                                </q-card>
+                                            </q-dialog>
                                         </div>
 
                                     </div>

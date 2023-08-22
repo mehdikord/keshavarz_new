@@ -45,7 +45,7 @@ class PlansRepository implements PlansInterface
             'plan_type' => 'customer'
         ]);
 
-        $invoice->update(['code' => helpers_random_code($invoice->id,13)]);
+        $invoice->update(['code' => core_random_code($invoice->id,13)]);
         if ($plan->is_free){
             //Selected plan is Free
             $invoice->update(['is_pay' => true,'is_free' => true,'paid_at' => Carbon::now()]);
@@ -73,13 +73,12 @@ class PlansRepository implements PlansInterface
             );
 
             if ($pay && $pay['Status'] == 100){
-                $invoice->update(['gateway_code' => $pay['Authority'] ]);
+                $invoice->update(['gateway_id' => $pay['Authority'] ]);
                 DB::commit();
                 return response_success($pay['StartPay'],'لینک انتقال به درگاه پرداخت ');
-            }else{
-                DB::rollBack();
-                return response_custom_error('مشکلی در فراید خرید بوجود آمده است. لطفا با مدیریت تماس بگیرید ');
             }
+            DB::rollBack();
+            return response_custom_error('مشکلی در فراید خرید بوجود آمده است. لطفا با مدیریت تماس بگیرید ');
         }
 
     }
@@ -88,7 +87,7 @@ class PlansRepository implements PlansInterface
         //get token from url params
         $authority = request('Authority');
         //get invoice
-        $invoice = Invoice::where('gateway_code',$authority)->first();
+        $invoice = Invoice::where('gateway_id',$authority)->first();
         if (!$invoice){
             DB::rollBack();
             return redirect()->route('reports_payment_failed')->with(['error' => 'فاکتور مورد نظر یافت نشد']);
@@ -142,7 +141,7 @@ class PlansRepository implements PlansInterface
             'plan_type' => 'provider'
         ]);
 
-        $invoice->update(['code' => helpers_random_code($invoice->id)]);
+        $invoice->update(['code' => core_random_code($invoice->id)]);
         if ($plan->is_free){
             //Selected plan is Free
             $invoice->update(['is_pay' => true,'is_free' => true,'paid_at' => Carbon::now()]);
@@ -170,7 +169,7 @@ class PlansRepository implements PlansInterface
                 $invoice->title,
             );
             if ($pay && $pay['Status'] == 100){
-                $invoice->update(['gateway_code' => $pay['Authority'] ]);
+                $invoice->update(['gateway_id' => $pay['Authority'] ]);
                 DB::commit();
                 return response_success($pay['StartPay'],'لینک انتقال به درگاه پرداخت ');
             }else{
@@ -185,7 +184,7 @@ class PlansRepository implements PlansInterface
         //get token from url params
         $authority = request('Authority');
         //get invoice
-        $invoice = Invoice::where('gateway_code',$authority)->first();
+        $invoice = Invoice::where('gateway_id',$authority)->first();
         if (!$invoice){
             DB::rollBack();
             return redirect()->route('reports_payment_failed')->with(['error' => 'فاکتور مورد نظر یافت نشد']);

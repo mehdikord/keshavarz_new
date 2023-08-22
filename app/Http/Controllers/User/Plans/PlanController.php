@@ -21,7 +21,7 @@ class PlanController extends Controller
     public function customer_buy(Customer_Plan $plan)
     {
         if (!$plan->is_active){
-            return response_custom_error('selected plan not active');
+            return response_custom_error('اشتراک مورد نظر فعال نیست');
         }
         return $this->repository->customer_buy_plan($plan);
 

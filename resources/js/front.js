@@ -16,6 +16,7 @@ import Front_Global_Search_Loading from "./front/globals/Front_Global_Search_Loa
 import Error_Validation from "./manage/errors/Error_Validation.vue";
 import Helper from "./helpers/Helper";
 import Front_Global_Info_Loading from "./front/globals/Front_Global_Info_Loading.vue";
+import axios from "axios";
 
 
 
@@ -61,6 +62,18 @@ App.mixin({
     },
     created() {
         axios.defaults.headers.common['Authorization'] ="Bearer "+this.UserToken
+        axios.interceptors.response.use(function (response) {
+            // Any status code that lie within the range of 2xx cause this function to trigger
+            // Do something with response data
+            return response;
+        }, function (error) {
+            // Any status codes that falls outside the range of 2xx cause this function to trigger
+            // Do something with response error
+
+            return Promise.reject(error);
+
+        });
+
 
     },
     //Methods
