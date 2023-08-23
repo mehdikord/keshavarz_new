@@ -340,7 +340,6 @@ export default {
         font-size: 13px;
         font-weight: 500;
     }
-
     .open-map-btn{
         padding: 10px 40px;
         font-size: 12px;

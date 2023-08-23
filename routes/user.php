@@ -34,6 +34,22 @@ Route::middleware(['auth:users'])->group(function (){
 
     });
 
+    Route::prefix('provider')->group(function (){
+
+        Route::get('range',[\App\Http\Controllers\User\Profile\ProfileController::class,'range']);
+        Route::post('range',[\App\Http\Controllers\User\Profile\ProfileController::class,'range_update']);
+        Route::get('days',[\App\Http\Controllers\User\Profile\ProfileController::class,'get_days']);
+        Route::post('days',[\App\Http\Controllers\User\Profile\ProfileController::class,'update_days']);
+
+        Route::prefix('implement')->group(function (){
+            Route::get('',[\App\Http\Controllers\User\Profile\ProfileController::class,'implement']);
+            Route::post('',[\App\Http\Controllers\User\Profile\ProfileController::class,'implement_update']);
+            Route::delete('{id}',[\App\Http\Controllers\User\Profile\ProfileController::class,'implement_delete']);
+            Route::post('edit/{id}',[\App\Http\Controllers\User\Profile\ProfileController::class,'implement_edit']);
+
+        });
+    });
+
     Route::prefix('callbacks')->group(function (){
         Route::prefix('plans/payments')->group(function (){
             Route::get('customer',[\App\Http\Controllers\User\Plans\PlanController::class,'customer_by_verify'])->withoutMiddleware('auth:users');
