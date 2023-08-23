@@ -35,8 +35,12 @@ export default {
 
                 </div>
                 <div class="col text-center">
-                    <q-icon name="fas fa-tractor" class="icon-size"></q-icon>
-                    <div class="menu-text">ارائه خدمات</div>
+                    <router-link :to="{name : 'profile_provider'}">
+                        <div  :class="{'text-positive' : this.$route.name === 'profile_provider'}">
+                            <q-icon name="fas fa-tractor" class="icon-size"></q-icon>
+                            <div class="menu-text">ارائه خدمات</div>
+                        </div>
+                    </router-link>
 
                 </div>
                 <div class="col text-center">

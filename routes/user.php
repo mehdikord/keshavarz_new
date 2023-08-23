@@ -34,6 +34,36 @@ Route::middleware(['auth:users'])->group(function (){
 
     });
 
+    Route::prefix('provider')->group(function (){
 
+        Route::get('range',[\App\Http\Controllers\User\Profile\ProfileController::class,'range']);
+        Route::post('range',[\App\Http\Controllers\User\Profile\ProfileController::class,'range_update']);
+        Route::get('days',[\App\Http\Controllers\User\Profile\ProfileController::class,'get_days']);
+        Route::post('days',[\App\Http\Controllers\User\Profile\ProfileController::class,'update_days']);
+
+        Route::prefix('implement')->group(function (){
+            Route::get('',[\App\Http\Controllers\User\Profile\ProfileController::class,'implement']);
+            Route::post('',[\App\Http\Controllers\User\Profile\ProfileController::class,'implement_update']);
+            Route::delete('{id}',[\App\Http\Controllers\User\Profile\ProfileController::class,'implement_delete']);
+            Route::post('edit/{id}',[\App\Http\Controllers\User\Profile\ProfileController::class,'implement_edit']);
+
+        });
+    });
+
+    Route::prefix('callbacks')->group(function (){
+        Route::prefix('plans/payments')->group(function (){
+            Route::get('customer',[\App\Http\Controllers\User\Plans\PlanController::class,'customer_by_verify'])->withoutMiddleware('auth:users');
+            Route::get('provider',[\App\Http\Controllers\User\Plans\PlanController::class,'provider_by_verify'])->withoutMiddleware('auth:users');
+
+        });
+
+    });
+
+    //Search provider
+    Route::prefix('search')->group(function (){
+        Route::post('providers',[\App\Http\Controllers\Search\SearchingController::class,'search_providers']);
+        Route::get('providers/profile/{user}',[\App\Http\Controllers\Search\SearchingController::class,'provider_profile']);
+        Route::get('providers/gallery/{user}',[\App\Http\Controllers\Search\SearchingController::class,'provider_gallery']);
+    });
 
 });

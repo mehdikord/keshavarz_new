@@ -30,4 +30,10 @@ class ProfileController extends Controller
     {
         return $this->repository->user_update_image($request);
     }
+
+    public function range_update(UserRangeUpdateRequest $request)
+    {
+        return response_success($this->repository->range_update($request));
+
+    }
 }

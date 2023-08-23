@@ -6,6 +6,7 @@ import Front_News from "@/front/news/Front_News.vue";
 import Front_Provider_Profile from "@/front/provider/Front_Provider_Profile.vue";
 import Front_Profile from "../front/profile/Front_Profile.vue";
 import Front_Plans_Store from "../front/plans/Front_Plans_Store.vue";
+import Front_Profile_Provider from "@/front/profile/Front_Profile_Provider.vue";
 
 const routes = [
     {
@@ -37,6 +38,12 @@ const routes = [
         name : "profile",
         component : Front_Profile,
         meta : {title : 'حساب کاربری'}
+    },
+    {
+        path : "/profile/provider",
+        name : "profile_provider",
+        component : Front_Profile_Provider,
+        meta : {title : 'ارائه خدمات'}
     },
     {
         path : "/plans",

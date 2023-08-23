@@ -22,15 +22,12 @@ export default {
                         <span class="price-title">قیمت : </span>
                         <template v-if="item.is_free">
                             <span class="float-right price text-yellow-7 fa-beat">رایگان</span>
-
                         </template>
                         <template v-else>
                             <template v-if="item.sale">
                                 <span class="price-unit float-right">تومان</span>
                                 <span class="float-right price text-yellow-7">{{this.$filters.numbers(item.sale)}}</span>
                                 <span class="float-right price-sale">{{this.$filters.numbers(item.price)}}</span>
-
-
                             </template>
                             <template v-else>
                                 <span class="price-unit float-right">تومان</span>
