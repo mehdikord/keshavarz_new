@@ -24,6 +24,15 @@ export default {
                 })
             } )
         },
+        ProfilesUserRangeUpdate(_,item){
+            return new Promise((resolve,reject) => {
+                axios.post('users/provider/range',item).then((result ) => {
+                    resolve(result);
+                }).catch(error => {
+                    reject(error);
+                })
+            } )
+        },
         ProfilesUserUpdateImage(_,item){
             return new Promise((resolve,reject) => {
                 let data = new FormData();
@@ -54,7 +63,25 @@ export default {
 
             })
 
-        }
+        },
+        ProfilesUserImplementStore(_,item){
+            return new Promise((resolve,reject) => {
+                axios.post('users/provider/implement',item).then((result ) => {
+                    resolve(result);
+                }).catch(error => {
+                    reject(error);
+                })
+            } )
+        },
+        ProfilesUserImplement(){
+            return new Promise((resolve,reject) => {
+                axios.get('users/provider/implement').then((result ) => {
+                    resolve(result);
+                }).catch(error => {
+                    reject(error);
+                })
+            } )
+        },
 
 
     }

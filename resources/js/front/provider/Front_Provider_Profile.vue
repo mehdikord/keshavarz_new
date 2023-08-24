@@ -130,25 +130,6 @@ export default {
  width: 100%;
     padding: 6px 0;
 }
-.form-box{
-    padding: 10px 0;
-}
-.gallery-image{
-    width: 150px;
-    height: 150px;
-    cursor: zoom-in;
-}
-.image-dialog{
-    width: 800px;
-}
-.form-title{
-    font-size: 15px;
-    font-weight: 600;
-}
-.form-text{
-    font-size: 15px;
-    margin-left: 5px;
-}
 .pro-price-type{
     font-size: 13px;
 }
@@ -167,6 +148,28 @@ export default {
 .pro-head{
     font-size: 17px;
 }
+
+.gallery-image{
+    width: 150px;
+    height: 150px;
+    cursor: zoom-in;
+}
+.image-dialog{
+    width: 800px;
+}
+.form-box{
+    padding: 10px 0;
+}
+.form-title{
+    font-size: 15px;
+    font-weight: 600;
+}
+.form-text{
+    font-size: 15px;
+    margin-left: 5px;
+}
+
+
 .title{
     font-size: 18px;
 }
@@ -206,25 +209,6 @@ export default {
         width: 100%;
         padding: 6px 0;
     }
-    .form-box{
-        padding: 6px 0;
-    }
-    .gallery-image{
-        width: 100px;
-        height: 100px;
-        cursor: zoom-in;
-    }
-    .image-dialog{
-        width: 100%;
-    }
-    .form-title{
-        font-size: 14px;
-        font-weight: 600;
-    }
-    .form-text{
-        font-size: 13px;
-        margin-left: 5px;
-    }
     .pro-price-type{
         font-size: 12px;
     }
@@ -243,6 +227,27 @@ export default {
     .pro-head{
         font-size: 14px;
     }
+
+    .gallery-image{
+        width: 100px;
+        height: 100px;
+        cursor: zoom-in;
+    }
+    .image-dialog{
+        width: 100%;
+    }
+    .form-box{
+        padding: 6px 0;
+    }
+    .form-title{
+        font-size: 14px;
+        font-weight: 600;
+    }
+    .form-text{
+        font-size: 13px;
+        margin-left: 5px;
+    }
+
     .title{
         font-size: 18px;
     }

@@ -14,6 +14,14 @@ interface ProfileInterface
 
     public function user_update_image($request);
 
+    public function range_update($request);
 
+    public function implement();
+
+    public function implement_update($request);
+
+    public function implement_edit($item,$request);
+
+    public function implement_delete($item);
 
 }

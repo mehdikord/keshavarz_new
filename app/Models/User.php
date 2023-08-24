@@ -102,6 +102,20 @@ class User extends Authenticatable implements JWTSubject
         return $this->provider_plans()->where('is_active',true)->first();
     }
 
+    public function implements()
+    {
+        return $this->hasMany(User_Implement::class,'user_id');
+    }
+
+    public function days()
+    {
+        return $this->hasMany(User_Day::class,'user_id');
+    }
+
+    public function referrals()
+    {
+        return $this->hasMany(__CLASS__,'referral_by');
+    }
 
     /**
      * Get the identifier that will be stored in the subject claim of the JWT.
