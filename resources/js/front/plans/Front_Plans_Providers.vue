@@ -36,7 +36,7 @@ export default {
          this.pay_loading=true;
          axios.get('users/plans/provider/buy/'+plan.id).then(res => {
              if (res.data.result){
-                 window.open(res.data.result,'_blank');
+                 window.open(res.data.result,'self');
              }
              this.pay_loading=false;
          }).catch(e => {
