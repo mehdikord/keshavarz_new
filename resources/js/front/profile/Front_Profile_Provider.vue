@@ -8,8 +8,11 @@ export default {
         NeshanMap,
     },
     mounted() {
-        this.GetProfile();
-        this.GetUserImplement();
+        if (this.AuthUserCheck()){
+            this.GetProfile();
+            this.GetUserImplement();
+        }
+
 
     },
     data(){
