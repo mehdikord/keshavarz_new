@@ -61,7 +61,9 @@ export default {
             this.ProfilesUserMe().then(res => {
                 this.user = res.data.result;
                 this.range= this.user.search_range
-                this.location= this.user.search_location
+                if (this.user.search_location){
+                    this.location= this.user.search_location
+                }
             }).catch(error => {
                 return this.NotifyServerError();
             })
@@ -326,6 +328,7 @@ export default {
                                 </div>
                             </q-card-section>
                         </q-card>
+
                         <q-card class="q-mt-lg">
                             <q-card-section class="info-title bg-orange-10 text-white">
                                 اطلاعات مربوط به ادوات قابل ارائه
