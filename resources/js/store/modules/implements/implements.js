@@ -14,6 +14,15 @@ export default {
                 })
             } )
         },
+        ImplementsShow(_,item){
+            return new Promise((resolve,reject) => {
+                axios.get('public/implements/implements/'+item).then((result) => {
+                    resolve(result);
+                }).catch(error => {
+                    reject(error);
+                })
+            } )
+        },
         ImplementsStore(_,item){
             return new Promise((resolve,reject) => {
                 axios.post('faqs',item).then((result) => {
@@ -41,7 +50,6 @@ export default {
                 })
             } )
         },
-
         ImplementsCategoriesIndex(){
             return new Promise((resolve,reject) => {
                 axios.get('public/implements/categories').then((result) => {

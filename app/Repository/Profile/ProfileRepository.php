@@ -41,6 +41,62 @@ class ProfileRepository implements ProfileInterface
         return response_success($image);
     }
 
+    public function range()
+    {
+        return response_success(auth()->user()->select(['search_range','search_location'])->first());
+    }
 
+    public function range_update($request)
+    {
+        auth()->user()->update([
+            'search_range' => $request->range,
+            'search_location' => $request->location,
+        ]);
+        return response_success($this->range());
+    }
+
+    public function implement()
+    {
+
+        return response_success(auth('users')->user()->implements()->with('forms')->with('implement')->get());
+    }
+
+    public function implement_update($request)
+    {
+        if (auth('users')->user()->implements()->where('implement_id',$request->implement_id)->exists()){
+            return response_custom_error('این دستگاه قبلا اضافه شده است');
+        }
+        $implement = auth('users')->user()->implements()->create([
+            'implement_id' => $request->implement_id,
+            'price' => $request->price
+        ]);
+        if ($request->forms && is_array($request->forms)){
+            foreach ($request->forms as $form){
+                if (!empty($form['data'])){
+
+                    $implement->forms()->create([
+                        'form_id' => $form['id'],
+                        'data' => $form['data'],
+                    ]);
+
+                }
+            }
+        }
+        return response_success(auth('users')->user()->implements()->where('implement_id',$request->implement_id)->with('forms')->first());
+    }
+
+    public function implement_edit($item,$request)
+    {
+        $item->update([
+            'price' => $request->price
+        ]);
+        return response_success($item);
+    }
+
+    public function implement_delete($item)
+    {
+        $item->delete();
+        return response_success(true);
+    }
 
 }

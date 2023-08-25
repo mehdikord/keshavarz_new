@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Public;
 
 use App\Http\Controllers\Controller;
 use App\Interfaces\Implements\ImplementInterface;
+use App\Models\Implement;
 use Illuminate\Http\Request;
 
 class ImplementController extends Controller
@@ -23,5 +24,13 @@ class ImplementController extends Controller
     public function implements()
     {
         return $this->repository->implement_index();
+    }
+
+    public function implements_show(Implement $implement)
+    {
+
+        return $this->repository->implement_show($implement);
+
+
     }
 }

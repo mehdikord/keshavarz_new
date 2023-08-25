@@ -57,5 +57,13 @@ class ImplementRepository implements ImplementInterface
         return response_success($data->get());
     }
 
+    public function implement_show($item)
+    {
+         $item->load('forms');
+         $item->load('forms.form');
+        return response_success($item);
+
+    }
+
 
 }

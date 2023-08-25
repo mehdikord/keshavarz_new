@@ -16,6 +16,8 @@ interface ImplementInterface
 
     public function implement_index();
 
+    public function implement_show($item);
+
 
 
 }
