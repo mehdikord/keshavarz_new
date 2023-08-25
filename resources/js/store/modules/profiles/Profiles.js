@@ -82,6 +82,24 @@ export default {
                 })
             } )
         },
+        ProfilesUserImplementDelete(_,item){
+            return new Promise((resolve,reject) => {
+                axios.delete('users/provider/implement/'+item).then((result ) => {
+                    resolve(result);
+                }).catch(error => {
+                    reject(error);
+                })
+            } )
+        },
+        ProfilesUserImplementUpdate(_,item){
+            return new Promise((resolve,reject) => {
+                axios.post('users/provider/implement/edit/'+item.id,{price:item.price}).then((result ) => {
+                    resolve(result);
+                }).catch(error => {
+                    reject(error);
+                })
+            } )
+        },
 
 
     }

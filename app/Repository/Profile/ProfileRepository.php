@@ -72,10 +72,14 @@ class ProfileRepository implements ProfileInterface
         ]);
         if ($request->forms && is_array($request->forms)){
             foreach ($request->forms as $form){
-                $implement->forms()->create([
-                    'form_id' => $form['id'],
-                    'data' => $form['data'],
-                ]);
+                if (!empty($form['data'])){
+
+                    $implement->forms()->create([
+                        'form_id' => $form['id'],
+                        'data' => $form['data'],
+                    ]);
+
+                }
             }
         }
         return response_success(auth('users')->user()->implements()->where('implement_id',$request->implement_id)->with('forms')->first());

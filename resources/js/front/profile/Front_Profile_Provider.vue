@@ -17,6 +17,7 @@ export default {
             user:null,
             user_implements:[],
             user_implement_loading:false,
+            errors:[],
             range:20,
             location:[],
             location_loading:false,
@@ -24,6 +25,7 @@ export default {
             show_map:false,
             forms_loading:false,
             AddImplementDialog:false,
+            EditImplementDialog:[],
             category_id: null,
             implement_id: null,
             loading_select_category:false,
@@ -45,6 +47,8 @@ export default {
             "ImplementsShow",
             "ProfilesUserImplementStore",
             "ProfilesUserImplement",
+            "ProfilesUserImplementDelete",
+            "ProfilesUserImplementUpdate",
         ]),
         Map_Marker(e){
             if (e.coords){
@@ -145,14 +149,60 @@ export default {
                 this.AddImplementDialog=false;
                 this.NotifySuccess("خدمت جدید با موفقیت به لیست خدمات شما اضافه شد")
             }).catch(error => {
+                this.implement_loading=false;
                 if (error.response.status === 409) {
                     this.NotifyError(error.response.data.error);
+                }else if (error.response.status === 422) {
+                    this.NotifyError("اطلاعات وارد شده ناقص است")
                 }else {
                     return this.NotifyServerError();
                 }
-                this.implement_loading=false;
 
             })
+        },
+        RemoveImplement(item){
+            this.$q.dialog({
+                title: 'هشدار !',
+                message: 'آیا مطمئن هستید آیتم مورد نظر از لیست خدمات شما حذف شود ؟',
+
+                ok: {
+                    glossy: true,
+                    color:'positive',
+                },
+                cancel: {
+                    glossy: true,
+                    color: 'red'
+                },
+                persistent: true
+            }).onOk(() => {
+                this.ProfilesUserImplementDelete(item).then(res => {
+                    this.GetUserImplement();
+                    return this.NotifyDelete();
+                }).catch(error => {
+                    return  this.NotifyServerError();
+                })
+
+            }).onCancel(() => {
+                // console.log('>>>> Cancel')
+            }).onDismiss(() => {
+                // console.log('I am triggered on both OK and Cancel')
+            })
+        },
+        UpdateImplement(implement){
+            if (!implement.price){
+                return this.NotifyError("مبلغ مورد نظر را وارد کنید !");
+            }
+            this.implement_loading=true;
+            this.ProfilesUserImplementUpdate(implement).then(res => {
+                this.implement_loading=false;
+                this.GetUserImplement();
+                this.EditImplementDialog[implement.id]=false;
+                return this.NotifyUpdate();
+            }).catch(error => {
+                this.implement_loading=false;
+                return this.NotifyServerError()
+            })
+
         }
     },
     computed :{
@@ -448,10 +498,45 @@ export default {
                                                     </template>
                                                     <q-card>
                                                         <q-card-section>
+                                                            <div class="q-mb-md text-center">
+                                                                <q-btn @click="EditImplementDialog[implement.id]=true" icon="fas fa-edit q-mr-sm" dense glossy class="imp-edit-btn"  color="primary">ویرایش</q-btn>
+                                                                <q-btn @click="RemoveImplement(implement.id)" icon="fas fa-trash q-mr-sm" dense glossy class="imp-edit-btn q-ml-sm"  color="red">حذف</q-btn>
 
-                                                            <div class="form-box" v-for="i in 4">
-                                                                <span class="form-title text-red">سال ساخت : </span>
-                                                                <span class="form-text "> 1395 </span>
+                                                                <q-dialog position="top"  v-model="EditImplementDialog[implement.id]">
+
+                                                                    <q-card class="add-implement-card">
+                                                                        <q-card-section class="bg-blue-8 text-white">
+                                                                            <div class="add-implement-title">
+                                                                                ویرایش قیمت : {{implement.implement.name}}
+                                                                            </div>
+                                                                        </q-card-section>
+                                                                        <q-card-section>
+                                                                            <div class="form-box">
+                                                                                <q-input
+                                                                                    :label="'قیمت خدمت قابل ارائه - '+ implement.implement.price_type +' (تومان) '"
+                                                                                    outlined
+                                                                                    v-model="implement.price"
+                                                                                    color="green-7"
+                                                                                >
+                                                                                </q-input>
+                                                                            </div>
+                                                                            <div class="q-mt-lg q-mb-sm text-right">
+                                                                                <q-btn v-close-popup color="grey-9" class="q-mr-sm" glossy> بستن</q-btn>
+
+                                                                                <q-btn @click="UpdateImplement(implement)" :loading="implement_loading" color="green-7" glossy> ویرایش قیمت</q-btn>
+                                                                            </div>
+                                                                        </q-card-section>
+
+                                                                    </q-card>
+
+                                                                </q-dialog>
+
+
+
+                                                            </div>
+                                                            <div v-if="implement.forms.length" class="form-imp-box" v-for="form in implement.forms">
+                                                                <span class="form-imp-title text-red"> {{form.form.name}} : </span>
+                                                                <span class="form-imp-text "> {{form.data}} </span>
                                                                 <q-separator class="q-mt-sm"/>
                                                             </div>
                                                         </q-card-section>
@@ -576,7 +661,9 @@ export default {
     font-size: 15px;
     margin-left: 5px;
 }
-
+.imp-edit-btn{
+    font-size: 13px;
+}
 
 @media only screen and (max-width: 600px) {
 
@@ -674,5 +761,9 @@ export default {
         font-size: 13px;
         margin-left: 5px;
     }
+    .imp-edit-btn{
+        font-size: 12px;
+    }
+
 }
 </style>
