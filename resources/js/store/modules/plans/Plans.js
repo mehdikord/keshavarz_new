@@ -26,11 +26,18 @@ export default {
         },
 
 
-
-
         UserPlanCustomerActive(){
             return new Promise((resolve,reject) => {
                 axios.get('users/plans/customer/active').then((result ) => {
+                    resolve(result);
+                }).catch(error => {
+                    reject();
+                })
+            } )
+        },
+        UserPlanProviderActive(){
+            return new Promise((resolve,reject) => {
+                axios.get('users/plans/provider/active').then((result ) => {
                     resolve(result);
                 }).catch(error => {
                     reject();

@@ -90,7 +90,7 @@ class PlansRepository implements PlansInterface
         $invoice = Invoice::where('gateway_id',$authority)->first();
         if (!$invoice){
             DB::rollBack();
-            return redirect()->route('reports_payment_failed')->with(['error' => 'فاکتور مورد نظر یافت نشد']);
+            return redirect("plans/pay/result?type=failed");
         }
 
         $result = $this->zarinpal_service->verify($invoice->price,$authority);
@@ -100,7 +100,7 @@ class PlansRepository implements PlansInterface
             //check ref_id
             if ($result['Node'] != 'sandbox' && Invoice::where('ref_id',$result['RefID'])->exists()){
                 DB::rollBack();
-                return redirect()->route('reports_payment_failed',['error' => 'تراکنش مورد نظر تکراری است !']);
+                return redirect('plans/pay/result?type=failed');
             }
             $invoice->update([
                 'is_pay' =>true,
@@ -112,9 +112,9 @@ class PlansRepository implements PlansInterface
                 $this->new_customer_plan($plan,$invoice);
             }
             DB::commit();
-            return redirect()->route('reports_payment_success');
+            return redirect("plans/pay/result?type=success");
         }
-        return redirect()->route('reports_payment_failed',['error' => $result['Message'] ?? '']);
+        return redirect("plans/pay/result?type=failed");
 
     }
 
@@ -187,7 +187,7 @@ class PlansRepository implements PlansInterface
         $invoice = Invoice::where('gateway_id',$authority)->first();
         if (!$invoice){
             DB::rollBack();
-            return redirect()->route('reports_payment_failed')->with(['error' => 'فاکتور مورد نظر یافت نشد']);
+            return redirect("plans/pay/result?type=failed");
         }
 
         $result = $this->zarinpal_service->verify($invoice->price,$authority);
@@ -197,7 +197,7 @@ class PlansRepository implements PlansInterface
             //check ref_id
             if ($result['Node'] != 'sandbox' && Invoice::where('ref_id',$result['RefID'])->exists()){
                 DB::rollBack();
-                return redirect()->route('reports_payment_failed',['error' => 'تراکنش مورد نظر تکراری است !']);
+                return redirect("plans/pay/result?type=failed");
             }
             $invoice->update([
                 'is_pay' =>true,
@@ -209,9 +209,9 @@ class PlansRepository implements PlansInterface
                 $this->new_provider_plan($plan,$invoice);
             }
             DB::commit();
-            return redirect()->route('reports_payment_success');
+            return redirect("plans/pay/result?type=success");
         }
-        return redirect()->route('reports_payment_failed',['error' => $result['Message'] ?? '']);
+        return redirect("plans/pay/result?type=failed");
 
     }
 
@@ -226,7 +226,6 @@ class PlansRepository implements PlansInterface
 
         return auth()->user()->provider_plans()->with('invoice')->get();
     }
-
 
     private function new_customer_plan($plan,$invoice){
         //create base data for user plan access
