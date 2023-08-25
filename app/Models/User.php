@@ -92,6 +92,15 @@ class User extends Authenticatable implements JWTSubject
         return $this->customer_plans()->where('is_active',true)->first();
     }
 
+    public function customer_plan_active_info()
+    {
+        $total='';
+        $left='';
+
+
+        return array('total' => $total,'left' => $left);
+    }
+
     public function provider_plan_active_check()
     {
         return $this->provider_plans()->where('is_active',true)->exists();
@@ -122,6 +131,7 @@ class User extends Authenticatable implements JWTSubject
      *
      * @return mixed
      */
+
     public function getJWTIdentifier()
     {
         return $this->getKey();

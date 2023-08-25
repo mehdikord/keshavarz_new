@@ -17,6 +17,7 @@ import Error_Validation from "./manage/errors/Error_Validation.vue";
 import Helper from "./helpers/Helper";
 import Front_Global_Info_Loading from "./front/globals/Front_Global_Info_Loading.vue";
 import axios from "axios";
+import moment from "moment-jalaali"
 
 
 
@@ -99,6 +100,7 @@ App.mixin({
                 });
             }
         },
+
         NotifyCreate(){
             this.NotifyMessage('آیتم باموفقیت ایجاد شد','positive')
         },
@@ -130,6 +132,14 @@ App.mixin({
             return Helper.HelperValidationCheck(errors,field);
 
         },
+        MixinLeftDate(start,end){
+          let a = moment(start);
+          let b = moment(end);
+          let now = moment();
+          let total = b.diff(a,'days');
+          let left = b.diff(now,'days');
+          return {total:total,left:left};
+        },
         AuthUserCheck(){
             return this.UserCheck;
         }
@@ -150,9 +160,9 @@ App.mixin({
 // ++++++++++ Global Filters ++++++++++
 
 App.config.globalProperties.$filters = {
-    // date(value,format) {
-    //     return moment(value).format(format='jYYYY/jM/jD')
-    // },
+    date(value,format) {
+        return moment(value).format(format='jYYYY/jM/jD')
+    },
     numbers(number){
         return new Intl.NumberFormat().format(number);
     },

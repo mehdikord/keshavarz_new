@@ -7,6 +7,7 @@ import Front_Provider_Profile from "@/front/provider/Front_Provider_Profile.vue"
 import Front_Profile from "../front/profile/Front_Profile.vue";
 import Front_Plans_Store from "../front/plans/Front_Plans_Store.vue";
 import Front_Profile_Provider from "@/front/profile/Front_Profile_Provider.vue";
+import Front_Plans_Result from "../front/plans/result/Front_Plans_Result.vue";
 
 const routes = [
     {
@@ -49,6 +50,12 @@ const routes = [
         path : "/plans",
         name : "plans",
         component : Front_Plans_Store,
+        meta : {title : 'خرید اشتراک'}
+    },
+    {
+        path : "/plans/pay/result",
+        name : "plans_pay_result",
+        component :Front_Plans_Result,
         meta : {title : 'خرید اشتراک'}
     },
 
