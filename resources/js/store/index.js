@@ -8,6 +8,7 @@ import products from "./modules/products/products";
 import implement from "./modules/implements/implements";
 import profiles from "./modules/profiles/Profiles";
 import plans from "./modules/plans/Plans";
+import search from "./modules/search/Search";
 const store = createStore({
     state(){
         return {
@@ -26,7 +27,8 @@ const store = createStore({
         products,
         implement,
         profiles,
-        plans
+        plans,
+        search
 
     },
 
@@ -37,7 +39,7 @@ const store = createStore({
             localStorage.setItem('manage_auth_user',JSON.stringify(item.user))
         },
         AuthLogout(state){
-            state.AAuth_Manageuth = {}
+            state.Auth_Manage = {}
             localStorage.removeItem('manage_auth_token')
             localStorage.removeItem('manage_auth_user')
         },
@@ -65,6 +67,11 @@ const store = createStore({
             state.Auth_User = item
             localStorage.setItem('user_auth_token',item.token)
             localStorage.setItem('user_auth_user',JSON.stringify(item.user))
+        },
+        AuthUserLogout(state,item){
+            state.Auth_User = {}
+            localStorage.removeItem('user_auth_token')
+            localStorage.removeItem('user_auth_user')
         }
 
 

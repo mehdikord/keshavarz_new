@@ -1,11 +1,17 @@
 <script>
 import {mapActions} from "vuex";
+import Front_Plans_Reserved_Item from "../plans/Front_Plans_Reserved_Item.vue";
 
 export default {
     name: "Front_Profile_Plans",
+    components:{
+      "plan_reserved" : Front_Plans_Reserved_Item,
+    },
     mounted() {
         this.Get_Customer_Active();
         this.Get_Provider_Active();
+        this.Get_Customer_Reserved();
+        this.Get_Provider_Reserved();
     },
     data(){
         return {
@@ -13,12 +19,19 @@ export default {
             customer_active:null,
             provider_active_loading:false,
             provider_active:null,
+
+            customer_reserved_loading:false,
+            customer_reserved:[],
+            provider_reserved_loading:false,
+            provider_reserved:[],
         }
     },
     methods :{
         ...mapActions([
             "UserPlanCustomerActive",
             "UserPlanProviderActive",
+            "UserPlanCustomerReserved",
+            "UserPlanProviderReserved",
         ]),
         Get_Customer_Active(){
             this.customer_active_loading=true;
@@ -40,7 +53,30 @@ export default {
                 this.provider_active_loading=false;
                 return this.NotifyServerError();
             })
-        }
+        },
+
+        Get_Customer_Reserved(){
+            this.customer_reserved_loading=true;
+            this.UserPlanCustomerReserved().then(res => {
+                this.customer_reserved = res.data.result;
+                this.customer_reserved_loading=false;
+            }).catch(error => {
+                this.customer_reserved_loading=false;
+                return this.NotifyServerError();
+            })
+        },
+
+        Get_Provider_Reserved(){
+            this.provider_reserved_loading=true;
+            this.UserPlanProviderReserved().then(res => {
+                this.provider_reserved = res.data.result;
+                this.provider_reserved_loading=false;
+            }).catch(error => {
+                this.provider_reserved_loading=false;
+                return this.NotifyServerError();
+            })
+        },
+
 
     }
 }
@@ -54,7 +90,11 @@ export default {
                     <div class="head-title text-white">اشتراک های فعال</div>
                 </q-card-section>
                 <q-card-section class="mobile-plan-card-top">
-                    <div class="plan-title text-indigo text-center">
+                    <div class="q-mb-md text-center">
+                        <q-btn :to="{name:'plans'}" glossy color="green-9">خرید اشتراک جدید</q-btn>
+                    </div>
+                    <q-separator/>
+                    <div class="plan-title text-indigo text-center q-mt-sm">
                         اشتراک دریافت خدمات
                     </div>
                     <div v-if="!customer_active_loading && !customer_active" class="text-center q-mt-sm not-active text-red-7">
@@ -121,6 +161,28 @@ export default {
 
                             </template>
                         </div>
+                    </div>
+                    <div class="q-mt-md">
+                        <template v-if="!customer_reserved_loading">
+                            <div v-if="!customer_reserved.length" class="text-center text-red no-reserved">
+                                اشتراک رزرو شده ای برای شما یافت نشد
+                            </div>
+                            <div v-else >
+                                <div class="text-center reserved-head text-teal-6">
+                                    اشتراک های رزرو شده
+                                </div>
+                                <div class=" row q-mt-sm">
+
+                                    <div v-for="reserved in customer_reserved" class="col-xl-4 col-lg-4 col-md-6 col-sm-12 col-xs-12 q-px-xs q-mt-md">
+                                        <plan_reserved :item="reserved" />
+                                    </div>
+
+                                </div>
+
+
+
+                            </div>
+                        </template>
                     </div>
 
                     <div class="q-mt-md q-mb-md">
@@ -196,6 +258,29 @@ export default {
                             </template>
                         </div>
                     </div>
+                    <div class="q-mt-md">
+                        <template v-if="!provider_reserved_loading">
+                            <div v-if="!provider_reserved.length" class="text-center text-red no-reserved">
+                                اشتراک رزرو شده ای برای شما یافت نشد
+                            </div>
+                            <div v-else >
+                                <div class="text-center reserved-head text-teal-6">
+                                    اشتراک های رزرو شده
+                                </div>
+                                <div class=" row q-mt-sm">
+
+                                    <div v-for="reserved in provider_reserved" class="col-xl-4 col-lg-4 col-md-6 col-sm-12 col-xs-12 q-px-xs q-mt-md">
+                                        <plan_reserved :item="reserved" />
+                                    </div>
+
+                                </div>
+
+
+
+                            </div>
+                        </template>
+                    </div>
+
                 </q-card-section>
             </q-card>
 
@@ -205,6 +290,7 @@ export default {
 </template>
 
 <style scoped>
+
 .head-title{
     font-size: 16px;
     font-weight: 700;
@@ -242,6 +328,14 @@ export default {
 }
 .active-access{
     font-size: 15px;
+}
+.no-reserved{
+    font-size: 14px;
+    font-weight: 450;
+}
+.reserved-head{
+    font-size: 16px;
+    font-weight: 500;
 }
 @media only screen and (max-width: 600px) {
 

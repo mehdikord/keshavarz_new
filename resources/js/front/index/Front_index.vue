@@ -83,7 +83,7 @@ export default {
                         <span class="news-title text-white">
                             آخرین اخبار حوزه کشاورزی
                         </span>
-                        <q-btn class="float-right news-btn" color="yellow-9" text-color="black">مشاهده همه خبرها</q-btn>
+                        <q-btn :to="{name:'news'}" class="float-right news-btn" color="yellow-9" text-color="black">مشاهده همه خبرها</q-btn>
                     </q-card-section>
                     <q-card-section>
                         <div class="row">

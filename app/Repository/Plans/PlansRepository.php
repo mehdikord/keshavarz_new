@@ -47,11 +47,15 @@ class PlansRepository implements PlansInterface
 
         $invoice->update(['code' => core_random_code($invoice->id,13)]);
         if ($plan->is_free){
+            //check exists
+            if (auth()->user()->customer_plans()->where('customer_plan_id',$plan->id)->exists()){
+                return response_custom_error('این اشتراک قبلا برای شما فعال شده');
+            }
             //Selected plan is Free
             $invoice->update(['is_pay' => true,'is_free' => true,'paid_at' => Carbon::now()]);
             $this->new_customer_plan($plan,$invoice);
             DB::commit();
-            return response_success('','اشتراک مورد نظر باموفقیت خریداری شد');
+            return response_success('','اشتراک مورد نظر باموفقیت برای شما فعال شد',201);
 
         }else{
             //start payment request
@@ -128,6 +132,11 @@ class PlansRepository implements PlansInterface
 
         return auth()->user()->customer_plans()->with('invoice')->get();
     }
+    public function customer_reserved()
+    {
+
+        return auth()->user()->customer_plans()->where('reserved',true)->with('invoice')->get();
+    }
     public function provider_buy_plan($plan)
     {
         DB::beginTransaction();
@@ -144,10 +153,14 @@ class PlansRepository implements PlansInterface
         $invoice->update(['code' => core_random_code($invoice->id)]);
         if ($plan->is_free){
             //Selected plan is Free
+            if (auth()->user()->provider_plans()->where('provider_plan_id',$plan->id)->exists()){
+                return response_custom_error('این اشتراک قبلا برای شما فعال شده');
+            }
+
             $invoice->update(['is_pay' => true,'is_free' => true,'paid_at' => Carbon::now()]);
             $this->new_provider_plan($plan,$invoice);
             DB::commit();
-            return response_success('','اشتراک مورد نظر باموفقیت خریداری شد');
+            return response_success('','اشتراک مورد نظر باموفقیت برای شما فعال شد',201);
 
         }else{
 
@@ -225,6 +238,11 @@ class PlansRepository implements PlansInterface
     {
 
         return auth()->user()->provider_plans()->with('invoice')->get();
+    }
+    public function provider_reserved()
+    {
+
+        return auth()->user()->provider_plans()->where('reserved',true)->with('invoice')->get();
     }
 
     private function new_customer_plan($plan,$invoice){

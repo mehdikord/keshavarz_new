@@ -18,6 +18,7 @@ export default {
         return{
             errors:[],
             show_form:true,
+            authDialog:false,
             show_map:false,
             category_id: null,
             implement_id: null,
@@ -59,6 +60,10 @@ export default {
             })
         },
         Do_Search(){
+            if (!this.AuthUserCheck()){
+               return this.authDialog=true;
+            }
+
             if (!this.location.length){
                 return this.NotifyError("مختصات از نقشه انتخاب نشده")
             }
@@ -67,6 +72,9 @@ export default {
             }
             // this.search_loading=true;
             this.show_form=false;
+
+
+
         },
         Filter_Select_Category (val, update, abort) {
             update(() => {
@@ -241,8 +249,19 @@ export default {
                     </div>
                     <div class="text-center q-mt-xl">
                         <q-btn @click="Do_Search" glossy rounded color="green"  class="open-map-btn" icon="fas fa-search q-mr-sm"> جستجو خدمات کشاورزی </q-btn>
+
+                        <q-dialog  v-model="authDialog">
+                            <q-card class="image-dialog">
+                                <q-card-section class="q-pt-none">
+
+
+                                </q-card-section>
+
+                            </q-card>
+                        </q-dialog>
                     </div>
                 </template>
+
                 <template v-else>
                     <div>
                         <span class="result-title q-mr-sm">نتایج جستجو برای : </span>
@@ -261,8 +280,6 @@ export default {
                             <search_profile v-for="i in 7" class="q-mb-md"></search_profile>
                         </template>
 
-
-
                     </div>
 
                 </template>
@@ -276,6 +293,9 @@ export default {
 </template>
 
 <style scoped>
+.image-dialog{
+    width: 800px;
+}
 .search-text{
     font-size: 15px;
     font-weight: 600;

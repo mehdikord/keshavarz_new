@@ -42,6 +42,10 @@ class PlanController extends Controller
         return response_success($this->repository->customer_all());
     }
 
+    public function customer_reserved()
+    {
+        return response_success($this->repository->customer_reserved());
+    }
 
 
     //Provider Plans
@@ -68,6 +72,12 @@ class PlanController extends Controller
     public function provider_all()
     {
         return response_success($this->repository->provider_all());
+
+    }
+
+    public function provider_reserved()
+    {
+        return response_success($this->repository->provider_reserved());
 
     }
 
