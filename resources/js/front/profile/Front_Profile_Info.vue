@@ -36,6 +36,7 @@ export default {
             "ProfileUserUpdateStorage",
             "ProfilesUserUpdateImage",
             "ProfilesUserUpdate",
+            "Auth_User_Logout"
         ]),
         GetProfile(){
             this.ProfilesUserMe().then(res => {
@@ -119,6 +120,29 @@ export default {
                 this.provinces.forEach(province => {
                     this.provinces_select.push({label : province.name , value : province.id})
                 })
+            })
+        },
+        Logout(){
+            this.$q.dialog({
+                title: 'هشدار !',
+                message: 'آیا برای خروج از حساب کاربری خود اطمینان دارید ؟',
+
+                ok: {
+                    glossy: true,
+                    color:'positive',
+                },
+                cancel: {
+                    glossy: true,
+                    color: 'red'
+                },
+                persistent: true
+            }).onOk(() => {
+                this.Auth_User_Logout()
+                window.open('/','_self')
+            }).onCancel(() => {
+                // console.log('>>>> Cancel')
+            }).onDismiss(() => {
+                // console.log('I am triggered on both OK and Cancel')
             })
         },
 
@@ -209,8 +233,9 @@ export default {
                                         {{user.bio}}
                                     </p>
                                 </div>
-                                <div class="col-12 text-right">
-                                    <q-btn @click="EditInfoDialog = true" color="indigo" glossy icon="fas fa-edit q-mr-sm" class="profile-edit-btn">ویرایش اطلاعات کاربری</q-btn>
+                                <div class="col-12 col-sm-12 col-xs-12 text-right">
+                                    <q-btn @click="EditInfoDialog = true" color="indigo" glossy icon="fas fa-edit q-mr-sm" class="profile-edit-btn q-mb-sm">ویرایش اطلاعات کاربری</q-btn>
+                                    <q-btn @click="Logout" color="red" glossy icon="fas fa-times q-mr-sm" class="profile-edit-btn q-ml-sm q-mb-sm">خروج از حساب</q-btn>
                                 </div>
 
                             </div>

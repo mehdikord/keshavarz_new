@@ -44,7 +44,24 @@ export default {
                 })
             } )
         },
-
+        UserPlanCustomerReserved(){
+            return new Promise((resolve,reject) => {
+                axios.get('users/plans/customer/reserved').then((result ) => {
+                    resolve(result);
+                }).catch(error => {
+                    reject();
+                })
+            } )
+        },
+        UserPlanProviderReserved(){
+            return new Promise((resolve,reject) => {
+                axios.get('users/plans/provider/reserved').then((result ) => {
+                    resolve(result);
+                }).catch(error => {
+                    reject();
+                })
+            } )
+        },
     }
 
 
