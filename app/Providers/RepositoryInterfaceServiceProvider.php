@@ -11,6 +11,7 @@ use App\Interfaces\News\NewsInterface;
 use App\Interfaces\Plans\PlansInterface;
 use App\Interfaces\Products\ProductsInterface;
 use App\Interfaces\Profile\ProfileInterface;
+use App\Interfaces\Search\SearchInterface;
 use App\Interfaces\Users\UsersInterface;
 use App\Repository\Auth\AuthRepository;
 use App\Repository\Brands\BrandsRepository;
@@ -21,6 +22,7 @@ use App\Repository\News\NewsRepository;
 use App\Repository\Plans\PlansRepository;
 use App\Repository\Products\ProductsRepository;
 use App\Repository\Profile\ProfileRepository;
+use App\Repository\Search\SearchRepository;
 use App\Repository\Users\UsersRepository;
 use Illuminate\Support\ServiceProvider;
 
@@ -41,6 +43,7 @@ class RepositoryInterfaceServiceProvider extends ServiceProvider
         $this->app->bind(NewsInterface::class,NewsRepository::class);
         $this->app->bind(ImplementInterface::class,ImplementRepository::class);
         $this->app->bind(PlansInterface::class,PlansRepository::class);
+        $this->app->bind(SearchInterface::class,SearchRepository::class);
 
     }
 

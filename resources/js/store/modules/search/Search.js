@@ -6,9 +6,9 @@ export default {
     state : {},
     mutations: {},
     actions:{
-        SearchStart(){
+        SearchStart(_,items){
             return new Promise((resolve,reject) => {
-                axios.get('users/search/providers').then((result ) => {
+                axios.post('users/search/providers',items).then((result ) => {
                     resolve(result);
                 }).catch(error => {
                     reject();
