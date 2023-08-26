@@ -252,8 +252,14 @@ export default {
 
                         <q-dialog  v-model="authDialog">
                             <q-card class="image-dialog">
-                                <q-card-section class="q-pt-none">
-
+                                <q-card-section>
+                                    <div class="text-center">
+                                        <q-icon name="fas fa-triangle-exclamation fa-3x fa-beat text-red"></q-icon>
+                                    </div>
+                                    <div class="text-center q-mt-lg text-red q-mb-md">
+                                        <strong>کاربر گرامی برای جستجو خدمات و مشاهده نتایج ابتدا باید وارد حساب کاربری خود شوید</strong>
+                                        <q-btn :to="{name:'profile'}" class="q-mt-lg" glossy color="teal-7">ثبت نام / ورود به حساب کاربری</q-btn>
+                                    </div>
 
                                 </q-card-section>
 
@@ -294,7 +300,7 @@ export default {
 
 <style scoped>
 .image-dialog{
-    width: 800px;
+    width: 860px;
 }
 .search-text{
     font-size: 15px;

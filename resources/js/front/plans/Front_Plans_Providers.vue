@@ -35,12 +35,19 @@ export default {
         BuyPlan(plan){
          this.pay_loading=true;
          axios.get('users/plans/provider/buy/'+plan.id).then(res => {
+             if (res.status === 201){
+                 this.pay_loading=false;
+                 return this.NotifySuccess('اشتراک رایگان باموفقیت برای شما ثبت و فعال شد')
+             }
              if (res.data.result){
                  window.open(res.data.result,'_self');
              }
              this.pay_loading=false;
          }).catch(e => {
              this.pay_loading=false;
+             if (e.response.status === 409){
+                 return this.NotifyError(e.response.data.error);
+             }
              console.log(e.response)
          })
         }
