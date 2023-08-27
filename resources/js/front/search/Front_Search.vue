@@ -2,6 +2,7 @@
 import {mapActions} from "vuex";
 import NeshanMap from "@neshan-maps-platform/vue3-openlayers"
 import Front_Search_Profile from "@/front/search/Front_Search_Profile.vue";
+import Front_Skeleton_Provider from "../skeleton/Front_Skeleton_Provider.vue";
 
 export default {
     name: "Front_Search",
@@ -12,6 +13,7 @@ export default {
     components: {
         NeshanMap,
         'search_profile' : Front_Search_Profile,
+        'skeleton_provider' : Front_Skeleton_Provider,
 
     },
     data(){
@@ -73,16 +75,17 @@ export default {
             }
             this.search_loading=true;
             this.SearchStart({implement_id : this.implement_id,location:this.location}).then(res => {
-                console.log(res.data.result);
+                this.search_result=res.data.result;
+                this.search_loading=false;
+                this.NotifySuccess("جستجو خدمات باموفقیت انجام شد")
 
             }).catch(error=>{
 
+                return this.NotifyServerError()
             })
 
 
             this.show_form=false;
-
-
 
 
         },
@@ -110,6 +113,7 @@ export default {
         },
         Map_Marker(e){
             if (e.coords){
+                this.location=[];
                 this.location.push(e.coords[1]);
                 this.location.push(e.coords[0]);
             }
@@ -290,10 +294,22 @@ export default {
                     <div class="q-mt-xl">
                         <global_search_loading v-if="search_loading"></global_search_loading>
                         <template v-else>
-                            <div class="q-mb-md search-text text-indigo">
-                                13 کاربر برای ارائه این خدمت یافت شد
-                            </div>
-                            <search_profile v-for="i in 7" class="q-mb-md"></search_profile>
+                            <template v-if="search_result.length">
+                                <div class="q-mb-md search-text text-indigo">
+                                    {{ search_result.length }} کاربر برای ارائه این خدمت یافت شد
+                                </div>
+                                <search_profile v-for="user in search_result" :user="user" class="q-mb-md"></search_profile>
+                            </template >
+                            <template v-else>
+                                <div class="text-center ">
+                                    <q-img class="not-found-image q-mt-md q-mb-lg" src="/front/images/search-not-found.png"></q-img>
+                                    <br>
+                                    <strong class="text-indigo">
+                                        درحال حاضر هیچ کاربری برای ارائه خدمت مورد نظر شما یافت نشد
+                                    </strong>
+                                </div>
+                            </template>
+
                         </template>
 
                     </div>
@@ -351,9 +367,14 @@ export default {
     font-size: 15px;
     font-weight: 550;
 }
+.not-found-image{
+    width: 150px;
+}
 
 @media only screen and (max-width: 600px) {
-
+    .not-found-image{
+        width: 100px;
+    }
     .search-text{
         font-size: 14px;
         font-weight: 600;

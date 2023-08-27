@@ -1,7 +1,6 @@
 <script>
 export default {
-    name: "Front_Search_Profile",
-    props:['user'],
+    name: "Front_Skeleton_Provider"
 }
 </script>
 
@@ -15,41 +14,28 @@ export default {
                 </div>
                 <div class="col-lg-10 col-sm-9 col-xs-9 info-padding">
                     <div class="info-box">
-                        <span class="info-title text-green-7">نام : </span>
-                        <span class="info-text text-dark">{{user.user.name}} </span>
+                        <span class="info-title text-green-7">    <q-skeleton width="120px" /> </span>
+                        <span class="info-text text-dark">  <q-skeleton width="130px" /></span>
                     </div>
                     <div class="info-box">
-                        <span class="info-title text-green-7">شماره تماس : </span>
-                        <span v-if="user.user.phone" class="info-text text-dark" dir="ltr">{{user.user.phone}}</span>
-                        <span v-else class="info-error text-red" dir="ltr">
-                            برای مشاهده باید اشتراک فعال داشته باشید
-                            <q-icon name="fas fa-triangle-exclamation"></q-icon>
-
-                        </span>
+                        <q-skeleton  />
                     </div>
                     <div class="info-box">
-                        <span class="info-title text-green-7">فاصله از شما : </span>
-                        <span class="info-text text-dark">{{user.dis}} کیلومتر </span>
+                        <q-skeleton  />
                     </div>
                     <div class="info-box">
-                        <span class="info-title text-green-7">قیمت : </span>
-                        <span class="info-text text-dark">
-                            <strong class="text-red">{{this.$filters.numbers(user.price)}}</strong>
-                            <span class="currency">تومان</span>
-                            /
-                            <span>{{user.price_type}}</span>
-                        </span>
+                        <q-skeleton  />
                     </div>
                     <div class="btn-box">
-                        <q-btn color="positive" :href="'tel:'+user.user.phone" class="float-right info-btn q-ml-sm" icon="fas fa-phone q-mr-xs" :disable="!user.user.phone">تماس</q-btn>
-                        <q-btn :to="{name : 'provider_profile',params:{id:user.user.id}}" color="positive" class="float-right info-btn" icon="fas fa-user q-mr-xs">مشاهده پروفایل</q-btn>
+                        <q-skeleton class="float-right" width="80px" height="30px" />
+                        <q-skeleton class="float-right q-mr-sm" width="100px" height="30px" />
+
                     </div>
                 </div>
             </div>
         </q-card-section>
     </q-card>
 </template>
-
 <style scoped>
 .mobile-padding{
 
@@ -101,7 +87,7 @@ export default {
         font-size: 12px;
     }
     .image{
-        width: 65px;
+        width: 70px;
     }
     .currency{
         font-size: 10px;

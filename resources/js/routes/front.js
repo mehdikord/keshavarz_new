@@ -23,7 +23,7 @@ const routes = [
         meta : {title : 'جستجو خدمات'}
     },
     {
-        path : "/provider/:code",
+        path : "/provider/:id",
         name : "provider_profile",
         component : Front_Provider_Profile,
         meta : {title : 'پروفایل خدمات دهنده'}

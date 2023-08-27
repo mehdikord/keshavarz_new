@@ -13,11 +13,13 @@ class SearchRepository implements SearchInterface
             $implement->where('implement_id',$request->implement_id);
         });
 
-        $result = [];
+
+        $result=[];
         foreach ($users->get() as $user){
-            $dis = location_distance($user->search_location,$request->location);
+            $dis = location_distance(json_decode($user->search_location),$request->location);
             if ($dis <= $user->search_range){
                 $user_implement = $user->implements()->where('implement_id',$request->implement_id)->first();
+
                 if (auth('users')->user()->customer_plan_active_check()){
                     $phone = $user->phone;
                 }else{
@@ -43,7 +45,6 @@ class SearchRepository implements SearchInterface
                     ]
 
                 ];
-
             }
         }
         log_search_store(auth('users')->id(),$request->implement_id,$request->location,count($result));
