@@ -3,7 +3,14 @@ export default {
     name: "Front_Provider_Profile",
     data(){
         return {
+            user:null,
+            user_loading:false,
             ImageDialog:[],
+
+        }
+    },
+    methods:{
+        GetUser(){
 
         }
     }

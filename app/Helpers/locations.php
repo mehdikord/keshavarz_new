@@ -2,12 +2,10 @@
 
 
 function location_distance($from,$to){
-    $from_ex = explode(',',$from);
-    $to_ex = explode(',',$to);
-    $lat1 = $from_ex[0];
-    $lon1 = $from_ex[1];
-    $lat2 = $to_ex[0];
-    $lon2 = $to_ex[1];
+    $lat1 = $from[0];
+    $lon1 = $from[1];
+    $lat2 = $to[0];
+    $lon2 = $to[1];
 
     $theta = $lon1 - $lon2;
     $dist = sin(deg2rad($lat1)) * sin(deg2rad($lat2)) +  cos(deg2rad($lat1)) * cos(deg2rad($lat2)) * cos(deg2rad($theta));
