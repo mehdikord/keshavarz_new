@@ -68,7 +68,7 @@ class SearchRepository implements SearchInterface
             'id' => $user->id,
             'name' => $user->name,
             'phone' => $phone,
-            'image' => $user->image,
+            'image' => $user->profile,
             'bio' => $user->bio,
         ];
         foreach ($user->implements()->with('implement')->with('forms')->get() as $implement){

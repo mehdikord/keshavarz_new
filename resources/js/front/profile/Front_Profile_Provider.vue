@@ -83,6 +83,9 @@ export default {
             })
 
         },
+        GetUserGallery(){
+
+        },
         UpdateRange(){
             if (!this.location.length){
                 return this.NotifyError("موقعیت جغرافیایی را از نقشه انتخاب کنید")
@@ -555,6 +558,29 @@ export default {
                                     </div>
 
                                 </div>
+                            </q-card-section>
+                        </q-card>
+
+                        <q-card class="q-mt-lg">
+                            <q-card-section class="info-title bg-indigo text-white">
+                                گالری تصاویر خدمت دهنده
+                            </q-card-section>
+                            <q-card-section>
+                                <div class="info-subtitle text-green-8">
+                                     تصاویر ادوات شما :
+                                </div>
+                                <div class="info-subtitle-small q-mt-xs q-mb-mb text-grey-7">
+                                     شما میتوانید تصاویر مربوط به ادوات کشاورزی خود را در این قسمت وارد کنید ، و کشاورز تصاویر گالری و ادوات شما را مشاهده میکند
+                                </div>
+                                <div class="q-mt-lg q-mb-md text-center">
+                                    <q-btn @click="AddImplementDialog=true" class="add-implement-btn" glossy color="teal-7" icon="fas fa-image q-mr-sm">
+                                        افزودن تصویر جدید
+                                    </q-btn>
+
+
+
+                                </div>
+
                             </q-card-section>
                         </q-card>
 

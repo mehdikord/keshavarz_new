@@ -82,6 +82,15 @@ export default {
                 })
             } )
         },
+        ProfilesUserGallery(){
+            return new Promise((resolve,reject) => {
+                axios.get('users/provider/implement').then((result ) => {
+                    resolve(result);
+                }).catch(error => {
+                    reject(error);
+                })
+            } )
+        },
         ProfilesUserImplementDelete(_,item){
             return new Promise((resolve,reject) => {
                 axios.delete('users/provider/implement/'+item).then((result ) => {
