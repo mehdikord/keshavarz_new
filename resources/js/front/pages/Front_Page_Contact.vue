@@ -25,6 +25,11 @@ export default {
                     </iframe>
                 </div>
             </div>
+            <div class="q-mt-lg row">
+                <div class="col-lg-4 col-md-6 col-sm-12 col-xs-12"></div>
+                <div class="col-lg-4 col-md-6 col-sm-12 col-xs-12"></div>
+                <div class="col-lg-4 col-md-12 col-sm-12 col-xs-12"></div>
+            </div>
 
         </div>
     </div>
