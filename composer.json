@@ -32,7 +32,8 @@
             "app/Helpers/responses.php",
             "app/Helpers/core.php",
             "app/Helpers/log.php",
-            "app/Helpers/locations.php"
+            "app/Helpers/locations.php",
+            "app/Helpers/access.php"
         ]
     },
     "autoload-dev": {

@@ -99,6 +99,8 @@ class ProfileRepository implements ProfileInterface
         $item->delete();
         return response_success(true);
     }
+
+
     public function index_gallery()
     {
         return auth()->user()->gallery;
@@ -106,11 +108,13 @@ class ProfileRepository implements ProfileInterface
 
     public function store_gallery($request)
     {
-        $file_path = uploader_image('image','public/images/users/gallery/');
-        $file = uploader_direct_link($file_path);
+
+        $image = (new MediaService())->store_image($request->file('image'),'users/gallery');
+
+
         return auth()->user()->gallery()->create([
-            'file_path' => $file_path,
-            'file' => $file,
+            'file_path' => $image,
+            'file' => $image,
             'type' => 'image',
         ]);
     }

@@ -84,7 +84,27 @@ export default {
         },
         ProfilesUserGallery(){
             return new Promise((resolve,reject) => {
-                axios.get('users/provider/implement').then((result ) => {
+                axios.get('users/gallery').then((result ) => {
+                    resolve(result);
+                }).catch(error => {
+                    reject(error);
+                })
+            } )
+        },
+        ProfilesUserGalleryStore(_,item){
+            return new Promise((resolve,reject) => {
+                let data = new  FormData();
+                if (item.image){data.append('image',item.image,item.image.name)};
+                axios.post('users/gallery',data,{headers: {'Content-Type': 'multipart/form-data'}}).then((result ) => {
+                    resolve(result);
+                }).catch(error => {
+                    reject(error);
+                })
+            } )
+        },
+        ProfilesUserGalleryDelete(_,item){
+            return new Promise((resolve,reject) => {
+                axios.delete('users/gallery/'+item).then((result ) => {
                     resolve(result);
                 }).catch(error => {
                     reject(error);

@@ -11,6 +11,7 @@ export default {
         if (this.AuthUserCheck()){
             this.GetProfile();
             this.GetUserImplement();
+            this.GetUserGallery();
         }
 
 
@@ -19,15 +20,20 @@ export default {
         return{
             user:null,
             user_implements:[],
+            user_gallery:[],
             user_implement_loading:false,
+            user_gallery_loading:false,
+            gallery_add:null,
             errors:[],
             range:20,
             location:[],
             location_loading:false,
             implement_loading:false,
+            gallery_loading:false,
             show_map:false,
             forms_loading:false,
             AddImplementDialog:false,
+            AddGalleryDialog:false,
             EditImplementDialog:[],
             category_id: null,
             implement_id: null,
@@ -52,6 +58,9 @@ export default {
             "ProfilesUserImplement",
             "ProfilesUserImplementDelete",
             "ProfilesUserImplementUpdate",
+            "ProfilesUserGallery",
+            "ProfilesUserGalleryStore",
+            "ProfilesUserGalleryDelete",
         ]),
         Map_Marker(e){
             if (e.coords){
@@ -84,7 +93,14 @@ export default {
 
         },
         GetUserGallery(){
-
+            this.user_gallery_loading=true;
+            this.ProfilesUserGallery().then(res => {
+                this.user_gallery = res.data.result;
+                this.user_gallery_loading=false;
+            }).catch(error =>{
+                this.user_gallery_loading=false;
+                this.NotifyServerError();
+            })
         },
         UpdateRange(){
             if (!this.location.length){
@@ -168,6 +184,29 @@ export default {
 
             })
         },
+        AddGallery(){
+            if (!this.gallery_add){
+                return this.NotifyError('تصویر را انتخاب کنید')
+            }
+            this.gallery_loading=true;
+           let item ={image:this.gallery_add}
+            this.ProfilesUserGalleryStore(item).then(res => {
+                this.user_gallery.push(res.data.result);
+                this.gallery_loading=false;
+                this.AddGalleryDialog=false;
+                this.NotifySuccess("تصویر جدید باموفقیت به گالری شما اضافه شد")
+            }).catch(error => {
+                this.gallery_loading=false;
+                if (error.response.status === 409) {
+                    this.NotifyError(error.response.data.error);
+                }else if (error.response.status === 422) {
+                    this.NotifyError("اطلاعات وارد شده ناقص است")
+                }else {
+                    return this.NotifyServerError();
+                }
+
+            })
+        },
         RemoveImplement(item){
             this.$q.dialog({
                 title: 'هشدار !',
@@ -196,6 +235,34 @@ export default {
                 // console.log('I am triggered on both OK and Cancel')
             })
         },
+        RemoveGallery(item){
+            this.$q.dialog({
+                title: 'هشدار !',
+                message: 'آیا مطمئن هستید آیتم مورد نظر از گالری شما حذف شود ؟',
+
+                ok: {
+                    glossy: true,
+                    color:'positive',
+                },
+                cancel: {
+                    glossy: true,
+                    color: 'red'
+                },
+                persistent: true
+            }).onOk(() => {
+                this.ProfilesUserGalleryDelete(item).then(res => {
+                    this.GetUserGallery();
+                    return this.NotifyDelete();
+                }).catch(error => {
+                    return  this.NotifyServerError();
+                })
+
+            }).onCancel(() => {
+                // console.log('>>>> Cancel')
+            }).onDismiss(() => {
+                // console.log('I am triggered on both OK and Cancel')
+            })
+        },
         UpdateImplement(implement){
             if (!implement.price){
                 return this.NotifyError("مبلغ مورد نظر را وارد کنید !");
@@ -211,7 +278,9 @@ export default {
                 return this.NotifyServerError()
             })
 
-        }
+        },
+
+
     },
     computed :{
         Get_Implement(){
@@ -573,11 +642,62 @@ export default {
                                      شما میتوانید تصاویر مربوط به ادوات کشاورزی خود را در این قسمت وارد کنید ، و کشاورز تصاویر گالری و ادوات شما را مشاهده میکند
                                 </div>
                                 <div class="q-mt-lg q-mb-md text-center">
-                                    <q-btn @click="AddImplementDialog=true" class="add-implement-btn" glossy color="teal-7" icon="fas fa-image q-mr-sm">
+                                    <q-btn @click="AddGalleryDialog=true" class="add-implement-btn" glossy color="teal-7" icon="fas fa-image q-mr-sm">
                                         افزودن تصویر جدید
                                     </q-btn>
+                                    <q-dialog position="top"  v-model="AddGalleryDialog" >
 
+                                        <q-card class="add-implement-card">
+                                            <q-card-section class="bg-indigo text-white">
+                                                <div class="add-implement-title">
+                                                    افزودن تصویر جدید به گالری خود
+                                                </div>
+                                            </q-card-section>
+                                            <q-card-section>
 
+                                                <div class="form-box">
+                                                    <q-file class="q-mb-md" color="green-7" outlined bottom-slots v-model="gallery_add" label="انتخاب تصویر" counter>
+                                                        <template v-slot:prepend>
+                                                            <q-icon name="fas fa-image" @click.stop.prevent />
+                                                        </template>
+                                                        <template v-slot:append>
+                                                            <q-icon name="fas fa-times" @click.stop.prevent="gallery_add = null" class="cursor-pointer" />
+                                                        </template>
+                                                    </q-file>
+                                                </div>
+                                                <div class="q-mt-lg q-mb-sm text-right">
+                                                    <q-btn @click="AddGallery" :loading="gallery_loading" color="green-7" glossy>ثبت و ارسال تصویر</q-btn>
+                                                </div>
+
+                                            </q-card-section>
+
+                                        </q-card>
+
+                                    </q-dialog>
+                                </div>
+                                <div class="q-mt-lg">
+                                    <global_info_loading v-if="user_gallery_loading"></global_info_loading>
+                                    <template v-else>
+                                        <div v-if="!user_gallery.length" class="text-center">
+                                            <span class="q-mt-md text-red-5 ">
+                                                شما هنوز هیچ تصویری در گالری خود اضافه نکرده اید
+                                            </span>
+                                        </div>
+                                        <div v-else>
+                                            <div class="row">
+                                                <div v-for="gallery in user_gallery" class="col-xl-2 col-lg-2 col-md-3 col-sm-6 col-xs-6 q-mt-xs">
+                                                    <q-card>
+                                                        <q-card-section class="text-center" >
+                                                            <q-img class="gallery-image" :src="gallery.file"/>
+                                                        </q-card-section>
+                                                        <q-card-actions>
+                                                            <q-icon @click="RemoveGallery(gallery.id)" name="fas fa-trash" color="red"  class="cursor-pointer"></q-icon>
+                                                        </q-card-actions>
+                                                    </q-card>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </template>
 
                                 </div>
 
@@ -696,6 +816,10 @@ export default {
 .imp-edit-btn{
     font-size: 13px;
 }
+.gallery-image{
+    width: 200px;
+    height: 200px;
+}
 
 @media only screen and (max-width: 600px) {
 
@@ -796,6 +920,11 @@ export default {
     .imp-edit-btn{
         font-size: 12px;
     }
+    .gallery-image{
+        width: 90px;
+        height: 90px;
+    }
+
 
 }
 </style>
