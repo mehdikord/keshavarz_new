@@ -921,8 +921,9 @@ export default {
         font-size: 12px;
     }
     .gallery-image{
-        width: 90px;
-        height: 90px;
+        width: 120px;
+        height: 120px;
+
     }
 
 

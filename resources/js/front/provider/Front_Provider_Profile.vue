@@ -5,18 +5,22 @@ export default {
     name: "Front_Provider_Profile",
     mounted() {
         this.GetUser();
+        this.GetUserGallery();
     },
     data(){
         return {
             user:null,
             implements:[],
+            gallery:[],
             user_loading:true,
+            gallery_loading:true,
             ImageDialog:[],
         }
     },
     methods:{
         ...mapActions([
-            "SearchProviderProfile"
+            "SearchProviderProfile",
+            "SearchProviderGallery",
         ]),
         GetUser(){
             if (this.$route.params.id){
@@ -31,7 +35,20 @@ export default {
 
 
 
-        }
+        },
+        GetUserGallery(){
+            if (this.$route.params.id){
+                this.SearchProviderGallery(this.$route.params.id).then(res => {
+                    this.gallery = res.data.result;
+                    this.gallery_loading=false;
+                }).catch(error => {
+                    return this.NotifyServerError();
+                })
+            }
+
+
+
+        },
     }
 }
 </script>
@@ -135,14 +152,15 @@ export default {
                             <strong class="text-indigo pro-head">گالری تصاویر</strong>
                             <q-separator class="q-mt-md"/>
                             <div class="row q-mt-lg justify-center">
-                                <div v-for="i in 8" class="col-xl-2 col-lg-2 col-sm-4 col-xs-4 q-mb-md text-center">
-                                    <q-img @click="ImageDialog[i] = true" src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/b7/Harrier_Hound_-Pedigree_Harrier.jpg/1200px-Harrier_Hound_-Pedigree_Harrier.jpg" class="rounded-borders gallery-image"/>
+                                <global_info_loading v-if="gallery_loading"/>
+                                <div v-else v-for="gallery_item in gallery" class="col-xl-2 col-lg-2 col-sm-4 col-xs-4 q-mb-md text-center">
+                                    <q-img @click="ImageDialog[gallery_item.id] = true" :src="gallery_item.file" class="rounded-borders gallery-image"/>
                                     <q-dialog
-                                        v-model="ImageDialog[i]"
+                                        v-model="ImageDialog[gallery_item.id]"
                                     >
                                         <q-card class="image-dialog">
                                             <q-card-section class="q-pt-none">
-                                                <q-img src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/b7/Harrier_Hound_-Pedigree_Harrier.jpg/1200px-Harrier_Hound_-Pedigree_Harrier.jpg"/>
+                                                <q-img :src="gallery_item.file"/>
 
                                             </q-card-section>
                                             <q-card-actions align="right" class="bg-white text-red">

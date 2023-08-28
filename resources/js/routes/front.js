@@ -8,6 +8,8 @@ import Front_Profile from "../front/profile/Front_Profile.vue";
 import Front_Plans_Store from "../front/plans/Front_Plans_Store.vue";
 import Front_Profile_Provider from "@/front/profile/Front_Profile_Provider.vue";
 import Front_Plans_Result from "../front/plans/result/Front_Plans_Result.vue";
+import Front_Page_About from "../front/pages/Front_Page_About.vue";
+import Front_Page_Contact from "../front/pages/Front_Page_Contact.vue";
 
 const routes = [
     {
@@ -53,10 +55,16 @@ const routes = [
         meta : {title : 'خرید اشتراک'}
     },
     {
-        path : "/plans/pay/result",
-        name : "plans_pay_result",
-        component :Front_Plans_Result,
-        meta : {title : 'خرید اشتراک'}
+        path : "/pages/about",
+        name : "pages_about",
+        component :Front_Page_About,
+        meta : {title : 'درباره کشاورز '}
+    },
+    {
+        path : "/pages/contact",
+        name : "pages_contact",
+        component :Front_Page_Contact,
+        meta : {title : 'تماس با ما '}
     },
 
 
