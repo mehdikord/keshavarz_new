@@ -5,6 +5,7 @@ namespace App\Repository\Profile;
 
 use App\Interfaces\Profile\ProfileInterface;
 use App\Services\MediaServices\MediaService;
+use Illuminate\Support\Facades\Storage;
 
 class ProfileRepository implements ProfileInterface
 {
@@ -98,5 +99,35 @@ class ProfileRepository implements ProfileInterface
         $item->delete();
         return response_success(true);
     }
+
+
+    public function index_gallery()
+    {
+        return auth()->user()->gallery;
+    }
+
+    public function store_gallery($request)
+    {
+
+        $image = (new MediaService())->store_image($request->file('image'),'users/gallery');
+
+
+        return auth()->user()->gallery()->create([
+            'file_path' => $image,
+            'file' => $image,
+            'type' => 'image',
+        ]);
+    }
+
+    public function delete_gallery($item)
+    {
+        if ($item->file_path){
+            Storage::delete($item->file_path);
+        }
+        $item->delete();
+        return true;
+    }
+
+
 
 }

@@ -15,6 +15,16 @@ export default {
                 })
             } )
         },
+        SearchProviderProfile(_,item){
+
+            return new Promise((resolve,reject) => {
+                axios.get('users/search/providers/profile/'+item).then((result ) => {
+                    resolve(result);
+                }).catch(error => {
+                    reject();
+                })
+            } )
+        }
 
     }
 

@@ -24,4 +24,10 @@ interface ProfileInterface
 
     public function implement_delete($item);
 
+    public function index_gallery();
+
+    public function store_gallery($request);
+
+    public function delete_gallery($item);
+
 }

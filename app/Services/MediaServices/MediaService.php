@@ -26,8 +26,12 @@ class MediaService{
         $title = $file->getClientOriginalName();
         $saved_file = (new UploadImageService())->upload_public($file,'images/'.$folder);
         $url = asset(Storage::url($saved_file));
+        $admin=null;
+        if ( auth('admin')->check()){
+            $admin= auth('admin')->id();
+        }
         Media::create([
-            'admin_id' => auth('admin')->id(),
+            'admin_id' =>$admin,
             'title' => $title,
             'url' => $url,
             'file' => $saved_file,
@@ -58,6 +62,8 @@ class MediaService{
         auth('users')->user()->update(['profile' => $image]);
         return $image;
     }
+
+
 
 
 

@@ -1,16 +1,35 @@
 <script>
+import {mapActions} from "vuex";
+
 export default {
     name: "Front_Provider_Profile",
+    mounted() {
+        this.GetUser();
+    },
     data(){
         return {
             user:null,
-            user_loading:false,
+            implements:[],
+            user_loading:true,
             ImageDialog:[],
-
         }
     },
     methods:{
+        ...mapActions([
+            "SearchProviderProfile"
+        ]),
         GetUser(){
+            if (this.$route.params.id){
+                this.SearchProviderProfile(this.$route.params.id).then(res => {
+                    this.user = res.data.result.user;
+                    this.implements = res.data.result.implements;
+                    this.user_loading=false;
+                }).catch(error => {
+                    return this.NotifyServerError();
+                })
+            }
+
+
 
         }
     }
@@ -34,96 +53,110 @@ export default {
                 <div class="text-right q-mb-sm">
                     <q-btn :to="{name : 'search'}" color="red" icon-right="fas fa-arrow-left" class="back-btn">بازگشت</q-btn>
                 </div>
-                <q-card flat class="bg-green-1">
-                    <q-card-section>
-                        <div class="row">
-                            <div class="col-lg-2 col-md-2">
-                                <q-img src="/front/images/farmer.png" class="profile-image"/>
+                <global_info_loading class="q-mt-xl" v-if="user_loading" />
+
+                <template v-else>
+                    <q-card flat class="bg-green-1">
+                        <q-card-section>
+                            <div class="row">
+                                <div class="col-lg-2 col-md-2">
+                                    <q-img v-if="user.image" :src="user.image" class="profile-image"/>
+                                    <q-img v-else src="/front/images/farmer.png" class="profile-image"/>
+                                </div>
+                                <div class="col-lg-10 col-md-10">
+                                    <div class="info-box">
+                                        <span class="info-title text-red">نام : </span>
+                                        <span class="info-text text-dark">{{user.name}} </span>
+                                    </div>
+                                    <div class="info-box">
+                                        <span class="info-title text-red">شماره تماس : </span>
+                                        <span v-if="user.phone" class="info-text text-dark">{{user.phone}} </span>
+                                        <span v-else class="info-text text-yellow-9">
+                                            <q-icon name="fas fa-triangle-exclamation"></q-icon>
+                                            برای مشاهده شماره موبایل کاربر باید اشتراک فعال خدمات گیرنده داشته باشید
+                                        </span>
+
+                                    </div>
+                                    <div class="info-box">
+                                        <span class="info-title text-red">درباره کاربر : </span>
+                                        <p class="text-justify bio">
+                                            {{user.bio}}
+                                        </p>
+                                    </div>
+                                </div>
                             </div>
-                            <div class="col-lg-10 col-md-10">
-                                <div class="info-box">
-                                    <span class="info-title text-red">نام : </span>
-                                    <span class="info-text text-dark">مهدی کرد </span>
-                                </div>
-                                <div class="info-box">
-                                    <span class="info-title text-red">شماره تماس : </span>
-                                    <span class="info-text text-dark">09117926950 </span>
-                                </div>
-                                <div class="info-box">
-                                    <span class="info-title text-red">درباره کاربر : </span>
-                                    <p class="text-justify bio">
-                                        لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک است. چاپگرها و متون بلکه روزنامه و مجله در ستون و سطرآنچنان که لازم است و برای شرایط فعلی تکنولوژی مورد نیاز و کاربردهای متنوع با هدف بهبود ابزارهای کاربردی
-                                    </p>
-                                </div>
-                            </div>
-                        </div>
-                    </q-card-section>
-                </q-card>
-                <q-card flat class="bg-grey-1 q-mt-md">
-                    <q-card-section>
-                        <strong class="text-indigo pro-head">خدمات قابل ارائه توسط مهدی کرد</strong>
-                        <q-separator class="q-mt-md"/>
-                        <div class="row q-mt-lg justify-center" >
-                            <div v-for="i in 6" class="col-xl-4 col-lg-4 col-sm-12 col-xs-12">
-                                <div class="extra-padding">
-                                    <q-expansion-item
-                                        class="shadow-6 overflow-hidden"
-                                        style="border-radius: 20px"
-                                        header-class="bg-green-7 text-white"
-                                        expand-icon-class="text-white"
-                                    >
-                                        <template v-slot:header>
-                                            <div  class="pro-box">
-                                                <span class="pro-title">بزرکار گندم :</span>
-                                                <span class="pro-price">
-                                                    350,000
+                        </q-card-section>
+                    </q-card>
+                    <q-card flat class="bg-grey-1 q-mt-md">
+                        <q-card-section>
+                            <strong class="text-indigo pro-head">خدمات قابل ارائه توسط {{ user.name }}</strong>
+                            <q-separator class="q-mt-md"/>
+                            <div class="row q-mt-lg justify-center" >
+                                <div v-for="implement in implements" class="col-xl-4 col-lg-4 col-sm-12 col-xs-12">
+                                    <div class="extra-padding">
+                                        <q-expansion-item
+                                            class="shadow-6 overflow-hidden"
+                                            style="border-radius: 20px"
+                                            header-class="bg-green-7 text-white"
+                                            expand-icon-class="text-white"
+                                        >
+                                            <template v-slot:header>
+                                                <div  class="pro-box">
+                                                    <span class="pro-title">{{ implement.implement.name }} :</span>
+                                                    <span class="pro-price">
+                                                    <span class="text-yellow-6 q-mr-sm">{{this.$filters.numbers(implement.price)}}</span>
                                                     <span class="pro-currency">تومان</span>
                                                     /
                                                     <span class="pro-price-type">در هکتار</span>
                                                 </span>
-                                            </div>
-                                        </template>
-                                        <q-card>
-                                            <q-card-section>
-                                                <div class="form-box" v-for="i in 4">
-                                                    <span class="form-title text-red">سال ساخت : </span>
-                                                    <span class="form-text "> 1395 </span>
-                                                    <q-separator class="q-mt-sm"/>
                                                 </div>
+                                            </template>
+                                            <q-card>
+                                                <q-card-section>
+                                                    <div class="form-box" v-for="form in implement.implement.forms">
+                                                        <template v-if="form.form">
+                                                            <span class="form-title text-red">{{ form.form.name }} : </span>
+                                                            <span class="form-text "> {{form.data}} </span>
+                                                            <q-separator class="q-mt-sm"/>
+                                                        </template>
+
+                                                    </div>
+                                                </q-card-section>
+                                            </q-card>
+                                        </q-expansion-item>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </q-card-section>
+                    </q-card>
+                    <q-card flat class="bg-green-1 q-mt-lg q-mb-xl">
+                        <q-card-section>
+                            <strong class="text-indigo pro-head">گالری تصاویر</strong>
+                            <q-separator class="q-mt-md"/>
+                            <div class="row q-mt-lg justify-center">
+                                <div v-for="i in 8" class="col-xl-2 col-lg-2 col-sm-4 col-xs-4 q-mb-md text-center">
+                                    <q-img @click="ImageDialog[i] = true" src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/b7/Harrier_Hound_-Pedigree_Harrier.jpg/1200px-Harrier_Hound_-Pedigree_Harrier.jpg" class="rounded-borders gallery-image"/>
+                                    <q-dialog
+                                        v-model="ImageDialog[i]"
+                                    >
+                                        <q-card class="image-dialog">
+                                            <q-card-section class="q-pt-none">
+                                                <q-img src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/b7/Harrier_Hound_-Pedigree_Harrier.jpg/1200px-Harrier_Hound_-Pedigree_Harrier.jpg"/>
+
                                             </q-card-section>
+                                            <q-card-actions align="right" class="bg-white text-red">
+                                                <q-btn flat label="بستن" v-close-popup />
+                                            </q-card-actions>
                                         </q-card>
-                                    </q-expansion-item>
+                                    </q-dialog>
 
                                 </div>
                             </div>
-                        </div>
-                    </q-card-section>
-                </q-card>
-                <q-card flat class="bg-green-1 q-mt-lg q-mb-xl">
-                    <q-card-section>
-                        <strong class="text-indigo pro-head">گالری تصاویر</strong>
-                        <q-separator class="q-mt-md"/>
-                        <div class="row q-mt-lg justify-center">
-                            <div v-for="i in 8" class="col-xl-2 col-lg-2 col-sm-4 col-xs-4 q-mb-md text-center">
-                                <q-img @click="ImageDialog[i] = true" src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/b7/Harrier_Hound_-Pedigree_Harrier.jpg/1200px-Harrier_Hound_-Pedigree_Harrier.jpg" class="rounded-borders gallery-image"/>
-                                <q-dialog
-                                    v-model="ImageDialog[i]"
-                                >
-                                    <q-card class="image-dialog">
-                                        <q-card-section class="q-pt-none">
-                                            <q-img src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/b7/Harrier_Hound_-Pedigree_Harrier.jpg/1200px-Harrier_Hound_-Pedigree_Harrier.jpg"/>
+                        </q-card-section>
+                    </q-card>
+                </template>
 
-                                        </q-card-section>
-                                        <q-card-actions align="right" class="bg-white text-red">
-                                            <q-btn flat label="بستن" v-close-popup />
-                                        </q-card-actions>
-                                    </q-card>
-                                </q-dialog>
-
-                            </div>
-                        </div>
-                    </q-card-section>
-                </q-card>
             </div>
         </div>
     </div>

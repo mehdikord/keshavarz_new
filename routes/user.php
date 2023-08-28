@@ -35,6 +35,14 @@ Route::middleware(['auth:users'])->group(function (){
 
     });
 
+    Route::prefix('gallery')->group(function (){
+
+        Route::get('',[\App\Http\Controllers\User\Profile\GalleryController::class,'index']);
+        Route::post('',[\App\Http\Controllers\User\Profile\GalleryController::class,'store']);
+        Route::delete('/{id}',[\App\Http\Controllers\User\Profile\GalleryController::class,'delete']);
+
+    });
+
     Route::prefix('provider')->group(function (){
 
         Route::get('range',[\App\Http\Controllers\User\Profile\ProfileController::class,'range']);
