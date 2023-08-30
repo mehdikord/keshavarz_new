@@ -127,6 +127,11 @@ export default {
                         </div>
                     </template>
                 </div>
+                <div class="text-center news-all ">
+                    <router-link class="text-red-6" :to="{name : 'news'}">
+                        مشاهده همه خبر ها
+                    </router-link>
+                </div>
 
             </div>
         </div>
@@ -150,6 +155,13 @@ export default {
     font-size: 20px;
     font-weight: 600;
 }
+.news-all{
+    margin-top: 30px;
+    margin-bottom: 30px;
+    font-size: 20px;
+    font-weight: 600;
+}
+
 @media only screen and (max-width: 600px) {
 
     .for-slider{
@@ -172,6 +184,12 @@ export default {
     }
     .item-box-text{
         font-size: 14px;
+        font-weight: 600;
+    }
+    .news-all{
+        margin-top: 20px;
+        margin-bottom: 25px;
+        font-size: 18px;
         font-weight: 600;
     }
 

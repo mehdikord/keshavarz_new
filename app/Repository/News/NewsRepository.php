@@ -41,7 +41,7 @@ class NewsRepository implements NewsInterface
 
     public function latest()
     {
-        return response_success(News::OrderbyDesc('id')->take(6)->get());
+        return response_success(News::OrderbyDesc('id')->take(3)->get());
 
     }
 
