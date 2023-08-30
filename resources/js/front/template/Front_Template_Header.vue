@@ -60,7 +60,20 @@ export default {
                 <q-item-section class="text-white menu-text">ارتباط با ما</q-item-section>
             </q-item>
             <q-separator color="grey-9"/>
-
+            <q-item clickable v-ripple :to="{name:'pages_services'}" class="menu-padding">
+                <q-item-section avatar >
+                    <q-icon color="positive"  name="fas fa-table-cells-large font-28" />
+                </q-item-section>
+                <q-item-section class="text-white menu-text">خدمات کشاورز</q-item-section>
+            </q-item>
+            <q-separator color="grey-9"/>
+            <q-item clickable v-ripple :to="{name:'pages_faqs'}" class="menu-padding">
+                <q-item-section avatar >
+                    <q-icon color="positive"  name="fas fa-question font-28" />
+                </q-item-section>
+                <q-item-section class="text-white menu-text">سوالات متداول</q-item-section>
+            </q-item>
+            <q-separator color="grey-9"/>
         </q-list>
     </q-drawer>
 

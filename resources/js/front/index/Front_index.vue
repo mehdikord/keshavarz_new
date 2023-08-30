@@ -36,28 +36,8 @@ export default {
 <template>
     <div class="row justify-center">
         <div class="col-lg-9 col-sm-12 col-xs-12 ">
-          <div class="row q-mt-sm items-center">
-              <div class="col-md-4 col-sm-12 col-xs-12 q-px-sm mobile-padding">
-                  <q-card>
-                      <q-img class="shadow-8" src="https://www.agrivi.com/wp-content/uploads/2021/05/Best-Farm-Practices-for-Profitable-Farming-1200x565.jpeg">
-                          <div class="absolute-bottom text-center text-box">
-                              <strong class="banner-title">
-                                  دریافت خدمات کشاورزی
-                              </strong>
-                          </div>
-                      </q-img>
-                  </q-card>
-                  <q-card class="q-mt-md">
-                      <q-img class="shadow-8" src="https://www.hashmicro.com/blog/wp-content/uploads/2022/09/Gautam-Adani-IRMA-Speech.jpg">
-                          <div class="absolute-bottom text-center text-box">
-                              <strong class="banner-title">
-                                  ارائه خدمات کشاورزی
-                              </strong>
-                          </div>
-                      </q-img>
-                  </q-card>
-              </div>
-              <div class="col-md-8 col-sm-12 col-xs-12 q-px-sm mobile-padding">
+            <div class="row items-center">
+                <div class="col-md-12 col-sm-12 col-xs-12 q-px-sm mobile-padding">
                   <q-carousel
                       class="for-slider shadow-8 rounded-borders"
                       animated
@@ -68,7 +48,6 @@ export default {
                       arrows
                       transition-prev="slide-right"
                       transition-next="slide-left"
-
                   >
                       <q-carousel-slide :name="1" img-src="https://cdn.quasar.dev/img/mountains.jpg" />
                       <q-carousel-slide :name="2" img-src="https://cdn.quasar.dev/img/parallax1.jpg" />
@@ -76,7 +55,54 @@ export default {
                       <q-carousel-slide :name="4" img-src="https://cdn.quasar.dev/img/quasar.jpg" />
                   </q-carousel>
               </div>
-          </div>
+            </div>
+            <div class="col-lg-12 q-mt-md q-px-sm row mobile-padding">
+                <div class="col-xl-3 col-lg-3 col-md-6 col-sm-6 col-xs-6 q-px-xs q-mb-sm">
+                    <router-link :to="{name:'search'}">
+                        <q-card class="shadow-4 cursor-pointer">
+                            <q-card-section class="item-box bg-green-6">
+                                <div class="text-center item-box-text font-iransans text-white">
+                                    دریافت خدمات کشاورزی
+                                </div>
+                            </q-card-section>
+                        </q-card>
+                    </router-link>
+                </div>
+                <div class="col-xl-3 col-lg-3 col-md-6 col-sm-6 col-xs-6 q-px-xs q-mb-sm">
+                    <q-card class="shadow-4 cursor-pointer">
+                        <router-link :to="{name:'profile_provider'}">
+                            <q-card-section class="item-box bg-deep-orange-6">
+                            <div class="text-center item-box-text font-iransans text-white">
+                                ارائه خدمات کشاورزی
+                            </div>
+                        </q-card-section>
+                        </router-link>
+                    </q-card>
+                </div>
+                <div class="col-xl-3 col-lg-3 col-md-6 col-sm-6 col-xs-6 q-px-xs q-mb-sm">
+                    <q-card class="shadow-4 cursor-pointer">
+                        <router-link :to="{name:'profile_provider'}">
+                            <q-card-section class="item-box bg-blue-7">
+                            <div class="text-center item-box-text font-iransans text-white">
+                                درخواست ثبت ادوات
+                            </div>
+                        </q-card-section>
+                        </router-link>
+                    </q-card>
+                </div>
+                <div class="col-xl-3 col-lg-3 col-md-6 col-sm-6 col-xs-6 q-px-xs q-mb-sm">
+                    <q-card class="shadow-4 cursor-pointer">
+                        <router-link :to="{name:'plans'}">
+                            <q-card-section class="item-box bg-yellow-9">
+                            <div class="text-center item-box-text font-iransans text-white">
+                                خرید و لیست اشتراک ها
+                            </div>
+                        </q-card-section>
+                        </router-link>
+                    </q-card>
+                </div>
+
+            </div>
             <div class="col-lg-12 q-mt-lg q-px-sm mobile-padding">
                 <q-card class="">
                     <q-card-section class="bg-green-7">
@@ -115,43 +141,29 @@ export default {
 </template>
 
 <style scoped>
-.text-box{
-    background-color: rgba(0,0,0,0.75);
-}
-.banner-title{
-    font-size: 16px;
-}
 .for-slider{
 
     height: 465px;
-}
-.title{
-    font-size: 24px;
-}
-.subtitle{
-    margin-top: 13px;
-    font-size: 16px;
 }
 .news-title{
     font-size: 18px;
     font-weight: 500;
 }
-
+.item-box{
+    padding-top: 38px;
+    padding-bottom: 38px;
+}
+.item-box-text{
+    font-size: 20px;
+    font-weight: 600;
+}
 @media only screen and (max-width: 600px) {
-    .banner-title{
-        font-size: 14px;
-    }
+
     .for-slider{
         margin-top: 10px;
         height: 200px;
     }
-    .title{
-        font-size: 24px;
-    }
-    .subtitle{
-        margin-top: 13px;
-        font-size: 16px;
-    }
+
     .news-title{
 
         font-size: 14px;
@@ -162,6 +174,14 @@ export default {
     }
     .news-btn{
         font-size: 12px;
+    }
+    .item-box{
+        padding-top: 35px;
+        padding-bottom: 35px;
+    }
+    .item-box-text{
+        font-size: 14px;
+        font-weight: 600;
     }
 
 }

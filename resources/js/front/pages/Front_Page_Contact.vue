@@ -8,7 +8,26 @@ export default {
                 phone:null,
                 email:null,
                 message:null,
-            }
+            },
+            loading:false,
+            errors:[],
+        }
+    },
+    methods:{
+        SendMessage(){
+            this.loading=true;
+            axios.post('public/contacts/message',this.contact).then(res => {
+                this.loading=false;
+                this.errors=[];
+                this.contact=[];
+                this.NotifySuccess(res.data.message);
+            }).catch(error =>{
+                this.loading=false;
+                if (error.response.status === 422) {
+                    return this.errors = error.response.data
+                }
+                return  this.NotifyServerError();
+            })
         }
     }
 }
@@ -90,7 +109,7 @@ export default {
                             </q-input>
                         </div>
                         <div class="col-12 q-px-xs text-center q-mt-md">
-                            <q-btn class="form-btn" color="positive" glossy icon="fas fa-message q-mr-sm">
+                            <q-btn @click="SendMessage" class="form-btn" color="positive" :loading="loading" glossy icon="fas fa-message q-mr-sm">
                                 ارسال پیام به کشاورز
                             </q-btn>
                         </div>
