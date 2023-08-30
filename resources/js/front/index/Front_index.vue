@@ -81,7 +81,7 @@ export default {
                 </div>
                 <div class="col-xl-3 col-lg-3 col-md-6 col-sm-6 col-xs-6 q-px-xs q-mb-sm">
                     <q-card class=" cursor-pointer">
-                        <router-link :to="{name:'profile_provider'}">
+                        <router-link :to="{name:'implements_request'}">
                             <q-card-section class="item-box bg-blue-7">
                             <div class="text-center item-box-text font-iransans text-white">
                                 درخواست ثبت ادوات

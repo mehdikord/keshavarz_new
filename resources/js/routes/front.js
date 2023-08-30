@@ -12,6 +12,7 @@ import Front_Page_About from "../front/pages/Front_Page_About.vue";
 import Front_Page_Contact from "../front/pages/Front_Page_Contact.vue";
 import Front_Page_Services from "../front/pages/Front_Page_Services.vue";
 import Front_Page_Faq from "../front/pages/Front_Page_Faq.vue";
+import Front_Implement_Request from "../front/implement/Front_Implement_Request.vue";
 
 const routes = [
     {
@@ -79,6 +80,12 @@ const routes = [
         name : "pages_faqs",
         component :Front_Page_Faq,
         meta : {title : 'سوالات متداول '}
+    },
+    {
+        path : "/implements/request",
+        name : "implements_request",
+        component :Front_Implement_Request,
+        meta : {title : 'درخواست ثبت ادوات '}
     },
 
 
