@@ -10,6 +10,8 @@ import Front_Profile_Provider from "@/front/profile/Front_Profile_Provider.vue";
 import Front_Plans_Result from "../front/plans/result/Front_Plans_Result.vue";
 import Front_Page_About from "../front/pages/Front_Page_About.vue";
 import Front_Page_Contact from "../front/pages/Front_Page_Contact.vue";
+import Front_Page_Services from "../front/pages/Front_Page_Services.vue";
+import Front_Page_Faq from "../front/pages/Front_Page_Faq.vue";
 
 const routes = [
     {
@@ -65,6 +67,18 @@ const routes = [
         name : "pages_contact",
         component :Front_Page_Contact,
         meta : {title : 'تماس با ما '}
+    },
+    {
+        path : "/pages/services",
+        name : "pages_services",
+        component :Front_Page_Services,
+        meta : {title : 'خدمات کشاورز '}
+    },
+    {
+        path : "/pages/faqs",
+        name : "pages_faqs",
+        component :Front_Page_Faq,
+        meta : {title : 'سوالات متداول '}
     },
 
 

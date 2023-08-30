@@ -2,7 +2,7 @@
 namespace App\Repository\Faqs;
 
 
-use App\Interfaces\News\FaqsInterface;
+use App\Interfaces\Faqs\FaqsInterface;
 use App\Models\Faq;
 
 class FaqsRepository implements FaqsInterface

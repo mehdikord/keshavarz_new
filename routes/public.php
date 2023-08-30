@@ -25,3 +25,13 @@ Route::prefix('plans')->group(function (){
 
 
 });
+
+Route::prefix('contacts')->group(function (){
+
+    Route::post('message',[\App\Http\Controllers\Public\ContactController::class,'send_message']);
+
+});
+Route::prefix('faqs')->group(function (){
+
+    Route::get('',[\App\Http\Controllers\Public\PublicController::class,'faqs']);
+});
