@@ -39,7 +39,7 @@ export default {
             <div class="row items-center">
                 <div class="col-md-12 col-sm-12 col-xs-12 q-px-sm mobile-padding">
                   <q-carousel
-                      class="for-slider shadow-8 rounded-borders"
+                      class="for-slider rounded-borders"
                       animated
                       v-model="slide"
                       navigation
@@ -59,7 +59,7 @@ export default {
             <div class="col-lg-12 q-mt-md q-px-sm row mobile-padding">
                 <div class="col-xl-3 col-lg-3 col-md-6 col-sm-6 col-xs-6 q-px-xs q-mb-sm">
                     <router-link :to="{name:'search'}">
-                        <q-card class="shadow-4 cursor-pointer">
+                        <q-card class=" cursor-pointer">
                             <q-card-section class="item-box bg-green-6">
                                 <div class="text-center item-box-text font-iransans text-white">
                                     دریافت خدمات کشاورزی
@@ -69,7 +69,7 @@ export default {
                     </router-link>
                 </div>
                 <div class="col-xl-3 col-lg-3 col-md-6 col-sm-6 col-xs-6 q-px-xs q-mb-sm">
-                    <q-card class="shadow-4 cursor-pointer">
+                    <q-card class=" cursor-pointer">
                         <router-link :to="{name:'profile_provider'}">
                             <q-card-section class="item-box bg-deep-orange-6">
                             <div class="text-center item-box-text font-iransans text-white">
@@ -80,7 +80,7 @@ export default {
                     </q-card>
                 </div>
                 <div class="col-xl-3 col-lg-3 col-md-6 col-sm-6 col-xs-6 q-px-xs q-mb-sm">
-                    <q-card class="shadow-4 cursor-pointer">
+                    <q-card class=" cursor-pointer">
                         <router-link :to="{name:'profile_provider'}">
                             <q-card-section class="item-box bg-blue-7">
                             <div class="text-center item-box-text font-iransans text-white">
@@ -91,7 +91,7 @@ export default {
                     </q-card>
                 </div>
                 <div class="col-xl-3 col-lg-3 col-md-6 col-sm-6 col-xs-6 q-px-xs q-mb-sm">
-                    <q-card class="shadow-4 cursor-pointer">
+                    <q-card class=" cursor-pointer">
                         <router-link :to="{name:'plans'}">
                             <q-card-section class="item-box bg-yellow-9">
                             <div class="text-center item-box-text font-iransans text-white">
