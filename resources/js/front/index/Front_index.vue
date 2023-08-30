@@ -49,10 +49,10 @@ export default {
                       transition-prev="slide-right"
                       transition-next="slide-left"
                   >
-                      <q-carousel-slide :name="1" img-src="https://cdn.quasar.dev/img/mountains.jpg" />
-                      <q-carousel-slide :name="2" img-src="https://cdn.quasar.dev/img/parallax1.jpg" />
-                      <q-carousel-slide :name="3" img-src="https://cdn.quasar.dev/img/parallax2.jpg" />
-                      <q-carousel-slide :name="4" img-src="https://cdn.quasar.dev/img/quasar.jpg" />
+                      <q-carousel-slide :name="1" img-src="https://www.pixelstalk.net/wp-content/uploads/images1/Windmill-farm-wallpaper-hd.jpg" />
+                      <q-carousel-slide :name="2" img-src="https://www.pixelstalk.net/wp-content/uploads/images1/Farm-landscape-hd-wallpapers.jpg" />
+                      <q-carousel-slide :name="3" img-src="https://www.pixelstalk.net/wp-content/uploads/images1/Images-Farm-Free-download.jpg" />
+                      <q-carousel-slide :name="4" img-src="https://www.pixelstalk.net/wp-content/uploads/images1/Best-Farm-Images.jpg" />
                   </q-carousel>
               </div>
             </div>
@@ -103,38 +103,36 @@ export default {
                 </div>
 
             </div>
-            <div class="col-lg-12 q-mt-lg q-px-sm mobile-padding">
-                <q-card class="">
-                    <q-card-section class="bg-green-7">
-                        <span class="news-title text-white">
-                            آخرین اخبار حوزه کشاورزی
-                        </span>
-                        <q-btn :to="{name:'news'}" class="float-right news-btn" color="yellow-9" text-color="black">مشاهده همه خبرها</q-btn>
-                    </q-card-section>
-                    <q-card-section>
-                        <div class="row">
-                            <template v-if="news_loading">
-                                <template v-for="i in 3">
-                                    <div class="col-12">
-                                        <skeleton_news></skeleton_news>
-                                    </div>
-                                    <div class="col-12 q-mt-xs q-mb-xs">
-                                        <q-separator/>
-                                    </div>
-                                </template>
-                            </template>
-                            <template v-else v-for="item in news">
-                                <div class="col-12">
-                                    <news_item :item="item"></news_item>
-                                </div>
-                                <div class="col-12 q-mt-xs q-mb-xs">
-                                    <q-separator/>
-                                </div>
-                            </template>
+            <div class="col-lg-12 q-mt-xl q-px-sm mobile-padding">
+                <div class="q-mt-lg q-mb-lg news-title font-iransans text-green-8">
+                    آخرین اخبار حوزه کشاورزی
+                </div>
+                <div class="row">
+                    <template v-if="news_loading">
+                        <template v-for="i in 3">
+                            <div class="col-12">
+                                <skeleton_news></skeleton_news>
+                            </div>
+                            <div class="col-12 q-mt-xs q-mb-xs">
+                                <q-separator/>
+                            </div>
+                        </template>
+                    </template>
+                    <template v-else v-for="item in news">
+                        <div class="col-12">
+                            <news_item :item="item"></news_item>
                         </div>
-                    </q-card-section>
+                        <div class="col-12 q-mt-xs q-mb-xs">
+                            <q-separator/>
+                        </div>
+                    </template>
+                </div>
+                <div class="text-center news-all ">
+                    <router-link class="text-red-6" :to="{name : 'news'}">
+                        مشاهده همه خبر ها
+                    </router-link>
+                </div>
 
-                </q-card>
             </div>
         </div>
     </div>
@@ -146,8 +144,8 @@ export default {
     height: 465px;
 }
 .news-title{
-    font-size: 18px;
-    font-weight: 500;
+    font-size: 22px;
+    font-weight: 600;
 }
 .item-box{
     padding-top: 38px;
@@ -157,17 +155,22 @@ export default {
     font-size: 20px;
     font-weight: 600;
 }
+.news-all{
+    margin-top: 30px;
+    margin-bottom: 30px;
+    font-size: 20px;
+    font-weight: 600;
+}
+
 @media only screen and (max-width: 600px) {
 
     .for-slider{
         margin-top: 10px;
         height: 200px;
     }
-
     .news-title{
-
-        font-size: 14px;
-        font-weight: 500;
+        font-size: 18px;
+        font-weight: 600;
     }
     .mobile-padding{
         padding: 0 0 !important;
@@ -181,6 +184,12 @@ export default {
     }
     .item-box-text{
         font-size: 14px;
+        font-weight: 600;
+    }
+    .news-all{
+        margin-top: 20px;
+        margin-bottom: 25px;
+        font-size: 18px;
         font-weight: 600;
     }
 
