@@ -53,10 +53,12 @@ Route::middleware(['auth:users'])->group(function (){
         Route::prefix('implement')->group(function (){
             Route::get('',[\App\Http\Controllers\User\Profile\ProfileController::class,'implement']);
             Route::post('',[\App\Http\Controllers\User\Profile\ProfileController::class,'implement_update']);
+            Route::post('requests',[\App\Http\Controllers\User\Profile\ProfileController::class,'implement_request']);
             Route::delete('{id}',[\App\Http\Controllers\User\Profile\ProfileController::class,'implement_delete']);
             Route::post('edit/{id}',[\App\Http\Controllers\User\Profile\ProfileController::class,'implement_edit']);
 
         });
+
     });
 
     Route::prefix('callbacks')->group(function (){

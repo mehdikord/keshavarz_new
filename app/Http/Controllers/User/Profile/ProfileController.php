@@ -4,6 +4,7 @@ namespace App\Http\Controllers\User\Profile;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Profile\UserImplementEditRequest;
+use App\Http\Requests\Profile\UserImplementReqRequest;
 use App\Http\Requests\Profile\UserImplementUpdateRequest;
 use App\Http\Requests\Profile\UserRangeUpdateRequest;
 use App\Http\Requests\Single\SingleImageUpdateRequest;
@@ -37,13 +38,18 @@ class ProfileController extends Controller
     public function range_update(UserRangeUpdateRequest $request)
     {
         return $this->repository->range_update($request);
-
     }
 
 
     public function implement()
     {
         return $this->repository->implement();
+
+    }
+
+    public function implement_request(UserImplementReqRequest $request)
+    {
+        return $this->repository->implement_request($request);
 
     }
 

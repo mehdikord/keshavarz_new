@@ -4,6 +4,7 @@ namespace App\Repository\Profile;
 
 
 use App\Interfaces\Profile\ProfileInterface;
+use App\Models\Implement_Request;
 use App\Services\MediaServices\MediaService;
 use Illuminate\Support\Facades\Storage;
 
@@ -84,6 +85,19 @@ class ProfileRepository implements ProfileInterface
             }
         }
         return response_success(auth('users')->user()->implements()->where('implement_id',$request->implement_id)->with('forms')->first());
+    }
+
+    public function implement_request($request)
+    {
+        $image = (new MediaService())->implement_request_image($request);
+        Implement_Request::create([
+            'user_id' => auth()->id(),
+            'type'=>$request->type,
+            'name'=>$request->name,
+            'description'=>$request->description,
+            'image' => $image
+        ]);
+        return response_success('','اطلاعات شما باموفقیت ثبت گردید. با تشکر از شما');
     }
 
     public function implement_edit($item,$request)

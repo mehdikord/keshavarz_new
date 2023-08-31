@@ -53,6 +53,13 @@ export default {
                 <q-item-section class="text-white menu-text">درباره کشاورز</q-item-section>
             </q-item>
             <q-separator color="grey-9"/>
+            <q-item clickable v-ripple :to="{name:'implements_request'}" class="menu-padding">
+                <q-item-section avatar >
+                    <q-icon color="positive"  name="fas fa-star font-28" />
+                </q-item-section>
+                <q-item-section class="text-white menu-text">درخواست ثبت ادوات</q-item-section>
+            </q-item>
+            <q-separator color="grey-9"/>
             <q-item clickable v-ripple :to="{name:'pages_contact'}" class="menu-padding">
                 <q-item-section avatar >
                     <q-icon color="positive"  name="fas fa-headset font-28" />

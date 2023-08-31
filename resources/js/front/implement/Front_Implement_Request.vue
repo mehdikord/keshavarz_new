@@ -1,4 +1,6 @@
 <script>
+import {mapActions} from "vuex";
+
 export default {
     name: "Front_Implement_Request",
     data(){
@@ -9,9 +11,29 @@ export default {
                 image:null,
                 description:null,
             },
+            loading:false,
             errors:[],
         }
+    },
+    methods:{
+        ...mapActions([
+            "ProfilesUserImplementRequest",
+        ]),
+        SendData(){
+            this.loading=true;
+            this.ProfilesUserImplementRequest(this.req).then(res => {
+                this.loading=false;
+                return this.NotifySuccess(res.data.message);
+            }).catch(error => {
+                this.edit_image_loading=false;
+                if (error.response.status === 422) {
+                    this.errors = error.response.data
+                }else {
+                    return this.NotifyServerError();
+                }
+            })
 
+        }
     }
 }
 </script>
@@ -71,7 +93,7 @@ export default {
                         </q-input>
                     </div>
                     <div class="q-mt-md text-center q-mb-lg">
-                        <q-btn color="green-7" glossy class="submit">ثبت و ارسال اطلاعات</q-btn>
+                        <q-btn @click="SendData" :loading="loading" color="green-7" glossy class="submit">ثبت و ارسال اطلاعات</q-btn>
                     </div>
                 </div>
 
