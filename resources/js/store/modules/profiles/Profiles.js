@@ -129,6 +129,20 @@ export default {
                 })
             } )
         },
+        ProfilesUserImplementRequest(_,item){
+            return new Promise((resolve,reject) => {
+                let data = new  FormData();
+                if (item.type){data.append('type',item.type)};
+                if (item.name){data.append('name',item.name)};
+                if (item.description){data.append('description',item.description)};
+                if (item.image){data.append('image',item.image,item.image.name)};
+                axios.post('users/provider/implement/requests',data,{headers: {'Content-Type': 'multipart/form-data'}}).then((result ) => {
+                    resolve(result);
+                }).catch(error => {
+                    reject(error);
+                })
+            } )
+        },
 
 
     }

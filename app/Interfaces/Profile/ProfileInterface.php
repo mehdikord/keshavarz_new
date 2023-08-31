@@ -20,6 +20,8 @@ interface ProfileInterface
 
     public function implement_update($request);
 
+    public function implement_request($request);
+
     public function implement_edit($item,$request);
 
     public function implement_delete($item);

@@ -63,6 +63,16 @@ class MediaService{
         return $image;
     }
 
+    public function implement_request_image($request)
+    {
+        $image=null;
+        if ($request->hasFile('image')){
+            $file = $request->file('image');
+            $image = $this->store_image($file,'implements/requests');
+        }
+        return $image;
+    }
+
 
 
 
