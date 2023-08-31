@@ -12,6 +12,7 @@ export default {
                 description:null,
             },
             loading:false,
+            authDialog:false,
             errors:[],
         }
     },
@@ -20,6 +21,9 @@ export default {
             "ProfilesUserImplementRequest",
         ]),
         SendData(){
+            if (!this.AuthUserCheck()){
+                return this.authDialog=true;
+            }
             this.loading=true;
             this.ProfilesUserImplementRequest(this.req).then(res => {
                 this.loading=false;
@@ -94,6 +98,23 @@ export default {
                     </div>
                     <div class="q-mt-md text-center q-mb-lg">
                         <q-btn @click="SendData" :loading="loading" color="green-7" glossy class="submit">ثبت و ارسال اطلاعات</q-btn>
+
+                        <q-dialog  v-model="authDialog">
+                            <q-card class="image-dialog">
+                                <q-card-section>
+                                    <div class="text-center">
+                                        <q-icon name="fas fa-triangle-exclamation fa-3x fa-beat text-red"></q-icon>
+                                    </div>
+                                    <div class="text-center q-mt-lg text-red q-mb-md">
+                                        <strong>کاربر گرامی برای درخواست ثبت ادوات ابتدا باید وارد حساب کاربری خود شوید</strong>
+                                        <q-btn :to="{name:'profile'}" class="q-mt-lg" glossy color="teal-7">ثبت نام / ورود به حساب کاربری</q-btn>
+                                    </div>
+
+                                </q-card-section>
+
+                            </q-card>
+                        </q-dialog>
+
                     </div>
                 </div>
 
