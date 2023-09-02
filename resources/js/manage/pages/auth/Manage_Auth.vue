@@ -7,7 +7,7 @@
                     <q-img class="top-img" src="/assets/images/bg/login-animation.svg"></q-img>
                 </div>
                 <q-card-section>
-                    <h5 class="text-center q-my-md">ورود به مدیریت کوکو</h5>
+                    <h5 class="text-center q-my-md">ورود به مدیریت کشاورز</h5>
                     <p class="text-center text-grey-7 q-my-md">برای ورود به حساب کاربری اطلاعات مورد نیاز را وارد کنید </p>
                     <div class="q-my-xl q-px-lg ">
                         <q-input lazy-rules  type="email" outlined v-model="login.email" label="Email" color="primary" class="q-my-md" :error="this.MixinValidationCheck(errors,'email')">
