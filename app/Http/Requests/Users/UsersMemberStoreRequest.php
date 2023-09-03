@@ -24,9 +24,10 @@ class UsersMemberStoreRequest extends FormRequest
 
         return [
             'name' => 'required',
-            'email' => 'required|email|unique:users',
+            'province_id' => 'required|exists:provinces,id',
+            'city_id' => 'required|exists:cities,id',
+            'national_code' => 'nullable|numeric|unique:users',
             'phone' => 'nullable|numeric|unique:users',
-            'password' => 'required|confirmed'
         ];
     }
     public function failedValidation(Validator $validator)

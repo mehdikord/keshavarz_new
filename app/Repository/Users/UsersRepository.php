@@ -48,18 +48,21 @@ class UsersRepository implements UsersInterface
     //Members
     public function members_index()
     {
-        return response_success(User::OrderbyDesc('id')->get());
+        return response_success(User::OrderbyDesc('id')->withCount('referrals')->get());
     }
 
     public function members_store($request)
     {
         $item = User::create([
             'name' => $request->name,
-            'email' => $request->email,
+            'province_id' => $request->province_id,
+            'city_id' => $request->city_id,
+            'national_code' => $request->national_code,
             'phone' => $request->phone,
             'is_active' => true,
-            'password' => Hash::make($request->password),
+
         ]);
+        $item->withCount('referrals');
         return response_success($item);
     }
 
@@ -67,7 +70,9 @@ class UsersRepository implements UsersInterface
     {
         $item->update([
             'name' => $request->name,
-            'email' => $request->email,
+            'province_id' => $request->province_id,
+            'city_id' => $request->city_id,
+            'national_code' => $request->national_code,
             'phone' => $request->phone,
         ]);
         return response_success($item);

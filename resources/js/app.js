@@ -20,6 +20,7 @@ import Error_Validation from "./manage/errors/Error_Validation.vue";
 import {mapGetters} from "vuex";
 import Manage_Global_Loading from "./manage/template/global/Manage_Global_Loading.vue";
 import Manage_Global_Show_Image from "./manage/template/global/Manage_Global_Show_Image.vue";
+import Manage_Global_Status from "@/manage/template/global/Manage_Global_Status.vue";
 
 
 const App=createApp(show);
@@ -29,6 +30,7 @@ const App=createApp(show);
 App.component('Error_Validation',Error_Validation)
 App.component('Global_Loading',Manage_Global_Loading)
 App.component('Global_Show_Image',Manage_Global_Show_Image)
+App.component('Global_Status',Manage_Global_Status)
 
 // ++++++++++++++++++++
 

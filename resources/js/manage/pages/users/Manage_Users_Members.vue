@@ -20,13 +20,11 @@
                                 <Error_Validation :errors="this.MixinValidation(errors,'email')"></Error_Validation>
                             </template>
                         </q-input>
-
                         <q-input v-model="add.phone" lazy-rules type="number" outlined label="موبایل" color="primary" class="q-my-xs" :error="this.MixinValidationCheck(errors,'phone')">
                             <template v-slot:error>
                                 <Error_Validation :errors="this.MixinValidation(errors,'phone')"></Error_Validation>
                             </template>
                         </q-input>
-
                         <q-input v-model="add.national_code" lazy-rules type="number" outlined label="کد ملی" color="primary" class="q-my-xs" :error="this.MixinValidationCheck(errors,'national_code')">
                             <template v-slot:error>
                                 <Error_Validation :errors="this.MixinValidation(errors,'national_code')"></Error_Validation>
@@ -98,11 +96,27 @@
                 <template v-slot:loading>
                     <Global_Loading></Global_Loading>
                 </template>
+                <template v-slot:body-cell-profile="props">
+                    <q-td :props="props">
+                        <Global_Show_Image :image="props.row.profile"></Global_Show_Image>
+                    </q-td>
+                </template>
                 <template v-slot:body-cell-phone="props">
                     <q-td :props="props">
                         <div v-if="props.row.phone">
                             <q-chip color="teal-4" class="font-12">{{props.row.phone}}</q-chip>
                         </div>
+                    </q-td>
+                </template>
+                <template v-slot:body-cell-is_provider="props">
+                    <q-td :props="props" >
+                        <Global_Status :status="props.row.is_provider"></Global_Status>
+                    </q-td>
+                </template>
+                <template v-slot:body-cell-is_customer="props">
+                    <q-td :props="props">
+                        <Global_Status :status="props.row.is_customer"></Global_Status>
+
                     </q-td>
                 </template>
                 <template v-slot:body-cell-is_active="props">
@@ -115,6 +129,11 @@
                             color="green-7"
                             @click="ChangeStatus(props.row.id)"
                         />
+                    </q-td>
+                </template>
+                <template v-slot:body-cell-referrals="props">
+                    <q-td :props="props">
+                        <q-chip color="indigo" text-color="white" size="sm">{{props.row.referrals_count}}</q-chip>
                     </q-td>
                 </template>
                 <template v-slot:body-cell-tools="props">
@@ -137,22 +156,62 @@
                                 <div class="text-h6">Edit item : {{props.row.name}}</div>
                             </q-card-section>
                             <q-card-section >
-                                <q-input v-model="props.row.name"  lazy-rules type="text" outlined label="نام" color="primary" class="q-my-xs" :error="this.MixinValidationCheck(errors,'name')">
+
+                                <q-input v-model="add.name"  lazy-rules type="text" outlined label="نام" color="primary" class="q-my-xs" :error="this.MixinValidationCheck(errors,'name')">
                                     <template v-slot:error>
                                         <Error_Validation :errors="this.MixinValidation(errors,'email')"></Error_Validation>
                                     </template>
                                 </q-input>
-                                <q-input v-model="props.row.email"  lazy-rules type="email" outlined label="ایمیل" color="primary" class="q-my-xs" :error="this.MixinValidationCheck(errors,'email')">
-                                    <template v-slot:error>
-                                        <Error_Validation :errors="this.MixinValidation(errors,'email')"></Error_Validation>
-                                    </template>
-                                </q-input>
-                                <q-input v-model="props.row.phone" lazy-rules type="number" outlined label="موبایل" color="primary" class="q-my-xs" :error="this.MixinValidationCheck(errors,'phone')">
+                                <q-input v-model="add.phone" lazy-rules type="number" outlined label="موبایل" color="primary" class="q-my-xs" :error="this.MixinValidationCheck(errors,'phone')">
                                     <template v-slot:error>
                                         <Error_Validation :errors="this.MixinValidation(errors,'phone')"></Error_Validation>
                                     </template>
                                 </q-input>
+                                <q-input v-model="add.national_code" lazy-rules type="number" outlined label="کد ملی" color="primary" class="q-my-xs" :error="this.MixinValidationCheck(errors,'national_code')">
+                                    <template v-slot:error>
+                                        <Error_Validation :errors="this.MixinValidation(errors,'national_code')"></Error_Validation>
+                                    </template>
+                                </q-input>
+                                <q-select
+                                    outlined
+                                    v-model="add.province_id"
+                                    class="q-my-xs"
+                                    color="primary"
+                                    transition-show="flip-up"
+                                    transition-hide="flip-down"
+                                    use-input
+                                    label="انتخاب استان"
+                                    :options="provinces_select"
+                                    emit-value
+                                    map-options
+                                    behavior="menu"
+                                    @change="GetCities"
+                                    :error="this.MixinValidationCheck(errors,'province_id')"
+                                >
 
+                                    <template v-slot:error>
+                                        <Error_Validation :errors="this.MixinValidation(errors,'province_id')"></Error_Validation>
+                                    </template>
+                                </q-select>
+                                <q-select
+                                    outlined
+                                    class="q-my-xs"
+                                    v-model="add.city_id"
+                                    color="primary"
+                                    transition-show="flip-up"
+                                    transition-hide="flip-down"
+                                    use-input
+                                    label="انتخاب شهر"
+                                    :options="cities_select"
+                                    emit-value
+                                    map-options
+                                    behavior="menu"
+                                    :error="this.MixinValidationCheck(errors,'city_id')"
+                                >
+                                    <template v-slot:error>
+                                        <Error_Validation :errors="this.MixinValidation(errors,'city_id')"></Error_Validation>
+                                    </template>
+                                </q-select>
 
                             </q-card-section>
 
@@ -204,12 +263,13 @@ export default {
 
             },
             item_columns:[
+
                 {
-                    name:'id',
+                    name:'profile',
                     required: true,
-                    label: 'ID',
+                    label: 'تصویر',
                     align: 'left',
-                    field: row => row.id,
+                    field: row => row.profile,
                     sortable: true
                 },
                 {
@@ -220,14 +280,7 @@ export default {
                     field: row => row.name,
                     sortable: true
                 },
-                {
-                    name:'email',
-                    required: true,
-                    label: 'ایمیل',
-                    align: 'left',
-                    field: row => row.email,
-                    sortable: true
-                },
+
                 {
                     name:'phone',
                     required: true,
@@ -237,11 +290,36 @@ export default {
                     sortable: true
                 },
                 {
+                    name:'is_provider',
+                    required: true,
+                    label: 'خدمات دهنده',
+                    align: 'left',
+                    field: row => row.is_provider,
+                    sortable: true
+                },
+                {
+                    name:'is_customer',
+                    required: true,
+                    label: 'خدمات گیرنده',
+                    align: 'left',
+                    field: row => row.is_customer,
+                    sortable: true
+                },
+
+                {
                     name:'is_active',
                     required: true,
                     label: 'وضعیت حساب',
                     align: 'left',
                     field: row => row.is_active,
+                    sortable: true
+                },
+                {
+                    name:'referrals',
+                    required: true,
+                    label: 'زیر مجموعه',
+                    align: 'left',
+                    field: row => row.referrals_count,
                     sortable: true
                 },
                 {
@@ -263,7 +341,7 @@ export default {
 
         ]),
         GetProvinces(){
-            axios.get('helper/provinces').then(res =>{
+            axios.get('helpers/provinces').then(res =>{
                 this.provinces = res.data.result;
                 this.provinces.forEach(province => {
                     this.provinces_select.push({label : province.name , value : province.id})
@@ -361,7 +439,7 @@ export default {
             if (this.add.province_id){
                 let cities;
                 this.provinces.forEach(province =>{
-                    if (province.id === this.edit.province_id){
+                    if (province.id === this.add.province_id){
                         cities = province.cities;
                     }
                 })
