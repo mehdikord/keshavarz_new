@@ -20,26 +20,58 @@
                                 <Error_Validation :errors="this.MixinValidation(errors,'email')"></Error_Validation>
                             </template>
                         </q-input>
-                        <q-input v-model="add.email"  lazy-rules type="email" outlined label="ایمیل" color="primary" class="q-my-xs" :error="this.MixinValidationCheck(errors,'email')">
-                            <template v-slot:error>
-                                <Error_Validation :errors="this.MixinValidation(errors,'email')"></Error_Validation>
-                            </template>
-                        </q-input>
+
                         <q-input v-model="add.phone" lazy-rules type="number" outlined label="موبایل" color="primary" class="q-my-xs" :error="this.MixinValidationCheck(errors,'phone')">
                             <template v-slot:error>
                                 <Error_Validation :errors="this.MixinValidation(errors,'phone')"></Error_Validation>
                             </template>
                         </q-input>
-                        <q-input v-model="add.password" lazy-rules type="password" outlined label="گذرواژه" color="primary" class="q-my-xs" :error="this.MixinValidationCheck(errors,'password')">
+
+                        <q-input v-model="add.national_code" lazy-rules type="number" outlined label="کد ملی" color="primary" class="q-my-xs" :error="this.MixinValidationCheck(errors,'national_code')">
                             <template v-slot:error>
-                                <Error_Validation :errors="this.MixinValidation(errors,'password')"></Error_Validation>
+                                <Error_Validation :errors="this.MixinValidation(errors,'national_code')"></Error_Validation>
                             </template>
                         </q-input>
-                        <q-input v-model="add.password_confirmation" lazy-rules type="password" outlined label="تکرار گذرواژه" color="primary" class="q-my-xs" :error="this.MixinValidationCheck(errors,'password_confirmation')">
+                        <q-select
+                            outlined
+                            v-model="add.province_id"
+                            class="q-my-xs"
+                            color="primary"
+                            transition-show="flip-up"
+                            transition-hide="flip-down"
+                            use-input
+                            label="انتخاب استان"
+                            :options="provinces_select"
+                            emit-value
+                            map-options
+                            behavior="menu"
+                            @change="GetCities"
+                            :error="this.MixinValidationCheck(errors,'province_id')"
+                        >
+
                             <template v-slot:error>
-                                <Error_Validation :errors="this.MixinValidation(errors,'password_confirmation')"></Error_Validation>
+                                <Error_Validation :errors="this.MixinValidation(errors,'province_id')"></Error_Validation>
                             </template>
-                        </q-input>
+                        </q-select>
+                        <q-select
+                            outlined
+                            class="q-my-xs"
+                            v-model="add.city_id"
+                            color="primary"
+                            transition-show="flip-up"
+                            transition-hide="flip-down"
+                            use-input
+                            label="انتخاب شهر"
+                            :options="cities_select"
+                            emit-value
+                            map-options
+                            behavior="menu"
+                            :error="this.MixinValidationCheck(errors,'city_id')"
+                        >
+                            <template v-slot:error>
+                                <Error_Validation :errors="this.MixinValidation(errors,'city_id')"></Error_Validation>
+                            </template>
+                        </q-select>
 
                     </q-card-section>
 
@@ -148,9 +180,9 @@ import {mapActions} from "vuex";
 
 export default {
     name: "Manage_Users_Members",
-    created() {
+    mounted() {
         this.GetItems();
-
+        this.GetProvinces();
     },
     data(){
         return{
@@ -160,12 +192,16 @@ export default {
             errors:[],
             dialog_add:false,
             dialog_edit:[],
+            provinces:[],
+            provinces_select:[],
+            cities_select:[],
             add:{
                 name:null,
-                email:null,
+                province_id:null,
+                city_id:null,
+                national_code:null,
                 phone:null,
-                password:null,
-                password_confirmation:null,
+
             },
             item_columns:[
                 {
@@ -226,6 +262,14 @@ export default {
             "UserMembersDChangeStatus"
 
         ]),
+        GetProvinces(){
+            axios.get('helper/provinces').then(res =>{
+                this.provinces = res.data.result;
+                this.provinces.forEach(province => {
+                    this.provinces_select.push({label : province.name , value : province.id})
+                })
+            })
+        },
         GetItems(){
 
             this.UserMembersIndex().then(res => {
@@ -309,6 +353,23 @@ export default {
             }).catch(error => {
                 return this.NotifyServerError();
             })
+        }
+
+    },
+    computed:{
+        GetCities(){
+            if (this.add.province_id){
+                let cities;
+                this.provinces.forEach(province =>{
+                    if (province.id === this.edit.province_id){
+                        cities = province.cities;
+                    }
+                })
+                this.cities_select=[];
+                cities.forEach(city => {
+                    this.cities_select.push({label : city.name , value : city.id})
+                })
+            }
         }
 
     }

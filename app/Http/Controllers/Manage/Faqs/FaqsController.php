@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Manage\Faqs;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Faqs\FaqsRequest;
-use App\Interfaces\News\FaqsInterface;
+use App\Interfaces\Faqs\FaqsInterface;
 use App\Models\Faq;
 use Illuminate\Http\Request;
 

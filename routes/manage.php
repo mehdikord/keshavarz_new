@@ -86,6 +86,13 @@ Route::middleware('auth:admin')->group(function (){
 
 
 
+    Route::prefix('helpers')->group(function (){
+        Route::get('provinces',[\App\Http\Controllers\Mnanage\Helper\HelperController::class,'provinces']);
+
+    });
+
+
+
 
 
 });
