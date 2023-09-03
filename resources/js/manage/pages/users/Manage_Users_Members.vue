@@ -138,7 +138,7 @@
                 </template>
                 <template v-slot:body-cell-tools="props">
                     <q-td :props="props">
-                        <q-btn @click="dialog_edit[props.row.id] = true;errors=[]" glossy color="primary" size="sm" icon="mdi-pen" class="q-mx-xs">
+                        <q-btn @click="dialog_edit[props.row.id] = true;errors=[];this.ChangeCities(props.row.province_id)" glossy color="primary" size="sm" icon="mdi-pen" class="q-mx-xs">
                             <q-tooltip class="bg-grey-9">Edit this item</q-tooltip>
                         </q-btn>
                         <q-btn @click="DeleteItem(props.row.id)" glossy color="red-9" size="sm" icon="mdi-delete" class="q-mx-xs">
@@ -157,24 +157,24 @@
                             </q-card-section>
                             <q-card-section >
 
-                                <q-input v-model="add.name"  lazy-rules type="text" outlined label="نام" color="primary" class="q-my-xs" :error="this.MixinValidationCheck(errors,'name')">
+                                <q-input v-model="props.row.name"  lazy-rules type="text" outlined label="نام" color="primary" class="q-my-xs" :error="this.MixinValidationCheck(errors,'name')">
                                     <template v-slot:error>
                                         <Error_Validation :errors="this.MixinValidation(errors,'email')"></Error_Validation>
                                     </template>
                                 </q-input>
-                                <q-input v-model="add.phone" lazy-rules type="number" outlined label="موبایل" color="primary" class="q-my-xs" :error="this.MixinValidationCheck(errors,'phone')">
+                                <q-input v-model="props.row.phone" lazy-rules type="number" outlined label="موبایل" color="primary" class="q-my-xs" :error="this.MixinValidationCheck(errors,'phone')">
                                     <template v-slot:error>
                                         <Error_Validation :errors="this.MixinValidation(errors,'phone')"></Error_Validation>
                                     </template>
                                 </q-input>
-                                <q-input v-model="add.national_code" lazy-rules type="number" outlined label="کد ملی" color="primary" class="q-my-xs" :error="this.MixinValidationCheck(errors,'national_code')">
+                                <q-input v-model="props.row.national_code" lazy-rules type="number" outlined label="کد ملی" color="primary" class="q-my-xs" :error="this.MixinValidationCheck(errors,'national_code')">
                                     <template v-slot:error>
                                         <Error_Validation :errors="this.MixinValidation(errors,'national_code')"></Error_Validation>
                                     </template>
                                 </q-input>
                                 <q-select
                                     outlined
-                                    v-model="add.province_id"
+                                    v-model="props.row.province_id"
                                     class="q-my-xs"
                                     color="primary"
                                     transition-show="flip-up"
@@ -185,10 +185,9 @@
                                     emit-value
                                     map-options
                                     behavior="menu"
-                                    @change="GetCities"
+                                    @change="new ChangeCities(props.row.province_id)"
                                     :error="this.MixinValidationCheck(errors,'province_id')"
                                 >
-
                                     <template v-slot:error>
                                         <Error_Validation :errors="this.MixinValidation(errors,'province_id')"></Error_Validation>
                                     </template>
@@ -196,7 +195,7 @@
                                 <q-select
                                     outlined
                                     class="q-my-xs"
-                                    v-model="add.city_id"
+                                    v-model="props.row.city_id"
                                     color="primary"
                                     transition-show="flip-up"
                                     transition-hide="flip-down"
@@ -431,7 +430,22 @@ export default {
             }).catch(error => {
                 return this.NotifyServerError();
             })
-        }
+        },
+        ChangeCities(id){
+            if (id){
+                console.log(id)
+                let cities;
+                this.provinces.forEach(province =>{
+                    if (province.id === id){
+                        cities = province.cities;
+                    }
+                })
+                this.cities_select=[];
+                cities.forEach(city => {
+                    this.cities_select.push({label : city.name , value : city.id})
+                })
+            }
+        },
 
     },
     computed:{
@@ -448,7 +462,7 @@ export default {
                     this.cities_select.push({label : city.name , value : city.id})
                 })
             }
-        }
+        },
 
     }
 }
