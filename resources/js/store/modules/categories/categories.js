@@ -93,6 +93,68 @@ export default {
             } )
         },
 
+        CategoriesImplementsIndex(){
+            return new Promise((resolve,reject) => {
+                axios.get('categories').then((result) => {
+                    resolve(result);
+                }).catch(error => {
+                    reject(error);
+                })
+            } )
+        },
+        CategoriesImplementsStore(_,item){
+            return new Promise((resolve,reject) => {
+                var data = new  FormData();
+                if (item.name){data.append('name',item.name)};
+                if (item.parent_id){data.append('parent_id',item.parent_id)};
+                if (item.image){data.append('image',item.image,item.image.name)};
+                if (item.description){data.append('description',item.description)};
+                axios.post('categories',data,{headers: {'Content-Type': 'multipart/form-data'}}).then((result) => {
+                    resolve(result);
+                }).catch(error => {
+                    reject(error);
+                })
+            } )
+        },
+        CategoriesImplementsEdit(_,item){
+            return new Promise((resolve,reject) => {
+                axios.post('categories/'+item.id,item).then((result) => {
+                    resolve(result);
+                }).catch(error => {
+                    reject(error);
+                })
+            } )
+        },
+        CategoriesImplementsDelete(_,item){
+            return new Promise((resolve,reject) => {
+                axios.delete('categories/'+item).then((result) => {
+                    resolve(result);
+                }).catch(error => {
+                    reject(error);
+                })
+            } )
+        },
+        CategoriesImplementsDeleteImage(_,item){
+            return new Promise((resolve,reject) => {
+                axios.post('categories/image/'+item).then((result) => {
+                    resolve(result);
+                }).catch(error => {
+                    reject(error);
+                })
+            } )
+        },
+        CategoriesImplementsEditImage(_,item){
+            return new Promise((resolve,reject) => {
+                var data = new  FormData();
+                if (item.image){data.append('image',item.image,item.image.name)};
+                axios.post('categories/image/'+item.id,data,{headers: {'Content-Type': 'multipart/form-data'}}).then((result) => {
+                    resolve(result);
+                }).catch(error => {
+                    reject(error);
+                })
+            } )
+        },
+
     }
 
 }

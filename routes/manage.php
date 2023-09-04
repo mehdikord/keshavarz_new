@@ -43,6 +43,21 @@ Route::middleware('auth:admin')->group(function (){
 
     });
 
+    //Implements
+    Route::group(['prefix' => 'implements','as'=>'implements.'],function (){
+
+
+        //Categories
+        Route::group(['prefix' => 'categories','as' => 'categories.'],function (){
+            Route::get('',[\App\Http\Controllers\Manage\Implements\CategoryController::class,'index'])->name('index');
+            Route::post('',[\App\Http\Controllers\Manage\Implements\CategoryController::class,'store'])->name('store');
+            Route::post('{category}',[\App\Http\Controllers\Manage\Implements\CategoryController::class,'update'])->name('update');
+            Route::delete('{category}',[\App\Http\Controllers\Manage\Implements\CategoryController::class,'delete'])->name('delete');
+            Route::post('image/{category}',[\App\Http\Controllers\Manage\Implements\CategoryController::class,'update_image'])->name('update_image');
+        });
+
+    });
+
     //Faqs
     Route::group(['prefix' => 'faqs','as' => 'faqs.'],function (){
         Route::get('',[\App\Http\Controllers\Manage\Faqs\FaqsController::class,'index'])->name('index');

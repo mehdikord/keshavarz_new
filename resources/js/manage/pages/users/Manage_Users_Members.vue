@@ -138,88 +138,12 @@
                 </template>
                 <template v-slot:body-cell-tools="props">
                     <q-td :props="props">
-                        <q-btn @click="dialog_edit[props.row.id] = true;errors=[];this.ChangeCities(props.row.province_id)" glossy color="primary" size="sm" icon="mdi-pen" class="q-mx-xs">
-                            <q-tooltip class="bg-grey-9">Edit this item</q-tooltip>
-                        </q-btn>
+                        <member_edit :data="props.row" @UpdateEditedItem="GetItems"></member_edit>
                         <q-btn @click="DeleteItem(props.row.id)" glossy color="red-9" size="sm" icon="mdi-delete" class="q-mx-xs">
                             <q-tooltip class="bg-grey-9">Delete this item</q-tooltip>
                         </q-btn>
                     </q-td>
-                    <q-dialog
-                        v-model="dialog_edit[props.row.id]"
-                        transition-show="scale"
-                        transition-hide="scale"
-                        position="top"
-                    >
-                        <q-card style="max-width: 700px;width: 700px">
-                            <q-card-section class="bg-primary text-white">
-                                <div class="text-h6">Edit item : {{props.row.name}}</div>
-                            </q-card-section>
-                            <q-card-section >
 
-                                <q-input v-model="props.row.name"  lazy-rules type="text" outlined label="نام" color="primary" class="q-my-xs" :error="this.MixinValidationCheck(errors,'name')">
-                                    <template v-slot:error>
-                                        <Error_Validation :errors="this.MixinValidation(errors,'email')"></Error_Validation>
-                                    </template>
-                                </q-input>
-                                <q-input v-model="props.row.phone" lazy-rules type="number" outlined label="موبایل" color="primary" class="q-my-xs" :error="this.MixinValidationCheck(errors,'phone')">
-                                    <template v-slot:error>
-                                        <Error_Validation :errors="this.MixinValidation(errors,'phone')"></Error_Validation>
-                                    </template>
-                                </q-input>
-                                <q-input v-model="props.row.national_code" lazy-rules type="number" outlined label="کد ملی" color="primary" class="q-my-xs" :error="this.MixinValidationCheck(errors,'national_code')">
-                                    <template v-slot:error>
-                                        <Error_Validation :errors="this.MixinValidation(errors,'national_code')"></Error_Validation>
-                                    </template>
-                                </q-input>
-                                <q-select
-                                    outlined
-                                    v-model="props.row.province_id"
-                                    class="q-my-xs"
-                                    color="primary"
-                                    transition-show="flip-up"
-                                    transition-hide="flip-down"
-                                    use-input
-                                    label="انتخاب استان"
-                                    :options="provinces_select"
-                                    emit-value
-                                    map-options
-                                    behavior="menu"
-                                    @change="new ChangeCities(props.row.province_id)"
-                                    :error="this.MixinValidationCheck(errors,'province_id')"
-                                >
-                                    <template v-slot:error>
-                                        <Error_Validation :errors="this.MixinValidation(errors,'province_id')"></Error_Validation>
-                                    </template>
-                                </q-select>
-                                <q-select
-                                    outlined
-                                    class="q-my-xs"
-                                    v-model="props.row.city_id"
-                                    color="primary"
-                                    transition-show="flip-up"
-                                    transition-hide="flip-down"
-                                    use-input
-                                    label="انتخاب شهر"
-                                    :options="cities_select"
-                                    emit-value
-                                    map-options
-                                    behavior="menu"
-                                    :error="this.MixinValidationCheck(errors,'city_id')"
-                                >
-                                    <template v-slot:error>
-                                        <Error_Validation :errors="this.MixinValidation(errors,'city_id')"></Error_Validation>
-                                    </template>
-                                </q-select>
-
-                            </q-card-section>
-
-                            <q-card-actions align="right">
-                                <q-btn  label="بستن" color="red" v-close-popup />
-                                <q-btn @click="EditItem(props.row)" :loading="loading_add" label="ویرایش آیتم" color="indigo"/>
-                            </q-card-actions>
-                        </q-card>
-                    </q-dialog>
 
                 </template>
 
@@ -235,9 +159,13 @@
 
 <script>
 import {mapActions} from "vuex";
+import Manage_Users_Members_Edit from "./Manage_Users_Members_Edit.vue";
 
 export default {
     name: "Manage_Users_Members",
+    components:{
+      'member_edit' : Manage_Users_Members_Edit,
+    },
     mounted() {
         this.GetItems();
         this.GetProvinces();
@@ -373,27 +301,7 @@ export default {
 
             })
         },
-        EditItem(item){
-            this.loading_add=true;
-            this.UserMembersEdit(item).then(res => {
-                this.loading_add=false;
-                this.items = this.items.filter(item_get =>{
-                    if (item_get.id === item.id){
-                        item_get=res.data.result
-                    }
-                    return item_get;
-                })
-                this.dialog_edit[item.id]=false;
-                return this.NotifyUpdate();
-            }).catch(error => {
-                this.loading_add=false;
-                if (error.response.status === 422) {
-                    return this.errors = error.response.data
-                }
-                return  this.NotifyServerError();
 
-            })
-        },
         DeleteItem (id) {
             this.$q.dialog({
                 title: 'هشدار !',
@@ -431,21 +339,7 @@ export default {
                 return this.NotifyServerError();
             })
         },
-        ChangeCities(id){
-            if (id){
-                console.log(id)
-                let cities;
-                this.provinces.forEach(province =>{
-                    if (province.id === id){
-                        cities = province.cities;
-                    }
-                })
-                this.cities_select=[];
-                cities.forEach(city => {
-                    this.cities_select.push({label : city.name , value : city.id})
-                })
-            }
-        },
+
 
     },
     computed:{
@@ -463,6 +357,7 @@ export default {
                 })
             }
         },
+
 
     }
 }

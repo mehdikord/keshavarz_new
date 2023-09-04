@@ -30,6 +30,24 @@ const routes = [
         meta : { title : "مدیران سیستم"}
     },
     {
+        path : "/management/implements/categories",
+        name : "implements_categories",
+        component : Manage_Brands,
+        meta : { title : "دسته بندی های ادوات"}
+    },
+    {
+        path : "/management/implements",
+        name : "implements",
+        component : Manage_Brands,
+        meta : { title : "مدیریت ادوات"}
+    },
+    {
+        path : "/management/implements/forms",
+        name : "implements_forms",
+        component : Manage_Brands,
+        meta : { title : "فرم های ادوات"}
+    },
+    {
         path : "/management/brands",
         name : "brands",
         component : Manage_Brands,
@@ -41,6 +59,7 @@ const routes = [
         component : Manage_Categories ,
         meta : { title : "دسته بندی ها"}
     },
+
     {
         path : "/management/products",
         name : "products",
@@ -53,8 +72,6 @@ const routes = [
         component : Manage_Users_Members,
         meta : { title : "مشتریان فروشگاه"}
     },
-
-
 
 
     {

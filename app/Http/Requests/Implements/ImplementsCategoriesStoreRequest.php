@@ -1,11 +1,11 @@
 <?php
-namespace App\Http\Requests\Categories;
+namespace App\Http\Requests\Implements;
 
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Exceptions\HttpResponseException;
 
-class CategoriesStoreRequest extends FormRequest
+class ImplementsCategoriesStoreRequest extends FormRequest
 {
 
     /**
@@ -23,8 +23,7 @@ class CategoriesStoreRequest extends FormRequest
     {
 
         return [
-            'name' => 'required|max:225|unique:categories',
-            'parent_id' => 'nullable|exists:categories,id',
+            'name' => 'required|max:225|unique:implement_categories',
             'image' => 'nullable|image',
         ];
     }

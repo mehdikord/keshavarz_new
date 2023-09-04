@@ -26,7 +26,7 @@ class CategoriesUpdateRequest extends FormRequest
         return [
             'name' => [
                 'nullable',
-                Rule::unique('brands')->ignore($this->category->id),
+                Rule::unique('categories')->ignore($this->category->id),
             ],
             'parent_id' => 'nullable|exists:categories,id',
         ];

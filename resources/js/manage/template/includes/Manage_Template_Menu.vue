@@ -70,6 +70,29 @@ export default {
                     ]
                 },
                 {
+                    title : "مدیریت ادوات",
+                    link : "",
+                    icon  : "mdi-tractor",
+                    subs:[
+                        {
+                            title : "دسته بندی ها",
+                            link : "implements_categories",
+                            icon  : "mdi-shape-plus",
+                        },
+                        {
+                            title : "لیست ادوات",
+                            link : "implements",
+                            icon  : "mdi-tractor",
+                        },
+                        {
+                            title : "فرم ها",
+                            link : "implements_forms",
+                            icon  : "mdi-text",
+                        },
+                    ]
+                },
+
+                {
                     title : "برند ها و دسته بندی ",
                     link : "",
                     icon  : "mdi-shape-plus",

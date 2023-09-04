@@ -1,11 +1,12 @@
 <?php
-namespace App\Http\Requests\Categories;
+namespace App\Http\Requests\Implements;
 
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Exceptions\HttpResponseException;
+use Illuminate\Validation\Rule;
 
-class CategoriesStoreRequest extends FormRequest
+class ImplementsCategoriesUpdateRequest extends FormRequest
 {
 
     /**
@@ -23,9 +24,10 @@ class CategoriesStoreRequest extends FormRequest
     {
 
         return [
-            'name' => 'required|max:225|unique:categories',
-            'parent_id' => 'nullable|exists:categories,id',
-            'image' => 'nullable|image',
+            'name' => [
+                'nullable',
+                Rule::unique('implement_categories')->ignore($this->category->id),
+            ],
         ];
     }
     public function failedValidation(Validator $validator)
