@@ -56,6 +56,8 @@
                 color="indigo"
                 table-header-class="text-indigo"
                 :loading="loading_get"
+                separator="cell"
+                :pagination="{rowsPerPage:30}"
             >
                 <template v-slot:loading>
                     <Global_Loading></Global_Loading>
@@ -96,41 +98,6 @@
                                         <Error_Validation :errors="this.MixinValidation(errors,'name')"></Error_Validation>
                                     </template>
                                 </q-input>
-
-                                <q-select
-                                    class="q-mb-md"
-                                    outlined
-                                    transition-show="flip-up"
-                                    transition-hide="flip-down"
-                                    v-model="props.row.parent_id"
-                                    use-input
-                                    label="انتخاب سرگروه"
-                                    :options="categories_option"
-                                    emit-value
-                                    map-options
-                                    :option-disable="opt => Object(opt) === opt ? opt.value === props.row.id : true"
-                                    @filter="Filter_Select_Category"
-                                    :loading="loading_select_category"
-                                    behavior="menu"
-                                >
-                                    <template v-slot:no-option>
-                                        <q-item>
-                                            <q-item-section class="text-grey">
-                                                No results
-                                            </q-item-section>
-                                        </q-item>
-                                    </template>
-                                    <template v-slot:option="scope">
-                                        <q-item v-bind="scope.itemProps">
-                                            <q-item-section avatar>
-                                                <Global_Show_Image :image="scope.opt.image"></Global_Show_Image>
-                                            </q-item-section>
-                                            <q-item-section>
-                                                <q-item-label>{{ scope.opt.label }}</q-item-label>
-                                            </q-item-section>
-                                        </q-item>
-                                    </template>
-                                </q-select>
 
                                 <q-input v-model="props.row.description"  lazy-rules type="textarea" outlined label="توضیحات" color="primary" class="q-my-xs" :error="this.MixinValidationCheck(errors,'description')">
                                     <template v-slot:error>
@@ -208,9 +175,6 @@ export default {
         this.GetItems();
 
     },
-    mounted() {
-        this.Categories_Select();
-    },
     data(){
         return{
             items:[],
@@ -276,17 +240,16 @@ export default {
     },
     methods:{
         ...mapActions([
-            "CategoriesIndex",
-            "CategoriesStore",
-            "CategoriesDelete",
-            "CategoriesDeleteImage",
-            "CategoriesEdit",
-            "CategoriesEditImage",
-            "CategoriesSelectNoParent"
+            "CategoriesImplementsIndex",
+            "CategoriesImplementsStore",
+            "CategoriesImplementsDelete",
+            "CategoriesImplementsDeleteImage",
+            "CategoriesImplementsEdit",
+            "CategoriesImplementsEditImage",
 
         ]),
         GetItems(){
-            this.CategoriesIndex().then(res => {
+            this.CategoriesImplementsIndex().then(res => {
                 this.items = res.data.result;
                 this.loading_get=false;
             }).catch(error => {
@@ -295,7 +258,7 @@ export default {
         },
         AddItem(){
             this.loading_add=true;
-            this.CategoriesStore(this.add).then(res => {
+            this.CategoriesImplementsStore(this.add).then(res => {
                 this.items.unshift(res.data.result);
                 this.loading_add=false;
                 this.dialog_add=false;
@@ -311,7 +274,7 @@ export default {
         },
         EditItem(item){
             this.loading_add=true;
-            this.CategoriesEdit(item).then(res => {
+            this.CategoriesImplementsEdit(item).then(res => {
                 this.loading_add=false;
                 this.items = this.items.filter(item_get =>{
                     if (item_get.id === item.id){
@@ -331,7 +294,7 @@ export default {
         },
         EditImage(id){
             this.loading_image=true;
-            this.CategoriesEditImage({id:id,image:this.edit_image[id]}).then(res => {
+            this.CategoriesImplementsEditImage({id:id,image:this.edit_image[id]}).then(res => {
                 this.items = this.items.filter(item_get =>{
                     if (item_get.id === id){
                         item_get.image=res.data.result.image
@@ -365,7 +328,7 @@ export default {
                 },
                 persistent: true
             }).onOk(() => {
-                this.CategoriesDelete(id).then(res => {
+                this.CategoriesImplementsDelete(id).then(res => {
                     this.items = this.items.filter(item =>{
                         return item.id !== id;
                     })
@@ -381,7 +344,7 @@ export default {
             })
         },
         DeleteItemImage (id) {
-            this.CategoriesDeleteImage(id).then( res => {
+            this.CategoriesImplementsDeleteImage(id).then( res => {
                 this.items = this.items.filter(item_get =>{
                     if (item_get.id === id){
                         item_get.image=null
@@ -396,27 +359,6 @@ export default {
 
             })
         },
-        Categories_Select(){
-            this.loading_select_category = true;
-            this.CategoriesSelectNoParent().then(res => {
-                this.categories_option = res;
-                this.loading_select_category=false;
-            }).catch(e => {
-                return  this.NotifyServerError();
-
-            })
-        },
-        Filter_Select_Category (val, update, abort) {
-            update(() => {
-                if (val){
-                    this.categories_option =  this.categories_option.filter(item => {
-                        return item.label !== null && item.label.match(val)
-                    })
-                }else {
-                    this.Categories_Select();
-                }
-            })
-        }
     },
 }
 </script>

@@ -240,6 +240,9 @@
                 color="indigo"
                 table-header-class="text-indigo"
                 :loading="loading_get"
+                separator="cell"
+                :pagination="{rowsPerPage:30}"
+
             >
                 <template v-slot:loading>
                     <Global_Loading></Global_Loading>

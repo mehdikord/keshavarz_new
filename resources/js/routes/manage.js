@@ -8,6 +8,8 @@ import Manage_Faqs from "@/manage/pages/faqs/Manage_Faqs.vue";
 import Manage_Brands from "../manage/pages/brands/Manage_Brands.vue";
 import Manage_Categories from "../manage/pages/categories/Manage_Categories.vue";
 import Manage_Products from "../manage/pages/products/Manage_Products.vue";
+import Manage_Implement_Categories from "@/manage/pages/implements/Manage_Implement_Categories.vue";
+import Manage_Implements from "@/manage/pages/implements/Manage_Implements.vue";
 
 const routes = [
 
@@ -32,13 +34,13 @@ const routes = [
     {
         path : "/management/implements/categories",
         name : "implements_categories",
-        component : Manage_Brands,
+        component : Manage_Implement_Categories,
         meta : { title : "دسته بندی های ادوات"}
     },
     {
         path : "/management/implements",
         name : "implements",
-        component : Manage_Brands,
+        component :Manage_Implements,
         meta : { title : "مدیریت ادوات"}
     },
     {

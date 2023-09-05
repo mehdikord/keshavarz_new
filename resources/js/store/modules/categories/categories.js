@@ -95,7 +95,7 @@ export default {
 
         CategoriesImplementsIndex(){
             return new Promise((resolve,reject) => {
-                axios.get('categories').then((result) => {
+                axios.get('implements/categories').then((result) => {
                     resolve(result);
                 }).catch(error => {
                     reject(error);
@@ -109,7 +109,7 @@ export default {
                 if (item.parent_id){data.append('parent_id',item.parent_id)};
                 if (item.image){data.append('image',item.image,item.image.name)};
                 if (item.description){data.append('description',item.description)};
-                axios.post('categories',data,{headers: {'Content-Type': 'multipart/form-data'}}).then((result) => {
+                axios.post('implements/categories',data,{headers: {'Content-Type': 'multipart/form-data'}}).then((result) => {
                     resolve(result);
                 }).catch(error => {
                     reject(error);
@@ -118,7 +118,7 @@ export default {
         },
         CategoriesImplementsEdit(_,item){
             return new Promise((resolve,reject) => {
-                axios.post('categories/'+item.id,item).then((result) => {
+                axios.post('implements/categories/'+item.id,item).then((result) => {
                     resolve(result);
                 }).catch(error => {
                     reject(error);
@@ -127,7 +127,7 @@ export default {
         },
         CategoriesImplementsDelete(_,item){
             return new Promise((resolve,reject) => {
-                axios.delete('categories/'+item).then((result) => {
+                axios.delete('implements/categories/'+item).then((result) => {
                     resolve(result);
                 }).catch(error => {
                     reject(error);
@@ -136,7 +136,7 @@ export default {
         },
         CategoriesImplementsDeleteImage(_,item){
             return new Promise((resolve,reject) => {
-                axios.post('categories/image/'+item).then((result) => {
+                axios.post('implements/categories/image/'+item).then((result) => {
                     resolve(result);
                 }).catch(error => {
                     reject(error);
@@ -147,7 +147,7 @@ export default {
             return new Promise((resolve,reject) => {
                 var data = new  FormData();
                 if (item.image){data.append('image',item.image,item.image.name)};
-                axios.post('categories/image/'+item.id,data,{headers: {'Content-Type': 'multipart/form-data'}}).then((result) => {
+                axios.post('implements/categories/image/'+item.id,data,{headers: {'Content-Type': 'multipart/form-data'}}).then((result) => {
                     resolve(result);
                 }).catch(error => {
                     reject(error);

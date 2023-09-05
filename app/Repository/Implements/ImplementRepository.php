@@ -34,7 +34,10 @@ class ImplementRepository implements ImplementInterface
         ]);
         return response_success($item);
     }
+    public function update_image($request,$item)
+    {
 
+    }
     public function delete($item)
     {
         $item->delete();
@@ -84,6 +87,8 @@ class ImplementRepository implements ImplementInterface
         return response_success(true,'item deleted success');
 
     }
+
+
 
     public function implement_index()
     {
