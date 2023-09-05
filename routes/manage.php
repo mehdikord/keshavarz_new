@@ -45,7 +45,11 @@ Route::middleware('auth:admin')->group(function (){
 
     //Implements
     Route::group(['prefix' => 'implements','as'=>'implements.'],function (){
-
+        Route::get('',[\App\Http\Controllers\Manage\Implements\ImplementController::class,'index'])->name('index');
+        Route::post('',[\App\Http\Controllers\Manage\Implements\ImplementController::class,'store'])->name('store');
+        Route::post('{implement}',[\App\Http\Controllers\Manage\Implements\ImplementController::class,'update'])->name('update');
+        Route::delete('{implement}',[\App\Http\Controllers\Manage\Implements\ImplementController::class,'delete'])->name('delete');
+        Route::post('image/{implement}',[\App\Http\Controllers\Manage\Implements\ImplementController::class,'update_image'])->name('update_image');
 
         //Categories
         Route::group(['prefix' => 'categories','as' => 'categories.'],function (){
@@ -102,7 +106,7 @@ Route::middleware('auth:admin')->group(function (){
 
 
     Route::prefix('helpers')->group(function (){
-        Route::get('provinces',[\App\Http\Controllers\Mnanage\Helper\HelperController::class,'provinces']);
+        Route::get('provinces',[\App\Http\Controllers\Manage\Helper\HelperController::class,'provinces']);
 
     });
 

@@ -14,13 +14,54 @@
                         <div class="text-h6">افزودن آیتم جدید</div>
                     </q-card-section>
                     <q-card-section >
-                        <q-input v-model="add.name"  lazy-rules type="text" outlined label="نام دسته بندی" color="primary" class="q-my-xs" :error="this.MixinValidationCheck(errors,'name')">
+                        <q-input v-model="add.name"  lazy-rules type="text" outlined label="نام دستگاه" color="primary" class="q-my-xs" :error="this.MixinValidationCheck(errors,'name')">
                             <template v-slot:error>
                                 <Error_Validation :errors="this.MixinValidation(errors,'name')"></Error_Validation>
                             </template>
                         </q-input>
 
+                        <q-select
+                                outlined
+                                color="primary"
+                                class="q-my-xs q-mb-lg"
+                                transition-show="flip-up"
+                                transition-hide="flip-down"
+                                v-model="add.implement_category_id"
+                                use-input
+                                label="انتخاب دسته بندی ادوات"
+                                :options="categories"
+                                emit-value
+                                map-options
+                                @filter="Filter_Select_Category"
+                                :loading="loading_select_category"
+                                behavior="menu"
+                            >
+                                <template v-slot:no-option>
+                                    <q-item>
+                                        <q-item-section class="text-red">
+                                            گزینه ای یافت نشد
+                                        </q-item-section>
+                                    </q-item>
+                                </template>
+                                <template v-slot:option="scope">
+                                    <q-item v-bind="scope.itemProps">
+                                        <q-item-section avatar>
+                                            <Global_Show_Image :image="scope.opt.image"></Global_Show_Image>
+                                        </q-item-section>
+                                        <q-item-section>
+                                            <q-item-label>{{ scope.opt.label }}</q-item-label>
+                                        </q-item-section>
+                                    </q-item>
+                                </template>
+                                <template v-slot:error>
+                                </template>
+                            </q-select>
 
+                        <q-input v-model="add.price_type"  lazy-rules type="text" outlined label="نوع قیمت دهی" color="primary" class="q-my-xs" :error="this.MixinValidationCheck(errors,'price_type')">
+                            <template v-slot:error>
+                                <Error_Validation :errors="this.MixinValidation(errors,'price_type')"></Error_Validation>
+                            </template>
+                        </q-input>
                         <q-file class="q-mb-md" outlined bottom-slots v-model="add.image" label="انتخاب تصویر" counter>
                             <template v-slot:prepend>
                                 <q-icon name="mdi-image" @click.stop.prevent />
@@ -68,7 +109,21 @@
                         <Global_Show_Image :image="props.row.image"></Global_Show_Image>
                     </q-td>
                 </template>
-
+                <template v-slot:body-cell-category="props">
+                    <q-td :props="props">
+                        <strong v-if="props.row.category" class="text-indigo">{{props.row.category.name}}</strong>
+                    </q-td>
+                </template>
+                <template v-slot:body-cell-users_count="props">
+                    <q-td :props="props">
+                        <q-chip color="green-8" text-color="white" >{{props.row.users_count}}</q-chip>
+                    </q-td>
+                </template>
+                <template v-slot:body-cell-search_count="props">
+                    <q-td :props="props">
+                        <q-chip color="orange-10" text-color="white" >{{props.row.search_count}}</q-chip>
+                    </q-td>
+                </template>
                 <template v-slot:body-cell-tools="props">
                     <q-td :props="props">
                         <q-btn @click="dialog_edit[props.row.id] = true;errors=[]" glossy color="primary" size="sm" icon="mdi-pen" class="q-mx-xs">
@@ -96,6 +151,47 @@
                                 <q-input v-model="props.row.name"  lazy-rules type="text" outlined label="عنوان برند" color="primary" class="q-my-xs" :error="this.MixinValidationCheck(errors,'name')">
                                     <template v-slot:error>
                                         <Error_Validation :errors="this.MixinValidation(errors,'name')"></Error_Validation>
+                                    </template>
+                                </q-input>
+                                <q-select
+                                    outlined
+                                    color="primary"
+                                    class="q-my-xs q-mb-lg"
+                                    transition-show="flip-up"
+                                    transition-hide="flip-down"
+                                    v-model="props.row.implement_category_id"
+                                    use-input
+                                    label="انتخاب دسته بندی ادوات"
+                                    :options="categories"
+                                    emit-value
+                                    map-options
+                                    @filter="Filter_Select_Category"
+                                    :loading="loading_select_category"
+                                    behavior="menu"
+                                >
+                                    <template v-slot:no-option>
+                                        <q-item>
+                                            <q-item-section class="text-red">
+                                                گزینه ای یافت نشد
+                                            </q-item-section>
+                                        </q-item>
+                                    </template>
+                                    <template v-slot:option="scope">
+                                        <q-item v-bind="scope.itemProps">
+                                            <q-item-section avatar>
+                                                <Global_Show_Image :image="scope.opt.image"></Global_Show_Image>
+                                            </q-item-section>
+                                            <q-item-section>
+                                                <q-item-label>{{ scope.opt.label }}</q-item-label>
+                                            </q-item-section>
+                                        </q-item>
+                                    </template>
+                                    <template v-slot:error>
+                                    </template>
+                                </q-select>
+                                <q-input v-model="props.row.price_type"  lazy-rules type="text" outlined label="نوع قیمت دهی" color="primary" class="q-my-xs" :error="this.MixinValidationCheck(errors,'price_type')">
+                                    <template v-slot:error>
+                                        <Error_Validation :errors="this.MixinValidation(errors,'price_type')"></Error_Validation>
                                     </template>
                                 </q-input>
 
@@ -170,7 +266,7 @@
 import {mapActions} from "vuex";
 
 export default {
-    name: "Manage_Implement_Categories",
+    name: "Manage_Implements",
     created() {
         this.GetItems();
 
@@ -186,9 +282,11 @@ export default {
             dialog_add:false,
             dialog_edit:[],
             dialog_edit_image:[],
-            categories_option:[],
+            categories:[],
             add:{
                 name:null,
+                implement_category_id:null,
+                price_type:null,
                 image:null,
                 description:null,
 
@@ -203,6 +301,7 @@ export default {
                     field: row => row.id,
                     sortable: true
                 },
+
                 {
                     name:'image',
                     required: true,
@@ -214,18 +313,41 @@ export default {
                 {
                     name:'name',
                     required: true,
-                    label: 'عنوان برند',
+                    label: 'نام دستگاه',
                     align: 'left',
                     field: row => row.name,
                     sortable: true
                 },
-
                 {
-                    name:'description',
+                    name:'category',
                     required: true,
-                    label: 'توضیحات',
+                    label: 'دسته بندی',
                     align: 'left',
-                    field: row => row.description,
+                    field: row => row,
+                    sortable: true
+                },
+                {
+                    name:'price_type',
+                    required: true,
+                    label: 'نوع قیمت دهی',
+                    align: 'left',
+                    field: row => row.price_type,
+                    sortable: true
+                },
+                {
+                    name:'users_count',
+                    required: true,
+                    label: 'تعداد استفاده',
+                    align: 'left',
+                    field: row => row.users_count,
+                    sortable: true
+                },
+                {
+                    name:'search_count',
+                    required: true,
+                    label: 'تعداد جستجو',
+                    align: 'left',
+                    field: row => row.search_count,
                     sortable: true
                 },
                 {
@@ -240,16 +362,17 @@ export default {
     },
     methods:{
         ...mapActions([
-            "CategoriesImplementsIndex",
-            "CategoriesImplementsStore",
-            "CategoriesImplementsDelete",
-            "CategoriesImplementsDeleteImage",
-            "CategoriesImplementsEdit",
-            "CategoriesImplementsEditImage",
+            "ManageImplementsIndex",
+            "ManageImplementsStore",
+            "ManageImplementsDelete",
+            "ManageImplementsDeleteImage",
+            "ManageImplementsEdit",
+            "ManageImplementsEditImage",
+            "ManageImplementsCategoriesSelectIndex"
 
         ]),
         GetItems(){
-            this.CategoriesImplementsIndex().then(res => {
+            this.ManageImplementsIndex().then(res => {
                 this.items = res.data.result;
                 this.loading_get=false;
             }).catch(error => {
@@ -258,7 +381,7 @@ export default {
         },
         AddItem(){
             this.loading_add=true;
-            this.CategoriesImplementsStore(this.add).then(res => {
+            this.ManageImplementsStore(this.add).then(res => {
                 this.items.unshift(res.data.result);
                 this.loading_add=false;
                 this.dialog_add=false;
@@ -274,7 +397,7 @@ export default {
         },
         EditItem(item){
             this.loading_add=true;
-            this.CategoriesImplementsEdit(item).then(res => {
+            this.ManageImplementsEdit(item).then(res => {
                 this.loading_add=false;
                 this.items = this.items.filter(item_get =>{
                     if (item_get.id === item.id){
@@ -294,7 +417,7 @@ export default {
         },
         EditImage(id){
             this.loading_image=true;
-            this.CategoriesImplementsEditImage({id:id,image:this.edit_image[id]}).then(res => {
+            this.ManageImplementsEditImage({id:id,image:this.edit_image[id]}).then(res => {
                 this.items = this.items.filter(item_get =>{
                     if (item_get.id === id){
                         item_get.image=res.data.result.image
@@ -328,7 +451,7 @@ export default {
                 },
                 persistent: true
             }).onOk(() => {
-                this.CategoriesImplementsDelete(id).then(res => {
+                this.ManageImplementsDelete(id).then(res => {
                     this.items = this.items.filter(item =>{
                         return item.id !== id;
                     })
@@ -344,7 +467,7 @@ export default {
             })
         },
         DeleteItemImage (id) {
-            this.CategoriesImplementsDeleteImage(id).then( res => {
+            this.ManageImplementsDeleteImage(id).then( res => {
                 this.items = this.items.filter(item_get =>{
                     if (item_get.id === id){
                         item_get.image=null
@@ -359,6 +482,28 @@ export default {
 
             })
         },
+        Get_Categories(){
+            this.loading_select_category=true;
+            this.ManageImplementsCategoriesSelectIndex().then(res => {
+                this.categories = res;
+                this.loading_select_category=false;
+            }).catch(error => {
+                this.loading_select_category=false;
+                return  this.NotifyServerError();
+            })
+        },
+        Filter_Select_Category (val, update, abort) {
+            update(() => {
+                if (val){
+                    this.categories =  this.categories.filter(item => {
+                        return item.label !== null && item.label.match(val)
+                    })
+                }else {
+                    this.Get_Categories();
+                }
+            })
+        },
+
     },
 }
 </script>

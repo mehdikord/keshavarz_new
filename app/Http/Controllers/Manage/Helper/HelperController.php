@@ -1,10 +1,9 @@
 <?php
 
-namespace App\Http\Controllers\Mnanage\Helper;
+namespace App\Http\Controllers\Manage\Helper;
 
 use App\Http\Controllers\Controller;
 use App\Models\Province;
-use Illuminate\Http\Request;
 
 class HelperController extends Controller
 {

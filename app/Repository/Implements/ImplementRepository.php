@@ -12,15 +12,21 @@ class ImplementRepository implements ImplementInterface
 {
     public function index()
     {
-        return response_success(Faq::OrderbyDesc('id')->get());
+        return response_success(Implement::with('category')->withCount('search')->withCount('users')->orderByDesc('id')->get());
     }
 
     public function store($request)
     {
-        $item = Faq::create([
-            'title' => $request->title,
-            'question' => $request->question,
-            'answer' => $request->answer,
+        $image=null;
+        if ($request->file('image')){
+            $image = (new MediaService())->store_image($request->file('image'),'implements/implements');
+        }
+        $item = Implement::create([
+            'name' => $request->name,
+            'implement_category_id' => $request->implement_category_id,
+            'price_type' => $request->price_type,
+            'image' => $image,
+            'long_description' => $request->description,
         ]);
         return response_success($item);
     }
@@ -28,16 +34,22 @@ class ImplementRepository implements ImplementInterface
     public function update($request,$item)
     {
         $item->update([
-            'title' => $request->title,
-            'question' => $request->question,
-            'answer' => $request->answer,
+            'name' => $request->name,
+            'implement_category_id' => $request->implement_category_id,
+            'price_type' => $request->price_type,
+            'long_description' => $request->description,
         ]);
         return response_success($item);
     }
     public function update_image($request,$item)
     {
+        if ((new MediaService)->update_model_image($request,$item,'image','implements/implements')){
 
+            return response_success($item);
+        }
+        return response_custom_error('image file update error');
     }
+
     public function delete($item)
     {
         $item->delete();
@@ -72,6 +84,7 @@ class ImplementRepository implements ImplementInterface
         ]);
         return response_success($item);
     }
+
     public function categories_update_image($request,$item)
     {
         if ((new MediaService)->update_model_image($request,$item,'image','implements/categories')){
