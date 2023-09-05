@@ -6,7 +6,7 @@ use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Exceptions\HttpResponseException;
 use Illuminate\Validation\Rule;
 
-class ImplementsCategoriesUpdateRequest extends FormRequest
+class ImplementsFormsUpdateRequest extends FormRequest
 {
 
     /**
@@ -25,8 +25,8 @@ class ImplementsCategoriesUpdateRequest extends FormRequest
 
         return [
             'name' => [
-                'required',
-                Rule::unique('implement_categories')->ignore($this->category->id),
+                'nullable',
+                Rule::unique('forms')->ignore($this->form->id),
             ],
         ];
     }

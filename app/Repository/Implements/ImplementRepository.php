@@ -4,6 +4,7 @@ namespace App\Repository\Implements;
 
 use App\Interfaces\Implements\ImplementInterface;
 use App\Models\Faq;
+use App\Models\Form;
 use App\Models\Implement;
 use App\Models\Implement_Category;
 use App\Services\MediaServices\MediaService;
@@ -41,6 +42,7 @@ class ImplementRepository implements ImplementInterface
         ]);
         return response_success($item);
     }
+
     public function update_image($request,$item)
     {
         if ((new MediaService)->update_model_image($request,$item,'image','implements/implements')){
@@ -60,7 +62,7 @@ class ImplementRepository implements ImplementInterface
 
     public function categories_index()
     {
-        return response_success(Implement_Category::orderBy('num','ASC')->get());
+        return response_success(Implement_Category::orderBy('num','ASC')->withCount('implements')->get());
     }
     public function categories_store($request)
     {
@@ -70,6 +72,7 @@ class ImplementRepository implements ImplementInterface
         }
         $item = Implement_Category::create([
             'name' => $request->name,
+            'num' => $request->num,
             'image' => $image,
             'description' => $request->description,
         ]);
@@ -80,6 +83,7 @@ class ImplementRepository implements ImplementInterface
     {
         $item->update([
             'name' => $request->name,
+            'num' => $request->num,
             'description' => $request->description,
         ]);
         return response_success($item);
@@ -95,6 +99,36 @@ class ImplementRepository implements ImplementInterface
     }
 
     public function categories_delete($item)
+    {
+        $item->delete();
+        return response_success(true,'item deleted success');
+
+    }
+
+
+    public function forms_index()
+    {
+        return response_success(Form::orderByDesc('id')->get());
+    }
+
+    public function forms_store($request)
+    {
+
+        $item = Form::create([
+            'name' => $request->name,
+        ]);
+        return response_success($item);
+    }
+
+    public function forms_update($request,$item)
+    {
+        $item->update([
+            'name' => $request->name,
+        ]);
+        return response_success($item);
+    }
+
+    public function forms_delete($item)
     {
         $item->delete();
         return response_success(true,'item deleted success');

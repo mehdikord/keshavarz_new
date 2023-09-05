@@ -4,9 +4,8 @@ namespace App\Http\Requests\Implements;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Exceptions\HttpResponseException;
-use Illuminate\Validation\Rule;
 
-class ImplementsCategoriesUpdateRequest extends FormRequest
+class ImplementsFormsStoreRequest extends FormRequest
 {
 
     /**
@@ -24,10 +23,7 @@ class ImplementsCategoriesUpdateRequest extends FormRequest
     {
 
         return [
-            'name' => [
-                'required',
-                Rule::unique('implement_categories')->ignore($this->category->id),
-            ],
+            'name' => 'required|max:225|unique:forms',
         ];
     }
     public function failedValidation(Validator $validator)

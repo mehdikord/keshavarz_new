@@ -60,6 +60,14 @@ Route::middleware('auth:admin')->group(function (){
             Route::post('image/{category}',[\App\Http\Controllers\Manage\Implements\CategoryController::class,'update_image'])->name('update_image');
         });
 
+        //Forms
+        Route::group(['prefix' => 'forms','as' => 'forms.'],function (){
+            Route::get('',[\App\Http\Controllers\Manage\Implements\FormController::class,'index'])->name('index');
+            Route::post('',[\App\Http\Controllers\Manage\Implements\FormController::class,'store'])->name('store');
+            Route::post('{form}',[\App\Http\Controllers\Manage\Implements\FormController::class,'update'])->name('update');
+            Route::delete('{form}',[\App\Http\Controllers\Manage\Implements\FormController::class,'delete'])->name('delete');
+        });
+
     });
 
     //Faqs

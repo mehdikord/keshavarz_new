@@ -9,6 +9,7 @@ import implement from "./modules/implements/implements";
 import profiles from "./modules/profiles/Profiles";
 import plans from "./modules/plans/Plans";
 import search from "./modules/search/Search";
+import forms from "./modules/forms/forms";
 const store = createStore({
     state(){
         return {
@@ -28,7 +29,8 @@ const store = createStore({
         implement,
         profiles,
         plans,
-        search
+        search,
+        forms,
 
     },
 

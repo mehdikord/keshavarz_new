@@ -2,7 +2,7 @@
     <q-card flat bordered>
 
         <q-card-section class="bg-blue-grey-14 text-white q-pb-lg">
-            <q-btn @click="dialog_add=true" color="deep-orange-7" icon="mdi-plus" push class="float-right" label="افزودن آیتم"></q-btn>
+            <q-btn @click="dialog_add=true" color="deep-orange-7" icon="mdi-plus" push class="float-right" label="افزودن آیتم جدید"></q-btn>
             <q-dialog
                 v-model="dialog_add"
 
@@ -12,35 +12,25 @@
             >
                 <q-card style="max-width: 700px;width: 700px">
                     <q-card-section class="bg-deep-orange-9 text-white">
-                        <div class="text-h6">افزودن آیتم جدید</div>
+                        <div class="text-h6">Add new item</div>
                     </q-card-section>
                     <q-card-section >
-                        <q-input v-model="add.title"  lazy-rules type="text" outlined label="عنوان (مشاهده در مدیریت)" color="primary" class="q-my-xs" :error="this.MixinValidationCheck(errors,'title')">
+                        <q-input v-model="add.name"  lazy-rules type="text" outlined label="عنوان فرم" color="primary" class="q-my-xs" :error="this.MixinValidationCheck(errors,'name')">
                             <template v-slot:error>
-                                <Error_Validation :errors="this.MixinValidation(errors,'title')"></Error_Validation>
-                            </template>
-                        </q-input>
-                        <q-input v-model="add.question"  lazy-rules type="textarea" outlined label="سوال" color="primary" class="q-my-xs" :error="this.MixinValidationCheck(errors,'question')">
-                            <template v-slot:error>
-                                <Error_Validation :errors="this.MixinValidation(errors,'question')"></Error_Validation>
-                            </template>
-                        </q-input>
-                        <q-input v-model="add.answer"  lazy-rules type="textarea" outlined label="پاسخ" color="primary" class="q-my-xs" :error="this.MixinValidationCheck(errors,'answer')">
-                            <template v-slot:error>
-                                <Error_Validation :errors="this.MixinValidation(errors,'answer')"></Error_Validation>
+                                <Error_Validation :errors="this.MixinValidation(errors,'name')"></Error_Validation>
                             </template>
                         </q-input>
 
                     </q-card-section>
 
                     <q-card-actions align="right">
-                        <q-btn  label="بستن" color="red" v-close-popup />
-                        <q-btn @click="AddItem" :loading="loading_add" label="افزودن آیتم" color="green-9"/>
+                        <q-btn  label="Close" color="red" v-close-popup />
+                        <q-btn @click="AddItem" :loading="loading_add" label="Add item" color="green-9"/>
                     </q-card-actions>
                 </q-card>
             </q-dialog>
 
-            <strong class="font-16">لیست سوالات متداول</strong>
+            <strong class="font-16">System members list</strong>
         </q-card-section>
 
         <q-card-section>
@@ -63,10 +53,10 @@
                 <template v-slot:body-cell-tools="props">
                     <q-td :props="props">
                         <q-btn @click="dialog_edit[props.row.id] = true;errors=[]" glossy color="primary" size="sm" icon="mdi-pen" class="q-mx-xs">
-                            <q-tooltip class="bg-grey-9">ویرایش این آیتم</q-tooltip>
+                            <q-tooltip class="bg-grey-9">Edit this item</q-tooltip>
                         </q-btn>
                         <q-btn @click="DeleteItem(props.row.id)" glossy color="red-9" size="sm" icon="mdi-delete" class="q-mx-xs">
-                            <q-tooltip class="bg-grey-9">حذف این آیتم</q-tooltip>
+                            <q-tooltip class="bg-grey-9">Delete this item</q-tooltip>
                         </q-btn>
                     </q-td>
                     <q-dialog
@@ -77,21 +67,21 @@
                     >
                         <q-card style="max-width: 700px;width: 700px">
                             <q-card-section class="bg-primary text-white">
-                                <div class="text-h6">ویرایش آیتم : {{props.row.name}}</div>
+                                <div class="text-h6">Edit item : {{props.row.name}}</div>
                             </q-card-section>
                             <q-card-section >
 
-                                <q-input v-model="props.row.title"  lazy-rules type="text" outlined label="عنوان (مشاهده در مدیریت)" color="primary" class="q-my-xs" :error="this.MixinValidationCheck(errors,'title')">
+                                <q-input v-model="props.row.title"  lazy-rules type="text" outlined label="Title" color="primary" class="q-my-xs" :error="this.MixinValidationCheck(errors,'title')">
                                     <template v-slot:error>
                                         <Error_Validation :errors="this.MixinValidation(errors,'title')"></Error_Validation>
                                     </template>
                                 </q-input>
-                                <q-input v-model="props.row.question"  lazy-rules type="textarea" outlined label="سوال" color="primary" class="q-my-xs" :error="this.MixinValidationCheck(errors,'question')">
+                                <q-input v-model="props.row.question"  lazy-rules type="textarea" outlined label="Question" color="primary" class="q-my-xs" :error="this.MixinValidationCheck(errors,'question')">
                                     <template v-slot:error>
                                         <Error_Validation :errors="this.MixinValidation(errors,'question')"></Error_Validation>
                                     </template>
                                 </q-input>
-                                <q-input v-model="props.row.answer"  lazy-rules type="textarea" outlined label="پاسخ" color="primary" class="q-my-xs" :error="this.MixinValidationCheck(errors,'answer')">
+                                <q-input v-model="props.row.answer"  lazy-rules type="textarea" outlined label="Answer" color="primary" class="q-my-xs" :error="this.MixinValidationCheck(errors,'answer')">
                                     <template v-slot:error>
                                         <Error_Validation :errors="this.MixinValidation(errors,'answer')"></Error_Validation>
                                     </template>
@@ -100,8 +90,8 @@
                             </q-card-section>
 
                             <q-card-actions align="right">
-                                <q-btn  label="بستن" color="red" v-close-popup />
-                                <q-btn @click="EditItem(props.row)" :loading="loading_add" label="ویرایش آیتم" color="indigo"/>
+                                <q-btn  label="Close" color="red" v-close-popup />
+                                <q-btn @click="EditItem(props.row)" :loading="loading_add" label="Update item" color="indigo"/>
                             </q-card-actions>
                         </q-card>
                     </q-dialog>
@@ -153,7 +143,7 @@ export default {
                 {
                     name:'title',
                     required: true,
-                    label: 'عنوان',
+                    label: 'Title',
                     align: 'left',
                     field: row => row.title,
                     sortable: true
@@ -161,7 +151,7 @@ export default {
                 {
                     name:'question',
                     required: true,
-                    label: 'سوال',
+                    label: 'Question',
                     align: 'left',
                     field: row => row.question,
                     sortable: true
@@ -169,7 +159,7 @@ export default {
                 {
                     name:'answer',
                     required: true,
-                    label: 'پاسخ',
+                    label: 'Answer',
                     align: 'left',
                     field: row => row.answer,
                     sortable: true
@@ -177,7 +167,7 @@ export default {
                 {
                     name:'tools',
                     required: true,
-                    label: 'تنظیمات',
+                    label: 'Tools',
                     align: 'left',
 
                 },
@@ -241,8 +231,9 @@ export default {
         },
         DeleteItem (id) {
             this.$q.dialog({
-                title: 'هشدار !',
-                message: 'آیا مطمئن هستید آیتم مورد نظر حذف شود ؟',
+                title: 'Confirm',
+                message: 'Are you sure to delete this item?',
+
                 ok: {
                     push: true,
                     color:'green-9',

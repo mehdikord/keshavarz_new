@@ -29,6 +29,11 @@
                                 <q-icon name="mdi-close" @click.stop.prevent="add.image = null" class="cursor-pointer" />
                             </template>
                         </q-file>
+                        <q-input v-model="add.num"  lazy-rules type="number" outlined label="ترتیب نمایش" color="primary" class="q-my-xs" :error="this.MixinValidationCheck(errors,'num')">
+                            <template v-slot:error>
+                                <Error_Validation :errors="this.MixinValidation(errors,'num')"></Error_Validation>
+                            </template>
+                        </q-input>
 
                         <q-input v-model="add.description"  lazy-rules type="textarea" outlined label="توضیحات" color="primary" class="q-my-xs" :error="this.MixinValidationCheck(errors,'description')">
                             <template v-slot:error>
@@ -68,6 +73,16 @@
                         <Global_Show_Image :image="props.row.image"></Global_Show_Image>
                     </q-td>
                 </template>
+                <template v-slot:body-cell-num="props">
+                    <q-td :props="props">
+                        <q-chip color="indigo" text-color="white">{{props.row.num}}</q-chip>
+                    </q-td>
+                </template>
+                <template v-slot:body-cell-implements_count="props">
+                    <q-td :props="props">
+                        <q-chip color="green-8" text-color="white">{{props.row.implements_count}}</q-chip>
+                    </q-td>
+                </template>
 
                 <template v-slot:body-cell-tools="props">
                     <q-td :props="props">
@@ -93,12 +108,16 @@
                             </q-card-section>
                             <q-card-section >
 
-                                <q-input v-model="props.row.name"  lazy-rules type="text" outlined label="عنوان برند" color="primary" class="q-my-xs" :error="this.MixinValidationCheck(errors,'name')">
+                                <q-input v-model="props.row.name"  lazy-rules type="text" outlined label="نام دسته بندی" color="primary" class="q-my-xs" :error="this.MixinValidationCheck(errors,'name')">
                                     <template v-slot:error>
                                         <Error_Validation :errors="this.MixinValidation(errors,'name')"></Error_Validation>
                                     </template>
                                 </q-input>
-
+                                <q-input v-model="props.row.num"  lazy-rules type="number" outlined label="ترتیب نمایش" color="primary" class="q-my-xs" :error="this.MixinValidationCheck(errors,'num')">
+                                    <template v-slot:error>
+                                        <Error_Validation :errors="this.MixinValidation(errors,'num')"></Error_Validation>
+                                    </template>
+                                </q-input>
                                 <q-input v-model="props.row.description"  lazy-rules type="textarea" outlined label="توضیحات" color="primary" class="q-my-xs" :error="this.MixinValidationCheck(errors,'description')">
                                     <template v-slot:error>
                                         <Error_Validation :errors="this.MixinValidation(errors,'description')"></Error_Validation>
@@ -214,12 +233,27 @@ export default {
                 {
                     name:'name',
                     required: true,
-                    label: 'عنوان برند',
+                    label: 'نام',
                     align: 'left',
                     field: row => row.name,
                     sortable: true
                 },
-
+                {
+                    name:'num',
+                    required: true,
+                    label: 'ترتیب نمایش',
+                    align: 'left',
+                    field: row => row.num,
+                    sortable: true
+                },
+                {
+                    name:'implements_count',
+                    required: true,
+                    label: 'تعداد ادوات',
+                    align: 'left',
+                    field: row => row.implements_count,
+                    sortable: true
+                },
                 {
                     name:'description',
                     required: true,

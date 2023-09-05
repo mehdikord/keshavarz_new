@@ -106,6 +106,7 @@ export default {
             return new Promise((resolve,reject) => {
                 var data = new  FormData();
                 if (item.name){data.append('name',item.name)};
+                if (item.num){data.append('num',item.num)};
                 if (item.image){data.append('image',item.image,item.image.name)};
                 if (item.description){data.append('description',item.description)};
                 axios.post('implements/categories',data,{headers: {'Content-Type': 'multipart/form-data'}}).then((result) => {

@@ -28,6 +28,15 @@ interface ImplementInterface
     public function categories_update_image($request,$item);
 
 
+    //Forms
+    public function forms_index();
+
+    public function forms_store($request);
+
+    public function forms_update($request,$item);
+
+    public function forms_delete($item);
+
     //Front
     public function implement_index();
 
