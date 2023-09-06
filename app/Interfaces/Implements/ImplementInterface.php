@@ -15,6 +15,12 @@ interface ImplementInterface
 
     public function delete($item);
 
+    public function forms($request,$item);
+
+    public function requests_index();
+
+    public function requests_delete($item);
+
 
     //Categories
     public function categories_index();

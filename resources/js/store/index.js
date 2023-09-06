@@ -10,6 +10,8 @@ import profiles from "./modules/profiles/Profiles";
 import plans from "./modules/plans/Plans";
 import search from "./modules/search/Search";
 import forms from "./modules/forms/forms";
+import slider from "./modules/slider/slider";
+import news from "./modules/news/news";
 const store = createStore({
     state(){
         return {
@@ -31,6 +33,8 @@ const store = createStore({
         plans,
         search,
         forms,
+        slider,
+        news,
 
     },
 

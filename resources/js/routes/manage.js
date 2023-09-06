@@ -10,6 +10,10 @@ import Manage_Categories from "../manage/pages/categories/Manage_Categories.vue"
 import Manage_Products from "../manage/pages/products/Manage_Products.vue";
 import Manage_Implement_Categories from "@/manage/pages/implements/Manage_Implement_Categories.vue";
 import Manage_Implements from "@/manage/pages/implements/Manage_Implements.vue";
+import Manage_Implement_Forms from "../manage/pages/implements/Manage_Implement_Forms.vue";
+import Manage_Slider from "../manage/pages/slider/Manage_Slider.vue";
+import Manage_Contacts from "../manage/pages/contacts/Manage_Contacts.vue";
+import Manage_News from "../manage/pages/news/Manage_News.vue";
 
 const routes = [
 
@@ -46,7 +50,7 @@ const routes = [
     {
         path : "/management/implements/forms",
         name : "implements_forms",
-        component : Manage_Brands,
+        component : Manage_Implement_Forms,
         meta : { title : "فرم های ادوات"}
     },
     {
@@ -74,8 +78,24 @@ const routes = [
         component : Manage_Users_Members,
         meta : { title : "مشتریان فروشگاه"}
     },
-
-
+    {
+        path : "/management/news",
+        name : "news",
+        component : Manage_News,
+        meta : { title : " خبر ها"}
+    },
+    {
+        path : "/management/slider",
+        name : "slider",
+        component : Manage_Slider,
+        meta : { title : " تنظیمات اسلایدر"}
+    },
+    {
+        path : "/management/contacts",
+        name : "contacts",
+        component : Manage_Contacts,
+        meta : { title : " پیام ها"}
+    },
     {
         path : "/management/faqs",
         name : "faqs",

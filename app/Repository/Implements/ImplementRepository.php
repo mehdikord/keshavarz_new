@@ -7,13 +7,14 @@ use App\Models\Faq;
 use App\Models\Form;
 use App\Models\Implement;
 use App\Models\Implement_Category;
+use App\Models\Implement_Request;
 use App\Services\MediaServices\MediaService;
 
 class ImplementRepository implements ImplementInterface
 {
     public function index()
     {
-        return response_success(Implement::with('category')->withCount('search')->withCount('users')->orderByDesc('id')->get());
+        return response_success(Implement::with('category')->with('forms')->withCount('search')->withCount('users')->orderByDesc('id')->get());
     }
 
     public function store($request)
@@ -59,11 +60,25 @@ class ImplementRepository implements ImplementInterface
 
     }
 
+    public function forms($request,$item)
+    {
+        $item->forms()->delete();
+        if (is_array($request->forms)){
+            foreach ($request->forms as $form){
+                $item->forms()->create([
+                    'form_id' => $form,
+                ]);
+            }
+        }
+        return response_success(true,'item forms updated');
+    }
+
 
     public function categories_index()
     {
         return response_success(Implement_Category::orderBy('num','ASC')->withCount('implements')->get());
     }
+
     public function categories_store($request)
     {
         $image=null;
@@ -106,6 +121,7 @@ class ImplementRepository implements ImplementInterface
     }
 
 
+
     public function forms_index()
     {
         return response_success(Form::orderByDesc('id')->get());
@@ -130,10 +146,27 @@ class ImplementRepository implements ImplementInterface
 
     public function forms_delete($item)
     {
+        $item->implements()->delete();
         $item->delete();
         return response_success(true,'item deleted success');
 
     }
+
+    public function requests_index()
+    {
+        return response_success(Implement_Request::with('user')->orderByDesc('id')->get());
+
+    }
+
+    public function requests_delete($item)
+    {
+        $item->delete();
+        return response_success(true,'item deleted success');
+    }
+
+
+
+
 
 
 

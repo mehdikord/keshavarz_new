@@ -14,52 +14,15 @@
                         <div class="text-h6">افزودن آیتم جدید</div>
                     </q-card-section>
                     <q-card-section >
-                        <q-input v-model="add.name"  lazy-rules type="text" outlined label="نام دستگاه" color="primary" class="q-my-xs" :error="this.MixinValidationCheck(errors,'name')">
+                        <q-input v-model="add.title"  lazy-rules type="text" outlined label="عنوان خبر" color="primary" class="q-my-xs" :error="this.MixinValidationCheck(errors,'title')">
                             <template v-slot:error>
-                                <Error_Validation :errors="this.MixinValidation(errors,'name')"></Error_Validation>
+                                <Error_Validation :errors="this.MixinValidation(errors,'title')"></Error_Validation>
                             </template>
                         </q-input>
 
-                        <q-select
-                                outlined
-                                color="primary"
-                                class="q-my-xs q-mb-lg"
-                                transition-show="flip-up"
-                                transition-hide="flip-down"
-                                v-model="add.implement_category_id"
-                                use-input
-                                label="انتخاب دسته بندی ادوات"
-                                :options="categories"
-                                emit-value
-                                map-options
-                                @filter="Filter_Select_Category"
-                                :loading="loading_select_category"
-                                behavior="menu"
-                            >
-                                <template v-slot:no-option>
-                                    <q-item>
-                                        <q-item-section class="text-red">
-                                            گزینه ای یافت نشد
-                                        </q-item-section>
-                                    </q-item>
-                                </template>
-                                <template v-slot:option="scope">
-                                    <q-item v-bind="scope.itemProps">
-                                        <q-item-section avatar>
-                                            <Global_Show_Image :image="scope.opt.image"></Global_Show_Image>
-                                        </q-item-section>
-                                        <q-item-section>
-                                            <q-item-label>{{ scope.opt.label }}</q-item-label>
-                                        </q-item-section>
-                                    </q-item>
-                                </template>
-                                <template v-slot:error>
-                                </template>
-                            </q-select>
-
-                        <q-input v-model="add.price_type"  lazy-rules type="text" outlined label="نوع قیمت دهی" color="primary" class="q-my-xs" :error="this.MixinValidationCheck(errors,'price_type')">
+                        <q-input v-model="add.link"  lazy-rules type="text" outlined label="لینک منبع" color="primary" class="q-my-xs" :error="this.MixinValidationCheck(errors,'link')">
                             <template v-slot:error>
-                                <Error_Validation :errors="this.MixinValidation(errors,'price_type')"></Error_Validation>
+                                <Error_Validation :errors="this.MixinValidation(errors,'link')"></Error_Validation>
                             </template>
                         </q-input>
                         <q-file class="q-mb-md" outlined bottom-slots v-model="add.image" label="انتخاب تصویر" counter>
@@ -70,12 +33,12 @@
                                 <q-icon name="mdi-close" @click.stop.prevent="add.image = null" class="cursor-pointer" />
                             </template>
                         </q-file>
-
-                        <q-input v-model="add.description"  lazy-rules type="textarea" outlined label="توضیحات" color="primary" class="q-my-xs" :error="this.MixinValidationCheck(errors,'description')">
+                        <q-input v-model="add.description"  lazy-rules type="textarea" outlined label="توضیحات کوتاه" color="primary" class="q-my-xs" :error="this.MixinValidationCheck(errors,'description')">
                             <template v-slot:error>
                                 <Error_Validation :errors="this.MixinValidation(errors,'description')"></Error_Validation>
                             </template>
                         </q-input>
+
 
                     </q-card-section>
 
@@ -85,7 +48,7 @@
                     </q-card-actions>
                 </q-card>
             </q-dialog>
-            <strong class="font-16">لیست همه ادوات در سیستم</strong>
+            <strong class="font-16">لیست همه خبر ها</strong>
         </q-card-section>
 
         <q-card-section>
@@ -97,38 +60,47 @@
                 color="indigo"
                 table-header-class="text-indigo"
                 :loading="loading_get"
-                separator="cell"
                 :pagination="{rowsPerPage:30}"
+
             >
                 <template v-slot:loading>
                     <Global_Loading></Global_Loading>
                 </template>
-
                 <template v-slot:body-cell-image="props">
                     <q-td :props="props">
                         <Global_Show_Image :image="props.row.image"></Global_Show_Image>
                     </q-td>
                 </template>
-                <template v-slot:body-cell-category="props">
+                <template v-slot:body-cell-description="props">
                     <q-td :props="props">
-                        <strong v-if="props.row.category" class="text-indigo">{{props.row.category.name}}</strong>
+                        <q-btn color="deep-purple" @click="dialog_description[props.row.id] = true">مشاهده</q-btn>
+                        <q-dialog
+                            v-model="dialog_description[props.row.id]"
+                            transition-show="scale"
+                            transition-hide="scale"
+                            position="top"
+                        >
+                            <q-card style="max-width: 700px;width: 700px">
+                                <q-card-section class="bg-deep-purple text-white">
+                                    <div class="text-h6">توضیحات : {{props.row.title}}</div>
+                                </q-card-section>
+                                <q-card-section >
+                                    <p class="text-justify">
+                                        {{props.row.description}}
+                                    </p>
+                                </q-card-section>
+
+                                <q-card-actions align="right">
+                                    <q-btn  label="بستن" color="red" v-close-popup />
+                                </q-card-actions>
+                            </q-card>
+                        </q-dialog>
+
                     </q-td>
                 </template>
-                <template v-slot:body-cell-users_count="props">
-                    <q-td :props="props">
-                        <q-chip color="green-8" text-color="white" >{{props.row.users_count}}</q-chip>
-                    </q-td>
-                </template>
-                <template v-slot:body-cell-search_count="props">
-                    <q-td :props="props">
-                        <q-chip color="orange-10" text-color="white" >{{props.row.search_count}}</q-chip>
-                    </q-td>
-                </template>
+
                 <template v-slot:body-cell-tools="props">
                     <q-td :props="props">
-                        <q-btn  @click="dialog_forms[props.row.id] = true;CreateEditFrom(props.row)"  glossy color="positive" size="sm" icon="mdi-menu" class="q-mx-xs">
-                            <q-tooltip class="bg-grey-9">مدیریت فرم ها</q-tooltip>
-                        </q-btn>
                         <q-btn @click="dialog_edit[props.row.id] = true;errors=[]" glossy color="primary" size="sm" icon="mdi-pen" class="q-mx-xs">
                             <q-tooltip class="bg-grey-9">ویرایش آیتم</q-tooltip>
                         </q-btn>
@@ -139,7 +111,6 @@
                             <q-tooltip class="bg-grey-9">حذف آیتم</q-tooltip>
                         </q-btn>
                     </q-td>
-
                     <q-dialog
                         v-model="dialog_edit[props.row.id]"
                         transition-show="scale"
@@ -152,54 +123,17 @@
                             </q-card-section>
                             <q-card-section >
 
-                                <q-input v-model="props.row.name"  lazy-rules type="text" outlined label="عنوان برند" color="primary" class="q-my-xs" :error="this.MixinValidationCheck(errors,'name')">
+                                <q-input v-model="props.row.title"  lazy-rules type="text" outlined label="عنوان خبر" color="primary" class="q-my-xs" :error="this.MixinValidationCheck(errors,'title')">
                                     <template v-slot:error>
-                                        <Error_Validation :errors="this.MixinValidation(errors,'name')"></Error_Validation>
+                                        <Error_Validation :errors="this.MixinValidation(errors,'title')"></Error_Validation>
                                     </template>
                                 </q-input>
-                                <q-select
-                                    outlined
-                                    color="primary"
-                                    class="q-my-xs q-mb-lg"
-                                    transition-show="flip-up"
-                                    transition-hide="flip-down"
-                                    v-model="props.row.implement_category_id"
-                                    use-input
-                                    label="انتخاب دسته بندی ادوات"
-                                    :options="categories"
-                                    emit-value
-                                    map-options
-                                    @filter="Filter_Select_Category"
-                                    :loading="loading_select_category"
-                                    behavior="menu"
-                                >
-                                    <template v-slot:no-option>
-                                        <q-item>
-                                            <q-item-section class="text-red">
-                                                گزینه ای یافت نشد
-                                            </q-item-section>
-                                        </q-item>
-                                    </template>
-                                    <template v-slot:option="scope">
-                                        <q-item v-bind="scope.itemProps">
-                                            <q-item-section avatar>
-                                                <Global_Show_Image :image="scope.opt.image"></Global_Show_Image>
-                                            </q-item-section>
-                                            <q-item-section>
-                                                <q-item-label>{{ scope.opt.label }}</q-item-label>
-                                            </q-item-section>
-                                        </q-item>
-                                    </template>
+                                <q-input v-model="props.row.link"  lazy-rules type="text" outlined label="لینک منبع" color="primary" class="q-my-xs" :error="this.MixinValidationCheck(errors,'link')">
                                     <template v-slot:error>
-                                    </template>
-                                </q-select>
-                                <q-input v-model="props.row.price_type"  lazy-rules type="text" outlined label="نوع قیمت دهی" color="primary" class="q-my-xs" :error="this.MixinValidationCheck(errors,'price_type')">
-                                    <template v-slot:error>
-                                        <Error_Validation :errors="this.MixinValidation(errors,'price_type')"></Error_Validation>
+                                        <Error_Validation :errors="this.MixinValidation(errors,'link')"></Error_Validation>
                                     </template>
                                 </q-input>
-
-                                <q-input v-model="props.row.description"  lazy-rules type="textarea" outlined label="توضیحات" color="primary" class="q-my-xs" :error="this.MixinValidationCheck(errors,'description')">
+                                <q-input v-model="props.row.description"  lazy-rules type="textarea" outlined label="توضیحات کوتاه" color="primary" class="q-my-xs" :error="this.MixinValidationCheck(errors,'description')">
                                     <template v-slot:error>
                                         <Error_Validation :errors="this.MixinValidation(errors,'description')"></Error_Validation>
                                     </template>
@@ -214,41 +148,6 @@
                         </q-card>
 
                     </q-dialog>
-                    <q-dialog
-                        v-model="dialog_forms[props.row.id]"
-                        transition-show="scale"
-                        transition-hide="scale"
-                        position="top"
-                    >
-                        <q-card style="max-width: 700px;width: 700px">
-                            <q-card-section class="bg-primary text-white">
-                                <div class="text-h6">مدیریت فرم ها : {{props.row.name}}</div>
-                            </q-card-section>
-                            <q-card-section>
-                                <div class="q-mt-sm q-mb-md text-red">
-                                    <strong>فرم های مربوط به این دستگاه را انتخاب کنید</strong>
-                                </div>
-                                <q-item v-for="form in forms" v-ripple>
-                                    <q-item-section side top>
-                                        <q-checkbox color="green-7" :val="form.id" v-model="edit_forms[props.row.id]" />
-                                    </q-item-section>
-
-                                    <q-item-section>
-                                        <q-item-label>{{form.name}}</q-item-label>
-
-                                    </q-item-section>
-                                </q-item>
-
-                            </q-card-section>
-                            <q-card-actions align="right">
-                                <q-btn label="بستن" color="red" v-close-popup />
-                                <q-btn @click="UpdateForm(props.row)" :loading="loading_add" label="ویرایش فرم ها" color="positive"/>
-
-                            </q-card-actions>
-                        </q-card>
-
-                    </q-dialog>
-
                     <q-dialog
                         v-model="dialog_edit_image[props.row.id]"
                         transition-show="scale"
@@ -305,10 +204,9 @@
 import {mapActions} from "vuex";
 
 export default {
-    name: "Manage_Implements",
+    name: "Manage_News",
     created() {
         this.GetItems();
-        this.GetForms();
 
     },
     data(){
@@ -317,21 +215,16 @@ export default {
             loading_get:true,
             loading_add:false,
             loading_image:false,
-            loading_form:false,
-            loading_select_category:false,
             errors:[],
-            edit_forms:[],
-            forms:[],
+            dialog_description:[],
             dialog_add:false,
             dialog_edit:[],
-            dialog_forms:[],
+            image_edit:[],
             dialog_edit_image:[],
-            categories:[],
             add:{
-                name:null,
-                implement_category_id:null,
-                price_type:null,
+                title:null,
                 image:null,
+                link:null,
                 description:null,
 
             },
@@ -345,7 +238,6 @@ export default {
                     field: row => row.id,
                     sortable: true
                 },
-
                 {
                     name:'image',
                     required: true,
@@ -357,41 +249,25 @@ export default {
                 {
                     name:'name',
                     required: true,
-                    label: 'نام دستگاه',
+                    label: 'عنوان خبر',
                     align: 'left',
-                    field: row => row.name,
+                    field: row => row.title,
                     sortable: true
                 },
                 {
-                    name:'category',
+                    name:'link',
                     required: true,
-                    label: 'دسته بندی',
+                    label: 'لینک منبع',
                     align: 'left',
-                    field: row => row,
+                    field: row => row.link,
                     sortable: true
                 },
                 {
-                    name:'price_type',
+                    name:'description',
                     required: true,
-                    label: 'نوع قیمت دهی',
+                    label: 'توضیحات',
                     align: 'left',
-                    field: row => row.price_type,
-                    sortable: true
-                },
-                {
-                    name:'users_count',
-                    required: true,
-                    label: 'تعداد استفاده',
-                    align: 'left',
-                    field: row => row.users_count,
-                    sortable: true
-                },
-                {
-                    name:'search_count',
-                    required: true,
-                    label: 'تعداد جستجو',
-                    align: 'left',
-                    field: row => row.search_count,
+                    field: row => row.description,
                     sortable: true
                 },
                 {
@@ -406,35 +282,25 @@ export default {
     },
     methods:{
         ...mapActions([
-            "ManageImplementsIndex",
-            "ManageImplementsStore",
-            "ManageImplementsDelete",
-            "ManageImplementsDeleteImage",
-            "ManageImplementsEdit",
-            "ManageImplementsEditImage",
-            "ManageImplementsCategoriesSelectIndex",
-            "ManageImplementsForms",
-            "FormsIndex"
+            "NewsIndex",
+            "NewsStore",
+            "NewsDelete",
+            "NewsDeleteImage",
+            "NewsEdit",
+            "NewsEditImage"
 
         ]),
         GetItems(){
-            this.ManageImplementsIndex().then(res => {
+            this.NewsIndex().then(res => {
                 this.items = res.data.result;
                 this.loading_get=false;
             }).catch(error => {
                 this.NotifyServerError();
             });
         },
-        GetForms(){
-            this.FormsIndex().then(res => {
-                this.forms = res.data.result;
-            }).catch(error => {
-                this.NotifyServerError();
-            });
-        },
         AddItem(){
             this.loading_add=true;
-            this.ManageImplementsStore(this.add).then(res => {
+            this.NewsStore(this.add).then(res => {
                 this.items.unshift(res.data.result);
                 this.loading_add=false;
                 this.dialog_add=false;
@@ -450,7 +316,7 @@ export default {
         },
         EditItem(item){
             this.loading_add=true;
-            this.ManageImplementsEdit(item).then(res => {
+            this.NewsEdit(item).then(res => {
                 this.loading_add=false;
                 this.items = this.items.filter(item_get =>{
                     if (item_get.id === item.id){
@@ -470,7 +336,7 @@ export default {
         },
         EditImage(id){
             this.loading_image=true;
-            this.ManageImplementsEditImage({id:id,image:this.edit_image[id]}).then(res => {
+            this.NewsEditImage({id:id,image:this.edit_image[id]}).then(res => {
                 this.items = this.items.filter(item_get =>{
                     if (item_get.id === id){
                         item_get.image=res.data.result.image
@@ -489,20 +355,6 @@ export default {
                 return  this.NotifyServerError();
             })
         },
-        UpdateForm(item){
-            this.loading_form=true;
-            let data = {id:item.id,forms:this.edit_forms[item.id]};
-            this.ManageImplementsForms(data).then(res =>{
-                this.GetItems();
-                this.loading_form=false;
-                this.NotifySuccess("لیست فرم ها باموفقیت بروز رسانی شد");
-            }).catch(error => {
-                this.loading_form=false;
-                return  this.NotifyServerError();
-
-            })
-
-        },
         DeleteItem (id) {
             this.$q.dialog({
                 title: 'هشدار !',
@@ -518,7 +370,7 @@ export default {
                 },
                 persistent: true
             }).onOk(() => {
-                this.ManageImplementsDelete(id).then(res => {
+                this.NewsDelete(id).then(res => {
                     this.items = this.items.filter(item =>{
                         return item.id !== id;
                     })
@@ -534,7 +386,7 @@ export default {
             })
         },
         DeleteItemImage (id) {
-            this.ManageImplementsDeleteImage(id).then( res => {
+            this.NewsDeleteImage(id).then( res => {
                 this.items = this.items.filter(item_get =>{
                     if (item_get.id === id){
                         item_get.image=null
@@ -549,35 +401,8 @@ export default {
 
             })
         },
-        Get_Categories(){
-            this.loading_select_category=true;
-            this.ManageImplementsCategoriesSelectIndex().then(res => {
-                this.categories = res;
-                this.loading_select_category=false;
-            }).catch(error => {
-                this.loading_select_category=false;
-                return  this.NotifyServerError();
-            })
-        },
-        Filter_Select_Category (val, update, abort) {
-            update(() => {
-                if (val){
-                    this.categories =  this.categories.filter(item => {
-                        return item.label !== null && item.label.match(val)
-                    })
-                }else {
-                    this.Get_Categories();
-                }
-            })
-        },
-        CreateEditFrom(item){
-            this.edit_forms[item.id]=[]
-            item.forms.forEach(form => {
-                this.edit_forms[item.id].push(form.form_id);
-            })
-        }
 
-    },
+    }
 }
 </script>
 

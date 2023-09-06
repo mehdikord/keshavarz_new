@@ -126,6 +126,37 @@ export default {
                 })
             } )
         },
+
+        ManageImplementsRequestsIndex(){
+            return new Promise((resolve,reject) => {
+                axios.get('implements/requests').then((result) => {
+                    resolve(result);
+                }).catch(error => {
+                    reject(error);
+                })
+            } )
+        },
+        ManageImplementsRequestsDelete(_,item){
+            return new Promise((resolve,reject) => {
+                axios.delete('implements/requests'+item).then((result) => {
+                    resolve(result);
+                }).catch(error => {
+                    reject(error);
+                })
+            } )
+        },
+
+
+        ManageImplementsForms(_,item){
+            return new Promise((resolve,reject) => {
+
+                axios.post('implements/form/'+item.id,{forms:item.forms}).then((result) => {
+                    resolve(result);
+                }).catch(error => {
+                    reject(error);
+                })
+            } )
+        },
         ManageImplementsCategoriesSelectIndex(){
             return new Promise((resolve,reject) => {
                 axios.get('implements/categories').then((result) => {

@@ -1,20 +1,19 @@
 <?php
-namespace App\Interfaces\News;
+namespace App\Interfaces\Slider;
 
-interface NewsInterface
+interface  SliderInterface
 {
 
     public function index();
 
-    public function latest();
-
     public function store($request);
 
     public function update($request,$item);
-
     public function update_image($request,$item);
 
     public function delete($item);
+
+    public function front_index();
 
 
 

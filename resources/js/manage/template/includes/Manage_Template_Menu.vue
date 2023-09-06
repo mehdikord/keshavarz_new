@@ -124,6 +124,30 @@ export default {
                     ]
                 },
                 {
+                    title : "خبر ها",
+                    link : "news",
+                    icon  : "mdi-newspaper",
+                    subs:[
+
+                    ]
+                },
+                {
+                    title : "تنظیمات اسلایدر",
+                    link : "slider",
+                    icon  : "mdi-image",
+                    subs:[
+
+                    ]
+                },
+                {
+                    title : "پیام های ارسالی",
+                    link : "contacts",
+                    icon  : "mdi-email",
+                    subs:[
+
+                    ]
+                },
+                {
                     title : "سوالات متداول",
                     link : "faqs",
                     icon  : "mdi-help",

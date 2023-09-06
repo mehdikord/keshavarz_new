@@ -4,6 +4,7 @@ namespace App\Repository\News;
 
 use App\Interfaces\News\NewsInterface;
 use App\Models\News;
+use App\Services\MediaServices\MediaService;
 
 class NewsRepository implements NewsInterface
 {
@@ -14,10 +15,16 @@ class NewsRepository implements NewsInterface
 
     public function store($request)
     {
-        $item = Faq::create([
+        $image=null;
+        if ($request->file('image')){
+            $image = (new MediaService())->store_image($request->file('image'),'news');
+        }
+
+        $item = News::create([
             'title' => $request->title,
-            'question' => $request->question,
-            'answer' => $request->answer,
+            'image' => $image,
+            'link' => $request->link,
+            'description' => $request->description,
         ]);
         return response_success($item);
     }
@@ -26,8 +33,8 @@ class NewsRepository implements NewsInterface
     {
         $item->update([
             'title' => $request->title,
-            'question' => $request->question,
-            'answer' => $request->answer,
+            'link' => $request->link,
+            'description' => $request->description,
         ]);
         return response_success($item);
     }
@@ -38,6 +45,16 @@ class NewsRepository implements NewsInterface
         return response_success(true,'item deleted success');
 
     }
+
+    public function update_image($request,$item)
+    {
+        if ((new MediaService)->update_model_image($request,$item,'image','news')){
+
+            return response_success($item);
+        }
+        return response_custom_error('image file update error');
+    }
+
 
     public function latest()
     {

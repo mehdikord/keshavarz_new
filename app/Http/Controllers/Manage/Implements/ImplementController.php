@@ -7,6 +7,8 @@ use App\Http\Requests\Implements\ImplementsStoreRequest;
 use App\Http\Requests\Single\SingleImageUpdateRequest;
 use App\Interfaces\Implements\ImplementInterface;
 use App\Models\Implement;
+use App\Models\Implement_Request;
+use Illuminate\Http\Request;
 
 class ImplementController extends Controller
 {
@@ -41,4 +43,21 @@ class ImplementController extends Controller
     {
         return $this->repository->categories_update_image($request,$implement);
     }
+
+    public function forms(Implement $implement,Request $request)
+    {
+        return $this->repository->forms($request,$implement);
+
+    }
+
+    public function requests_index()
+    {
+        return $this->repository->requests_index();
+    }
+
+    public function requests_delete(Implement_Request $implement)
+    {
+        return $this->repository->requests_delete($implement);
+    }
+
 }
