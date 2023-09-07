@@ -78,6 +78,31 @@ Route::middleware('auth:admin')->group(function (){
 
     });
 
+    //Plans
+    Route::group(['prefix' => 'plans','as'=>'plans.'],function (){
+
+        Route::group(['prefix' => 'providers','as'=>'providers.'],function (){
+
+            Route::get('',[\App\Http\Controllers\Manage\Plans\PlanController::class,'provider_index'])->name('index');
+            Route::post('',[\App\Http\Controllers\Manage\Plans\PlanController::class,'provider_store'])->name('store');
+            Route::post('{plan}',[\App\Http\Controllers\Manage\Plans\PlanController::class,'provider_update'])->name('update');
+            Route::delete('{plan}',[\App\Http\Controllers\Manage\Plans\PlanController::class,'provider_delete'])->name('delete');
+            Route::post('image/{plan}',[\App\Http\Controllers\Manage\Plans\PlanController::class,'provider_update_image'])->name('update_image');
+            Route::get('activation/{plan}',[\App\Http\Controllers\Manage\Plans\PlanController::class,'provider_activation'])->name('activation');
+
+        });
+
+        Route::group(['prefix' => 'customers','as'=>'customers.'],function (){
+
+            Route::get('',[\App\Http\Controllers\Manage\Plans\PlanController::class,'customer_index'])->name('index');
+            Route::post('',[\App\Http\Controllers\Manage\Plans\PlanController::class,'customer_store'])->name('store');
+            Route::post('{plan}',[\App\Http\Controllers\Manage\Plans\PlanController::class,'customer_update'])->name('update');
+            Route::delete('{plan}',[\App\Http\Controllers\Manage\Plans\PlanController::class,'customer_delete'])->name('delete');
+            Route::post('image/{plan}',[\App\Http\Controllers\Manage\Plans\PlanController::class,'customer_update_image'])->name('update_image');
+        });
+
+    });
+
     //Faqs
     Route::group(['prefix' => 'faqs','as' => 'faqs.'],function (){
         Route::get('',[\App\Http\Controllers\Manage\Faqs\FaqsController::class,'index'])->name('index');
@@ -117,6 +142,16 @@ Route::middleware('auth:admin')->group(function (){
         Route::delete('{contact}',[\App\Http\Controllers\Manage\Contacts\ContactController::class,'delete'])->name('delete');
     });
 
+    //Searches
+    Route::group(['prefix' => 'searches','as' => 'searches.'],function (){
+        Route::get('',[\App\Http\Controllers\Manage\Searches\SearchController::class,'index'])->name('index');
+        Route::delete('{search}',[\App\Http\Controllers\Manage\Searches\SearchController::class,'delete'])->name('delete');
+    });
+
+    //Searches
+    Route::group(['prefix' => 'invoices','as' => 'invoices.'],function (){
+        Route::get('',[\App\Http\Controllers\Manage\Invoices\InvoiceController::class,'index'])->name('index');
+    });
 
     //Categories
     Route::group(['prefix' => 'categories','as' => 'categories.'],function (){

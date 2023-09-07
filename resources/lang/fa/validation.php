@@ -195,6 +195,13 @@ return [
         'city_id' => 'شهر',
         'national_code' => 'کد ملی',
         'image' => 'تصویر انتخاب شده',
+        'price' => 'قیمت',
+        'sale' => 'قیمت با تخفیف',
+        'is_free' => 'رایگان',
+        'is_active' => 'وضعیت',
+        'customer_plan_id' => 'اشتراک خدمات گیرنده',
+        'provider_plan_id' => 'اشتراک خدمات دهنده',
+        'invoice_id' => 'فاکتور'
     ],
 
 ];

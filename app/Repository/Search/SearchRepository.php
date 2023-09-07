@@ -1,10 +1,25 @@
 <?php
 namespace App\Repository\Search;
 use App\Interfaces\Search\SearchInterface;
+use App\Models\Search;
 use App\Models\User;
 
 class SearchRepository implements SearchInterface
 {
+    public function index()
+    {
+        return response_success(Search::with('user')->with('implement')->get());
+    }
+
+    public function delete($item)
+    {
+        $item->delete();
+        return response_success(true,'item deleted success');
+    }
+
+
+
+
     public function search_providers($request)
     {
         $users = User::query();

@@ -4,7 +4,7 @@
         <q-card-section class="bg-blue-grey-14 text-white q-pb-lg">
 
 
-            <strong class="font-16">لیست ادوات پیشنهاد شده کاربران</strong>
+            <strong class="font-16">لیست جستجو های کاربران</strong>
         </q-card-section>
 
         <q-card-section>
@@ -23,56 +23,35 @@
                 <template v-slot:loading>
                     <Global_Loading></Global_Loading>
                 </template>
-
+                <template v-slot:body-cell-user_image="props">
+                    <q-td :props="props">
+                        <Global_Show_Image :image="props.row.user.profile"></Global_Show_Image>
+                    </q-td>
+                </template>
                 <template v-slot:body-cell-user="props">
                     <q-td :props="props">
-                        <strong class="text-indigo">
+                        <strong class="text-purple-9">
                             {{props.row.user.name}}
                         </strong>
                     </q-td>
                 </template>
-                <template v-slot:body-cell-type="props">
+                <template v-slot:body-cell-implement="props">
                     <q-td :props="props">
                         <strong class="text-red">
-                            {{props.row.type}}
+                            {{props.row.implement.name}}
                         </strong>
                     </q-td>
                 </template>
-                <template v-slot:body-cell-image="props">
+                <template v-slot:body-cell-location="props">
                     <q-td :props="props">
-
-                        <Global_Show_Image :image="props.row.image"></Global_Show_Image>
-
+                        <q-btn color="indigo">مشاهده</q-btn>
                     </q-td>
                 </template>
-
-                <template v-slot:body-cell-description="props">
+                <template v-slot:body-cell-result="props">
                     <q-td :props="props">
-                        <q-btn color="deep-purple" @click="dialog_message[props.row.id] = true">مشاهده توضیحات</q-btn>
-                        <q-dialog
-                            v-model="dialog_message[props.row.id]"
-                            transition-show="scale"
-                            transition-hide="scale"
-                            position="top"
-                        >
-                            <q-card style="max-width: 700px;width: 700px">
-                                <q-card-section class="bg-deep-purple text-white">
-                                    <div class="text-h6">مشاهده توضیحات : {{props.row.name}}</div>
-                                </q-card-section>
-                                <q-card-section >
-                                    <p class="text-justify">
-                                        {{props.row.description}}
-                                    </p>
-                                </q-card-section>
-
-                                <q-card-actions align="right">
-                                    <q-btn  label="بستن" color="red" v-close-popup />
-                                </q-card-actions>
-                            </q-card>
-                        </q-dialog>
+                        <q-chip color="green-7" text-color="white">{{props.row.result}}</q-chip>
                     </q-td>
                 </template>
-
                 <template v-slot:body-cell-tools="props">
                     <q-td :props="props">
                         <q-btn @click="DeleteItem(props.row.id)" glossy color="red-9" size="sm" icon="mdi-delete" class="q-mx-xs">
@@ -118,6 +97,14 @@ export default {
                     sortable: true
                 },
                 {
+                    name:'user_image',
+                    required: true,
+                    label: 'تصویر کاربر',
+                    align: 'left',
+                    field: row => row.user,
+                    sortable: true
+                },
+                {
                     name:'user',
                     required: true,
                     label: 'کاربر',
@@ -126,35 +113,27 @@ export default {
                     sortable: true
                 },
                 {
-                    name:'type',
-                    required: true,
-                    label: 'دسته بندی دستگاه',
-                    align: 'left',
-                    field: row => row.type,
-                    sortable: true
-                },
-                {
-                    name:'name',
+                    name:'implement',
                     required: true,
                     label: 'نام دستگاه',
                     align: 'left',
-                    field: row => row.name,
+                    field: row => row.implement,
                     sortable: true
                 },
                 {
-                    name:'image',
+                    name:'location',
                     required: true,
-                    label: 'تصویر ارسالی',
+                    label: 'لوکیشن',
                     align: 'left',
-                    field: row => row.image,
+                    field: row => row.location,
                     sortable: true
                 },
                 {
-                    name:'description',
+                    name:'result',
                     required: true,
-                    label: 'توضیحات',
+                    label: 'تعداد نتایج',
                     align: 'left',
-                    field: row => row.description,
+                    field: row => row.result,
                     sortable: true
                 },
                 {
@@ -169,12 +148,12 @@ export default {
     },
     methods:{
         ...mapActions([
-            "ManageImplementsRequestsIndex",
-            "ManageImplementsRequestsDelete"
+            "SearchIndex",
+            "SearchDelete"
         ]),
         GetItems(){
 
-            this.ManageImplementsRequestsIndex().then(res => {
+            this.SearchIndex().then(res => {
                 this.items = res.data.result;
                 this.loading_get=false;
             }).catch(error => {
@@ -196,7 +175,7 @@ export default {
                 },
                 persistent: true
             }).onOk(() => {
-                this.ManageImplementsRequestsDelete(id).then(res => {
+                this.SearchDelete(id).then(res => {
                     this.items = this.items.filter(item =>{
                         return item.id !== id;
                     })

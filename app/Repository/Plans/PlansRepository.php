@@ -6,6 +6,7 @@ use App\Interfaces\Plans\PlansInterface;
 use App\Models\Customer_Plan;
 use App\Models\Invoice;
 use App\Models\Provider_Plan;
+use App\Services\MediaServices\MediaService;
 use App\Services\Zarinpal\ZarinpalService;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
@@ -20,18 +21,121 @@ class PlansRepository implements PlansInterface
         $this->zarinpal_service = new ZarinpalService();
     }
 
+
     public function index_customer()
     {
-        return Customer_Plan::OrderByDesc('id')->withCount('invoices')->get();
+        return response_success(Customer_Plan::OrderByDesc('id')->withCount('invoices')->get());
     }
+    public function create_customer($request)
+    {
+
+        $image=null;
+        if ($request->file('image')){
+            $image = (new MediaService())->store_image($request->file('image'),'plans');
+        };
+        $item = Customer_Plan::create([
+            'title' => $request->title,
+            'subtitle' => $request->subtitle,
+            'price' => $request->price,
+            'sale' => $request->sale,
+            'access' => $request->access,
+            'image' => $image,
+            'is_free' => $request->is_free,
+            'is_active' => 1,
+        ]);
+        return response_success($item);
+
+    }
+    public function update_customer($request,$item)
+    {
+
+        $item->update([
+            'title' => $request->title,
+            'subtitle' => $request->subtitle,
+            'price' => $request->price,
+            'sale' => $request->sale,
+            'access' => $request->access,
+            'is_free' => $request->is_free,
+        ]);
+
+        return response_success(Customer_Plan::find($item->id));
+    }
+    public function update_image_customer($request,$item)
+    {
+        if ((new MediaService)->update_model_image($request,$item,'image','plans')){
+
+            return response_success($item);
+        }
+        return response_custom_error('image file update error');
+    }
+    public function delete_customer($item)
+    {
+        $item->delete();
+        return response_success(true,'success');
+    }
+    public function activation_customer($item)
+    {
+        $item->update(['is_active' => !$item->is_active]);
+        return response_success(true,'item activation changed');
+    }
+
 
     public function index_provider()
     {
-        return Provider_Plan::OrderByDesc('id')->withCount('invoices')->get();
+        return response_success(Provider_Plan::OrderByDesc('id')->withCount('invoices')->get());
 
     }
+    public function create_provider($request)
+    {
 
+        $image=null;
+        if ($request->file('image')){
+            $image = (new MediaService())->store_image($request->file('image'),'slider');
+        }
+        $item = Provider_Plan::create([
+            'title' => $request->title,
+            'subtitle' => $request->subtitle,
+            'price' => $request->price,
+            'sale' => $request->sale,
+            'access' => $request->access,
+            'image' => $image,
+            'is_free' => $request->is_free,
+            'is_active' => 1,
+        ]);
+        return response_success($item);
 
+    }
+    public function update_provider($request,$item)
+    {
+        $item->update([
+            'title' => $request->title,
+            'subtitle' => $request->subtitle,
+            'price' => $request->price,
+            'sale' => $request->sale,
+            'access' => $request->access,
+            'is_free' => $request->is_free,
+        ]);
+
+        return response_success(Provider_Plan::find($item->id));
+    }
+    public function update_image_provider($request,$item)
+    {
+        if ((new MediaService)->update_model_image($request,$item,'image','plans')){
+
+            return response_success($item);
+        }
+        return response_custom_error('image file update error');
+    }
+    public function delete_provider($item)
+    {
+        $item->delete();
+        return response_success(true,'success');
+    }
+    public function activation_provider($item)
+    {
+        $item->update(['is_active' => !$item->is_active]);
+        return response_success(true,'item activation changed');
+    }
     public function customer_buy_plan($plan)
     {
         DB::beginTransaction();
@@ -121,21 +225,17 @@ class PlansRepository implements PlansInterface
         return redirect("plans/pay/result?type=failed");
 
     }
-
     public function customer_active()
     {
-
-        return auth()->user()->customer_plan_active();
+        return response_success(auth()->user()->customer_plan_active());
     }
     public function customer_all()
     {
-
-        return auth()->user()->customer_plans()->with('invoice')->get();
+        return response_success(auth()->user()->customer_plans()->with('invoice')->get());
     }
     public function customer_reserved()
     {
-
-        return auth()->user()->customer_plans()->where('reserved',true)->with('invoice')->get();
+        return response_success(auth()->user()->customer_plans()->where('reserved',true)->with('invoice')->get());
     }
     public function provider_buy_plan($plan)
     {
@@ -185,10 +285,10 @@ class PlansRepository implements PlansInterface
                 $invoice->update(['gateway_id' => $pay['Authority'] ]);
                 DB::commit();
                 return response_success($pay['StartPay'],'لینک انتقال به درگاه پرداخت ');
-            }else{
-                DB::rollBack();
-                response_custom_error('مشکلی در فراید خرید بوجود آمده است. لطفا با مدیریت تماس بگیرید ');
             }
+
+            DB::rollBack();
+            response_custom_error('مشکلی در فراید خرید بوجود آمده است. لطفا با مدیریت تماس بگیرید ');
         }
 
     }
@@ -230,19 +330,17 @@ class PlansRepository implements PlansInterface
 
     public function provider_active()
     {
-
-        return auth()->user()->provider_plan_active();
+        return response_success(auth()->user()->provider_plan_active());
     }
 
     public function provider_all()
     {
-
-        return auth()->user()->provider_plans()->with('invoice')->get();
+        return response_success(auth()->user()->provider_plans()->with('invoice')->get());
     }
     public function provider_reserved()
     {
 
-        return auth()->user()->provider_plans()->where('reserved',true)->with('invoice')->get();
+        return response_success(auth()->user()->provider_plans()->where('reserved',true)->with('invoice')->get());
     }
 
     private function new_customer_plan($plan,$invoice){

@@ -43,4 +43,5 @@ class SliderController extends Controller
     {
         return $this->repository->update_image($request,$slider);
     }
+
 }

@@ -138,7 +138,7 @@ export default {
         },
         ManageImplementsRequestsDelete(_,item){
             return new Promise((resolve,reject) => {
-                axios.delete('implements/requests'+item).then((result) => {
+                axios.delete('implements/requests/'+item).then((result) => {
                     resolve(result);
                 }).catch(error => {
                     reject(error);

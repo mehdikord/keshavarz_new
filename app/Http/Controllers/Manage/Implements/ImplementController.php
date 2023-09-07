@@ -55,9 +55,9 @@ class ImplementController extends Controller
         return $this->repository->requests_index();
     }
 
-    public function requests_delete(Implement_Request $implement)
+    public function requests_delete(Implement_Request $request)
     {
-        return $this->repository->requests_delete($implement);
+        return $this->repository->requests_delete($request);
     }
 
 }

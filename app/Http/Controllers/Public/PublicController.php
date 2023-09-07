@@ -27,12 +27,12 @@ class PublicController extends Controller
 
     public function plans_customer()
     {
-        return response_success($this->plan_repository->index_customer());
+        return $this->plan_repository->index_customer();
     }
 
     public function plans_provider()
     {
-        return response_success($this->plan_repository->index_provider());
+        return $this->plan_repository->index_provider();
     }
 
     public function faqs()
