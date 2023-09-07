@@ -89,7 +89,7 @@ export default {
     >
         <q-card style="max-width: 700px;width: 700px">
             <q-card-section class="bg-primary text-white">
-                <div class="text-h6">ویرایش آیتم : {{user.name}}</div>
+                <strong>ویرایش آیتم : {{user.name}}</strong>
             </q-card-section>
             <q-card-section >
 

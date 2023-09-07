@@ -13,7 +13,7 @@
                 <q-card>
 
                     <q-card-section class="bg-deep-orange-9 text-white">
-                        <div class="text-h6">افزودن محصول جدید</div>
+                        <strong>افزودن محصول جدید</strong>
                     </q-card-section>
                     <q-card-section >
                         <div class="row">
@@ -313,7 +313,7 @@
                     >
                         <q-card style="max-width: 700px;width: 700px">
                             <q-card-section class="bg-primary text-white">
-                                <div class="text-h6">ویرایش آیتم : {{props.row.name}}</div>
+                                <strong>ویرایش آیتم : {{props.row.name}}</strong>
                             </q-card-section>
                             <q-card-section >
                                 <div class="row">
@@ -532,7 +532,7 @@
                     >
                         <q-card>
                             <q-card-section class="bg-deep-orange text-white">
-                                <div class="text-h6">ویرایش تصاویر : {{props.row.name}}</div>
+                                <strong>ویرایش تصاویر : {{props.row.name}}</strong>
                             </q-card-section>
                             <q-card-section>
 

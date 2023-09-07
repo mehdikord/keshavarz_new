@@ -8,7 +8,8 @@ class InvoiceRepository implements InvoiceInterface
 {
     public function index()
     {
-        return response_success(Invoice::with('user')->with('implement')->get());
+        return response_success(Invoice::with('user')->with('provider_plan')->with('customer_plan')->get());
+
     }
 
 }

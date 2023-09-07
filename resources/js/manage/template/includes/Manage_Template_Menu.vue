@@ -140,6 +140,14 @@ export default {
                     ]
                 },
                 {
+                    title : "امور مالی",
+                    link : "invoices",
+                    icon  : "mdi-bank",
+                    subs:[
+
+                    ]
+                },
+                {
                     title : "خبر ها",
                     link : "news",
                     icon  : "mdi-newspaper",

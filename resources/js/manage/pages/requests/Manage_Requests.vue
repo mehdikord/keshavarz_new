@@ -57,7 +57,7 @@
                         >
                             <q-card style="max-width: 700px;width: 700px">
                                 <q-card-section class="bg-deep-purple text-white">
-                                    <div class="text-h6">مشاهده توضیحات : {{props.row.name}}</div>
+                                    <strong>مشاهده توضیحات : {{props.row.name}}</strong>
                                 </q-card-section>
                                 <q-card-section >
                                     <p class="text-justify">
