@@ -159,6 +159,11 @@ export default {
                 password:null,
                 password_confirmation:null,
             },
+            add_empty:{
+                name:null,
+                email:null,
+                phone:null,
+            },
             item_columns:[
                 {
                     name:'id',
@@ -225,7 +230,7 @@ export default {
                 this.items.unshift(res.data.result);
                 this.loading_add=false;
                 this.dialog_add=false;
-                this.add=[];
+                this.add=this.add_empty;
                 return this.NotifyCreate();
             }).catch(error => {
                 this.loading_add=false;
