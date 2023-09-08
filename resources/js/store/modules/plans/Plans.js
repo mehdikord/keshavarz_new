@@ -99,7 +99,7 @@ export default {
                 if (item.sale){data.append('sale',item.sale)};
                 if (item.subtitle){data.append('subtitle',item.subtitle)};
                 if (item.access){data.append('access',item.access)};
-                if (item.is_free){data.append('is_free',item.is_free)};
+                data.append('is_free',item.is_free);
                 axios.post('plans/customers',data,{headers: {'Content-Type': 'multipart/form-data'}}).then((result) => {
                     resolve(result);
                 }).catch(error => {
