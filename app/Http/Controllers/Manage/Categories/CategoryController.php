@@ -8,7 +8,6 @@ use App\Http\Requests\Categories\CategoriesUpdateRequest;
 use App\Http\Requests\Single\SingleImageUpdateRequest;
 use App\Interfaces\Categories\CategoriesInterface;
 use App\Models\Category;
-use Illuminate\Http\Request;
 
 class CategoryController extends Controller
 {
@@ -28,6 +27,7 @@ class CategoryController extends Controller
     {
         return $this->repository->store($request);
     }
+
     public function update(Category $category,CategoriesUpdateRequest $request)
     {
         return $this->repository->update($request,$category);

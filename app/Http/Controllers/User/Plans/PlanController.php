@@ -34,17 +34,17 @@ class PlanController extends Controller
 
     public function customer_active()
     {
-        return response_success($this->repository->customer_active());
+        return $this->repository->customer_active();
     }
 
     public function customer_all()
     {
-        return response_success($this->repository->customer_all());
+        return $this->repository->customer_all();
     }
 
     public function customer_reserved()
     {
-        return response_success($this->repository->customer_reserved());
+        return $this->repository->customer_reserved();
     }
 
 
@@ -65,19 +65,19 @@ class PlanController extends Controller
 
     public function provider_active()
     {
-        return response_success($this->repository->provider_active());
+        return $this->repository->provider_active();
 
     }
 
     public function provider_all()
     {
-        return response_success($this->repository->provider_all());
+        return $this->repository->provider_all();
 
     }
 
     public function provider_reserved()
     {
-        return response_success($this->repository->provider_reserved());
+        return $this->repository->provider_reserved();
 
     }
 

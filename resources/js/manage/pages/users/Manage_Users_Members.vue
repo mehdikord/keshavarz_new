@@ -12,15 +12,10 @@
             >
                 <q-card style="max-width: 700px;width: 700px">
                     <q-card-section class="bg-deep-orange-9 text-white">
-                        <div class="text-h6"> افزودن آیتم جدید</div>
+                        <strong> افزودن آیتم جدید</strong>
                     </q-card-section>
                     <q-card-section >
                         <q-input v-model="add.name"  lazy-rules type="text" outlined label="نام" color="primary" class="q-my-xs" :error="this.MixinValidationCheck(errors,'name')">
-                            <template v-slot:error>
-                                <Error_Validation :errors="this.MixinValidation(errors,'email')"></Error_Validation>
-                            </template>
-                        </q-input>
-                        <q-input v-model="add.email"  lazy-rules type="email" outlined label="ایمیل" color="primary" class="q-my-xs" :error="this.MixinValidationCheck(errors,'email')">
                             <template v-slot:error>
                                 <Error_Validation :errors="this.MixinValidation(errors,'email')"></Error_Validation>
                             </template>
@@ -30,16 +25,51 @@
                                 <Error_Validation :errors="this.MixinValidation(errors,'phone')"></Error_Validation>
                             </template>
                         </q-input>
-                        <q-input v-model="add.password" lazy-rules type="password" outlined label="گذرواژه" color="primary" class="q-my-xs" :error="this.MixinValidationCheck(errors,'password')">
+                        <q-input v-model="add.national_code" lazy-rules type="number" outlined label="کد ملی" color="primary" class="q-my-xs" :error="this.MixinValidationCheck(errors,'national_code')">
                             <template v-slot:error>
-                                <Error_Validation :errors="this.MixinValidation(errors,'password')"></Error_Validation>
+                                <Error_Validation :errors="this.MixinValidation(errors,'national_code')"></Error_Validation>
                             </template>
                         </q-input>
-                        <q-input v-model="add.password_confirmation" lazy-rules type="password" outlined label="تکرار گذرواژه" color="primary" class="q-my-xs" :error="this.MixinValidationCheck(errors,'password_confirmation')">
+                        <q-select
+                            outlined
+                            v-model="add.province_id"
+                            class="q-my-xs"
+                            color="primary"
+                            transition-show="flip-up"
+                            transition-hide="flip-down"
+                            use-input
+                            label="انتخاب استان"
+                            :options="provinces_select"
+                            emit-value
+                            map-options
+                            behavior="menu"
+                            @change="GetCities"
+                            :error="this.MixinValidationCheck(errors,'province_id')"
+                        >
+
                             <template v-slot:error>
-                                <Error_Validation :errors="this.MixinValidation(errors,'password_confirmation')"></Error_Validation>
+                                <Error_Validation :errors="this.MixinValidation(errors,'province_id')"></Error_Validation>
                             </template>
-                        </q-input>
+                        </q-select>
+                        <q-select
+                            outlined
+                            class="q-my-xs"
+                            v-model="add.city_id"
+                            color="primary"
+                            transition-show="flip-up"
+                            transition-hide="flip-down"
+                            use-input
+                            label="انتخاب شهر"
+                            :options="cities_select"
+                            emit-value
+                            map-options
+                            behavior="menu"
+                            :error="this.MixinValidationCheck(errors,'city_id')"
+                        >
+                            <template v-slot:error>
+                                <Error_Validation :errors="this.MixinValidation(errors,'city_id')"></Error_Validation>
+                            </template>
+                        </q-select>
 
                     </q-card-section>
 
@@ -62,15 +92,34 @@
                 color="indigo"
                 table-header-class="text-indigo"
                 :loading="loading_get"
+                separator="cell"
+                :pagination="{rowsPerPage:30}"
+
             >
                 <template v-slot:loading>
                     <Global_Loading></Global_Loading>
+                </template>
+                <template v-slot:body-cell-profile="props">
+                    <q-td :props="props">
+                        <Global_Show_Image :image="props.row.profile"></Global_Show_Image>
+                    </q-td>
                 </template>
                 <template v-slot:body-cell-phone="props">
                     <q-td :props="props">
                         <div v-if="props.row.phone">
                             <q-chip color="teal-4" class="font-12">{{props.row.phone}}</q-chip>
                         </div>
+                    </q-td>
+                </template>
+                <template v-slot:body-cell-is_provider="props">
+                    <q-td :props="props" >
+                        <Global_Status :status="props.row.is_provider"></Global_Status>
+                    </q-td>
+                </template>
+                <template v-slot:body-cell-is_customer="props">
+                    <q-td :props="props">
+                        <Global_Status :status="props.row.is_customer"></Global_Status>
+
                     </q-td>
                 </template>
                 <template v-slot:body-cell-is_active="props">
@@ -85,51 +134,19 @@
                         />
                     </q-td>
                 </template>
+                <template v-slot:body-cell-referrals="props">
+                    <q-td :props="props">
+                        <q-chip color="indigo" text-color="white" size="sm">{{props.row.referrals_count}}</q-chip>
+                    </q-td>
+                </template>
                 <template v-slot:body-cell-tools="props">
                     <q-td :props="props">
-                        <q-btn @click="dialog_edit[props.row.id] = true;errors=[]" glossy color="primary" size="sm" icon="mdi-pen" class="q-mx-xs">
-                            <q-tooltip class="bg-grey-9">Edit this item</q-tooltip>
-                        </q-btn>
+                        <member_edit :data="props.row" @UpdateEditedItem="GetItems"></member_edit>
                         <q-btn @click="DeleteItem(props.row.id)" glossy color="red-9" size="sm" icon="mdi-delete" class="q-mx-xs">
                             <q-tooltip class="bg-grey-9">Delete this item</q-tooltip>
                         </q-btn>
                     </q-td>
-                    <q-dialog
-                        v-model="dialog_edit[props.row.id]"
-                        transition-show="scale"
-                        transition-hide="scale"
-                        position="top"
-                    >
-                        <q-card style="max-width: 700px;width: 700px">
-                            <q-card-section class="bg-primary text-white">
-                                <div class="text-h6">Edit item : {{props.row.name}}</div>
-                            </q-card-section>
-                            <q-card-section >
-                                <q-input v-model="props.row.name"  lazy-rules type="text" outlined label="نام" color="primary" class="q-my-xs" :error="this.MixinValidationCheck(errors,'name')">
-                                    <template v-slot:error>
-                                        <Error_Validation :errors="this.MixinValidation(errors,'email')"></Error_Validation>
-                                    </template>
-                                </q-input>
-                                <q-input v-model="props.row.email"  lazy-rules type="email" outlined label="ایمیل" color="primary" class="q-my-xs" :error="this.MixinValidationCheck(errors,'email')">
-                                    <template v-slot:error>
-                                        <Error_Validation :errors="this.MixinValidation(errors,'email')"></Error_Validation>
-                                    </template>
-                                </q-input>
-                                <q-input v-model="props.row.phone" lazy-rules type="number" outlined label="موبایل" color="primary" class="q-my-xs" :error="this.MixinValidationCheck(errors,'phone')">
-                                    <template v-slot:error>
-                                        <Error_Validation :errors="this.MixinValidation(errors,'phone')"></Error_Validation>
-                                    </template>
-                                </q-input>
 
-
-                            </q-card-section>
-
-                            <q-card-actions align="right">
-                                <q-btn  label="بستن" color="red" v-close-popup />
-                                <q-btn @click="EditItem(props.row)" :loading="loading_add" label="ویرایش آیتم" color="indigo"/>
-                            </q-card-actions>
-                        </q-card>
-                    </q-dialog>
 
                 </template>
 
@@ -145,12 +162,16 @@
 
 <script>
 import {mapActions} from "vuex";
+import Manage_Users_Members_Edit from "./Manage_Users_Members_Edit.vue";
 
 export default {
     name: "Manage_Users_Members",
-    created() {
+    components:{
+      'member_edit' : Manage_Users_Members_Edit,
+    },
+    mounted() {
         this.GetItems();
-
+        this.GetProvinces();
     },
     data(){
         return{
@@ -160,20 +181,25 @@ export default {
             errors:[],
             dialog_add:false,
             dialog_edit:[],
+            provinces:[],
+            provinces_select:[],
+            cities_select:[],
             add:{
                 name:null,
-                email:null,
+                province_id:null,
+                city_id:null,
+                national_code:null,
                 phone:null,
-                password:null,
-                password_confirmation:null,
+
             },
             item_columns:[
+
                 {
-                    name:'id',
+                    name:'profile',
                     required: true,
-                    label: 'ID',
+                    label: 'تصویر',
                     align: 'left',
-                    field: row => row.id,
+                    field: row => row.profile,
                     sortable: true
                 },
                 {
@@ -184,14 +210,7 @@ export default {
                     field: row => row.name,
                     sortable: true
                 },
-                {
-                    name:'email',
-                    required: true,
-                    label: 'ایمیل',
-                    align: 'left',
-                    field: row => row.email,
-                    sortable: true
-                },
+
                 {
                     name:'phone',
                     required: true,
@@ -201,11 +220,36 @@ export default {
                     sortable: true
                 },
                 {
+                    name:'is_provider',
+                    required: true,
+                    label: 'خدمات دهنده',
+                    align: 'left',
+                    field: row => row.is_provider,
+                    sortable: true
+                },
+                {
+                    name:'is_customer',
+                    required: true,
+                    label: 'خدمات گیرنده',
+                    align: 'left',
+                    field: row => row.is_customer,
+                    sortable: true
+                },
+
+                {
                     name:'is_active',
                     required: true,
                     label: 'وضعیت حساب',
                     align: 'left',
                     field: row => row.is_active,
+                    sortable: true
+                },
+                {
+                    name:'referrals',
+                    required: true,
+                    label: 'زیر مجموعه',
+                    align: 'left',
+                    field: row => row.referrals_count,
                     sortable: true
                 },
                 {
@@ -226,6 +270,14 @@ export default {
             "UserMembersDChangeStatus"
 
         ]),
+        GetProvinces(){
+            axios.get('helpers/provinces').then(res =>{
+                this.provinces = res.data.result;
+                this.provinces.forEach(province => {
+                    this.provinces_select.push({label : province.name , value : province.id})
+                })
+            })
+        },
         GetItems(){
 
             this.UserMembersIndex().then(res => {
@@ -252,27 +304,7 @@ export default {
 
             })
         },
-        EditItem(item){
-            this.loading_add=true;
-            this.UserMembersEdit(item).then(res => {
-                this.loading_add=false;
-                this.items = this.items.filter(item_get =>{
-                    if (item_get.id === item.id){
-                        item_get=res.data.result
-                    }
-                    return item_get;
-                })
-                this.dialog_edit[item.id]=false;
-                return this.NotifyUpdate();
-            }).catch(error => {
-                this.loading_add=false;
-                if (error.response.status === 422) {
-                    return this.errors = error.response.data
-                }
-                return  this.NotifyServerError();
 
-            })
-        },
         DeleteItem (id) {
             this.$q.dialog({
                 title: 'هشدار !',
@@ -309,7 +341,26 @@ export default {
             }).catch(error => {
                 return this.NotifyServerError();
             })
-        }
+        },
+
+
+    },
+    computed:{
+        GetCities(){
+            if (this.add.province_id){
+                let cities;
+                this.provinces.forEach(province =>{
+                    if (province.id === this.add.province_id){
+                        cities = province.cities;
+                    }
+                })
+                this.cities_select=[];
+                cities.forEach(city => {
+                    this.cities_select.push({label : city.name , value : city.id})
+                })
+            }
+        },
+
 
     }
 }

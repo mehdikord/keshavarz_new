@@ -27,6 +27,7 @@ export default {
             this.loading=true;
             this.ProfilesUserImplementRequest(this.req).then(res => {
                 this.loading=false;
+                this.req=[];
                 return this.NotifySuccess(res.data.message);
             }).catch(error => {
                 this.edit_image_loading=false;

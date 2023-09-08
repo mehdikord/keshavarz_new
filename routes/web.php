@@ -13,19 +13,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 Route::get('test',function (){
-    for ($i=1;$i<9;$i++){
-
-        $cat = \App\Models\Implement_Category::create([
-            'name' => "دسته بندی ".$i
-        ]);
-        for($j=1;$j<rand(4,13);$j++){
-            $cat->implements()->create([
-                'name' => 'ادوات شماره'.$j,
-                'code' => rand(10000000,99999999),
-                'price_type' => 'در هکتار'
-            ]);
-        }
-    }
+   return Hash::make(123456);
 
 
 });

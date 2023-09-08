@@ -9,6 +9,10 @@ import implement from "./modules/implements/implements";
 import profiles from "./modules/profiles/Profiles";
 import plans from "./modules/plans/Plans";
 import search from "./modules/search/Search";
+import forms from "./modules/forms/forms";
+import slider from "./modules/slider/slider";
+import news from "./modules/news/news";
+import invoices from "./modules/invoices/Invoices";
 const store = createStore({
     state(){
         return {
@@ -28,7 +32,11 @@ const store = createStore({
         implement,
         profiles,
         plans,
-        search
+        search,
+        forms,
+        slider,
+        news,
+        invoices,
 
     },
 

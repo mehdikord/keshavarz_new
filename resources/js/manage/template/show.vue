@@ -9,7 +9,7 @@
                     <q-avatar>
                         <img src="https://cdn.quasar.dev/logo-v2/svg/logo-mono-white.svg"  alt="test">
                     </q-avatar>
-                    پنل مدیریت فروشگاه کوکو
+                    پنل مدیریت کشاورز
                 </q-toolbar-title>
                 <q-btn color="teal" icon="mdi-account" round size="md">
                     <q-menu

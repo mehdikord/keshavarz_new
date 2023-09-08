@@ -5,12 +5,11 @@
 
             <template v-if="item.subs.length">
 
-                <q-expansion-item :content-inset-level="0.3" expand-separator :icon="item.icon" :label="item.title">
-
+                <q-expansion-item :content-inset-level="0.3" expand-separator :icon="item.icon + ' text-blue-grey-8'" :label="item.title">
 
                     <q-item v-for="sub in item.subs" clickable v-ripple :to="{name : sub.link}">
                         <q-item-section avatar>
-                            <q-icon color="deep-orange-8" :name="sub.icon" />
+                            <q-icon color="deep-orange-9" :name="sub.icon" />
                         </q-item-section>
                         <q-item-section>
                             {{sub.title}}
@@ -23,7 +22,7 @@
             <template v-else>
                 <q-item clickable v-ripple :to="{name : item.link}">
                     <q-item-section avatar>
-                        <q-icon color="deep-orange-8" :name="item.icon" />
+                        <q-icon color="deep-orange-9" :name="item.icon" />
                     </q-item-section>
                     <q-item-section>
                         {{item.title}}
@@ -70,6 +69,29 @@ export default {
                     ]
                 },
                 {
+                    title : "مدیریت ادوات",
+                    link : "",
+                    icon  : "mdi-tractor",
+                    subs:[
+                        {
+                            title : "دسته بندی ها",
+                            link : "implements_categories",
+                            icon  : "mdi-shape-plus",
+                        },
+                        {
+                            title : "لیست ادوات",
+                            link : "implements",
+                            icon  : "mdi-tractor",
+                        },
+                        {
+                            title : "فرم ها",
+                            link : "implements_forms",
+                            icon  : "mdi-text",
+                        },
+                    ]
+                },
+
+                {
                     title : "برند ها و دسته بندی ",
                     link : "",
                     icon  : "mdi-shape-plus",
@@ -101,9 +123,74 @@ export default {
                     ]
                 },
                 {
+                    title : "مدیریت اشتراک ها",
+                    link : "",
+                    icon  : "mdi-star",
+                    subs:[
+                        {
+                            title : "خدمات دهنده",
+                            link : "plans_providers",
+                            icon  : "mdi-tractor-variant",
+                        },
+                        {
+                            title : "خدمات گیرنده",
+                            link : "plans_customers",
+                            icon  : "mdi-face-agent",
+                        }
+                    ]
+                },
+                {
+                    title : "امور مالی",
+                    link : "invoices",
+                    icon  : "mdi-bank",
+                    subs:[
+
+                    ]
+                },
+                {
+                    title : "خبر ها",
+                    link : "news",
+                    icon  : "mdi-newspaper",
+                    subs:[
+
+                    ]
+                },
+                {
+                    title : "ادوات ارسالی",
+                    link : "implements_requests",
+                    icon  : "mdi-comment-plus",
+                    subs:[
+
+                    ]
+                },
+                {
+                    title : "تنظیمات اسلایدر",
+                    link : "slider",
+                    icon  : "mdi-image",
+                    subs:[
+
+                    ]
+                },
+                {
+                    title : "پیام های ارسالی",
+                    link : "contacts",
+                    icon  : "mdi-email",
+                    subs:[
+
+                    ]
+                },
+                {
                     title : "سوالات متداول",
                     link : "faqs",
                     icon  : "mdi-help",
+                    subs:[
+
+                    ]
+                },
+                {
+                    title : "جستجو های ادوات",
+                    link : "searches",
+                    icon  : "mdi-magnify-expand",
                     subs:[
 
                     ]

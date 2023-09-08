@@ -25,13 +25,15 @@ class UsersMemberUpdateRequest extends FormRequest
 
         return [
             'name' => 'required',
+            'province_id' => 'required|exists:provinces,id',
+            'city_id' => 'required|exists:cities,id',
             'phone' => [
                 'nullable',
                 Rule::unique('users')->ignore($this->user->id),
             ],
-            'email' => [
+            'national_code' => [
+                'nullable',
                 'required',
-                'email',
                 Rule::unique('users')->ignore($this->user->id),
             ],
         ];
