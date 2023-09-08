@@ -27,16 +27,8 @@
                 <template v-slot:body-cell-user="props">
                     <q-td :props="props">
                         <Global_Show_Image :image="props.row.user.profile"></Global_Show_Image>
-
                         <strong class="text-indigo-8 q-ml-sm">
                             {{props.row.user.name}}
-                        </strong>
-                    </q-td>
-                </template>
-                <template v-slot:body-cell-implement="props">
-                    <q-td :props="props">
-                        <strong class="text-red">
-                            {{props.row.implement.name}}
                         </strong>
                     </q-td>
                 </template>
@@ -47,14 +39,14 @@
                 </template>
                 <template v-slot:body-cell-is_pay="props">
                     <q-td :props="props">
-                        <q-btn class="font-12" dense v-if="props.row.is_pay" color="positive" icon="mdi-check">پرداخت شده</q-btn>
-                        <q-btn class="font-12" dense v-else color="red" icon="mdi-close">پرداخت نشده</q-btn>
+                        <q-btn @click="ChangePay(props.row.id)" class="font-12" dense v-if="props.row.is_pay" color="positive" icon="mdi-check">پرداخت شده</q-btn>
+                        <q-btn @click="ChangePay(props.row.id)" class="font-12" dense v-else color="red" icon="mdi-close">پرداخت نشده</q-btn>
                     </q-td>
                 </template>
                 <template v-slot:body-cell-type="props">
                     <q-td :props="props">
-                        <q-chip dense v-if="props.row.plan_type === 'provider'" color="deep-orange-7" text-color="white" >اشتراک خدمات گیرنده</q-chip>
-                        <q-chip dense v-else-if="props.row.plan_type === 'customer'" color="green-7" text-color="white" >اشتراک خدمات دهنده</q-chip>
+                        <q-chip dense v-if="props.row.plan_type === 'provider'" color="deep-orange-7" text-color="white" >اشتراک خدمات دهنده</q-chip>
+                        <q-chip dense v-else-if="props.row.plan_type === 'customer'" color="green-7" text-color="white" > اشتراک خدمات گیرنده</q-chip>
                         <q-chip dense v-else color="indigo-7" text-color="white" >خرید از فروشگاه</q-chip>
                     </q-td>
                 </template>
@@ -126,10 +118,54 @@
                                             </strong>
                                         </div>
                                         <div class="col-md-6 q-mb-md">
-                                            <strong class="text-teal-7">کد ملی : </strong>
-                                            <span>{{props.row.user.national_code}}</span>
+                                            <strong class="text-teal-7">ثبت توسط : </strong>
+                                            <template v-if="props.row.admin_id">
+                                                <span>مدیریت : </span>
+                                                <span>{{props.row.admin.name}}</span>
+                                            </template>
+                                            <span v-else> کاربر</span>
                                         </div>
+                                        <div class="col-md-6 q-mb-md">
+                                            <strong class="text-teal-7">درگاه پرداخت : </strong>
+                                            <span>{{ props.row.gateway }}</span>
+                                        </div>
+                                        <template v-if="props.row.is_pay">
+                                            <div class="col-md-6 q-mb-md">
+                                                <strong class="text-teal-7"> زمان پرداخت : </strong>
+                                                <span>{{this.$filters.date(props.row.paid_at)}}</span>
+                                            </div>
+                                            <div class="col-md-6 q-mb-md">
+                                                <strong class="text-teal-7"> کد تراکنش بانکی : </strong>
+                                                <span>{{props.row.ref_id}}</span>
+                                            </div>
+
+                                        </template>
+
                                     </div>
+                                    <q-separator/>
+                                    <div class="q-mt-md">
+                                        <strong class="text-indigo-7">اطلاعات محصول : </strong>
+                                    </div>
+                                    <div class="q-mt-md q-mb-sm row">
+
+                                        <div class="col-md-5 q-mb-md">
+                                            <strong class="text-teal-7">نوع : </strong>
+                                            <q-chip class="font-13" dense v-if="props.row.plan_type === 'provider'" color="blue-grey-7" text-color="white" >اشتراک خدمات دهنده</q-chip>
+                                            <q-chip class="font-13" dense v-else-if="props.row.plan_type === 'customer'" color="blue-grey-7" text-color="white" >اشتراک خدمات گیرنده</q-chip>
+                                            <q-chip class="font-13" dense v-else color="blue-grey-7" text-color="white" >خرید از فروشگاه</q-chip>
+                                        </div>
+                                        <div class="col-md-7 q-mb-md">
+                                            <strong class="text-teal-7">عنوان : </strong>
+                                            <span v-if="props.row.plan_type === 'provider' && props.row.provider_plan">
+                                                {{props.row.provider_plan.title}}
+                                            </span>
+                                            <span v-if="props.row.plan_type === 'customer' && props.row.customer_plan">
+                                                {{props.row.customer_plan.title}}
+                                            </span>
+                                        </div>
+
+                                    </div>
+
                                 </q-card-section>
                                 <q-card-actions align="right">
                                     <q-btn  label="بستن" color="red" v-close-popup />
@@ -137,6 +173,7 @@
                             </q-card>
 
                         </q-dialog>
+
                     </q-td>
 
                 </template>
@@ -236,6 +273,7 @@ export default {
     methods:{
         ...mapActions([
             "InvoicesIndex",
+            "InvoicesChangePay"
         ]),
         GetItems(){
 
@@ -247,6 +285,40 @@ export default {
             });
         },
 
+        ChangePay(id) {
+            this.$q.dialog({
+                title: 'هشدار !',
+                message: 'آیا مطمئن هستید وضعیت پرداخت تغییر کند ؟',
+
+                ok: {
+                    push: true,
+                    color:'green-9',
+                },
+                cancel: {
+                    push: true,
+                    color: 'negative'
+                },
+                persistent: true
+            }).onOk(() => {
+                this.InvoicesChangePay(id).then(res => {
+                    this.items = this.items.filter(item =>{
+                        if (item.id === id){
+                            item.is_pay = !item.is_pay;
+                            item.paid_at = res.data.result.paid_at;
+                        }
+                        return item
+                    })
+                    return this.NotifySuccess(res.data.message);
+                }).catch(error => {
+                    return  this.NotifyServerError();
+                })
+
+            }).onCancel(() => {
+                // console.log('>>>> Cancel')
+            }).onDismiss(() => {
+                // console.log('I am triggered on both OK and Cancel')
+            })
+        },
 
     }
 }

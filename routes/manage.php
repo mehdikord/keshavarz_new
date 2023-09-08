@@ -151,6 +151,7 @@ Route::middleware('auth:admin')->group(function (){
     //Searches
     Route::group(['prefix' => 'invoices','as' => 'invoices.'],function (){
         Route::get('',[\App\Http\Controllers\Manage\Invoices\InvoiceController::class,'index'])->name('index');
+        Route::get('change/pay/{invoice}',[\App\Http\Controllers\Manage\Invoices\InvoiceController::class,'change_pay'])->name('change_pay');
     });
 
     //Categories

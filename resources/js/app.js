@@ -21,6 +21,7 @@ import {mapGetters} from "vuex";
 import Manage_Global_Loading from "./manage/template/global/Manage_Global_Loading.vue";
 import Manage_Global_Show_Image from "./manage/template/global/Manage_Global_Show_Image.vue";
 import Manage_Global_Status from "@/manage/template/global/Manage_Global_Status.vue";
+import moment from "moment-jalaali";
 
 
 const App=createApp(show);
@@ -146,6 +147,7 @@ App.config.globalProperties.$filters = {
     numbers(number){
         return new Intl.NumberFormat().format(number);
     },
+
     quantity_color(quantity){
         if (quantity >= 5){
             return "green";
@@ -155,13 +157,17 @@ App.config.globalProperties.$filters = {
             return "red";
         }
     },
+
     short_text(text,len = 20){
         var extra='';
         if (text.length > len){
             extra = "..."
         }
         return text.substring(0,len) + extra;
-    }
+    },
+    date(value,format) {
+        return moment(value).format(format='jYYYY/jM/jD')
+    },
 }
 
 // ++++++++++++++++++++
