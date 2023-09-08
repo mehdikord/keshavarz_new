@@ -4,7 +4,7 @@
             color="indigo-10"
             size="75px"
         />
-        <h6 class="text-center q-mt-md">Loading items ...</h6>
+        <h6 class="text-center q-mt-md">درحال بارگذاری ...</h6>
     </div>
 </template>
 
