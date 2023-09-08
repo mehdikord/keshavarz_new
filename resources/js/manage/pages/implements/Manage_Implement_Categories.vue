@@ -210,7 +210,11 @@ export default {
                 name:null,
                 image:null,
                 description:null,
-
+            },
+            add_empty:{
+                name:null,
+                image:null,
+                description:null,
             },
             edit_image:[],
             item_columns:[
@@ -296,7 +300,7 @@ export default {
                 this.items.unshift(res.data.result);
                 this.loading_add=false;
                 this.dialog_add=false;
-                this.add=[];
+                this.add=this.add_empty;
                 return this.NotifyCreate();
             }).catch(error => {
                 this.loading_add=false;

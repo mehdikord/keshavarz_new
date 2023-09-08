@@ -299,6 +299,15 @@ export default {
                 access:1,
                 is_free:0,
             },
+            add_empty:{
+                title:null,
+                subtitle:null,
+                image:null,
+                price:null,
+                sale:null,
+                access:1,
+                is_free:0,
+            },
             edit_image:[],
             free_options : [
                 {
@@ -418,7 +427,7 @@ export default {
                 this.items.unshift(res.data.result);
                 this.loading_add=false;
                 this.dialog_add=false;
-                this.add=[];
+                this.add=this.add_empty;
                 return this.NotifyCreate();
             }).catch(error => {
                 this.loading_add=false;

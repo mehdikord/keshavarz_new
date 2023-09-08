@@ -190,7 +190,13 @@ export default {
                 city_id:null,
                 national_code:null,
                 phone:null,
-
+            },
+            add_empty:{
+                name:null,
+                province_id:null,
+                city_id:null,
+                national_code:null,
+                phone:null,
             },
             item_columns:[
 
@@ -293,7 +299,7 @@ export default {
                 this.items.unshift(res.data.result);
                 this.loading_add=false;
                 this.dialog_add=false;
-                this.add=[];
+                this.add=this.add_empty;
                 return this.NotifyCreate();
             }).catch(error => {
                 this.loading_add=false;
