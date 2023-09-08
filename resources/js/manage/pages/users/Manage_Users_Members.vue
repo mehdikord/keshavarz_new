@@ -141,12 +141,14 @@
                 </template>
                 <template v-slot:body-cell-tools="props">
                     <q-td :props="props">
+                        <q-btn  glossy color="teal" size="sm" icon="mdi-menu" class="q-mx-xs">
+                            <q-tooltip class="bg-grey-9">مدیریت کاربر</q-tooltip>
+                        </q-btn>
                         <member_edit :data="props.row" @UpdateEditedItem="GetItems"></member_edit>
                         <q-btn @click="DeleteItem(props.row.id)" glossy color="red-9" size="sm" icon="mdi-delete" class="q-mx-xs">
-                            <q-tooltip class="bg-grey-9">Delete this item</q-tooltip>
+                            <q-tooltip class="bg-grey-9">حذف آیتم</q-tooltip>
                         </q-btn>
                     </q-td>
-
 
                 </template>
 
