@@ -24,6 +24,11 @@ Route::middleware('auth:admin')->group(function (){
         Route::get('',[\App\Http\Controllers\Manage\Profile\ProfileController::class,'me'])->name('me');
     });
 
+    //Dashboard
+    Route::group(['prefix' => 'dashboard','as'=>'dashboard.'],function (){
+        Route::get('main/info',[\App\Http\Controllers\Manage\Dashboard\DashboardController::class,'main_info'])->name('main_info');
+    });
+
     //Members and Managers
     Route::group(['prefix' => 'users','as' => 'users.'],function (){
        Route::group(['prefix' => 'managers','as' => 'managers.'],function (){

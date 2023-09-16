@@ -312,7 +312,6 @@ export default {
 
             })
         },
-
         DeleteItem (id) {
             this.$q.dialog({
                 title: 'هشدار !',
