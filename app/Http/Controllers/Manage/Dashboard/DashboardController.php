@@ -18,4 +18,14 @@ class DashboardController extends Controller
     {
         return $this->repository->main_info();
     }
+
+    public function last_invoices()
+    {
+        return $this->repository->last_invoices();
+    }
+
+    public function last_users()
+    {
+        return $this->repository->last_users();
+    }
 }

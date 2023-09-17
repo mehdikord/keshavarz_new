@@ -27,6 +27,8 @@ Route::middleware('auth:admin')->group(function (){
     //Dashboard
     Route::group(['prefix' => 'dashboard','as'=>'dashboard.'],function (){
         Route::get('main/info',[\App\Http\Controllers\Manage\Dashboard\DashboardController::class,'main_info'])->name('main_info');
+        Route::get('last/invoices',[\App\Http\Controllers\Manage\Dashboard\DashboardController::class,'last_invoices'])->name('last_invoices');
+        Route::get('last/users',[\App\Http\Controllers\Manage\Dashboard\DashboardController::class,'last_users'])->name('last_users');
     });
 
     //Members and Managers
