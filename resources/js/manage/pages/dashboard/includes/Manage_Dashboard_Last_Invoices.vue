@@ -18,14 +18,6 @@ export default {
                     sortable: true
                 },
                 {
-                    name:'code',
-                    required: true,
-                    label: 'کد فاکتور',
-                    align: 'left',
-                    field: row => row.code,
-                    sortable: true
-                },
-                {
                     name:'price',
                     required: true,
                     label: 'مبلغ',
@@ -47,14 +39,6 @@ export default {
                     label: 'نوع فاکتور',
                     align: 'left',
                     field: row => row,
-                    sortable: true
-                },
-                {
-                    name:'method',
-                    required: true,
-                    label: 'نوع ثبت',
-                    align: 'left',
-                    field: row => row.method,
                     sortable: true
                 },
             ]
@@ -119,11 +103,7 @@ export default {
                             <q-chip class="font-12" dense v-else color="indigo-7" text-color="white" >خرید از فروشگاه</q-chip>
                         </q-td>
                     </template>
-                    <template v-slot:body-cell-method="props">
-                        <q-td :props="props">
-                            <q-chip dense color="deep-purple" text-color="white">{{props.row.method}}</q-chip>
-                        </q-td>
-                    </template>
+
 
                 </q-table>
             </template>

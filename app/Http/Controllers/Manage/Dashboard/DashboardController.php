@@ -28,4 +28,9 @@ class DashboardController extends Controller
     {
         return $this->repository->last_users();
     }
+
+    public function payments()
+    {
+        return $this->repository->payments();
+    }
 }

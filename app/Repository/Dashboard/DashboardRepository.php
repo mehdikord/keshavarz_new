@@ -51,4 +51,16 @@ class DashboardRepository implements DashboardInterface
 
     }
 
+    public function payments()
+    {
+        $providers = Invoice::where('plan_type','provider')->where('is_pay',true)->sum('price');
+        $customers = Invoice::where('plan_type','customer')->where('is_pay',true)->sum('price');
+        $shop = Invoice::whereNull('plan_type')->where('is_pay',true)->sum('price');
+        return response_success([
+            'providers' => $providers,
+            'customers' => $customers,
+            'shop' => $shop,
+        ]);
+    }
+
 }
