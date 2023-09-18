@@ -4,7 +4,7 @@
         <q-card-section class="bg-blue-grey-14 text-white q-pb-lg">
 
 
-            <strong class="font-16">مدیریت امور مالی و فاکتور ها</strong>
+            <strong class="font-16">جستجوهای کاربران برای دریافت خدمات</strong>
         </q-card-section>
 
         <q-card-section>
