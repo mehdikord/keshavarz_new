@@ -19,6 +19,7 @@ import Manage_Plans_Customers from "../manage/pages/plans/Manage_Plans_Customers
 import Manage_Requests from "../manage/pages/requests/Manage_Requests.vue";
 import Manage_Searches from "../manage/pages/searches/Manage_Searches.vue";
 import Manage_Invoices from "../manage/pages/invoices/Manage_Invoices.vue";
+import Manage_Users_Members_Details from "../manage/pages/users/Manage_Users_Members_Details.vue";
 
 const routes = [
 
@@ -81,7 +82,13 @@ const routes = [
         path : "/management/users/members",
         name : "users_members",
         component : Manage_Users_Members,
-        meta : { title : "مشتریان فروشگاه"}
+        meta : { title : "مشتریان (کاربران)"}
+    },
+    {
+        path : "/management/users/members/details/:id",
+        name : "users_members_details",
+        component : Manage_Users_Members_Details,
+        meta : { title : "اطلاعات مشتری"}
     },
     {
         path : "/management/plans/providers",
