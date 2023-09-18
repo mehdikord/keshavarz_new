@@ -17,14 +17,14 @@ export default {
 <template>
     <main_info/>
     <div class="row q-mt-lg">
-        <div class="col-md-6 col-sm-12 col-xs-12 q-px-sm">
+        <div class="col-md-6 col-sm-12 col-xs-12 q-px-xs">
             <last_invoices></last_invoices>
         </div>
-        <div class="col-md-6 col-sm-12 col-xs-12">
+        <div class="col-md-6 col-sm-12 col-xs-12 q-px-xs">
             <last_users></last_users>
         </div>
 
-        <div class="col-12 q-mt-lg">
+        <div class="col-12 q-mt-lg q-px-sm">
             <payments></payments>
         </div>
 
