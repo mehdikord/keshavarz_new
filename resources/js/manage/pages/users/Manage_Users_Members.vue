@@ -80,7 +80,7 @@
                 </q-card>
             </q-dialog>
 
-            <strong class="font-16">لیست مشتریان فروشگاه </strong>
+            <strong class="font-16">لیست کاربران سیستم </strong>
         </q-card-section>
 
         <q-card-section>

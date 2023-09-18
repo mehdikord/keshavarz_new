@@ -165,14 +165,14 @@ export default {
                             transition-show="flip-up"
                             transition-hide="flip-down"
                             v-model="category_id"
-                            use-input
                             label="انتخاب دسته بندی ادوات"
                             :options="categories"
                             emit-value
                             map-options
                             @filter="Filter_Select_Category"
                             :loading="loading_select_category"
-                            behavior="menu"
+                            use-input
+                            behavior="dialog"
                             @change="Get_Select_Name"
                         >
                             <template v-slot:no-option>
@@ -203,14 +203,14 @@ export default {
                             transition-show="flip-up"
                             transition-hide="flip-down"
                             v-model="implement_id"
-                            use-input
                             label="انتخاب ادوات"
                             :options="implements"
                             emit-value
                             map-options
                             @filter="Filter_Select_Implement"
                             :loading="loading_select_implements"
-                            behavior="menu"
+                            use-input
+                            behavior="dialog"
                             @change="Get_Select_Name"
                         >
                             <template v-slot:no-option>
