@@ -100,7 +100,7 @@ class UsersRepository implements UsersInterface
         $item->load('province');
         $item->load('city');
         $item->loadCount('referrals');
-        return $item;
+        return response_success($item);
     }
 
     public function members_invoices($item)
