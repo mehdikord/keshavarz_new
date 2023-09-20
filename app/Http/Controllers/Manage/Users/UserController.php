@@ -59,22 +59,22 @@ class UserController extends Controller
 
     public function members_invoices(User $user)
     {
-        
+
     }
 
     public function members_invoices_create(User $user)
     {
-        
+
     }
 
     public function members_active_provider(User $user)
     {
-        
+
     }
 
     public function members_active_customer(User $user)
     {
-        
+
     }
 
     public function members_delete(User $user)

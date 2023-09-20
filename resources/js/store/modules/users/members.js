@@ -50,6 +50,16 @@ export default {
                 })
             } )
         },
+        UserMembersShow(_,item){
+            return new Promise((resolve,reject) => {
+                axios.get('users/members/'+item).then((result) => {
+                    resolve(result);
+                }).catch(error => {
+                    reject(error);
+                })
+            } )
+
+        }
 
     }
 
