@@ -105,7 +105,7 @@ class UsersRepository implements UsersInterface
 
     public function members_invoices($item)
     {
-        return $item->invoices;
+        return response_success($item->invoices()->with('provider_plan')->with('customer_plan')->get());
     }
 
     public function members_invoices_create($request,$item)
@@ -172,11 +172,6 @@ class UsersRepository implements UsersInterface
 
     }
 
-    public function members_change_status($item)
-    {
-        return $item->update(['is_active' => !$item->is_active]);
-    }
-
     public function members_active_provider($item)
     {
         $data = $item->provider_plan_active();
@@ -184,7 +179,7 @@ class UsersRepository implements UsersInterface
             $data->load('invoice');
 
         }
-        return $data;
+        return response_success($data);
     }
 
     public function members_active_customer($item)
@@ -192,9 +187,8 @@ class UsersRepository implements UsersInterface
         $data = $item->customer_plan_active();
         if ($data){
             $data->load('invoice');
-
         }
-        return $data;
+        return response_success($data);
 
     }
 
@@ -220,6 +214,7 @@ class UsersRepository implements UsersInterface
         }
         $new_plan->update($update);
     }
+
     private function members_new_provider_plan($plan,$invoice){
         //create base data for user plan access
 

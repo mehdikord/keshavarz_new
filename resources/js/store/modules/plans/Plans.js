@@ -154,6 +154,32 @@ export default {
                 })
             } )
         },
+        PlansCustomerSelection(){
+            return new Promise((resolve,reject) => {
+                axios.get('plans/customers').then((result) => {
+                    let data=[];
+                    result.data.result.forEach(item => {
+                        data.push({label:item.title,value:item.id});
+                    })
+                    resolve(data);
+                }).catch(error => {
+                    reject(error);
+                })
+            } )
+        },
+        PlansProviderSelection(){
+            return new Promise((resolve,reject) => {
+                axios.get('plans/providers').then((result) => {
+                    let data=[];
+                    result.data.result.forEach(item => {
+                        data.push({label:item.title,value:item.id});
+                    })
+                    resolve(data);
+                }).catch(error => {
+                    reject(error);
+                })
+            } )
+        },
 
 
 

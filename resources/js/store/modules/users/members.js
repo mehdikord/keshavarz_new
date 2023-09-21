@@ -59,7 +59,37 @@ export default {
                 })
             } )
 
-        }
+        },
+        UserMembersActiveCustomer(_,item){
+            return new Promise((resolve,reject) => {
+                axios.get('users/members/active/customer/'+item).then((result) => {
+                    resolve(result);
+                }).catch(error => {
+                    reject(error);
+                })
+            } )
+
+        },
+        UserMembersActiveProvider(_,item){
+            return new Promise((resolve,reject) => {
+                axios.get('users/members/active/provider/'+item).then((result) => {
+                    resolve(result);
+                }).catch(error => {
+                    reject(error);
+                })
+            } )
+
+        },
+        UserMembersInvoices(_,item){
+            return new Promise((resolve,reject) => {
+                axios.get('users/members/invoices/'+item).then((result) => {
+                    resolve(result);
+                }).catch(error => {
+                    reject(error);
+                })
+            } )
+
+        },
 
     }
 

@@ -55,6 +55,11 @@
                         <q-chip dense color="deep-purple" text-color="white">{{props.row.method}}</q-chip>
                     </q-td>
                 </template>
+                <template v-slot:body-cell-date="props">
+                    <q-td :props="props">
+                        <q-chip size="sm" color="grey-7" text-color="white">{{this.$filters.date(props.row.created_at)}}</q-chip>
+                    </q-td>
+                </template>
                 <template v-slot:body-cell-tools="props">
                     <q-td :props="props">
                         <q-btn @click="dialog_detail[props.row.id] = true" glossy color="teal" size="sm" icon="mdi-menu" class="q-mx-xs">
@@ -258,6 +263,14 @@ export default {
                     label: 'نوع ثبت',
                     align: 'left',
                     field: row => row.method,
+                    sortable: true
+                },
+                {
+                    name:'date',
+                    required: true,
+                    label: 'تاریخ',
+                    align: 'left',
+                    field: row => row.created_at,
                     sortable: true
                 },
                 {
