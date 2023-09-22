@@ -44,7 +44,13 @@ Route::middleware('auth:admin')->group(function (){
        Route::group(['prefix' => 'members','as' => 'members.'],function (){
             Route::get('',[\App\Http\Controllers\Manage\Users\UserController::class,'members_index'])->name('index');
             Route::post('',[\App\Http\Controllers\Manage\Users\UserController::class,'members_store'])->name('store');
-            Route::get('activation/{user}',[\App\Http\Controllers\Manage\Users\UserController::class,'members_activation'])->name('activation');
+           Route::get('{user}',[\App\Http\Controllers\Manage\Users\UserController::class,'members_show'])->name('show');
+           Route::get('invoices/{user}',[\App\Http\Controllers\Manage\Users\UserController::class,'members_invoices']);
+           Route::post('invoices/{user}',[\App\Http\Controllers\Manage\Users\UserController::class,'members_invoices_create']);
+           Route::get('active/provider/{user}',[\App\Http\Controllers\Manage\Users\UserController::class,'members_active_provider']);
+           Route::get('active/customer/{user}',[\App\Http\Controllers\Manage\Users\UserController::class,'members_active_customer']);
+
+           Route::get('activation/{user}',[\App\Http\Controllers\Manage\Users\UserController::class,'members_activation'])->name('activation');
             Route::post('{user}',[\App\Http\Controllers\Manage\Users\UserController::class,'members_update'])->name('update');
             Route::delete('{user}',[\App\Http\Controllers\Manage\Users\UserController::class,'members_delete'])->name('delete');
        });

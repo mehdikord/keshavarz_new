@@ -52,6 +52,33 @@ class UserController extends Controller
         return $this->repository->members_store($request);
     }
 
+    public function members_show(User $user)
+    {
+        return $this->repository->members_show($user);
+    }
+
+    public function members_invoices(User $user)
+    {
+        return $this->repository->members_invoices($user);
+
+    }
+
+    public function members_invoices_create(User $user)
+    {
+
+    }
+
+    public function members_active_provider(User $user)
+    {
+        return $this->repository->members_active_provider($user);
+
+    }
+
+    public function members_active_customer(User $user)
+    {
+        return $this->repository->members_active_customer($user);
+    }
+
     public function members_delete(User $user)
     {
         return $this->repository->members_delete($user);

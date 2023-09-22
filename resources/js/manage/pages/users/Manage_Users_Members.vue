@@ -141,7 +141,7 @@
                 </template>
                 <template v-slot:body-cell-tools="props">
                     <q-td :props="props">
-                        <q-btn  glossy color="teal" size="sm" icon="mdi-menu" class="q-mx-xs">
+                        <q-btn :to="{name : 'users_members_details',params : {id : props.row.id}}" glossy color="teal" size="sm" icon="mdi-menu" class="q-mx-xs">
                             <q-tooltip class="bg-grey-9">مدیریت کاربر</q-tooltip>
                         </q-btn>
                         <member_edit :data="props.row" @UpdateEditedItem="GetItems"></member_edit>
