@@ -90,6 +90,16 @@ export default {
             } )
 
         },
+        UserMembersInvoicesCreate(_,item){
+            return new Promise((resolve,reject) => {
+                axios.post('users/members/invoices/'+item.id,item).then((result) => {
+                    resolve(result);
+                }).catch(error => {
+                    reject(error);
+                })
+            } )
+
+        },
 
     }
 

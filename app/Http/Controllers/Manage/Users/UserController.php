@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Manage\Users;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Invoices\InvoicesCreatePlanMember;
 use App\Http\Requests\Users\UsersManagerStoreRequest;
 use App\Http\Requests\Users\UsersManagerUpdateRequest;
 use App\Http\Requests\Users\UsersMemberStoreRequest;
@@ -63,9 +64,9 @@ class UserController extends Controller
 
     }
 
-    public function members_invoices_create(User $user)
+    public function members_invoices_create(InvoicesCreatePlanMember $request,User $user)
     {
-
+        return $this->repository->members_invoices_create($request,$user);
     }
 
     public function members_active_provider(User $user)

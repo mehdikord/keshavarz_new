@@ -48,7 +48,8 @@ Route::middleware(['auth:users'])->group(function (){
         Route::get('range',[\App\Http\Controllers\User\Profile\ProfileController::class,'range']);
         Route::post('range',[\App\Http\Controllers\User\Profile\ProfileController::class,'range_update']);
         Route::get('days',[\App\Http\Controllers\User\Profile\ProfileController::class,'get_days']);
-        Route::post('days',[\App\Http\Controllers\User\Profile\ProfileController::class,'update_days']);
+        Route::post('days',[\App\Http\Controllers\User\Profile\ProfileController::class,'store_days']);
+        Route::delete('days/{day}',[\App\Http\Controllers\User\Profile\ProfileController::class,'delete_days']);
 
         Route::prefix('implement')->group(function (){
             Route::get('',[\App\Http\Controllers\User\Profile\ProfileController::class,'implement']);

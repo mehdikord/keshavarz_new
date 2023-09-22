@@ -7,6 +7,7 @@ use App\Interfaces\Profile\ProfileInterface;
 use App\Models\Implement_Request;
 use App\Services\MediaServices\MediaService;
 use Illuminate\Support\Facades\Storage;
+use Morilog\Jalali\Jalalian;
 
 class ProfileRepository implements ProfileInterface
 {
@@ -114,7 +115,6 @@ class ProfileRepository implements ProfileInterface
         return response_success(true);
     }
 
-
     public function index_gallery()
     {
         return auth()->user()->gallery;
@@ -140,6 +140,24 @@ class ProfileRepository implements ProfileInterface
         }
         $item->delete();
         return true;
+    }
+
+    public function get_days()
+    {
+        return response_success(auth('users')->user()->days);
+    }
+
+    public function store_days($request)
+    {
+        if ($request->filled('days') && is_array($request->days)){
+            foreach ($request->days as $day){
+                $date = (new Jalalian($day))->toCarbon()->toDateTimeString();
+                auth('users');
+
+            }
+
+        }
+
     }
 
 

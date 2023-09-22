@@ -10,7 +10,9 @@ use App\Http\Requests\Profile\UserRangeUpdateRequest;
 use App\Http\Requests\Single\SingleImageUpdateRequest;
 use App\Http\Requests\Single\SingleUserProfileUpdateRequest;
 use App\Interfaces\Profile\ProfileInterface;
+use App\Models\User_Day;
 use App\Models\User_Implement;
+use Illuminate\Http\Request;
 
 class ProfileController extends Controller
 {
@@ -60,7 +62,6 @@ class ProfileController extends Controller
 
     }
 
-
     public function implement_edit(User_Implement $id,UserImplementEditRequest $request)
     {
         if ($id->user_id != auth('users')->id()){
@@ -75,5 +76,20 @@ class ProfileController extends Controller
             return response()->json('Unauthorised',401);
         }
         return $this->repository->implement_delete($id);
+    }
+
+    public function get_days()
+    {
+        return $this->repository->get_days();
+    }
+
+    public function store_days(Request $request)
+    {
+        return $this->repository->store_days($request);
+    }
+
+    public function delete_days(User_Day $day)
+    {
+        return $this->repository->delete_days($day);
     }
 }

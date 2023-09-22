@@ -1,4 +1,6 @@
 import {createApp} from "vue";
+import VuePersianDatetimePicker from 'vue3-persian-datetime-picker';
+
 import Store from "./store";
 import './bootstrap-front';
 import Front from "./routes/front";
@@ -9,15 +11,17 @@ import quasarLang from 'quasar/lang/fa-IR';
 import 'quasar/dist/quasar.css';
 import '@quasar/extras/fontawesome-v6/fontawesome-v6.css'
 import  '@neshan-maps-platform/vue3-openlayers/dist/style.css'
-import {mapGetters} from "vuex";
+import {mapActions, mapGetters} from "vuex";
 import Front_Global_Images_Categories from "./front/globals/Front_Global_Images_Categories.vue";
 import Front_Global_Images_Implements from "./front/globals/Front_Global_Images_Implements.vue";
 import Front_Global_Search_Loading from "./front/globals/Front_Global_Search_Loading.vue";
 import Error_Validation from "./manage/errors/Error_Validation.vue";
 import Helper from "./helpers/Helper";
 import Front_Global_Info_Loading from "./front/globals/Front_Global_Info_Loading.vue";
+
 import axios from "axios";
-import moment from "moment-jalaali"
+import moment from 'moment-jalaali';
+
 
 
 
@@ -51,6 +55,7 @@ App.component("global_image_implements",Front_Global_Images_Implements)
 App.component("global_search_loading",Front_Global_Search_Loading)
 App.component("global_info_loading",Front_Global_Info_Loading)
 App.component('Error_Validation',Error_Validation)
+App.component("PersianDatePicker",VuePersianDatetimePicker)
 
 
 
@@ -63,22 +68,15 @@ App.mixin({
     },
     created() {
         axios.defaults.headers.common['Authorization'] ="Bearer "+this.UserToken
-        axios.interceptors.response.use(function (response) {
-            // Any status code that lie within the range of 2xx cause this function to trigger
-            // Do something with response data
-            return response;
-        }, function (error) {
-            // Any status codes that falls outside the range of 2xx cause this function to trigger
-            // Do something with response error
 
-            return Promise.reject(error);
-
-        });
 
 
     },
     //Methods
     methods:{
+        ...mapActions([
+            "Auth_User_Logout"
+        ]),
         NotifyMessage(message=null,type=null,icon=null,color=null){
             if (icon || color){
                 this.$q.notify({
@@ -140,6 +138,7 @@ App.mixin({
           let left = b.diff(now,'days');
           return {total:total,left:left};
         },
+
         AuthUserCheck(){
             return this.UserCheck;
         }
@@ -209,6 +208,7 @@ App.config.globalProperties.$filters = {
 }
 
 // ++++++++++++++++++++
+
 
 
 App.mount('#app')

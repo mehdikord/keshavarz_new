@@ -91,6 +91,15 @@ export default {
                 })
             } )
         },
+        ProfilesUserDays(){
+            return new Promise((resolve,reject) => {
+                axios.get('users/provider/days').then((result ) => {
+                    resolve(result);
+                }).catch(error => {
+                    reject(error);
+                })
+            } )
+        },
         ProfilesUserGalleryStore(_,item){
             return new Promise((resolve,reject) => {
                 let data = new  FormData();
