@@ -32,10 +32,10 @@ class AuthRepository implements AuthInterface
             $referral_by = null;
             if ($request->filled('referral')){
                 $referral = User::where('phone',$request->referral)->first();
-                $referral_by = $referral?->id;
+                $referral_by = $referral->id;
             }
             $user = User::create([
-                'name' => 'کاربر  کشاورز',
+                'name' => 'کاربر کشاورز',
                 'phone' => $request->phone,
                 'referral_by' => $referral_by
             ]);

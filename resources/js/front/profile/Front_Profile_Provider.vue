@@ -23,6 +23,7 @@ export default {
             user_gallery:[],
             user_implement_loading:false,
             user_gallery_loading:false,
+            user_days_loading:true,
             gallery_add:null,
             errors:[],
             range:20,
@@ -45,6 +46,8 @@ export default {
             implement_price:'',
             price:null,
             forms:{},
+            date:'',
+
         }
     },
     methods:{
@@ -631,6 +634,32 @@ export default {
                         </q-card>
 
                         <q-card class="q-mt-lg">
+                            <q-card-section class="info-title bg-red-6 text-white">
+                                روز های تعطیل
+                            </q-card-section>
+                            <q-card-section>
+                                <p>
+                                    تاریخ های انتخابی در این قسمت بیانگر فعالیت نداشتن شما در آن روز است که به جستجو کننده خدمات نشان داده میشود
+                                </p>
+                                <div class="row justify-center q-mt-lg">
+                                    <div class="col-md-4 col-sm-12 col-xs-12">
+                                        <PersianDatePicker
+                                            multiple
+                                            v-model="date"
+                                            placeholder="برای انتخاب تاریخ از تقویم کلیک کنید"
+                                        />
+                                        <q-btn class="q-mt-sm" dense color="teal-7" glossy>افرودن تاریخ جدید</q-btn>
+                                    </div>
+                                </div>
+                                <q-separator class="q-mt-md"/>
+                                <div class="q-mt-sm q-mb-lg">
+                                    <strong class="text-teal-8">لیست روز های تعطیل شما : </strong>
+                                </div>
+
+                            </q-card-section>
+                        </q-card>
+
+                        <q-card class="q-mt-lg">
                             <q-card-section class="info-title bg-indigo text-white">
                                 گالری تصاویر خدمت دهنده
                             </q-card-section>
@@ -713,6 +742,9 @@ export default {
 </template>
 
 <style scoped>
+.custom-input{
+    display: none;
+}
 .title{
     font-size: 18px;
 }

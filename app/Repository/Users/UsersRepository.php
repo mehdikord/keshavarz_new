@@ -111,7 +111,7 @@ class UsersRepository implements UsersInterface
     public function members_invoices_create($request,$item)
     {
         $is_pay = $request->pay;
-        if ($request->plan_type === 'customer'){
+        if ($request->plan_type === 'customer') {
             $plan = Customer_Plan::find($request->plan_id);
             if ($plan){
                 $paid_at=null;
@@ -121,7 +121,7 @@ class UsersRepository implements UsersInterface
 
                 }
                 $invoice = $item->invoices()->create([
-                    'admin_id' => auth('admins')->id(),
+                    'admin_id' => auth('admin')->id(),
                     'title' => "اشتراک خدمات گیرنده : ".$plan->title,
                     'price' => $plan->price,
                     'is_free' => $plan->is_free,
@@ -131,15 +131,17 @@ class UsersRepository implements UsersInterface
                     'plan' => $plan->id,
                     'plan_type' => 'customer'
                 ]);
-                $invoice->update(['code' => helpers_random_code($invoice->id)]);
+                $invoice->update(['code' => core_random_code($invoice->id)]);
                 if ($is_pay){
-                    $this->new_customer_plan($plan,$invoice);
+                    $this->members_new_customer_plan($plan,$invoice);
                 }
-                return response_success("اشتراک مورد نظر باموفقیت اضافه شد");
-            }else{
-                return response_custom_error('اشتراک انتخاب شده یافت نشد');
+                return response_success([],"اشتراک مورد نظر باموفقیت اضافه شد");
             }
-        }elseif ($request->plan_type === 'provider'){
+
+            return response_custom_error('اشتراک انتخاب شده یافت نشد');
+        }
+
+        if ($request->plan_type === 'provider') {
             $plan = Provider_Plan::find($request->plan_id);
             if ($plan){
                 $paid_at=null;
@@ -148,7 +150,7 @@ class UsersRepository implements UsersInterface
                     $paid_at=Carbon::now();
                 }
                 $invoice = $item->invoices()->create([
-                    'admin_id' => auth('admins')->id(),
+                    'admin_id' => auth('admin')->id(),
                     'title' => "اشتراک خدمات دهنده : ".$plan->title,
                     'price' => $plan->price,
                     'is_free' => $plan->is_free,
@@ -158,17 +160,17 @@ class UsersRepository implements UsersInterface
                     'plan' => $plan->id,
                     'plan_type' => 'provider'
                 ]);
-                $invoice->update(['code' => helpers_random_code($invoice->id)]);
+                $invoice->update(['code' => core_random_code($invoice->id)]);
                 if ($is_pay){
-                    $this->new_provider_plan($plan,$invoice);
+                    $this->members_new_provider_plan($plan,$invoice);
                 }
-                return response_success("اشتراک مورد نظر باموفقیت اضافه شد");
-            }else{
-                return response_custom_error('اشتراک انتخاب شده یافت نشد');
+                return response_success([],"اشتراک مورد نظر باموفقیت اضافه شد");
             }
-        }else{
+
             return response_custom_error('اشتراک انتخاب شده یافت نشد');
         }
+
+        return response_custom_error('اشتراک انتخاب شده یافت نشد');
 
     }
 

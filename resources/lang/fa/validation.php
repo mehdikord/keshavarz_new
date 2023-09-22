@@ -201,7 +201,9 @@ return [
         'is_active' => 'وضعیت',
         'customer_plan_id' => 'اشتراک خدمات گیرنده',
         'provider_plan_id' => 'اشتراک خدمات دهنده',
-        'invoice_id' => 'فاکتور'
+        'invoice_id' => 'فاکتور',
+        'plan_id' => 'اشتراک',
+        'plan_type' => 'نوع اشتراک',
     ],
 
 ];

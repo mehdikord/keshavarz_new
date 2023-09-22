@@ -15,6 +15,7 @@ export default {
             loading_user_customer:true,
             loading_user_provider:true,
             loading_user_invoices:true,
+            loading_user_invoices_create:false,
             user:null,
             customers:null,
             providers:null,
@@ -87,11 +88,23 @@ export default {
                     value:'provider'
                 },
             ],
+            pay_selection:[
+                {
+                    label:'پرداخت شده (فعالسازی)',
+                    value:1
+                },
+                {
+                    label:'پرداخت نشده',
+                    value:0
+                },
+            ],
             plans:[],
             add:{
               plan_type:null,
                 plan_id:null,
+                pay:1,
             },
+            errors:[],
 
 
         }
@@ -102,6 +115,7 @@ export default {
             "UserMembersActiveCustomer",
             "UserMembersActiveProvider",
             "UserMembersInvoices",
+            "UserMembersInvoicesCreate",
             "InvoicesChangePay",
             "PlansCustomerSelection",
             "PlansProviderSelection"
@@ -137,6 +151,35 @@ export default {
             }).catch(error =>{
                 return this.NotifyServerError();
             })
+        },
+        CreateInvoice(){
+            this.loading_user_invoices_create=true;
+
+            let items = {
+                id : this.$route.params.id,
+                plan_id: this.add.plan_id,
+                plan_type: this.add.plan_type,
+                pay: this.add.pay,
+            }
+            this.UserMembersInvoicesCreate(items).then(res => {
+                if (this.add.plan_type === 'customer'){
+                    this.GetCustomer();
+                }
+                if (this.add.plan_type === 'provider'){
+                    this.GetProvider();
+                }
+                this.GetInvoices();
+                this.dialog_add=false;
+                this.loading_user_invoices_create=false;
+            }).catch(error => {
+                this.loading_user_invoices_create=false;
+                if (error.response.status === 422) {
+                    return this.errors = error.response.data
+                }
+                return  this.NotifyServerError();
+
+            })
+
         },
         ChangePay(id) {
             this.$q.dialog({
@@ -400,6 +443,7 @@ export default {
                                      :options="plan_selection"
                                      emit-value
                                      map-options
+                                     :error="this.MixinValidationCheck(errors,'plan_type')"
                                      @change="GetPlansSelection"
                                      behavior="menu"
                                  >
@@ -411,6 +455,7 @@ export default {
                                          </q-item>
                                      </template>
                                      <template v-slot:error>
+                                         <Error_Validation :errors="this.MixinValidation(errors,'plan_type')"></Error_Validation>
                                      </template>
                                  </q-select>
                                  <q-select
@@ -426,6 +471,8 @@ export default {
                                      emit-value
                                      map-options
                                      behavior="menu"
+                                     :error="this.MixinValidationCheck(errors,'plan_id')"
+
                                  >
                                      <template v-slot:no-option>
                                          <q-item>
@@ -435,13 +482,41 @@ export default {
                                          </q-item>
                                      </template>
                                      <template v-slot:error>
+                                         <Error_Validation :errors="this.MixinValidation(errors,'plan_id')"></Error_Validation>
+
+                                     </template>
+                                 </q-select>
+                                 <q-select
+                                     outlined
+                                     color="primary"
+                                     class="q-mt-lg"
+                                     transition-show="flip-up"
+                                     transition-hide="flip-down"
+                                     v-model="add.pay"
+                                     use-input
+                                     label="وضعیت پرداخت فاکتور"
+                                     :options="pay_selection"
+                                     emit-value
+                                     map-options
+                                     behavior="menu"
+                                 >
+                                     <template v-slot:no-option>
+                                         <q-item>
+                                             <q-item-section class="text-red">
+                                                 گزینه ای یافت نشد
+                                             </q-item-section>
+                                         </q-item>
+                                     </template>
+                                     <template v-slot:error>
+                                         <Error_Validation :errors="this.MixinValidation(errors,'pay')"></Error_Validation>
+
                                      </template>
                                  </q-select>
 
 
                              </q-card-section>
                              <q-card-actions align="right">
-                                 <q-btn glossy label="ثبت اشتراک جدید" color="positive"  />
+                                 <q-btn glossy label="ثبت اشتراک جدید" color="positive" :loading="loading_user_invoices_create" @click="CreateInvoice" />
 
                                  <q-btn glossy label="بستن" color="red" v-close-popup />
                              </q-card-actions>

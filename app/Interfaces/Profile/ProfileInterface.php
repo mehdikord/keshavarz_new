@@ -32,4 +32,8 @@ interface ProfileInterface
 
     public function delete_gallery($item);
 
+    public function get_days();
+    public function store_days($request);
+    public function delete_days($item);
+
 }
