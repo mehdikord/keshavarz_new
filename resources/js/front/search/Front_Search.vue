@@ -3,7 +3,6 @@ import {mapActions} from "vuex";
 import NeshanMap from "@neshan-maps-platform/vue3-openlayers"
 import Front_Search_Profile from "@/front/search/Front_Search_Profile.vue";
 import Front_Skeleton_Provider from "../skeleton/Front_Skeleton_Provider.vue";
-
 export default {
     name: "Front_Search",
     mounted() {
@@ -32,7 +31,8 @@ export default {
             loading_select_implements:false,
             categories :[],
             implements :[],
-            search_result:[]
+            search_result:[],
+            map_zoom:{ latitude: 36.83951508755615, longitude: 54.43313598632812 },
 
         }
     },
@@ -147,7 +147,20 @@ export default {
                     alert("خطای ناشناخته رخ داد.");
                     break;
             }
-        }
+        },
+        markersIconCallback(point) {
+            if (point.isReverseMarker) {
+                return {
+                    src: "https://img.icons8.com/fluency/344/find-clinic.png"
+                };
+            } else {
+                return {
+                    src: "https://img.icons8.com/fluency/344/find-clinic.png",
+                    iconScale: 0.05
+                };
+            }
+        },
+
 
     },
     computed:{
@@ -167,7 +180,7 @@ export default {
                 })
             }
         }
-    }
+    },
 }
 </script>
 
@@ -279,17 +292,16 @@ export default {
                            <div v-if="show_map" class="map">
                                <NeshanMap
                                    mapKey="web.eaf4d6d0f42a400bb9583fbd8496947f"
-                                   :center="{ latitude: 35.70222201840939, longitude: 51.35178336960962 }"
+                                   :center="{ latitude: 36.83951508755615, longitude: 54.43313598632812 }"
                                    :zoom="10"
                                    hide-layers
-                                   :hide-search-container="true"
+                                   :markers-icon-callback="markersIconCallback"
                                    @on-click="Map_Marker"
 
 
                                />
                            </div>
-                        {{location}}
-                        <q-btn color="orange" @click="getLocation">test</q-btn>
+
                     </div>
                     <div class="q-mt-lg q-mb-lg">
                         <q-separator/>
