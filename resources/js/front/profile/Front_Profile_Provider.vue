@@ -304,6 +304,7 @@ export default {
             this.user_days_add_loading=true;
             this.ProfilesUserDaysStore({days:this.date}).then(res => {
                 this.GetUserDays();
+                this.date=[];
                 this.NotifySuccess('تاریخ های مورد نظر باموفقیت اضافه شد');
                 this.user_days_add_loading=false;
             }).catch(error => {
@@ -425,7 +426,7 @@ export default {
                                         <div v-if="show_map" class="map">
                                             <NeshanMap
                                                 mapKey="web.eaf4d6d0f42a400bb9583fbd8496947f"
-                                                :center="{ latitude: 35.70222201840939, longitude: 51.35178336960962 }"
+                                                :center="{ latitude: 36.83951508755615, longitude: 54.43313598632812 }"
                                                 :zoom="10"
                                                 hide-layers
                                                 :hide-search-container="true"

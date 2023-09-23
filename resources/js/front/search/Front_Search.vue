@@ -295,6 +295,7 @@ export default {
                                    :center="{ latitude: 36.83951508755615, longitude: 54.43313598632812 }"
                                    :zoom="10"
                                    hide-layers
+                                   hide-search-container
                                    :markers-icon-callback="markersIconCallback"
                                    @on-click="Map_Marker"
 
