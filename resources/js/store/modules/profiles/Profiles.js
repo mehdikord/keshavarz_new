@@ -109,6 +109,15 @@ export default {
                 })
             } )
         },
+        ProfilesUserDaysDelete(_,item){
+            return new Promise((resolve,reject) => {
+                axios.delete('users/provider/days/'+item).then((result ) => {
+                    resolve(result);
+                }).catch(error => {
+                    reject(error);
+                })
+            } )
+        },
 
         ProfilesUserGalleryStore(_,item){
             return new Promise((resolve,reject) => {
