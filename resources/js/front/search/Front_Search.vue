@@ -8,6 +8,10 @@ export default {
     mounted() {
       this.Get_Categories();
       this.Get_Implements();
+      if (localStorage.key('keshavarz_search_result')){
+          this.search_result = JSON.parse(localStorage.getItem('keshavarz_search_result'));
+          this.show_form=false;
+      }
     },
     components: {
         NeshanMap,
@@ -77,18 +81,15 @@ export default {
             this.search_loading=true;
             this.SearchStart({implement_id : this.implement_id,location:this.location}).then(res => {
                 this.search_result=res.data.result;
+                localStorage.setItem('keshavarz_search_result',JSON.stringify(this.search_result));
                 this.search_loading=false;
                 this.NotifySuccess("جستجو خدمات باموفقیت انجام شد")
 
             }).catch(error=>{
-
                 return this.NotifyServerError()
             })
 
-
             this.show_form=false;
-
-
         },
         Filter_Select_Category (val, update, abort) {
             update(() => {
@@ -160,6 +161,12 @@ export default {
                 };
             }
         },
+        SearchClear(){
+            localStorage.removeItem('keshavarz_search_result')
+            this.category_id=null;
+            this.implement_id=null;
+            this.show_form=true
+        }
 
 
     },
@@ -296,10 +303,7 @@ export default {
                                    :zoom="10"
                                    hide-layers
                                    hide-search-container
-                                   :markers-icon-callback="markersIconCallback"
                                    @on-click="Map_Marker"
-
-
                                />
                            </div>
 
@@ -332,7 +336,7 @@ export default {
                     <div>
                         <span class="result-title q-mr-sm">نتایج جستجو برای : </span>
                         <span class="result-info text-red">{{category_name}}</span> / <span class="result-info text-red">{{implement_name}}</span>
-                        <q-btn @click="category_id=null;implement_id=null;show_form=true" class="float-right research" color="deep-orange" rounded icon="fas fa-search q-mr-sm"> جستجو مجدد </q-btn>
+                        <q-btn @click="SearchClear" class="float-right research" color="deep-orange" rounded icon="fas fa-search q-mr-sm"> جستجو مجدد </q-btn>
                     </div>
                     <div class="q-mt-lg">
                         <q-separator></q-separator>
