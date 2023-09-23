@@ -33,6 +33,7 @@ export default {
             categories :[],
             implements :[],
             search_result:[]
+
         }
     },
 
@@ -116,6 +117,35 @@ export default {
                 this.location=[];
                 this.location.push(e.coords[1]);
                 this.location.push(e.coords[0]);
+            }
+        },
+        getLocation() {
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(
+                    this.showPosition,
+                    this.showError
+                );
+            } else {
+                alert("مرورگر شما از موقعیت جغرافیایی پشتیبانی نمی‌کند.");
+            }
+        },
+        showPosition(position) {
+            this.location = `عرض جغرافیایی: ${position.coords.latitude}, طول جغرافیایی: ${position.coords.longitude}`;
+        },
+        showError(error) {
+            switch (error.code) {
+                case error.PERMISSION_DENIED:
+                    alert("کاربر اجازه دسترسی به موقعیت جغرافیایی را نداد.");
+                    break;
+                case error.POSITION_UNAVAILABLE:
+                    alert("اطلاعات موقعیت جغرافیایی در دسترس نیست.");
+                    break;
+                case error.TIMEOUT:
+                    alert("زمان درخواست گرفتن موقعیت جغرافیایی پایان یافت.");
+                    break;
+                case error.UNKNOWN_ERROR:
+                    alert("خطای ناشناخته رخ داد.");
+                    break;
             }
         }
 
@@ -255,8 +285,11 @@ export default {
                                    :hide-search-container="true"
                                    @on-click="Map_Marker"
 
+
                                />
                            </div>
+                        {{location}}
+                        <q-btn color="orange" @click="getLocation">test</q-btn>
                     </div>
                     <div class="q-mt-lg q-mb-lg">
                         <q-separator/>
