@@ -152,11 +152,18 @@ class ProfileRepository implements ProfileInterface
         if ($request->filled('days') && is_array($request->days)){
             foreach ($request->days as $day){
                 $date = (new Jalalian($day))->toCarbon()->toDateTimeString();
-                auth('users');
+                auth('users')->user()->days()->create([
+                    'day' => $date,
+                ]);
 
             }
 
         }
+
+    }
+
+    public function delete_days($item)
+    {
 
     }
 

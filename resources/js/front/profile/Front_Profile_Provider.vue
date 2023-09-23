@@ -12,6 +12,7 @@ export default {
             this.GetProfile();
             this.GetUserImplement();
             this.GetUserGallery();
+            this.GetUserDays();
         }
 
 
@@ -46,7 +47,8 @@ export default {
             implement_price:'',
             price:null,
             forms:{},
-            date:'',
+            days:[],
+            date:[],
 
         }
     },
@@ -64,6 +66,8 @@ export default {
             "ProfilesUserGallery",
             "ProfilesUserGalleryStore",
             "ProfilesUserGalleryDelete",
+            "ProfilesUserDays",
+            "ProfilesUserDaysStore"
         ]),
         Map_Marker(e){
             if (e.coords){
@@ -282,6 +286,15 @@ export default {
             })
 
         },
+        GetUserDays(){
+            this.ProfilesUserDays().then(res => {
+                this.days = res.data.result;
+                this.user_days_loading=false;
+            }).catch(error => {
+                return this.NotifyServerError();
+            })
+
+        }
 
 
     },
@@ -654,6 +667,27 @@ export default {
                                 <q-separator class="q-mt-md"/>
                                 <div class="q-mt-sm q-mb-lg">
                                     <strong class="text-teal-8">لیست روز های تعطیل شما : </strong>
+                                </div>
+                                <div class="mt-md q-mb-lg">
+                                    <global_info_loading v-if="user_days_loading"></global_info_loading>
+                                    <template v-else>
+                                        <div v-if="!days.length" class="text-center text-yellow-10">
+                                            <strong>
+                                                هنوز هیچ تاریخی اضافه نکرده اید نشده است
+                                            </strong>
+                                        </div>
+                                        <div v-else class="q-mt-sm row">
+                                            <div v-for="day in days" class="col-md-2 q-px-xs">
+                                                <q-card>
+                                                    <q-card-section class="bg-deep-orange-6 text-white">
+                                                        <strong>{{this.$filters.date(day.day)}}</strong>
+                                                        <q-icon class="float-right" name="fas fa-trash"></q-icon>
+                                                    </q-card-section>
+                                                </q-card>
+                                            </div>
+                                        </div>
+
+                                    </template>
                                 </div>
 
                             </q-card-section>
