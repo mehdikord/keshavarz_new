@@ -100,6 +100,25 @@ export default {
                 })
             } )
         },
+        ProfilesUserDaysStore(_,item){
+            return new Promise((resolve,reject) => {
+                axios.post('users/provider/days',item).then((result ) => {
+                    resolve(result);
+                }).catch(error => {
+                    reject(error);
+                })
+            } )
+        },
+        ProfilesUserDaysDelete(_,item){
+            return new Promise((resolve,reject) => {
+                axios.delete('users/provider/days/'+item).then((result ) => {
+                    resolve(result);
+                }).catch(error => {
+                    reject(error);
+                })
+            } )
+        },
+
         ProfilesUserGalleryStore(_,item){
             return new Promise((resolve,reject) => {
                 let data = new  FormData();

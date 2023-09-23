@@ -149,15 +149,27 @@ class ProfileRepository implements ProfileInterface
 
     public function store_days($request)
     {
+
         if ($request->filled('days') && is_array($request->days)){
             foreach ($request->days as $day){
-                $date = (new Jalalian($day))->toCarbon()->toDateTimeString();
-                auth('users');
-
+                $date = Jalalian::fromFormat('Y/m/d',$day)->toCarbon();
+                auth('users')->user()->days()->updateOrCreate([
+                    'day'=>$date
+                ]);
             }
 
         }
+        return auth('users')->user()->days;
 
+    }
+
+    public function delete_days($item)
+    {
+        if ($item->user_id == auth('users')->id()){
+            $item->delete();
+            return response_success([],'تاریخ با موفقیت حذف شد');
+        }
+        return response_custom_error('error');
     }
 
 
