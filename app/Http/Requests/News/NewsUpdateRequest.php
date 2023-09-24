@@ -24,8 +24,8 @@ class NewsUpdateRequest extends FormRequest
     {
 
         return [
-            'title' => 'required|max:225',
-            'link' => 'required|max:225',
+            'title' => 'required',
+            'link' => 'required',
         ];
     }
     public function failedValidation(Validator $validator)

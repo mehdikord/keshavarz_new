@@ -111,7 +111,7 @@ const store = createStore({
             state.commit('AuthManageLogin',item)
         },
         Auth_Manage_Logout(state){
-            state.commit('AuthManageLogout')
+            state.commit('AuthLogout')
         },
         Auth_User_Login(state,item){
             state.commit('AuthUserLogin',item)

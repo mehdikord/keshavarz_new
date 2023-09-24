@@ -105,7 +105,7 @@ class UsersRepository implements UsersInterface
 
     public function members_invoices($item)
     {
-        return response_success($item->invoices()->with('provider_plan')->with('customer_plan')->get());
+        return response_success($item->invoices()->with('admin')->with('provider_plan')->with('customer_plan')->get());
     }
 
     public function members_invoices_create($request,$item)

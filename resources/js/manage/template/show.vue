@@ -31,7 +31,7 @@
                             </q-item>
 
                             <q-separator />
-                            <q-item clickable>
+                            <q-item @click="Logout" clickable>
                                 <q-icon name="mdi-exit" size="md" color="dark"></q-icon>
                                 <strong class="q-mt-xs text-red">
                                     خروج از حساب
@@ -70,7 +70,7 @@
 import {ref} from 'vue';
 import Manage_Template_Menu from "./includes/Manage_Template_Menu.vue";
 import Manage_Template_Content from "./includes/Manage_Template_Content.vue";
-import {mapGetters} from "vuex";
+import {mapActions, mapGetters} from "vuex";
 export default {
 
     name: "show",
@@ -93,6 +93,16 @@ export default {
                 rightDrawerOpen.value = !rightDrawerOpen.value
             }
         }
+    },
+    methods:{
+        ...mapActions([
+            "Auth_Manage_Logout"
+        ]),
+        Logout(){
+            this.Auth_Manage_Logout();
+            window.open('/management/login','_self');
+        }
+
     },
     computed : {
         ...mapGetters({

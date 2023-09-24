@@ -23,8 +23,8 @@ class NewsStoreRequest extends FormRequest
     {
 
         return [
-            'title' => 'required|max:225',
-            'link' => 'required|max:225',
+            'title' => 'required',
+            'link' => 'required',
             'image' => 'nullable|image',
         ];
     }
