@@ -87,6 +87,12 @@ const routes = [
         component :Front_Implement_Request,
         meta : {title : 'درخواست ثبت ادوات '}
     },
+    {
+        path : "/plans/pay/result",
+        name : "payment_result",
+        component :Front_Plans_Result,
+        meta : {title : 'نتیجه پرداخت '}
+    },
 
 
 
