@@ -8,7 +8,7 @@ export default {
     mounted() {
       this.Get_Categories();
       this.Get_Implements();
-      if (localStorage.key('keshavarz_search_result')){
+      if (localStorage.getItem('keshavarz_search_result')){
           this.search_result = JSON.parse(localStorage.getItem('keshavarz_search_result'));
           this.show_form=false;
       }
