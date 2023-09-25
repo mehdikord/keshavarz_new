@@ -20,6 +20,7 @@ import Helper from "./helpers/Helper";
 import Front_Global_Info_Loading from "./front/globals/Front_Global_Info_Loading.vue";
 import axios from "axios";
 import moment from 'moment-jalaali';
+import './../../src/registerServiceWorker'
 
 
 
