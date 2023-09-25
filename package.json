@@ -1,28 +1,30 @@
 {
-    "private": true,
-    "scripts": {
-        "dev": "vite",
-        "build": "vite build"
-    },
-    "devDependencies": {
-        "@quasar/vite-plugin": "^1.3.1",
-        "axios": "^1.1.2",
-        "laravel-vite-plugin": "^0.7.2",
-        "sass": "^1.32.12",
-        "vite": "^4.0.0",
-        "vite-plugin-pwa": "^0.16.5"
-    },
-    "dependencies": {
-        "@neshan-maps-platform/vue3-openlayers": "^1.0.6",
-        "@quasar/extras": "^1.16.3",
-        "@vdcrea/vue-leaflet": "gitlab:vdcrea/vue-leaflet",
-        "@vitejs/plugin-vue": "^4.2.1",
-        "moment-jalaali": "^0.10.0",
-        "postcss-rtlcss": "^4.0.6",
-        "quasar": "^2.11.10",
-        "vue": "^3.2.36",
-        "vue-router": "^4.1.6",
-        "vue3-persian-datetime-picker": "^1.2.2",
-        "vuex": "^4.0.2"
-    }
+  "private": true,
+  "scripts": {
+    "build": "vite build",
+    "dev": "vite"
+  },
+  "dependencies": {
+    "@neshan-maps-platform/vue3-openlayers": "^1.0.6",
+    "@quasar/extras": "^1.16.3",
+    "@vdcrea/vue-leaflet": "gitlab:vdcrea/vue-leaflet",
+    "@vitejs/plugin-vue": "^4.2.1",
+    "moment-jalaali": "^0.10.0",
+    "postcss-rtlcss": "^4.0.6",
+    "quasar": "^2.11.10",
+    "register-service-worker": "^1.7.2",
+    "vue": "^3.2.36",
+    "vue-router": "^4.1.6",
+    "vue3-persian-datetime-picker": "^1.2.2",
+    "vuex": "^4.0.2"
+  },
+  "devDependencies": {
+    "@quasar/vite-plugin": "^1.3.1",
+    "@vue/cli-plugin-pwa": "~5.0.0",
+    "axios": "^1.1.2",
+    "laravel-vite-plugin": "^0.7.2",
+    "sass": "^1.32.12",
+    "vite": "^4.0.0",
+    "vite-plugin-pwa": "^0.16.5"
+  }
 }
