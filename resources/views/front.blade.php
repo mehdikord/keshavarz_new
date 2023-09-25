@@ -3,9 +3,9 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta name="enamad" content="860688" >
+    <meta name="enamad" content="undefined" >
 
-    <title>860688</title>
+    <title>undefined</title>
     <link rel="icon" href="logo.png">
     <link rel="stylesheet" href="{{asset('front/css/font.css')}}">
 
