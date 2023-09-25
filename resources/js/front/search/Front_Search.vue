@@ -37,6 +37,29 @@ export default {
             implements :[],
             search_result:[],
             map_zoom:{ latitude: 36.83951508755615, longitude: 54.43313598632812 },
+            filter_options : [
+                {
+                    label: 'تصادفی',
+                    value: 'random',
+                },
+                {
+                    label: 'کمترین فاصله',
+                    value: 'min_dis',
+                },
+                {
+                    label: 'بیشترین فاصله',
+                    value: 'max_dis',
+                },
+                {
+                    label: 'کمترین قیمت',
+                    value: 'min_price',
+                },
+                {
+                    label: 'بیشترین قیمت',
+                    value: 'max_price',
+                }
+            ],
+            filter_select : 'random'
 
         }
     },
@@ -166,7 +189,19 @@ export default {
             this.category_id=null;
             this.implement_id=null;
             this.show_form=true
+        },
+        SortByKey(array, key, order) {
+            return array.sort((a, b) => {
+                let comparison = 0;
+                if (a[key] > b[key]) {
+                    comparison = 1;
+                } else if (a[key] < b[key]) {
+                    comparison = -1;
+                }
+                return order === 'desc' ? comparison * -1 : comparison;
+            });
         }
+
 
 
     },
@@ -186,6 +221,26 @@ export default {
                     }
                 })
             }
+        },
+        Do_Filter(){
+            if (this.filter_select === 'min_dis'){
+                this.search_result = this.SortByKey(this.search_result,'dis','asc')
+            }
+            if (this.filter_select === 'max_dis'){
+                this.search_result = this.SortByKey(this.search_result,'dis','desc')
+            }
+            if (this.filter_select === 'min_price'){
+                this.search_result = this.SortByKey(this.search_result,'price','asc')
+            }
+            if (this.filter_select === 'max_price'){
+                this.search_result = this.SortByKey(this.search_result,'price','desc')
+            }
+            if (this.filter_select === 'random'){
+                if (localStorage.getItem('keshavarz_search_result')){
+                    this.search_result = JSON.parse(localStorage.getItem('keshavarz_search_result'));
+                }
+            }
+
         }
     },
 }
@@ -346,8 +401,29 @@ export default {
                         <template v-else>
                             <template v-if="search_result.length">
                                 <div class="q-mb-md search-text text-indigo">
-                                    {{ search_result.length }} کاربر برای ارائه این خدمت یافت شد
+                                    <strong>{{ search_result.length }}</strong> کاربر برای ارائه این خدمت یافت شد
                                 </div>
+                                <div class="q-mb-lg">
+                                    <strong>مرتب سازی نتایج بر اساس :</strong>
+                                    <div class="q-mt-md">
+                                        <q-select
+                                            filled
+                                            rounded
+                                            color="indigo"
+                                            transition-show="flip-up"
+                                            transition-hide="flip-down"
+                                            v-model="filter_select"
+                                            label="انتخاب ترتیب نمایش"
+                                            :options="filter_options"
+                                            emit-value
+                                            map-options
+                                            @change="Do_Filter"
+                                            behavior="menu"
+                                        >
+                                        </q-select>
+                                    </div>
+                                </div>
+
                                 <search_profile v-for="user in search_result" :user="user" class="q-mb-md"></search_profile>
                             </template >
                             <template v-else>
