@@ -43,6 +43,14 @@ Route::middleware(['auth:users'])->group(function (){
 
     });
 
+    Route::prefix('lands')->group(function (){
+
+        Route::get('',[\App\Http\Controllers\User\Lands\LandsController::class,'index']);
+        Route::post('',[\App\Http\Controllers\User\Lands\LandsController::class,'store']);
+        Route::delete('/{id}',[\App\Http\Controllers\User\Lands\LandsController::class,'delete']);
+
+    });
+
     Route::prefix('provider')->group(function (){
 
         Route::get('range',[\App\Http\Controllers\User\Profile\ProfileController::class,'range']);
