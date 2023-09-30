@@ -5,12 +5,12 @@ export default {
 </script>
 
 <template>
-    <q-footer elevated class="bg-blue-grey-10 text-white">
+    <q-footer elevated class="text-white" style="background: #1E1E2D">
         <div class="footer-padding">
             <div class="row no-wrap justify-center">
                 <div class="col text-center">
                     <router-link :to="{name : 'profile'}">
-                        <div  :class="{'text-positive' : this.$route.name === 'profile'}">
+                        <div  :class="{'text-yellow-8' : this.$route.name === 'profile'}">
                         <q-icon name="fas fa-user" class="icon-size"></q-icon>
                         <div class="menu-text">حساب کاربری</div>
                         </div>
@@ -18,7 +18,7 @@ export default {
                 </div>
                 <div class="col text-center">
                     <router-link :to="{name : 'search'}">
-                        <div  :class="{'text-positive' : this.$route.name === 'search'}">
+                        <div  :class="{'text-yellow-8' : this.$route.name === 'search'}">
                             <q-icon name="fas fa-magnifying-glass" class="icon-size"></q-icon>
                             <div class="menu-text">جستجو خدمات</div>
                         </div>
@@ -27,7 +27,7 @@ export default {
                 </div>
                 <div class="col text-center" >
                     <router-link :to="{name : 'index'}">
-                        <div  :class="{'text-positive' : this.$route.name === 'index'}">
+                        <div  :class="{'text-yellow-8' : this.$route.name === 'index'}">
                             <q-icon name="fab fa-pagelines" class="icon-size"></q-icon>
                             <div class="menu-text">کشاورز</div>
                         </div>
@@ -36,7 +36,7 @@ export default {
                 </div>
                 <div class="col text-center">
                     <router-link :to="{name : 'profile_provider'}">
-                        <div  :class="{'text-positive' : this.$route.name === 'profile_provider'}">
+                        <div  :class="{'text-yellow-8' : this.$route.name === 'profile_provider'}">
                             <q-icon name="fas fa-tractor" class="icon-size"></q-icon>
                             <div class="menu-text">ارائه خدمات</div>
                         </div>
@@ -45,9 +45,9 @@ export default {
                 </div>
                 <div class="col text-center">
                     <router-link :to="{name : 'news'}">
-                        <div  :class="{'text-positive' : this.$route.name === 'news'}">
-                            <q-icon name="fas fa-newspaper" class="icon-size"></q-icon>
-                            <div class="menu-text">اخبار روز</div>
+                        <div  :class="{'text-yellow-8' : this.$route.name === 'news'}">
+                            <q-icon name="fas fa-mountain-sun" class="icon-size"></q-icon>
+                            <div class="menu-text">زمین های من</div>
                         </div>
                     </router-link>
 

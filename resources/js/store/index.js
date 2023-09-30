@@ -61,6 +61,7 @@ const store = createStore({
                 state.Auth_Manage = item
             }
         },
+
         AuthUserSync(state){
             if (localStorage.getItem('user_auth_token') && localStorage.getItem('user_auth_user')){
                 var item;

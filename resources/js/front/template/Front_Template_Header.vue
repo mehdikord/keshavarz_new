@@ -17,76 +17,82 @@ export default {
 <template>
 
 
-    <q-header elevated class="bg-blue-grey-10 text-white">
+    <q-header elevated class="top-menu text-white" >
         <q-toolbar>
-            <q-btn dense flat round icon="fas fa-list" @click="toggleLeftDrawer" />
 
-            <q-toolbar-title>
+            <q-btn  flat round icon="fas fa-list" @click="toggleLeftDrawer" />
+
+            <q-toolbar-title class="text-right">
+                <strong class="text-yellow-8 q-mr-sm page-title">کشاورز</strong>
                 <q-avatar>
                     <img src="/logo.png">
                 </q-avatar>
-                <strong class="text-positive q-ml-sm page-title">کشاورز</strong>
-                <span class="q-ml-sm q-mr-sm">
-                    <q-icon name="fas fa-arrow-left" class="font-16"></q-icon>
-                </span>
-                <span class="page-text">
-                    {{this.$route.meta.title}}
-                </span>
+
             </q-toolbar-title>
 
         </q-toolbar>
     </q-header>
 
-    <q-drawer v-model="leftDrawerOpen" side="left" behavior="mobile" elevated style="background: #212121">
+    <q-drawer v-model="leftDrawerOpen" side="left" behavior="mobile" elevated style="background: #1E1E2D">
         <q-list >
             <q-item clickable v-ripple :to="{name:'index'}" class="menu-padding">
                 <q-item-section avatar >
-                    <q-icon color="positive" name="fas fa-home font-28" />
+                    <q-icon color="yellow-7" name="fas fa-home font-26" />
                 </q-item-section>
                 <q-item-section class="text-white menu-text">صفحه اصلی</q-item-section>
             </q-item>
-            <q-separator color="grey-9"/>
+            <q-separator  />
+            <q-item clickable v-ripple :to="{name:'news'}" class="menu-padding">
+                <q-item-section avatar >
+                    <q-icon color="yellow-7" name="fas fa-newspaper font-26" />
+                </q-item-section>
+                <q-item-section class="text-white menu-text">خبرنامه کشاورزی</q-item-section>
+            </q-item>
+            <q-separator  />
             <q-item clickable v-ripple :to="{name:'pages_about'}" class="menu-padding">
                 <q-item-section avatar >
-                    <q-icon color="positive"  name="fas fa-info-circle font-28" />
+                    <q-icon color="yellow-7"  name="fas fa-info-circle font-26" />
                 </q-item-section>
                 <q-item-section class="text-white menu-text">درباره کشاورز</q-item-section>
             </q-item>
-            <q-separator color="grey-9"/>
+            <q-separator/>
             <q-item clickable v-ripple :to="{name:'implements_request'}" class="menu-padding">
                 <q-item-section avatar >
-                    <q-icon color="positive"  name="fas fa-star font-28" />
+                    <q-icon color="yellow-7"  name="fas fa-star font-26" />
                 </q-item-section>
                 <q-item-section class="text-white menu-text">درخواست ثبت ادوات</q-item-section>
             </q-item>
-            <q-separator color="grey-9"/>
+            <q-separator/>
             <q-item clickable v-ripple :to="{name:'pages_contact'}" class="menu-padding">
                 <q-item-section avatar >
-                    <q-icon color="positive"  name="fas fa-headset font-28" />
+                    <q-icon color="yellow-7"  name="fas fa-headset font-26" />
                 </q-item-section>
                 <q-item-section class="text-white menu-text">ارتباط با ما</q-item-section>
             </q-item>
-            <q-separator color="grey-9"/>
+            <q-separator/>
             <q-item clickable v-ripple :to="{name:'pages_services'}" class="menu-padding">
                 <q-item-section avatar >
-                    <q-icon color="positive"  name="fas fa-table-cells-large font-28" />
+                    <q-icon color="yellow-7"  name="fas fa-table-cells-large font-26" />
                 </q-item-section>
                 <q-item-section class="text-white menu-text">خدمات کشاورز</q-item-section>
             </q-item>
-            <q-separator color="grey-9"/>
+            <q-separator/>
             <q-item clickable v-ripple :to="{name:'pages_faqs'}" class="menu-padding">
                 <q-item-section avatar >
-                    <q-icon color="positive"  name="fas fa-question font-28" />
+                    <q-icon color="yellow-7"  name="fas fa-question font-26" />
                 </q-item-section>
                 <q-item-section class="text-white menu-text">سوالات متداول</q-item-section>
             </q-item>
-            <q-separator color="grey-9"/>
+            <q-separator/>
         </q-list>
     </q-drawer>
 
 </template>
 
 <style scoped>
+.w-85{
+    width: 90%!important;
+}
 .page-text{
     font-size: 16px;
     font-weight: 600;
@@ -99,13 +105,23 @@ export default {
     padding-top: 14px;
     padding-bottom: 14px;
 }
+.top-menu{
+    background: #1E1E2D;
+    padding-top: 7px;
+    padding-bottom: 7px;
+}
 @media only screen and (max-width: 600px) {
     .page-text{
         font-size: 13px;
         font-weight: 500;
     }
     .page-title{
-        font-size: 18px;
+        font-size: 16px;
+    }
+    .top-menu{
+        background: #1E1E2D;
+        padding-top: 3px;
+        padding-bottom: 3px;
     }
 }
 </style>

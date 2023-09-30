@@ -74,6 +74,7 @@ class AuthRepository implements AuthInterface
      *
      * @return \Illuminate\Http\JsonResponse
      */
+
     protected function respondWithToken($token)
     {
         return response()->json([

@@ -84,7 +84,7 @@ App.mixin({
                     icon : icon,
                     color : color,
                     progress : true,
-                    position: "bottom"
+                    position: "top"
 
                 });
             }else {
@@ -93,7 +93,7 @@ App.mixin({
                     iconSize:'md',
                     message: message,
                     progress : true,
-                    position: "bottom"
+                    position: "top"
                 });
             }
         },
