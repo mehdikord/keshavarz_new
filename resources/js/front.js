@@ -85,7 +85,6 @@ App.mixin({
                     color : color,
                     progress : true,
                     position: "top"
-
                 });
             }else {
                 this.$q.notify({

@@ -44,8 +44,8 @@ export default {
 
                 </div>
                 <div class="col text-center">
-                    <router-link :to="{name : 'news'}">
-                        <div  :class="{'text-yellow-8' : this.$route.name === 'news'}">
+                    <router-link :to="{name : 'lands'}">
+                        <div  :class="{'text-yellow-8' : this.$route.name === 'lands'}">
                             <q-icon name="fas fa-mountain-sun" class="icon-size"></q-icon>
                             <div class="menu-text">زمین های من</div>
                         </div>
