@@ -121,6 +121,11 @@ class User extends Authenticatable implements JWTSubject
         return $this->hasMany(User_Day::class,'user_id');
     }
 
+    public function lands(): HasMany
+    {
+        return $this->hasMany(User_Land::class,'user_id');
+    }
+
     public function referrals()
     {
         return $this->hasMany(__CLASS__,'referral_by');

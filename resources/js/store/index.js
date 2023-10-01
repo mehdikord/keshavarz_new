@@ -13,6 +13,7 @@ import forms from "./modules/forms/forms";
 import slider from "./modules/slider/slider";
 import news from "./modules/news/news";
 import invoices from "./modules/invoices/Invoices";
+import lands from "./modules/lands/lands";
 const store = createStore({
     state(){
         return {
@@ -37,6 +38,7 @@ const store = createStore({
         slider,
         news,
         invoices,
+        lands,
 
     },
 
@@ -61,6 +63,7 @@ const store = createStore({
                 state.Auth_Manage = item
             }
         },
+
         AuthUserSync(state){
             if (localStorage.getItem('user_auth_token') && localStorage.getItem('user_auth_user')){
                 var item;

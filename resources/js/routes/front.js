@@ -13,6 +13,7 @@ import Front_Page_Contact from "../front/pages/Front_Page_Contact.vue";
 import Front_Page_Services from "../front/pages/Front_Page_Services.vue";
 import Front_Page_Faq from "../front/pages/Front_Page_Faq.vue";
 import Front_Implement_Request from "../front/implement/Front_Implement_Request.vue";
+import Front_Lands from "../front/lands/Front_Lands.vue";
 
 const routes = [
     {
@@ -32,6 +33,12 @@ const routes = [
         name : "provider_profile",
         component : Front_Provider_Profile,
         meta : {title : 'پروفایل خدمات دهنده'}
+    },
+    {
+        path : "/lands",
+        name : "lands",
+        component : Front_Lands,
+        meta : {title : 'زمین های من'}
     },
     {
         path : "/news",

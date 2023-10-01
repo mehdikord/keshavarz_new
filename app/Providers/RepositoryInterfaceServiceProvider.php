@@ -10,6 +10,7 @@ use App\Interfaces\Dashboard\DashboardInterface;
 use App\Interfaces\Faqs\FaqsInterface;
 use App\Interfaces\Implements\ImplementInterface;
 use App\Interfaces\Invoices\InvoiceInterface;
+use App\Interfaces\Lands\LandsInterface;
 use App\Interfaces\News\NewsInterface;
 use App\Interfaces\Plans\PlansInterface;
 use App\Interfaces\Products\ProductsInterface;
@@ -25,6 +26,7 @@ use App\Repository\Dashboard\DashboardRepository;
 use App\Repository\Faqs\FaqsRepository;
 use App\Repository\Implements\ImplementRepository;
 use App\Repository\Invoices\InvoiceRepository;
+use App\Repository\Lands\LandsRepository;
 use App\Repository\News\NewsRepository;
 use App\Repository\Plans\PlansRepository;
 use App\Repository\Products\ProductsRepository;
@@ -56,6 +58,7 @@ class RepositoryInterfaceServiceProvider extends ServiceProvider
         $this->app->bind(ContactsInterface::class,ContactsRepository::class);
         $this->app->bind(InvoiceInterface::class,InvoiceRepository::class);
         $this->app->bind(DashboardInterface::class,DashboardRepository::class);
+        $this->app->bind(LandsInterface::class,LandsRepository::class);
 
     }
 
