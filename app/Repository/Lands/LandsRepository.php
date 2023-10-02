@@ -25,7 +25,7 @@ class LandsRepository implements LandsInterface
             'title' => $request->title,
             'description' => $request->description,
             'area' => $request->area,
-            'location' => $request->location,
+            'location' => json_encode($request->location, JSON_THROW_ON_ERROR),
             'image' => $image
         ]);
         return response_success($item,'زمین شما با موفقیت اضافه شد');
@@ -41,7 +41,11 @@ class LandsRepository implements LandsInterface
 
     public function user_delete($item)
     {
-
+        if ($item->user_id !== auth('users')->id()){
+            return response_custom_error('access denied');
+        }
+        $item->delete();
+        return  response_success([],'زمین مورد نظر باموفقیت حذف شد');
     }
 
 }

@@ -16,7 +16,13 @@ export default {
         },
         LandsUserStore(_,item){
             return new Promise((resolve,reject) => {
-                axios.post('faqs',item).then((result) => {
+                let data = new  FormData();
+                if (item.title){data.append('title',item.title)}
+                if (item.area){data.append('area',item.area)}
+                if (item.location){data.append('location',item.location)}
+                if (item.image){data.append('image',item.image,item.image.name)}
+
+                axios.post('users/lands',data).then((result) => {
                     resolve(result);
                 }).catch(error => {
                     reject(error);
@@ -34,7 +40,7 @@ export default {
         },
         LandsUserDelete(_,item){
             return new Promise((resolve,reject) => {
-                axios.delete('faqs/'+item).then((result) => {
+                axios.delete('users/lands/'+item).then((result) => {
                     resolve(result);
                 }).catch(error => {
                     reject(error);
