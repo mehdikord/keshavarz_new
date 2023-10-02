@@ -308,7 +308,6 @@ export default {
                                 @change="GetCities"
                                 :error="this.MixinValidationCheck(errors,'province_id')"
                             >
-
                                 <template v-slot:error>
                                     <Error_Validation :errors="this.MixinValidation(errors,'province_id')"></Error_Validation>
                                 </template>

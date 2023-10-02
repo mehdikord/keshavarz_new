@@ -47,7 +47,7 @@ Route::middleware(['auth:users'])->group(function (){
 
         Route::get('',[\App\Http\Controllers\User\Lands\LandsController::class,'index']);
         Route::post('',[\App\Http\Controllers\User\Lands\LandsController::class,'store']);
-        Route::delete('/{id}',[\App\Http\Controllers\User\Lands\LandsController::class,'delete']);
+        Route::delete('/{land}',[\App\Http\Controllers\User\Lands\LandsController::class,'delete']);
 
     });
 

@@ -5,6 +5,7 @@ namespace App\Http\Controllers\User\Lands;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Lands\LandsUserStoreRequest;
 use App\Interfaces\Lands\LandsInterface;
+use App\Models\User_Land;
 use Illuminate\Http\Request;
 
 class LandsController extends Controller
@@ -23,7 +24,11 @@ class LandsController extends Controller
     public function store(LandsUserStoreRequest $request)
     {
         return $this->repository->user_store($request);
+    }
 
+    public function delete(User_Land $land)
+    {
+        return $this->repository->user_delete($land);
     }
 
 
