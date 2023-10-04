@@ -3,14 +3,13 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta name="enamad" content="496845" >
+    <meta name="enamad" content="595012" >
 
-    <title>915160</title>
+    <title>595012</title>
     <link rel="icon" href="logo.png">
     <link rel="stylesheet" href="{{asset('front/css/font.css')}}">
 
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>My title here</title>
     <meta name="description" content="My description here">
 
     @vite(['resources/js/front.js'])
