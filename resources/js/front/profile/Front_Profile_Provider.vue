@@ -373,6 +373,51 @@ export default {
                 <template v-else>
                     <global_info_loading class="q-mt-xl" v-if="!user"></global_info_loading>
                     <template v-else>
+                        <div class="q-mt-md q-mb-lg">
+                            <div class="row">
+                                <div class="col-md-3 col-sm-6 col-xs-6 q-px-xs q-mt-sm">
+                                    <router-link :to="{name : 'profile_provider_range'}">
+                                        <q-card class="menu-bg pointer">
+                                            <q-card-section>
+                                                <q-img src="/front/images/map.png" class="menu-img" />
+                                                <strong class="text-white q-ml-sm menu-title">محدوده فعالیت</strong>
+                                            </q-card-section>
+                                        </q-card>
+                                    </router-link>
+
+                                </div>
+                                <div class="col-md-3 col-sm-6 col-xs-6 q-px-xs q-mt-sm">
+                                    <q-card class="menu-bg">
+                                        <q-card-section>
+                                            <q-img src="/front/images/tractor.png" class="menu-img" />
+                                            <strong class="text-white q-ml-sm menu-title">ادوات قابل ارائه</strong>
+                                        </q-card-section>
+                                    </q-card>
+                                </div>
+                                <div class="col-md-3 col-sm-6 col-xs-6 q-px-xs q-mt-sm">
+                                    <q-card class="menu-bg">
+                                        <q-card-section>
+                                            <q-img src="/front/images/sleep.png" class="menu-img" />
+                                            <strong class="text-white q-ml-sm menu-title">روز های تعطیل</strong>
+                                        </q-card-section>
+                                    </q-card>
+                                </div>
+                                <div class="col-md-3 col-sm-6 col-xs-6 q-px-xs q-mt-sm">
+                                    <q-card class="menu-bg">
+                                        <q-card-section>
+                                            <q-img src="/front/images/gallery.png" class="menu-img" />
+                                            <strong class="text-white q-ml-sm menu-title">گالری تصاویر شما</strong>
+                                        </q-card-section>
+                                    </q-card>
+                                </div>
+
+                            </div>
+
+                        </div>
+
+
+
+
                         <q-card>
                             <q-card-section class="info-title bg-teal-7 text-white">
                                 اطلاعات مربوط به موقعیت جغرافیایی و محدوده فعالیت
@@ -799,6 +844,13 @@ export default {
 </template>
 
 <style scoped>
+.menu-img{
+    width: 75px;
+}
+.menu-bg{
+    background-color: #011133;
+}
+
 .custom-input{
     display: none;
 }
@@ -911,7 +963,12 @@ export default {
 }
 
 @media only screen and (max-width: 600px) {
-
+    .menu-img{
+        width: 40px;
+    }
+    .menu-title{
+        font-size: 13px;
+    }
     .title{
         font-size: 15px;
     }
