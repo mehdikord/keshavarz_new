@@ -14,8 +14,6 @@ export default {
             this.GetUserGallery();
             this.GetUserDays();
         }
-
-
     },
     data(){
         return{
@@ -373,6 +371,7 @@ export default {
                 <template v-else>
                     <global_info_loading class="q-mt-xl" v-if="!user"></global_info_loading>
                     <template v-else>
+
                         <div class="q-mt-md q-mb-lg">
                             <div class="row">
                                 <div class="col-md-3 col-sm-6 col-xs-6 q-px-xs q-mt-sm">
@@ -414,8 +413,6 @@ export default {
                             </div>
 
                         </div>
-
-
 
 
                         <q-card>
