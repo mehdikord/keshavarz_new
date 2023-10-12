@@ -62,6 +62,7 @@ export default {
                 this.items.unshift(res.data.result);
                 this.add_loading=false;
                 this.add=[];
+                this.AddDialog=false;
                 return this.NotifySuccess(res.data.message);
             }).catch(error => {
                 this.add_loading=false;

@@ -47,7 +47,7 @@ export default {
                     </q-banner>
                 </template>
                 <template v-else>
-                    <div class="q-mt-md q-mb-lg">
+                    <div class="q-mt-md q-mb-sm">
                             <div class="row">
                                 <div class="col-md-3 col-sm-6 col-xs-6 q-px-xs q-mt-sm ">
                                     <router-link :to="{name : 'profile_provider_range'}">
@@ -92,6 +92,22 @@ export default {
                                 </div>
                             </div>
                         </div>
+                    <div class="q-mt-md">
+                        <q-card class="shadow-4">
+                            <q-card-section>
+                                <div class="text-center">
+                                    <strong class="text-red req-title">درخواست های در انتظار تایید</strong>
+                                </div>
+                                <div class="text-center q-mt-xs">
+                                    <q-img src="/front/images/empty.png" class="req-img-empty" />
+                                    <div class="q-mt-xs text-grey-8">
+                                        درخواست جدیدی وجود ندارد
+                                    </div>
+                                </div>
+                            </q-card-section>
+                        </q-card>
+                    </div>
+
                 </template>
             </div>
         </div>
@@ -105,7 +121,6 @@ export default {
 .menu-bg{
     background-color: #011133;
 }
-
 .title{
     font-size: 18px;
 }
@@ -121,6 +136,14 @@ export default {
 .auth-btn{
     font-size: 14px;
 }
+.req-title{
+    font-size: 15px;
+}
+.req-img-empty{
+    width: 60px;
+}
+
+
 @media only screen and (max-width: 600px) {
     .menu-img{
         width: 40px;
@@ -143,5 +166,9 @@ export default {
     .auth-btn{
         font-size: 13px;
     }
+    .req-title{
+        font-size: 13px;
+    }
+
 }
 </style>
