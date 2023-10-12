@@ -36,7 +36,7 @@ export default {
                 </div>
                 <div class="col text-center">
                     <router-link :to="{name : 'profile_provider'}">
-                        <div  :class="{'text-yellow-8' : this.$route.name === 'profile_provider'}">
+                        <div  :class="{'text-yellow-8' : ['profile_provider','profile_provider_range','profile_provider_implements','profile_provider_days','profile_provider_gallery'].includes(this.$route.name) }">
                             <q-icon name="fas fa-tractor" class="icon-size"></q-icon>
                             <div class="menu-text">ارائه خدمات</div>
                         </div>
@@ -62,7 +62,7 @@ export default {
     padding: 10px 2px;
 }
 .icon-size{
-    font-size: 20px;
+    font-size: 25px;
 }
 .menu-text{
     margin-top: 4px;
@@ -75,7 +75,7 @@ export default {
         padding: 12px 0 6px;
     }
     .icon-size{
-        font-size: 19px;
+        font-size: 20px;
     }
     .menu-text{
         margin-top: 6px;

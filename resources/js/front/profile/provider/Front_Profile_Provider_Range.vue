@@ -28,7 +28,7 @@ export default {
 
         Map_Marker(e){
             if (e.coords){
-                console.log(e.coords)
+                this.location=[];
                 this.location.push(e.coords[1]);
                 this.location.push(e.coords[0]);
             }
@@ -51,10 +51,8 @@ export default {
             }
             this.location_loading=true;
             this.ProfilesUserRangeUpdate({range:this.range,location:this.location}).then(res => {
-                console.log(res.data.result)
-                this.user.search_location = res.data.result.search_location;
-                this.user.search_range = res.data.result.search_range;
-
+                this.location=[];
+                this.GetProfile();
                 this.location_loading=false;
                 return this.NotifySuccess("تنظیمات موقعیت و محدوده فعالیت باموفقیت بروزرسانی شد")
             }).catch(error=>{
@@ -86,6 +84,7 @@ export default {
                 <q-btn :to="{name : 'profile_provider'}" color="red" size="sm" class="font-12" icon-right="fas fa-arrow-left q-ml-xs" glossy >بازگشت</q-btn>
             </div>
             <q-separator class="q-mt-sm q-mb-md" color="grey-2"/>
+
             <global_info_loading class="q-mt-xl" v-if="!user"></global_info_loading>
 
             <template v-else>
@@ -116,7 +115,7 @@ export default {
                 <q-card class="q-mt-sm">
                     <q-card-section>
                         <div class="location-box">
-                            <div class="info-subtitle text-green-8">
+                            <div class="info-subtitle text-red">
                                 موقعیت جغرافیایی : <span class="q-ml-sm">
                             <span class="text-blue-8" v-if="user.search_location">
                                 انتخاب شده
@@ -130,7 +129,7 @@ export default {
                                 موقعیت جغرافیایی شما که محدوده فعالیت تعیین شما توسط شما از آن نقطعه محاسبه میشود
                             </div>
                             <div class="text-center q-mt-md">
-                                <q-btn @click="show_map=!show_map" color="deep-purple-10" class="open-map-btn">باز کردن نقشه</q-btn>
+                                <q-btn @click="show_map=!show_map" color="indigo" class="open-map-btn" glossy rounded>باز کردن نقشه</q-btn>
                             </div>
                             <div v-show="location.length" class="q-mt-md text-green-8 text-center location-select">
                                 <q-icon name="fas fa-check"/>
@@ -158,8 +157,6 @@ export default {
                 </q-card>
             </template>
 
-
-
         </div>
     </div>
 
@@ -180,10 +177,6 @@ export default {
     width: 80px;
 }
 
-.info-title{
-    font-size: 15px;
-    font-weight: 500;
-}
 .info-subtitle{
     font-size: 14px;
     font-weight: 500;
@@ -201,7 +194,7 @@ export default {
 }
 .open-map-btn{
     width: 50%;
-    font-size: 13px;
+    font-size: 15px;
 }
 .map{
     width: 100%;
@@ -228,12 +221,6 @@ export default {
         width: 70px;
     }
 
-
-    .info-title{
-        font-size: 14px;
-        font-weight: 450;
-        text-align: center;
-    }
     .info-subtitle{
         font-size: 13px;
         font-weight: 500;
@@ -248,7 +235,7 @@ export default {
     }
     .open-map-btn{
         width: 50%;
-        font-size: 12px;
+        font-size: 14px;
     }
     .map{
         width: 100%;

@@ -15,6 +15,9 @@ import Front_Page_Faq from "../front/pages/Front_Page_Faq.vue";
 import Front_Implement_Request from "../front/implement/Front_Implement_Request.vue";
 import Front_Lands from "../front/lands/Front_Lands.vue";
 import Front_Profile_Provider_Range from "../front/profile/provider/Front_Profile_Provider_Range.vue";
+import Front_Profile_Provider_Implements from "../front/profile/provider/Front_Profile_Provider_Implements.vue";
+import Front_Profile_Provider_Days from "../front/profile/provider/Front_Profile_Provider_Days.vue";
+import Front_Profile_Provider_Gallery from "../front/profile/provider/Front_Profile_Provider_Gallery.vue";
 
 const routes = [
     {
@@ -108,6 +111,24 @@ const routes = [
         name : "profile_provider_range",
         component : Front_Profile_Provider_Range,
         meta : {title : 'تنظیمات موقعیت جغرافیایی و محدوده فعالیت'}
+    },
+    {
+        path : "/profile/provider/implements",
+        name : "profile_provider_implements",
+        component : Front_Profile_Provider_Implements,
+        meta : {title : 'تنظیمات اداوت قابل ارائه'}
+    },
+    {
+        path : "/profile/provider/days",
+        name : "profile_provider_days",
+        component : Front_Profile_Provider_Days,
+        meta : {title : 'تنظیمات روز های تعطلیل'}
+    },
+    {
+        path : "/profile/provider/gallery",
+        name : "profile_provider_gallery",
+        component : Front_Profile_Provider_Gallery,
+        meta : {title : 'تنظیمات گالری تصاویر'}
     },
 
 
