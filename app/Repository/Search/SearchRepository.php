@@ -1,6 +1,7 @@
 <?php
 namespace App\Repository\Search;
 use App\Interfaces\Search\SearchInterface;
+use App\Models\Request;
 use App\Models\Search;
 use App\Models\User;
 
@@ -27,9 +28,8 @@ class SearchRepository implements SearchInterface
         $users->whereHas('implements',function ($implement)use($request){
             $implement->where('implement_id',$request->implement_id);
         });
-
-
         $result=[];
+        $make_request=null;
         foreach ($users->get() as $user){
             $dis = location_distance(json_decode($user->search_location),$request->location);
             if ($dis <= $user->search_range){
@@ -62,8 +62,19 @@ class SearchRepository implements SearchInterface
                 ];
             }
         }
+        if (count($result)){
+            $make_request = Request::create([
+                'user_id' => auth()->id(),
+                'implement_id' => $request->implement_id,
+                'location' => json_encode($request->location, JSON_THROW_ON_ERROR),
+            ]);
+            $make_request->update(['code' => core_random_code($make_request->id,16)]);
+        }
         log_search_store(auth('users')->id(),$request->implement_id,$request->location,count($result));
-        return response_success($result);
+        return response_success([
+            'result' => $result,
+            'request' => $make_request
+        ]);
 
     }
 
