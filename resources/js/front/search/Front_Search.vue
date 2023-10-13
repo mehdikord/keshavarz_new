@@ -396,6 +396,7 @@ export default {
                     <div class="q-mt-lg">
                         <q-separator></q-separator>
                     </div>
+
                     <div class="q-mt-xl">
                         <global_search_loading v-if="search_loading"></global_search_loading>
                         <template v-else>

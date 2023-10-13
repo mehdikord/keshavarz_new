@@ -1,6 +1,6 @@
 <script>
 export default {
-    name: "Front_Profile_Provider_"
+    name: "Front_Profile_Provider_Waiting"
 }
 </script>
 

@@ -1,8 +1,13 @@
 <script>
 import {mapActions} from "vuex";
+import Front_Profile_Provider_Request_Waiting_Item
+    from "./provider/requests/Front_Profile_Provider_Request_Waiting_Item.vue";
 
 export default {
     name: "Front_Profile_Provider",
+    components : {
+        'request_waiting_item' : Front_Profile_Provider_Request_Waiting_Item,
+    },
     mounted() {
 
     },
@@ -97,11 +102,26 @@ export default {
                             <q-card-section>
                                 <div class="text-center">
                                     <strong class="text-red req-title">درخواست های در انتظار تایید</strong>
+                                    <q-icon name="fas fa-question-circle q-ml-sm font-20" class="text-indigo cursor-pointer">
+                                        <q-popup-proxy :offset="[90,10]">
+                                            <q-banner class="bg-indigo-6 text-white">
+                                                در صورت وجود درخواست شما میتوانید با استفاده از دکمه پذیرفتن، درخواست را قبول کرده و اطلاعات تماس شما برای درخواست کننده ارسال شود. توجه داشته باشید ممکن است درخواست ها برای خدمات دهندگان دیگر نیز ارسال شود و درصورت پذیرفتن سریع تر کاربر دیگر این درخواست از لیست شما حذف میگردد
+                                            </q-banner>
+                                        </q-popup-proxy>
+                                    </q-icon>
                                 </div>
-                                <div class="text-center q-mt-xs">
-                                    <q-img src="/front/images/empty.png" class="req-img-empty" />
-                                    <div class="q-mt-xs text-grey-8">
-                                        درخواست جدیدی وجود ندارد
+                                <div class="text-center text-grey-8">
+                                </div>
+
+<!--                                <div class="text-center q-mt-xs">-->
+<!--                                    <q-img src="/front/images/empty.png" class="req-img-empty" />-->
+<!--                                    <div class="q-mt-xs text-grey-8">-->
+<!--                                        درخواست جدیدی وجود ندارد-->
+<!--                                    </div>-->
+<!--                                </div>-->
+                                <div class="row justify-center q-mt-lg">
+                                    <div class="col-lg-4">
+                                        <request_waiting_item></request_waiting_item>
                                     </div>
                                 </div>
                             </q-card-section>
