@@ -59,7 +59,9 @@ export default {
                     value: 'max_price',
                 }
             ],
-            filter_select : 'random'
+            filter_select : 'random',
+            search_expansion:false,
+
 
         }
     },
@@ -104,6 +106,7 @@ export default {
             this.search_loading=true;
             this.SearchStart({implement_id : this.implement_id,location:this.location}).then(res => {
                 this.search_result=res.data.result;
+                this.search_expansion=false;
                 localStorage.setItem('keshavarz_search_result',JSON.stringify(this.search_result));
                 this.search_loading=false;
                 this.NotifySuccess("جستجو خدمات باموفقیت انجام شد")
@@ -263,6 +266,7 @@ export default {
             </div>
             <div class="q-mt-lg">
                 <q-expansion-item
+                    v-model="search_expansion"
                     class="shadow-4 overflow-hidden"
                     style="border-radius: 5px"
                     header-class="bg-teal-7 text-white"
@@ -385,6 +389,7 @@ export default {
                     </q-card>
                 </q-expansion-item>
 
+
                 <template v-if="show_form">
                     <q-card class="q-mt-md rounded-borders">
                         <q-card-section>
@@ -435,12 +440,12 @@ export default {
                     <q-expansion-item
                         class="shadow-4 overflow-hidden q-mt-lg"
                         style="border-radius: 5px"
-                        header-class="bg-grey-2"
+                        header-class="bg-grey-3"
                     >
                         <template v-slot:header>
                             <div class="req-title text-center" style="width: 100%">
                                 <strong class="text-teal-7 req-title">درخواست های در انتظار تایید</strong>
-                                <q-icon name="fas fa-question-circle q-ml-sm font-20" class="text-indigo cursor-pointer">
+                                <q-icon name="fas fa-question-circle q-ml-sm font-20" class="text-indigo cursor-pointer float-left">
                                     <q-popup-proxy :offset="[90,10]">
                                         <q-banner class="bg-indigo-6 text-white">
 
@@ -460,17 +465,40 @@ export default {
                             </q-card-section>
                         </q-card>
                     </q-expansion-item>
+                    <q-expansion-item
+                        class="shadow-4 overflow-hidden q-mt-md"
+                        style="border-radius: 5px"
+                        header-class="bg-grey-3"
+                    >
+                        <template v-slot:header>
+                            <div class="req-title text-center" style="width: 100%">
+                                <strong class="text-teal-7 req-title">درخواست های پایان یافته</strong>
+                                <q-icon name="fas fa-question-circle q-ml-sm font-20" class="text-indigo cursor-pointer float-left">
+                                    <q-popup-proxy :offset="[90,10]">
+                                        <q-banner class="bg-indigo-6 text-white">
 
-
-                    <div>
-                        <span class="result-title q-mr-sm">نتایج جستجو برای : </span>
-                        <span class="result-info text-red">{{category_name}}</span> / <span class="result-info text-red">{{implement_name}}</span>
-                        <q-btn @click="SearchClear" class="float-right research" color="deep-orange" rounded icon="fas fa-search q-mr-sm"> جستجو مجدد </q-btn>
+                                        </q-banner>
+                                    </q-popup-proxy>
+                                </q-icon>
+                            </div>
+                        </template>
+                        <q-card>
+                            <q-card-section>
+                                <div class="text-center q-mt-md">
+                                    <q-img src="/front/images/empty.png" class="req-img-empty" />
+                                    <div class="q-mt-xs text-grey-7">
+                                        درخواست جدیدی وجود ندارد
+                                    </div>
+                                </div>
+                            </q-card-section>
+                        </q-card>
+                    </q-expansion-item>
+                    <div class="q-mt-lg q-mb-md">
+                        <strong class="float-left text-grey-7">
+                            نتایج جستجو :
+                        </strong>
                     </div>
-                    <div class="q-mt-lg">
-                        <q-separator></q-separator>
-                    </div>
-
+                    <q-separator class="q-mt-xl" />
                     <div class="q-mt-xl">
                         <global_search_loading v-if="search_loading"></global_search_loading>
                         <template v-else>
@@ -532,7 +560,7 @@ export default {
     padding-bottom: 7px;
 }
 .req-title{
-    font-size: 15px;
+    font-size: 14px;
 }
 .req-img-empty{
     width: 60px;
