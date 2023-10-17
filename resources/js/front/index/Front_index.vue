@@ -132,8 +132,20 @@ export default {
                         مشاهده همه خبر ها
                     </router-link>
                 </div>
+            </div>
+            <div class="col-12">
+                <q-separator/>
+            </div>
+            <div class="col-lg-12 q-mt-lg q-px-sm mobile-padding">
+                <div class="font-iransans text-green-8">
+                    <strong>مجوز های کشاورز</strong>
+                </div>
+                <div class="q-mt-lg">
+                    <a referrerpolicy='origin' target='_blank' href='https://trustseal.enamad.ir/u?id=392965&code=aaNhobh3KdXmTZ9y8UNknp9dZGZ8t5Fo'><img referrerpolicy='origin' src='https://trustseal.enamad.ir/logo.aspx?id=392965&code=aaNhobh3KdXmTZ9y8UNknp9dZGZ8t5Fo' alt='' style='cursor:pointer' code='aaNhobh3KdXmTZ9y8UNknp9dZGZ8t5Fo'></a>
+                </div>
 
             </div>
+
         </div>
     </div>
 </template>
@@ -156,7 +168,7 @@ export default {
     font-weight: 600;
 }
 .news-all{
-    margin-top: 30px;
+    margin-top: 18px;
     margin-bottom: 30px;
     font-size: 20px;
     font-weight: 600;
@@ -187,7 +199,7 @@ export default {
         font-weight: 600;
     }
     .news-all{
-        margin-top: 20px;
+        margin-top: 15px;
         margin-bottom: 25px;
         font-size: 18px;
         font-weight: 600;
