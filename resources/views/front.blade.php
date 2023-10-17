@@ -5,7 +5,11 @@
     <meta charset="UTF-8">
     <meta name="enamad" content="595012" >
 
+<<<<<<< HEAD
     <title>595012</title>
+=======
+    <title>کشاورز - همراه همیشگی کشاورزان</title>
+>>>>>>> b3623e1339be3b21b2e7fd86f34faf737dc188f0
     <link rel="icon" href="logo.png">
     <link rel="stylesheet" href="{{asset('front/css/font.css')}}">
 

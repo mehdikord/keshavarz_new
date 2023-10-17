@@ -5,6 +5,7 @@ export default {
     state : {},
     mutations: {},
     actions:{
+
         UserMembersIndex(){
             return new Promise((resolve,reject) => {
                 axios.get('users/members').then((result) => {

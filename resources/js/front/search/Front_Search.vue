@@ -8,8 +8,11 @@ export default {
     mounted() {
       this.Get_Categories();
       this.Get_Implements();
+      this.Check_Customer();
       if (localStorage.getItem('keshavarz_search_result')){
-          this.search_result = JSON.parse(localStorage.getItem('keshavarz_search_result'));
+          let search_data = JSON.parse(localStorage.getItem('keshavarz_search_result'))
+          this.search_result = search_data.result;
+          this.search_request = search_data.request;
           this.show_form=false;
       }
     },
@@ -36,6 +39,7 @@ export default {
             categories :[],
             implements :[],
             search_result:[],
+            search_request:null,
             map_zoom:{ latitude: 36.83951508755615, longitude: 54.43313598632812 },
             filter_options : [
                 {
@@ -59,7 +63,10 @@ export default {
                     value: 'max_price',
                 }
             ],
-            filter_select : 'random'
+            filter_select : 'random',
+            search_expansion:false,
+            check_customer : 0,
+
 
         }
     },
@@ -68,7 +75,8 @@ export default {
         ...mapActions([
             "ImplementsCategoriesSelectIndex",
             "ImplementsSelectIndex",
-            "SearchStart"
+            "SearchStart",
+            "ProfilesUserCheckCustomer"
 
         ]),
         Get_Categories(){
@@ -103,8 +111,10 @@ export default {
             }
             this.search_loading=true;
             this.SearchStart({implement_id : this.implement_id,location:this.location}).then(res => {
-                this.search_result=res.data.result;
-                localStorage.setItem('keshavarz_search_result',JSON.stringify(this.search_result));
+                this.search_result=res.data.result.result;
+                this.search_request=res.data.result.request;
+                this.search_expansion=false;
+                localStorage.setItem('keshavarz_search_result',JSON.stringify(res.data.result));
                 this.search_loading=false;
                 this.NotifySuccess("جستجو خدمات باموفقیت انجام شد")
 
@@ -200,6 +210,16 @@ export default {
                 }
                 return order === 'desc' ? comparison * -1 : comparison;
             });
+        },
+        Check_Customer(){
+            if (this.AuthUserCheck()){
+                this.ProfilesUserCheckCustomer().then(res => {
+                    this.check_customer = res.data.result
+                }).catch(error => {
+                    return this.NotifyServerError();
+                })
+            }
+
         }
 
 
@@ -237,7 +257,7 @@ export default {
             }
             if (this.filter_select === 'random'){
                 if (localStorage.getItem('keshavarz_search_result')){
-                    this.search_result = JSON.parse(localStorage.getItem('keshavarz_search_result'));
+                    this.search_result = JSON.parse(localStorage.getItem('keshavarz_search_result')).result;
                 }
             }
 
@@ -261,145 +281,263 @@ export default {
                     کافیست اطلاعت مورد نیاز را به دقت وارد کرده و دکمه جستجو را بزنید و در وقت خود صرفه جویی کنید !
                 </p>
             </div>
-            <div class="q-mt-xl">
+            <template v-if="!this.AuthUserCheck()">
+                <q-banner rounded class="bg-orange-9 text-center">
+                    <strong class="auth-text text-white">
+                        کاربر گرامی برای تکمیل اطلاعات مربوط به ارائه خدمات خود ، ابتدا باید وارد حساب کاربری خود شوید
+                    </strong>
+                    <div class="q-mt-lg q-pb-md">
+                        <q-btn :to="{name:'profile'}" color="white" glossy text-color="dark" class="auth-btn">ثبت نام / ورود به حساب</q-btn>
+                    </div>
+                </q-banner>
+            </template>
+            <div v-else class="q-mt-lg">
+                <q-expansion-item
+                    v-model="search_expansion"
+                    class="shadow-4 overflow-hidden"
+                    style="border-radius: 5px"
+                    header-class="bg-teal-7 text-white"
+                    expand-icon-class="text-white"
+                >
+                    <template v-slot:header>
+                        <div class="new-search-header text-center">
+                            جستجوی خدمات کشاورزی
+                        </div>
+                    </template>
+                    <q-card>
+                        <q-card-section>
+                            <div class="form-box">
+                                <q-select
+                                    outlined
+                                    color="green-7"
+                                    transition-show="flip-up"
+                                    transition-hide="flip-down"
+                                    v-model="category_id"
+                                    label="انتخاب دسته بندی ادوات"
+                                    :options="categories"
+                                    emit-value
+                                    map-options
+                                    @filter="Filter_Select_Category"
+                                    :loading="loading_select_category"
+                                    use-input
+                                    behavior="dialog"
+                                    @change="Get_Select_Name"
+                                >
+                                    <template v-slot:no-option>
+                                        <q-item>
+                                            <q-item-section class="text-red">
+                                                گزینه ای یافت نشد
+                                            </q-item-section>
+                                        </q-item>
+                                    </template>
+                                    <template v-slot:option="scope">
+                                        <q-item v-bind="scope.itemProps">
+                                            <q-item-section avatar>
+                                                <global_image_categories :image="scope.opt.image"></global_image_categories>
+                                            </q-item-section>
+                                            <q-item-section>
+                                                <q-item-label>{{ scope.opt.label }}</q-item-label>
+                                            </q-item-section>
+                                        </q-item>
+                                    </template>
+                                    <template v-slot:error>
+                                    </template>
+                                </q-select>
+                            </div>
+                            <div class="form-box">
+                                <q-select
+                                    outlined
+                                    color="green-7"
+                                    transition-show="flip-up"
+                                    transition-hide="flip-down"
+                                    v-model="implement_id"
+                                    label="انتخاب ادوات"
+                                    :options="implements"
+                                    emit-value
+                                    map-options
+                                    @filter="Filter_Select_Implement"
+                                    :loading="loading_select_implements"
+                                    use-input
+                                    behavior="dialog"
+                                    @change="Get_Select_Name"
+                                >
+                                    <template v-slot:no-option>
+                                        <q-item>
+                                            <q-item-section class="text-red">
+                                                گزینه ای یافت نشد
+                                            </q-item-section>
+                                        </q-item>
+                                    </template>
+                                    <template v-slot:option="scope">
+                                        <q-item v-bind="scope.itemProps">
+                                            <q-item-section avatar>
+                                                <global_image_implements :image="scope.opt.image"></global_image_implements>
+                                            </q-item-section>
+                                            <q-item-section>
+                                                <q-item-label>{{ scope.opt.label }}</q-item-label>
+                                            </q-item-section>
+                                        </q-item>
+                                    </template>
+                                    <template v-slot:error>
+                                    </template>
+                                </q-select>
+
+                            </div>
+                            <div class="map-text text-center text-indigo">
+                                با استفاده از نقشه زیر ، موقعیت مکانی زمین خود را انتخاب کنید تا ما بتوانیم نزدیک ترین خدمات را برای شما پیدا کنیم
+                            </div>
+                            <div class="text-center q-mt-lg">
+                                <q-btn @click="show_map=!show_map" glossy rounded color="indigo" class="open-map-btn">باز کردن نقشه</q-btn>
+                            </div>
+                            <div v-show="location.length" class="q-mt-md text-positive text-center location-select">
+                                <q-icon name="fas fa-check"/>
+                                <span class="q-ml-sm">مختصات انتخاب شده است</span>
+                            </div>
+                            <div class="q-mt-md q-mb-md">
+                                <div v-if="show_map" class="map">
+                                    <NeshanMap
+                                        mapKey="web.eaf4d6d0f42a400bb9583fbd8496947f"
+                                        :center="{ latitude: 36.83951508755615, longitude: 54.43313598632812 }"
+                                        :zoom="10"
+                                        hide-layers
+                                        hide-search-container
+                                        @on-click="Map_Marker"
+                                    />
+                                </div>
+
+                            </div>
+                            <div class="q-mt-lg q-mb-lg">
+                                <q-separator/>
+                            </div>
+                            <div class="text-center q-mt-xl">
+                                <q-btn @click="Do_Search" glossy rounded color="green"  class="open-map-btn" icon="fas fa-search q-mr-sm"> جستجو خدمات کشاورزی </q-btn>
+                            </div>
+                        </q-card-section>
+                    </q-card>
+                </q-expansion-item>
+
                 <template v-if="show_form">
-                    <div class="form-box">
-                        <q-select
-                            outlined
-                            color="green-7"
-                            transition-show="flip-up"
-                            transition-hide="flip-down"
-                            v-model="category_id"
-                            label="انتخاب دسته بندی ادوات"
-                            :options="categories"
-                            emit-value
-                            map-options
-                            @filter="Filter_Select_Category"
-                            :loading="loading_select_category"
-                            use-input
-                            behavior="dialog"
-                            @change="Get_Select_Name"
-                        >
-                            <template v-slot:no-option>
-                                <q-item>
-                                    <q-item-section class="text-red">
-                                        گزینه ای یافت نشد
-                                    </q-item-section>
-                                </q-item>
-                            </template>
-                            <template v-slot:option="scope">
-                                <q-item v-bind="scope.itemProps">
-                                    <q-item-section avatar>
-                                        <global_image_categories :image="scope.opt.image"></global_image_categories>
-                                    </q-item-section>
-                                    <q-item-section>
-                                        <q-item-label>{{ scope.opt.label }}</q-item-label>
-                                    </q-item-section>
-                                </q-item>
-                            </template>
-                            <template v-slot:error>
-                            </template>
-                        </q-select>
-                    </div>
-                    <div class="form-box">
-                        <q-select
-                            outlined
-                            color="green-7"
-                            transition-show="flip-up"
-                            transition-hide="flip-down"
-                            v-model="implement_id"
-                            label="انتخاب ادوات"
-                            :options="implements"
-                            emit-value
-                            map-options
-                            @filter="Filter_Select_Implement"
-                            :loading="loading_select_implements"
-                            use-input
-                            behavior="dialog"
-                            @change="Get_Select_Name"
-                        >
-                            <template v-slot:no-option>
-                                <q-item>
-                                    <q-item-section class="text-red">
-                                        گزینه ای یافت نشد
-                                    </q-item-section>
-                                </q-item>
-                            </template>
-                            <template v-slot:option="scope">
-                                <q-item v-bind="scope.itemProps">
-                                    <q-item-section avatar>
-                                        <global_image_implements :image="scope.opt.image"></global_image_implements>
-                                    </q-item-section>
-                                    <q-item-section>
-                                        <q-item-label>{{ scope.opt.label }}</q-item-label>
-                                    </q-item-section>
-                                </q-item>
-                            </template>
-                            <template v-slot:error>
-                            </template>
-                        </q-select>
+                    <q-card class="q-mt-md rounded-borders">
+                        <q-card-section>
+                            <div class="text-center">
+                                <strong class="text-teal-7 req-title">درخواست های در انتظار تایید</strong>
+                                <q-icon name="fas fa-question-circle q-ml-sm font-20" class="text-indigo cursor-pointer">
+                                    <q-popup-proxy :offset="[90,10]">
+                                        <q-banner class="bg-indigo-6 text-white">
 
-                    </div>
-                    <div class="map-text text-center text-indigo">
-                        با استفاده از نقشه زیر ، موقعیت مکانی زمین خود را انتخاب کنید تا ما بتوانیم نزدیک ترین خدمات را برای شما پیدا کنیم
-                    </div>
-                    <div class="text-center q-mt-lg">
-                        <q-btn @click="show_map=!show_map" glossy rounded color="indigo" class="open-map-btn">باز کردن نقشه</q-btn>
-                    </div>
-                    <div v-show="location.length" class="q-mt-md text-positive text-center location-select">
-                        <q-icon name="fas fa-check"/>
-                        <span class="q-ml-sm">مختصات انتخاب شده است</span>
-                    </div>
-                    <div class="q-mt-md q-mb-md">
-                           <div v-if="show_map" class="map">
-                               <NeshanMap
-                                   mapKey="web.eaf4d6d0f42a400bb9583fbd8496947f"
-                                   :center="{ latitude: 36.83951508755615, longitude: 54.43313598632812 }"
-                                   :zoom="10"
-                                   hide-layers
-                                   hide-search-container
-                                   @on-click="Map_Marker"
-                               />
-                           </div>
+                                        </q-banner>
+                                    </q-popup-proxy>
+                                </q-icon>
+                            </div>
+                            <q-separator class="q-mt-sm" />
+                            <div class="text-center q-mt-md">
+                                <q-img src="/front/images/empty.png" class="req-img-empty" />
+                                <div class="q-mt-xs text-grey-7">
+                                    درخواست جدیدی وجود ندارد
+                                </div>
+                            </div>
+                        </q-card-section>
+                    </q-card>
+                    <q-card class="q-mt-md rounded-borders q-mt-md">
+                        <q-card-section>
+                            <div class="text-center">
+                                <strong class="text-grey-9 req-title">درخواست های پایان یافته</strong>
+                                <q-icon name="fas fa-question-circle q-ml-sm font-20" class="text-indigo cursor-pointer">
+                                    <q-popup-proxy :offset="[90,10]">
+                                        <q-banner class="bg-indigo-6 text-white">
 
-                    </div>
-                    <div class="q-mt-lg q-mb-lg">
-                        <q-separator/>
-                    </div>
-                    <div class="text-center q-mt-xl">
-                        <q-btn @click="Do_Search" glossy rounded color="green"  class="open-map-btn" icon="fas fa-search q-mr-sm"> جستجو خدمات کشاورزی </q-btn>
+                                        </q-banner>
+                                    </q-popup-proxy>
+                                </q-icon>
+                            </div>
+                            <q-separator class="q-mt-sm" />
+                            <div class="text-center q-mt-md">
+                                <q-img src="/front/images/empty.png" class="req-img-empty" />
+                                <div class="q-mt-xs text-grey-7">
+                                    درخواست جدیدی وجود ندارد
+                                </div>
+                            </div>
+                        </q-card-section>
+                    </q-card>
 
-                        <q-dialog  v-model="authDialog">
-                            <q-card class="image-dialog">
-                                <q-card-section>
-                                    <div class="text-center">
-                                        <q-icon name="fas fa-triangle-exclamation fa-3x fa-beat text-red"></q-icon>
-                                    </div>
-                                    <div class="text-center q-mt-lg text-red q-mb-md">
-                                        <strong>کاربر گرامی برای جستجو خدمات و مشاهده نتایج ابتدا باید وارد حساب کاربری خود شوید</strong>
-                                        <q-btn :to="{name:'profile'}" class="q-mt-lg" glossy color="teal-7">ثبت نام / ورود به حساب کاربری</q-btn>
-                                    </div>
-
-                                </q-card-section>
-
-                            </q-card>
-                        </q-dialog>
-                    </div>
                 </template>
 
                 <template v-else>
-                    <div>
-                        <span class="result-title q-mr-sm">نتایج جستجو برای : </span>
-                        <span class="result-info text-red">{{category_name}}</span> / <span class="result-info text-red">{{implement_name}}</span>
-                        <q-btn @click="SearchClear" class="float-right research" color="deep-orange" rounded icon="fas fa-search q-mr-sm"> جستجو مجدد </q-btn>
+                    <q-expansion-item
+                        class="shadow-4 overflow-hidden q-mt-lg"
+                        style="border-radius: 5px"
+                        header-class="bg-grey-3"
+                    >
+                        <template v-slot:header>
+                            <div class="req-title text-center" style="width: 100%">
+                                <strong class="text-teal-7 req-title">درخواست های در انتظار تایید</strong>
+                                <q-icon name="fas fa-question-circle q-ml-sm font-20" class="text-indigo cursor-pointer float-left">
+                                    <q-popup-proxy :offset="[90,10]">
+                                        <q-banner class="bg-indigo-6 text-white">
+
+                                        </q-banner>
+                                    </q-popup-proxy>
+                                </q-icon>
+                            </div>
+                        </template>
+                        <q-card>
+                            <q-card-section>
+                                <div class="text-center q-mt-md">
+                                    <q-img src="/front/images/empty.png" class="req-img-empty" />
+                                    <div class="q-mt-xs text-grey-7">
+                                        درخواست جدیدی وجود ندارد
+                                    </div>
+                                </div>
+                            </q-card-section>
+                        </q-card>
+                    </q-expansion-item>
+                    <q-expansion-item
+                        class="shadow-4 overflow-hidden q-mt-md"
+                        style="border-radius: 5px"
+                        header-class="bg-grey-3"
+                    >
+                        <template v-slot:header>
+                            <div class="req-title text-center" style="width: 100%">
+                                <strong class="text-teal-7 req-title">درخواست های پایان یافته</strong>
+                                <q-icon name="fas fa-question-circle q-ml-sm font-20" class="text-indigo cursor-pointer float-left">
+                                    <q-popup-proxy :offset="[90,10]">
+                                        <q-banner class="bg-indigo-6 text-white">
+
+                                        </q-banner>
+                                    </q-popup-proxy>
+                                </q-icon>
+                            </div>
+                        </template>
+                        <q-card>
+                            <q-card-section>
+                                <div class="text-center q-mt-md">
+                                    <q-img src="/front/images/empty.png" class="req-img-empty" />
+                                    <div class="q-mt-xs text-grey-7">
+                                        درخواست جدیدی وجود ندارد
+                                    </div>
+                                </div>
+                            </q-card-section>
+                        </q-card>
+                    </q-expansion-item>
+                    <div class="q-mt-lg q-mb-md">
+                        <strong class="float-left text-grey-7">
+                            نتایج جستجو :
+                        </strong>
+                        <strong v-if="search_request" class="q-ml-sm text-red">
+                            {{search_request.implement.name}}
+                        </strong>
                     </div>
-                    <div class="q-mt-lg">
-                        <q-separator></q-separator>
-                    </div>
-                    <div class="q-mt-xl">
+                    <q-separator class="q-mt-md" />
+                    <q-banner v-if="check_customer === 0" rounded class="bg-yellow-8">
+                        <div class="text-center">
+                            <i class="fas fa-triangle-exclamation font-20 q-mr-sm fa-beat text-red-14"></i>
+                            <strong>برای ارسال درخواست باید اشتراک فعال خدمات گیرنده داشته باشید</strong>
+                        </div>
+                    </q-banner>
+                    <div class="q-mt-md">
                         <global_search_loading v-if="search_loading"></global_search_loading>
                         <template v-else>
-                            <template v-if="search_result.length">
+                            <template v-if="search_result">
                                 <div class="q-mb-md search-text text-indigo">
                                     <strong>{{ search_result.length }}</strong> کاربر برای ارائه این خدمت یافت شد
                                 </div>
@@ -424,7 +562,7 @@ export default {
                                     </div>
                                 </div>
 
-                                <search_profile v-for="user in search_result" :user="user" class="q-mb-md"></search_profile>
+                                <search_profile v-for="user in search_result" :user="user" :check_customer="check_customer" class="q-mb-md"></search_profile>
                             </template >
                             <template v-else>
                                 <div class="text-center ">
@@ -444,13 +582,26 @@ export default {
 
             </div>
 
-
         </div>
     </div>
 
 </template>
 
 <style scoped>
+.new-search-header{
+    font-size: 15px;
+    font-weight: 600;
+    width: 100%;
+    padding-top: 8px;
+    padding-bottom: 7px;
+}
+.req-title{
+    font-size: 14px;
+}
+.req-img-empty{
+    width: 60px;
+}
+
 .image-dialog{
     width: 860px;
 }
@@ -541,6 +692,9 @@ export default {
     }
     .research{
         font-size: 11px;
+    }
+    .req-title{
+        font-size: 13px;
     }
 
 }

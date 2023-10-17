@@ -1,7 +1,7 @@
 <script>
 export default {
     name: "Front_Search_Profile",
-    props:['user'],
+    props:['user','check_customer'],
 }
 </script>
 
@@ -22,9 +22,8 @@ export default {
                         <span class="info-title text-green-7">شماره تماس : </span>
                         <span v-if="user.user.phone" class="info-text text-dark" dir="ltr">{{user.user.phone}}</span>
                         <span v-else class="info-error text-red" dir="ltr">
-                            برای مشاهده باید اشتراک فعال داشته باشید
+                            باید اشتراک فعال داشته باشید
                             <q-icon name="fas fa-triangle-exclamation"></q-icon>
-
                         </span>
                     </div>
                     <div class="info-box">
@@ -41,8 +40,9 @@ export default {
                         </span>
                     </div>
                     <div class="btn-box">
-                        <q-btn color="positive" :href="'tel:'+user.user.phone" class="float-right info-btn q-ml-sm" icon="fas fa-phone q-mr-xs" :disable="!user.user.phone">تماس</q-btn>
-                        <q-btn :to="{name : 'provider_profile',params:{id:user.user.id}}" color="positive" class="float-right info-btn" icon="fas fa-user q-mr-xs">مشاهده پروفایل</q-btn>
+                        <q-btn color="indigo" class="float-right info-btn q-ml-sm" icon="fas fa-check q-mr-xs" :disable="check_customer === 1" >درخواست</q-btn>
+
+                        <q-btn :to="{name : 'provider_profile',params:{id:user.user.id}}" color="positive" class="float-right info-btn" icon="fas fa-user q-mr-xs">پروفایل</q-btn>
                     </div>
                 </div>
             </div>

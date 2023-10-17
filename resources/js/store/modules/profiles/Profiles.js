@@ -171,6 +171,24 @@ export default {
                 })
             } )
         },
+        ProfilesUserCheckCustomer(){
+            return new Promise((resolve,reject) => {
+                axios.get('users/plans/customer/check').then((result ) => {
+                    resolve(result);
+                }).catch(error => {
+                    reject();
+                })
+            } )
+        },
+        ProfilesUserCheckProvider(){
+            return new Promise((resolve,reject) => {
+                axios.get('users/plans/provider/check').then((result ) => {
+                    resolve(result);
+                }).catch(error => {
+                    reject();
+                })
+            } )
+        },
 
 
     }
