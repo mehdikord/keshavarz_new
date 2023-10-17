@@ -71,6 +71,7 @@ class SearchRepository implements SearchInterface
             $make_request->update(['code' => core_random_code($make_request->id,16)]);
         }
         log_search_store(auth('users')->id(),$request->implement_id,$request->location,count($result));
+        $make_request->load('implement');
         return response_success([
             'result' => $result,
             'request' => $make_request

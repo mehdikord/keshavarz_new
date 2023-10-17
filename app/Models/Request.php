@@ -18,7 +18,7 @@ class Request extends Model
         return $this->belongsTo(User::class,'user_id');
     }
 
-    public function implememt(): BelongsTo
+    public function implement(): BelongsTo
     {
         return $this->belongsTo(Implement::class,'implement_id');
     }

@@ -47,6 +47,11 @@ class PlanController extends Controller
         return $this->repository->customer_reserved();
     }
 
+    public function customer_check()
+    {
+        return $this->repository->customer_check();
+    }
+
 
     //Provider Plans
     //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -78,6 +83,11 @@ class PlanController extends Controller
     public function provider_reserved()
     {
         return $this->repository->provider_reserved();
+
+    }
+    public function provider_check()
+    {
+        return $this->repository->provider_check();
 
     }
 

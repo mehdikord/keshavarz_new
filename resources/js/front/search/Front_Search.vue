@@ -8,8 +8,11 @@ export default {
     mounted() {
       this.Get_Categories();
       this.Get_Implements();
+      this.Check_Customer();
       if (localStorage.getItem('keshavarz_search_result')){
-          this.search_result = JSON.parse(localStorage.getItem('keshavarz_search_result'));
+          let search_data = JSON.parse(localStorage.getItem('keshavarz_search_result'))
+          this.search_result = search_data.result;
+          this.search_request = search_data.request;
           this.show_form=false;
       }
     },
@@ -36,6 +39,7 @@ export default {
             categories :[],
             implements :[],
             search_result:[],
+            search_request:null,
             map_zoom:{ latitude: 36.83951508755615, longitude: 54.43313598632812 },
             filter_options : [
                 {
@@ -61,6 +65,7 @@ export default {
             ],
             filter_select : 'random',
             search_expansion:false,
+            check_customer : 0,
 
 
         }
@@ -70,7 +75,8 @@ export default {
         ...mapActions([
             "ImplementsCategoriesSelectIndex",
             "ImplementsSelectIndex",
-            "SearchStart"
+            "SearchStart",
+            "ProfilesUserCheckCustomer"
 
         ]),
         Get_Categories(){
@@ -105,9 +111,10 @@ export default {
             }
             this.search_loading=true;
             this.SearchStart({implement_id : this.implement_id,location:this.location}).then(res => {
-                this.search_result=res.data.result;
+                this.search_result=res.data.result.result;
+                this.search_request=res.data.result.request;
                 this.search_expansion=false;
-                localStorage.setItem('keshavarz_search_result',JSON.stringify(this.search_result));
+                localStorage.setItem('keshavarz_search_result',JSON.stringify(res.data.result));
                 this.search_loading=false;
                 this.NotifySuccess("جستجو خدمات باموفقیت انجام شد")
 
@@ -203,6 +210,16 @@ export default {
                 }
                 return order === 'desc' ? comparison * -1 : comparison;
             });
+        },
+        Check_Customer(){
+            if (this.AuthUserCheck()){
+                this.ProfilesUserCheckCustomer().then(res => {
+                    this.check_customer = res.data.result
+                }).catch(error => {
+                    return this.NotifyServerError();
+                })
+            }
+
         }
 
 
@@ -240,7 +257,7 @@ export default {
             }
             if (this.filter_select === 'random'){
                 if (localStorage.getItem('keshavarz_search_result')){
-                    this.search_result = JSON.parse(localStorage.getItem('keshavarz_search_result'));
+                    this.search_result = JSON.parse(localStorage.getItem('keshavarz_search_result')).result;
                 }
             }
 
@@ -264,7 +281,17 @@ export default {
                     کافیست اطلاعت مورد نیاز را به دقت وارد کرده و دکمه جستجو را بزنید و در وقت خود صرفه جویی کنید !
                 </p>
             </div>
-            <div class="q-mt-lg">
+            <template v-if="!this.AuthUserCheck()">
+                <q-banner rounded class="bg-orange-9 text-center">
+                    <strong class="auth-text text-white">
+                        کاربر گرامی برای تکمیل اطلاعات مربوط به ارائه خدمات خود ، ابتدا باید وارد حساب کاربری خود شوید
+                    </strong>
+                    <div class="q-mt-lg q-pb-md">
+                        <q-btn :to="{name:'profile'}" color="white" glossy text-color="dark" class="auth-btn">ثبت نام / ورود به حساب</q-btn>
+                    </div>
+                </q-banner>
+            </template>
+            <div v-else class="q-mt-lg">
                 <q-expansion-item
                     v-model="search_expansion"
                     class="shadow-4 overflow-hidden"
@@ -389,7 +416,6 @@ export default {
                     </q-card>
                 </q-expansion-item>
 
-
                 <template v-if="show_form">
                     <q-card class="q-mt-md rounded-borders">
                         <q-card-section>
@@ -497,12 +523,21 @@ export default {
                         <strong class="float-left text-grey-7">
                             نتایج جستجو :
                         </strong>
+                        <strong v-if="search_request" class="q-ml-sm text-red">
+                            {{search_request.implement.name}}
+                        </strong>
                     </div>
-                    <q-separator class="q-mt-xl" />
-                    <div class="q-mt-xl">
+                    <q-separator class="q-mt-md" />
+                    <q-banner v-if="check_customer === 0" rounded class="bg-yellow-8">
+                        <div class="text-center">
+                            <i class="fas fa-triangle-exclamation font-20 q-mr-sm fa-beat text-red-14"></i>
+                            <strong>برای ارسال درخواست باید اشتراک فعال خدمات گیرنده داشته باشید</strong>
+                        </div>
+                    </q-banner>
+                    <div class="q-mt-md">
                         <global_search_loading v-if="search_loading"></global_search_loading>
                         <template v-else>
-                            <template v-if="search_result.length">
+                            <template v-if="search_result">
                                 <div class="q-mb-md search-text text-indigo">
                                     <strong>{{ search_result.length }}</strong> کاربر برای ارائه این خدمت یافت شد
                                 </div>
@@ -527,7 +562,7 @@ export default {
                                     </div>
                                 </div>
 
-                                <search_profile v-for="user in search_result" :user="user" class="q-mb-md"></search_profile>
+                                <search_profile v-for="user in search_result" :user="user" :check_customer="check_customer" class="q-mb-md"></search_profile>
                             </template >
                             <template v-else>
                                 <div class="text-center ">
@@ -546,6 +581,7 @@ export default {
                 </template>
 
             </div>
+
         </div>
     </div>
 

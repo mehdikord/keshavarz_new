@@ -85,15 +85,7 @@ export default {
                                         <span class="info-title text-red">نام : </span>
                                         <span class="info-text text-dark">{{user.name}} </span>
                                     </div>
-                                    <div class="info-box">
-                                        <span class="info-title text-red">شماره تماس : </span>
-                                        <span v-if="user.phone" class="info-text text-dark">{{user.phone}} </span>
-                                        <span v-else class="info-text text-yellow-9">
-                                            <q-icon name="fas fa-triangle-exclamation"></q-icon>
-                                            برای مشاهده شماره موبایل کاربر باید اشتراک فعال خدمات گیرنده داشته باشید
-                                        </span>
 
-                                    </div>
                                     <div class="info-box">
                                         <span class="info-title text-red">درباره کاربر : </span>
                                         <p class="text-justify bio">

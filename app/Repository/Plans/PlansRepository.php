@@ -237,6 +237,12 @@ class PlansRepository implements PlansInterface
     {
         return response_success(auth()->user()->customer_plans()->where('reserved',true)->with('invoice')->get());
     }
+
+    public function customer_check()
+    {
+        return response_success(auth('users')->user()->is_customer);
+    }
+
     public function provider_buy_plan($plan)
     {
         DB::beginTransaction();
@@ -292,6 +298,7 @@ class PlansRepository implements PlansInterface
         }
 
     }
+
     public function provider_by_plan_verify()
     {
         //get token from url params
@@ -337,10 +344,15 @@ class PlansRepository implements PlansInterface
     {
         return response_success(auth()->user()->provider_plans()->with('invoice')->get());
     }
+
     public function provider_reserved()
     {
 
         return response_success(auth()->user()->provider_plans()->where('reserved',true)->with('invoice')->get());
+    }
+    public function provider_check()
+    {
+        return response_success(auth('users')->user()->is_provider);
     }
 
     private function new_customer_plan($plan,$invoice){
