@@ -1,7 +1,33 @@
 <script>
+import {mapActions} from "vuex";
+
 export default {
     name: "Front_Search_Profile",
-    props:['user','check_customer'],
+    props:['user','check_customer','request_id'],
+
+    methods:{
+        ...mapActions([
+            "SearchProviderRequestSend"
+        ]),
+        SendRequest(){
+            let items = {
+                "request_id" : this.request_id,
+                "user_id" : this.user.user.id
+            }
+            this.SearchProviderRequestSend(items).then(res => {
+
+                console.log(res.data)
+
+            }).catch(error => {
+
+
+
+            })
+
+
+        }
+    }
+
 }
 </script>
 
@@ -22,7 +48,7 @@ export default {
                         <span class="info-title text-green-7">شماره تماس : </span>
                         <span v-if="user.user.phone" class="info-text text-dark" dir="ltr">{{user.user.phone}}</span>
                         <span v-else class="info-error text-red" dir="ltr">
-                            باید اشتراک فعال داشته باشید
+                            برای مشاهده باید درخواست بدهید
                             <q-icon name="fas fa-triangle-exclamation"></q-icon>
                         </span>
                     </div>
@@ -40,7 +66,7 @@ export default {
                         </span>
                     </div>
                     <div class="btn-box">
-                        <q-btn color="indigo" class="float-right info-btn q-ml-sm" icon="fas fa-check q-mr-xs" :disable="check_customer === 1" >درخواست</q-btn>
+                        <q-btn @click="SendRequest" color="indigo" class="float-right info-btn q-ml-sm" icon="fas fa-check q-mr-xs" :disable="check_customer === 0" >درخواست</q-btn>
 
                         <q-btn :to="{name : 'provider_profile',params:{id:user.user.id}}" color="positive" class="float-right info-btn" icon="fas fa-user q-mr-xs">پروفایل</q-btn>
                     </div>

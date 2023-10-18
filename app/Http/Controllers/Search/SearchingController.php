@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Search;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Search\SearchRequestSendRequest;
 use App\Http\Requests\Single\SearchProvidersRequest;
 use App\Interfaces\Search\SearchInterface;
 use App\Models\User;
@@ -32,6 +33,12 @@ class SearchingController extends Controller
     public function provider_gallery(User $user)
     {
         return $this->repository->provider_gallery($user);
+
+    }
+
+    public function search_providers_request_send(SearchRequestSendRequest $request)
+    {
+        return $this->repository->search_providers_request_send($request);
 
     }
 }

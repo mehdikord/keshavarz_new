@@ -562,7 +562,7 @@ export default {
                                     </div>
                                 </div>
 
-                                <search_profile v-for="user in search_result" :user="user" :check_customer="check_customer" class="q-mb-md"></search_profile>
+                                <search_profile v-for="user in search_result" :user="user" :check_customer="check_customer" :request_id="search_request.id" class="q-mb-md"></search_profile>
                             </template >
                             <template v-else>
                                 <div class="text-center ">

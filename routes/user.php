@@ -85,7 +85,7 @@ Route::middleware(['auth:users'])->group(function (){
     //Search provider
     Route::prefix('search')->group(function (){
         Route::post('providers',[\App\Http\Controllers\Search\SearchingController::class,'search_providers']);
-
+        Route::post('providers/request',[\App\Http\Controllers\Search\SearchingController::class,'search_providers_request_send'])->middleware('auth:users');
         Route::get('providers/profile/{user}',[\App\Http\Controllers\Search\SearchingController::class,'provider_profile']);
         Route::get('providers/gallery/{user}',[\App\Http\Controllers\Search\SearchingController::class,'provider_gallery']);
     });

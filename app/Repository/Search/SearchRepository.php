@@ -79,6 +79,14 @@ class SearchRepository implements SearchInterface
 
     }
 
+    public function search_providers_request_send($request)
+    {
+        $get_req = Request::find($request->request_id);
+        $get_user = User::find($request->user_id);
+        return $get_req;
+
+    }
+
     public function provider_profile($user)
     {
         $implements = [];
@@ -132,6 +140,8 @@ class SearchRepository implements SearchInterface
         return response_success($data);
 
     }
+
+
 
 
 }

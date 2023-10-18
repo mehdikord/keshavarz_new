@@ -50,7 +50,16 @@ export default {
                     reject();
                 })
             } )
-        }
+        },
+        SearchProviderRequestSend(_,items){
+            return new Promise((resolve,reject) => {
+                axios.post('users/search/providers/request',items).then((result ) => {
+                    resolve(result);
+                }).catch(error => {
+                    reject();
+                })
+            } )
+        },
 
     }
 
