@@ -4,12 +4,20 @@ import {mapActions} from "vuex";
 export default {
     name: "Front_Search_Profile",
     props:['user','check_customer','request_id'],
+    data(){
+        return{
+            request_loading : false,
+
+        }
+
+    },
 
     methods:{
         ...mapActions([
             "SearchProviderRequestSend"
         ]),
         SendRequest(){
+            this.request_loading = true;
             let items = {
                 "request_id" : this.request_id,
                 "user_id" : this.user.user.id
@@ -18,10 +26,11 @@ export default {
 
                 console.log(res.data)
 
+
             }).catch(error => {
 
 
-
+                return this.NotifyServerError();
             })
 
 

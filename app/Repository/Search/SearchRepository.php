@@ -83,7 +83,17 @@ class SearchRepository implements SearchInterface
     {
         $get_req = Request::find($request->request_id);
         $get_user = User::find($request->user_id);
-        return $get_req;
+        $user_implement = $get_user->implements()->where('implement_id',$get_req->implement_id)->first();
+        if ($user_implement){
+            $req_user = $get_req->users()->create([
+                'user_id' => $get_user->id,
+                'user_implement_id' => $user_implement->id,
+                'price' => $user_implement->price,
+            ]);
+
+
+        }
+
 
     }
 
