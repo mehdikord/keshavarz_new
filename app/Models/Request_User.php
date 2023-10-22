@@ -11,6 +11,9 @@ class Request_User extends Model
     use HasFactory;
     protected $table='request_users';
     protected $guarded=[];
+    public const STATUS_PENDING = 'pending';
+    public const STATUS_ACCEPT = 'accept';
+    public const STATUS_REJECT = 'reject';
 
     public function user(): BelongsTo
     {

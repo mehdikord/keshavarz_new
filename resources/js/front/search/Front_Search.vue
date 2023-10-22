@@ -15,6 +15,7 @@ export default {
           this.search_request = search_data.request;
           this.show_form=false;
       }
+      this.GetRequestUsers();
     },
     components: {
         NeshanMap,
@@ -39,6 +40,7 @@ export default {
             categories :[],
             implements :[],
             search_result:[],
+            request_users:[],
             search_request:null,
             map_zoom:{ latitude: 36.83951508755615, longitude: 54.43313598632812 },
             filter_options : [
@@ -76,7 +78,8 @@ export default {
             "ImplementsCategoriesSelectIndex",
             "ImplementsSelectIndex",
             "SearchStart",
-            "ProfilesUserCheckCustomer"
+            "ProfilesUserCheckCustomer",
+            "SearchProviderRequestUsers"
 
         ]),
         Get_Categories(){
@@ -220,7 +223,21 @@ export default {
                 })
             }
 
+        },
+        GetRequestUsers(){
+            if (this.search_request){
+                this.SearchProviderRequestUsers(this.search_request.id).then(res => {
+                    this.request_users = res.data.result;
+                }).catch(error => {
+                    return this.NotifyServerError();
+                })
+            }
+        },
+        UpdateRequestUsers(data){
+            this.request_users.push(data)
+
         }
+
 
 
 
@@ -441,7 +458,7 @@ export default {
                     <q-card class="q-mt-md rounded-borders q-mt-md">
                         <q-card-section>
                             <div class="text-center">
-                                <strong class="text-grey-9 req-title">درخواست های پایان یافته</strong>
+                                <strong class="text-grey-9 req-title">درخواست های تایید شده</strong>
                                 <q-icon name="fas fa-question-circle q-ml-sm font-20" class="text-indigo cursor-pointer">
                                     <q-popup-proxy :offset="[90,10]">
                                         <q-banner class="bg-indigo-6 text-white">
@@ -498,7 +515,7 @@ export default {
                     >
                         <template v-slot:header>
                             <div class="req-title text-center" style="width: 100%">
-                                <strong class="text-teal-7 req-title">درخواست های پایان یافته</strong>
+                                <strong class="text-teal-7 req-title">درخواست های تایید شده</strong>
                                 <q-icon name="fas fa-question-circle q-ml-sm font-20" class="text-indigo cursor-pointer float-left">
                                     <q-popup-proxy :offset="[90,10]">
                                         <q-banner class="bg-indigo-6 text-white">
@@ -562,7 +579,7 @@ export default {
                                     </div>
                                 </div>
 
-                                <search_profile v-for="user in search_result" :user="user" :check_customer="check_customer" :request_id="search_request.id" class="q-mb-md"></search_profile>
+                                <search_profile v-for="user in search_result" :user="user" :check_customer="check_customer" :users="request_users" :request_id="search_request.id" @GetReqUsers="(data) => GetRequestUsers(data)" class="q-mb-md"></search_profile>
                             </template >
                             <template v-else>
                                 <div class="text-center ">

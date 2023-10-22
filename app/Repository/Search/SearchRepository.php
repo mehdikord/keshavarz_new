@@ -2,6 +2,7 @@
 namespace App\Repository\Search;
 use App\Interfaces\Search\SearchInterface;
 use App\Models\Request;
+use App\Models\Request_User;
 use App\Models\Search;
 use App\Models\User;
 
@@ -85,14 +86,24 @@ class SearchRepository implements SearchInterface
         $get_user = User::find($request->user_id);
         $user_implement = $get_user->implements()->where('implement_id',$get_req->implement_id)->first();
         if ($user_implement){
+            if (Request_User::where('request_id',$get_req->id)->where('user_implement_id',$user_implement->id)->exists()){
+                return response_custom_error('قبلا برای این کاربر درخواست ارسال کرده اید');
+            }
             $req_user = $get_req->users()->create([
                 'user_id' => $get_user->id,
                 'user_implement_id' => $user_implement->id,
                 'price' => $user_implement->price,
             ]);
-
-
+            return response_success($req_user);
         }
+    }
+
+    public function search_providers_request_users($request)
+    {
+        if ($request->user_id != auth('users')->id()){
+            return response_custom_error('Unauthorized');
+        }
+        return response_success($request->users()->get());
 
 
     }

@@ -131,6 +131,11 @@ class User extends Authenticatable implements JWTSubject
         return $this->hasMany(__CLASS__,'referral_by');
     }
 
+    public function provider_requests()
+    {
+        return $this->hasMany(Request_User::class,'user_id');
+    }
+
     /**
      * Get the identifier that will be stored in the subject claim of the JWT.
      *

@@ -3,11 +3,10 @@ import {mapActions} from "vuex";
 
 export default {
     name: "Front_Search_Profile",
-    props:['user','check_customer','request_id'],
+    props:['user','check_customer','request_id','users'],
     data(){
         return{
-            request_loading : false,
-
+            request_loading:[],
         }
 
     },
@@ -17,24 +16,40 @@ export default {
             "SearchProviderRequestSend"
         ]),
         SendRequest(){
-            this.request_loading = true;
+            this.request_loading[this.user.user.id] = true;
             let items = {
                 "request_id" : this.request_id,
                 "user_id" : this.user.user.id
             }
             this.SearchProviderRequestSend(items).then(res => {
-
-                console.log(res.data)
-
+                this.NotifySuccess('درخواست باموفقیت ارسال شد');
+                this.$emit('GetReqUsers',res.data.result);
+                this.request_loading[this.user.user.id] = false;
 
             }).catch(error => {
-
-
+                this.request_loading[this.user.user.id] = false;
+                if (error.response.status === 409) {
+                    return this.NotifyError(error.response.data.error);
+                }
                 return this.NotifyServerError();
+
             })
 
 
+        },
+        CheckUserExists(user){
+            let find=null;
+            if (this.users.length){
+                this.users.forEach(item => {
+                    if (item.user_id === user){
+                        find = item
+                    }
+                })
+            }
+            return find;
         }
+
+
     }
 
 }
@@ -75,7 +90,15 @@ export default {
                         </span>
                     </div>
                     <div class="btn-box">
-                        <q-btn @click="SendRequest" color="indigo" class="float-right info-btn q-ml-sm" icon="fas fa-check q-mr-xs" :disable="check_customer === 0" >درخواست</q-btn>
+
+                        <template v-if="CheckUserExists(user.user.id)">
+
+                            <q-btn v-if="CheckUserExists(user.user.id).status === 'pending'" color="yellow-9" text-color="dark" disable class="float-right info-btn q-ml-sm" icon="fas fa-spinner fa-spin q-mr-xs">در انتظار تایید</q-btn>
+                            <q-btn v-if="CheckUserExists(user.user.id).status === 'reject'" color="red" disable class="float-right info-btn q-ml-sm" icon="fas fa-times q-mr-xs">رد شده</q-btn>
+
+                        </template>
+
+                        <q-btn v-else @click="SendRequest" :loading="request_loading[user.user.id]" color="indigo" class="float-right info-btn q-ml-sm" icon="fas fa-check q-mr-xs" :disable="check_customer === 0" >درخواست</q-btn>
 
                         <q-btn :to="{name : 'provider_profile',params:{id:user.user.id}}" color="positive" class="float-right info-btn" icon="fas fa-user q-mr-xs">پروفایل</q-btn>
                     </div>

@@ -25,7 +25,6 @@ Route::middleware(['auth:users'])->group(function (){
             Route::get('all',[\App\Http\Controllers\User\Plans\PlanController::class,'customer_all']);
             Route::get('reserved',[\App\Http\Controllers\User\Plans\PlanController::class,'customer_reserved']);
             Route::get('check',[\App\Http\Controllers\User\Plans\PlanController::class,'customer_check']);
-
         });
 
         Route::prefix('provider')->group(function (){
@@ -71,6 +70,11 @@ Route::middleware(['auth:users'])->group(function (){
 
         });
 
+        Route::prefix('requests')->group(function (){
+            Route::get('pending',[\App\Http\Controllers\User\Requests\RequestController::class,'pending']);
+
+        });
+
     });
 
     Route::prefix('callbacks')->group(function (){
@@ -86,6 +90,7 @@ Route::middleware(['auth:users'])->group(function (){
     Route::prefix('search')->group(function (){
         Route::post('providers',[\App\Http\Controllers\Search\SearchingController::class,'search_providers']);
         Route::post('providers/request',[\App\Http\Controllers\Search\SearchingController::class,'search_providers_request_send'])->middleware('auth:users');
+        Route::get('providers/request/users/{request}',[\App\Http\Controllers\Search\SearchingController::class,'search_providers_request_users'])->middleware('auth:users');
         Route::get('providers/profile/{user}',[\App\Http\Controllers\Search\SearchingController::class,'provider_profile']);
         Route::get('providers/gallery/{user}',[\App\Http\Controllers\Search\SearchingController::class,'provider_gallery']);
     });

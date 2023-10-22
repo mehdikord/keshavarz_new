@@ -56,10 +56,21 @@ export default {
                 axios.post('users/search/providers/request',items).then((result ) => {
                     resolve(result);
                 }).catch(error => {
+                    reject(error);
+                })
+            } )
+        },
+        SearchProviderRequestUsers(_,item){
+            return new Promise((resolve,reject) => {
+                axios.get('users/search/providers/request/users/'+item).then((result ) => {
+                    resolve(result);
+                }).catch(error => {
                     reject();
                 })
             } )
         },
+
+
 
     }
 

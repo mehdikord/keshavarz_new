@@ -41,4 +41,9 @@ class SearchingController extends Controller
         return $this->repository->search_providers_request_send($request);
 
     }
+
+    public function search_providers_request_users(\App\Models\Request $request)
+    {
+        return $this->repository->search_providers_request_users($request);
+    }
 }

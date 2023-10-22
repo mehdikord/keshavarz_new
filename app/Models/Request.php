@@ -13,6 +13,11 @@ class Request extends Model
     protected $table='requests';
     protected $guarded=[];
 
+    public const STATUS_PENDING = 'pending';
+    public const STATUS_WORKING = 'working';
+    public const STATUS_CANCELED = 'canceled';
+    public const STATUS_DONE = 'done';
+
     public function user()
     {
         return $this->belongsTo(User::class,'user_id');
