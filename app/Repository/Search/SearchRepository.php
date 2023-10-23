@@ -20,12 +20,10 @@ class SearchRepository implements SearchInterface
     }
 
 
-
-
     public function search_providers($request)
     {
         $users = User::query();
-        $users->where('is_active',true)->where('is_provider',true)->whereNotNull('search_location');
+        $users->where('id','!=',auth('users')->id())->where('is_active',true)->where('is_provider',true)->whereNotNull('search_location');
         $users->whereHas('implements',function ($implement)use($request){
             $implement->where('implement_id',$request->implement_id);
         });
@@ -106,6 +104,11 @@ class SearchRepository implements SearchInterface
         return response_success($request->users()->get());
 
 
+    }
+
+    public function search_providers_request_get_pending()
+    {
+        return response_success(auth('users')->user()->customer_requests()->where('status','pending'));
     }
 
     public function provider_profile($user)

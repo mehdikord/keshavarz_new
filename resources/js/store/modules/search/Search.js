@@ -53,7 +53,7 @@ export default {
         },
         SearchProviderRequestSend(_,items){
             return new Promise((resolve,reject) => {
-                axios.post('users/search/providers/request',items).then((result ) => {
+                axios.post('users/search/request',items).then((result ) => {
                     resolve(result);
                 }).catch(error => {
                     reject(error);
@@ -62,7 +62,7 @@ export default {
         },
         SearchProviderRequestUsers(_,item){
             return new Promise((resolve,reject) => {
-                axios.get('users/search/providers/request/users/'+item).then((result ) => {
+                axios.get('users/search/request/users/'+item).then((result ) => {
                     resolve(result);
                 }).catch(error => {
                     reject();

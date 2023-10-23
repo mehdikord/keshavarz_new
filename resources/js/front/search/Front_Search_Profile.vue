@@ -92,10 +92,8 @@ export default {
                     <div class="btn-box">
 
                         <template v-if="CheckUserExists(user.user.id)">
-
                             <q-btn v-if="CheckUserExists(user.user.id).status === 'pending'" color="yellow-9" text-color="dark" disable class="float-right info-btn q-ml-sm" icon="fas fa-spinner fa-spin q-mr-xs">در انتظار تایید</q-btn>
                             <q-btn v-if="CheckUserExists(user.user.id).status === 'reject'" color="red" disable class="float-right info-btn q-ml-sm" icon="fas fa-times q-mr-xs">رد شده</q-btn>
-
                         </template>
 
                         <q-btn v-else @click="SendRequest" :loading="request_loading[user.user.id]" color="indigo" class="float-right info-btn q-ml-sm" icon="fas fa-check q-mr-xs" :disable="check_customer === 0" >درخواست</q-btn>
