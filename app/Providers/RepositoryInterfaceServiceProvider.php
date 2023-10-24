@@ -15,6 +15,7 @@ use App\Interfaces\News\NewsInterface;
 use App\Interfaces\Plans\PlansInterface;
 use App\Interfaces\Products\ProductsInterface;
 use App\Interfaces\Profile\ProfileInterface;
+use App\Interfaces\Requests\RequestsInterface;
 use App\Interfaces\Search\SearchInterface;
 use App\Interfaces\Slider\SliderInterface;
 use App\Interfaces\Users\UsersInterface;
@@ -31,6 +32,7 @@ use App\Repository\News\NewsRepository;
 use App\Repository\Plans\PlansRepository;
 use App\Repository\Products\ProductsRepository;
 use App\Repository\Profile\ProfileRepository;
+use App\Repository\Requests\RequestsRepository;
 use App\Repository\Search\SearchRepository;
 use App\Repository\Slider\SliderRepository;
 use App\Repository\Users\UsersRepository;
@@ -59,6 +61,7 @@ class RepositoryInterfaceServiceProvider extends ServiceProvider
         $this->app->bind(InvoiceInterface::class,InvoiceRepository::class);
         $this->app->bind(DashboardInterface::class,DashboardRepository::class);
         $this->app->bind(LandsInterface::class,LandsRepository::class);
+        $this->app->bind(RequestsInterface::class,RequestsRepository::class);
 
     }
 

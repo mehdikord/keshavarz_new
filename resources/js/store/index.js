@@ -14,6 +14,7 @@ import slider from "./modules/slider/slider";
 import news from "./modules/news/news";
 import invoices from "./modules/invoices/Invoices";
 import lands from "./modules/lands/lands";
+import requests from "./modules/requests/requests";
 const store = createStore({
     state(){
         return {
@@ -39,6 +40,7 @@ const store = createStore({
         news,
         invoices,
         lands,
+        requests
 
     },
 

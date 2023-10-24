@@ -68,8 +68,8 @@ export default {
             filter_select : 'random',
             search_expansion:false,
             check_customer : 0,
-
-
+            customer_requests_loading:true,
+            customer_requests:[],
         }
     },
 
@@ -79,9 +79,11 @@ export default {
             "ImplementsSelectIndex",
             "SearchStart",
             "ProfilesUserCheckCustomer",
-            "SearchProviderRequestUsers"
+            "SearchProviderRequestUsers",
+            "UserCustomerPending",
 
         ]),
+
         Get_Categories(){
                 this.loading_select_category=true;
                 this.ImplementsCategoriesSelectIndex().then(res => {
@@ -235,6 +237,16 @@ export default {
         },
         UpdateRequestUsers(data){
             this.request_users.push(data)
+        },
+        GetCustomerRequests(){
+            this.UserCustomerPending().then(res =>{
+                this.customer_requests=res.data.result;
+                this.customer_requests_loading=false;
+
+
+            }).catch(error => {
+
+            })
 
         }
 
