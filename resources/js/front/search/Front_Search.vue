@@ -3,25 +3,32 @@ import {mapActions} from "vuex";
 import NeshanMap from "@neshan-maps-platform/vue3-openlayers"
 import Front_Search_Profile from "@/front/search/Front_Search_Profile.vue";
 import Front_Skeleton_Provider from "../skeleton/Front_Skeleton_Provider.vue";
+import Front_Search_Requests_Waiting from "./requests/Front_Search_Requests_Waiting.vue";
 export default {
     name: "Front_Search",
     mounted() {
       this.Get_Categories();
       this.Get_Implements();
-      this.Check_Customer();
-      if (localStorage.getItem('keshavarz_search_result')){
-          let search_data = JSON.parse(localStorage.getItem('keshavarz_search_result'))
-          this.search_result = search_data.result;
-          this.search_request = search_data.request;
-          this.show_form=false;
+      if (this.AuthUserCheck()){
+          this.Check_Customer();
+          if (localStorage.getItem('keshavarz_search_result')){
+              let search_data = JSON.parse(localStorage.getItem('keshavarz_search_result'))
+              this.search_result = search_data.result;
+              this.search_request = search_data.request;
+              this.show_form=false;
+          }
+          this.GetRequestUsers();
+          this.GetCustomerRequests();
+          this.Get_Lands();
       }
-      this.GetRequestUsers();
-      this.GetCustomerRequests();
+
+
     },
     components: {
         NeshanMap,
         'search_profile' : Front_Search_Profile,
         'skeleton_provider' : Front_Skeleton_Provider,
+        'search_request_waiting' : Front_Search_Requests_Waiting,
 
     },
     data(){
@@ -32,14 +39,17 @@ export default {
             show_map:false,
             category_id: null,
             implement_id: null,
+            user_land_id: null,
             location: [],
             category_name: null,
             implement_name: null,
             search_loading:false,
             loading_select_category:false,
             loading_select_implements:false,
+            loading_select_lands:false,
             categories :[],
             implements :[],
+            lands :[],
             search_result:[],
             request_users:[],
             search_request:null,
@@ -78,6 +88,7 @@ export default {
         ...mapActions([
             "ImplementsCategoriesSelectIndex",
             "ImplementsSelectIndex",
+            "LandsUserSelectIndex",
             "SearchStart",
             "ProfilesUserCheckCustomer",
             "SearchProviderRequestUsers",
@@ -105,25 +116,35 @@ export default {
                     return  this.NotifyServerError();
             })
         },
+        Get_Lands(){
+            this.loading_select_lands=true;
+            this.LandsUserSelectIndex().then(res => {
+                this.lands = res
+                this.loading_select_lands=false;
+            }).catch(error => {
+                this.loading_select_lands=false;
+                return  this.NotifyServerError();
+            })
+        },
         Do_Search(){
             if (!this.AuthUserCheck()){
                return this.authDialog=true;
             }
-            if (!this.location.length){
-                return this.NotifyError("مختصات از نقشه انتخاب نشده")
+            if (!this.user_land_id){
+                return this.NotifyError("زمین انتخاب نشده")
             }
             if (!this.implement_id){
                 return this.NotifyError("ادوات برای جستجو انتخاب نشده")
             }
             this.search_loading=true;
-            this.SearchStart({implement_id : this.implement_id,location:this.location}).then(res => {
+            this.SearchStart({implement_id : this.implement_id,user_land_id:this.user_land_id}).then(res => {
                 this.search_result=res.data.result.result;
                 this.search_request=res.data.result.request;
                 this.search_expansion=false;
                 localStorage.setItem('keshavarz_search_result',JSON.stringify(res.data.result));
                 this.search_loading=false;
                 this.NotifySuccess("جستجو خدمات باموفقیت انجام شد")
-
+                this.GetCustomerRequests()
             }).catch(error=>{
                 return this.NotifyServerError()
             })
@@ -149,6 +170,17 @@ export default {
                     })
                 }else {
                     this.Get_Implements();
+                }
+            })
+        },
+        Filter_Select_Lands (val, update, abort) {
+            update(() => {
+                if (val){
+                    this.lands =  this.lands.filter(item => {
+                        return item.label !== null && item.label.match(val)
+                    })
+                }else {
+                    this.Get_Lands();
                 }
             })
         },
@@ -410,34 +442,74 @@ export default {
                                     <template v-slot:error>
                                     </template>
                                 </q-select>
+                            </div>
+                            <div class="form-box">
+                                <q-select
+                                    outlined
+                                    color="green-7"
+                                    transition-show="flip-up"
+                                    transition-hide="flip-down"
+                                    v-model="user_land_id"
+                                    label="انتخاب زمین"
+                                    :options="lands"
+                                    emit-value
+                                    map-options
+                                    @filter="Filter_Select_Lands"
+                                    :loading="loading_select_lands"
+                                    use-input
+                                    behavior="dialog"
 
+                                >
+                                    <template v-slot:no-option>
+                                        <q-item>
+                                            <q-item-section class="text-red">
+                                                گزینه ای یافت نشد
+                                            </q-item-section>
+                                        </q-item>
+                                    </template>
+                                    <template v-slot:option="scope">
+                                        <q-item v-bind="scope.itemProps">
+                                            <q-item-section avatar>
+                                                <global_image_lands :image="scope.opt.image"></global_image_lands>
+                                            </q-item-section>
+                                            <q-item-section>
+                                                <q-item-label>{{ scope.opt.label }}</q-item-label>
+                                            </q-item-section>
+                                        </q-item>
+                                    </template>
+                                    <template v-slot:error>
+                                    </template>
+                                </q-select>
                             </div>
-                            <div class="map-text text-center text-indigo">
-                                با استفاده از نقشه زیر ، موقعیت مکانی زمین خود را انتخاب کنید تا ما بتوانیم نزدیک ترین خدمات را برای شما پیدا کنیم
-                            </div>
-                            <div class="text-center q-mt-lg">
-                                <q-btn @click="show_map=!show_map" glossy rounded color="indigo" class="open-map-btn">باز کردن نقشه</q-btn>
-                            </div>
-                            <div v-show="location.length" class="q-mt-md text-positive text-center location-select">
-                                <q-icon name="fas fa-check"/>
-                                <span class="q-ml-sm">مختصات انتخاب شده است</span>
-                            </div>
-                            <div class="q-mt-md q-mb-md">
-                                <div v-if="show_map" class="map">
-                                    <NeshanMap
-                                        mapKey="web.eaf4d6d0f42a400bb9583fbd8496947f"
-                                        :center="{ latitude: 36.83951508755615, longitude: 54.43313598632812 }"
-                                        :zoom="10"
-                                        hide-layers
-                                        hide-search-container
-                                        @on-click="Map_Marker"
-                                    />
+                            <div v-show="false">
+                                <div class="map-text text-center text-indigo">
+                                    با استفاده از نقشه زیر ، موقعیت مکانی زمین خود را انتخاب کنید تا ما بتوانیم نزدیک ترین خدمات را برای شما پیدا کنیم
                                 </div>
+                                <div class="text-center q-mt-lg">
+                                    <q-btn @click="show_map=!show_map" glossy rounded color="indigo" class="open-map-btn">باز کردن نقشه</q-btn>
+                                </div>
+                                <div v-show="location.length" class="q-mt-md text-positive text-center location-select">
+                                    <q-icon name="fas fa-check"/>
+                                    <span class="q-ml-sm">مختصات انتخاب شده است</span>
+                                </div>
+                                <div class="q-mt-md q-mb-md">
+                                    <div v-if="show_map" class="map">
+                                        <NeshanMap
+                                            mapKey="web.eaf4d6d0f42a400bb9583fbd8496947f"
+                                            :center="{ latitude: 36.83951508755615, longitude: 54.43313598632812 }"
+                                            :zoom="10"
+                                            hide-layers
+                                            hide-search-container
+                                            @on-click="Map_Marker"
+                                        />
+                                    </div>
 
+                                </div>
+                                <div class="q-mt-lg q-mb-lg">
+                                    <q-separator/>
+                                </div>
                             </div>
-                            <div class="q-mt-lg q-mb-lg">
-                                <q-separator/>
-                            </div>
+
                             <div class="text-center q-mt-xl">
                                 <q-btn @click="Do_Search" glossy rounded color="green"  class="open-map-btn" icon="fas fa-search q-mr-sm"> جستجو خدمات کشاورزی </q-btn>
                             </div>
@@ -462,7 +534,11 @@ export default {
                             <global_info_loading v-if="customer_requests_loading"></global_info_loading>
                             <div v-else>
                                 <div v-if="customer_requests.length">
-
+                                    <div class="row justify-center">
+                                        <div v-for="request in customer_requests" class="col-md-6">
+                                            <search_request_waiting :request="request"></search_request_waiting>
+                                        </div>
+                                    </div>
                                 </div>
                                 <div v-else class="text-center q-mt-md">
                                     <q-img src="/front/images/empty.png" class="req-img-empty" />
@@ -471,8 +547,6 @@ export default {
                                     </div>
                                 </div>
                             </div>
-
-
                         </q-card-section>
                     </q-card>
                     <q-card class="q-mt-md rounded-borders q-mt-md">
@@ -519,12 +593,21 @@ export default {
                         </template>
                         <q-card>
                             <q-card-section>
-                                <div class="text-center q-mt-md">
+                                <div v-if="customer_requests.length">
+                                    <div class="row justify-center">
+                                        <div v-for="request in customer_requests" class="col-md-6">
+                                            <search_request_waiting :request="request"></search_request_waiting>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div v-else class="text-center q-mt-md">
                                     <q-img src="/front/images/empty.png" class="req-img-empty" />
                                     <div class="q-mt-xs text-grey-7">
                                         درخواست جدیدی وجود ندارد
                                     </div>
                                 </div>
+
+
                             </q-card-section>
                         </q-card>
                     </q-expansion-item>
@@ -657,7 +740,7 @@ export default {
     width: 60px;
 }
 .form-box{
-    margin-bottom: 45px;
+    margin-bottom: 20px;
 }
 .map-text {
     margin-top: 20px;
@@ -704,7 +787,7 @@ export default {
         width: 45px;
     }
     .form-box{
-        margin-bottom: 30px;
+        margin-bottom: 15px;
     }
     .map-text {
         margin-top: 20px;

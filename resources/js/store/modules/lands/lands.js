@@ -47,6 +47,20 @@ export default {
                 })
             } )
         },
+        LandsUserSelectIndex(){
+            return new Promise((resolve,reject) => {
+                axios.get('users/lands').then((result) => {
+
+                    let data = [];
+                    result.data.result.forEach(item => {
+                        data.push({label : item.title , image:item.image , value : item.id})
+                    })
+                    resolve(data);
+                }).catch(error => {
+                    reject(error);
+                })
+            } )
+        },
 
     }
 

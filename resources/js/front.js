@@ -20,6 +20,7 @@ import Helper from "./helpers/Helper";
 import Front_Global_Info_Loading from "./front/globals/Front_Global_Info_Loading.vue";
 import axios from "axios";
 import moment from 'moment-jalaali';
+import Front_Global_Images_Lands from "./front/globals/Front_Global_Images_Lands.vue";
 
 
 
@@ -51,6 +52,7 @@ window.Helper = Helper
 // ++++++++++ Global Components ++++++++++
 App.component("global_image_categories",Front_Global_Images_Categories)
 App.component("global_image_implements",Front_Global_Images_Implements)
+App.component("global_image_lands",Front_Global_Images_Lands)
 App.component("global_search_loading",Front_Global_Search_Loading)
 App.component("global_info_loading",Front_Global_Info_Loading)
 App.component('Error_Validation',Error_Validation)

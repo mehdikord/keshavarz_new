@@ -27,19 +27,14 @@ class SearchRepository implements SearchInterface
         $users->whereHas('implements',function ($implement)use($request){
             $implement->where('implement_id',$request->implement_id);
         });
+        $land = auth()->user()->lands()->where('id',$request->user_land_id);
         $result=[];
         $make_request=null;
         foreach ($users->get() as $user){
             $dis = location_distance(json_decode($user->search_location),$request->location);
             if ($dis <= $user->search_range){
                 $user_implement = $user->implements()->where('implement_id',$request->implement_id)->first();
-
-                if (auth('users')->user()->customer_plan_active_check()){
-                    $phone = $user->phone;
-                }else{
-                    $phone = null;
-                }
-
+                $phone = null;
                 $result[]=[
                     'dis' => $dis,
                     'price_type' => $user_implement->implement->price_type,
@@ -108,7 +103,10 @@ class SearchRepository implements SearchInterface
 
     public function search_providers_request_get_pending()
     {
-        return response_success(auth('users')->user()->customer_requests()->where('status','pending'));
+        $data = auth('users')->user()->customer_requests()->where('status','pending');
+        $data->with('implement');
+        $data->withCount('users');
+        return response_success($data->get());
     }
 
     public function provider_profile($user)

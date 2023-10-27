@@ -46,4 +46,8 @@ function helpers_auth_make($phone): void
         'code' => $code,
         'updated_at' => \Carbon\Carbon::now(),
     ]);
+    sms_kavenegar_pattern($phone,'keshavarz-auth',$code);
+
 }
+
+
