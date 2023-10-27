@@ -16,6 +16,7 @@ export default {
           this.show_form=false;
       }
       this.GetRequestUsers();
+      this.GetCustomerRequests();
     },
     components: {
         NeshanMap,
@@ -243,7 +244,6 @@ export default {
                 this.customer_requests=res.data.result;
                 this.customer_requests_loading=false;
 
-
             }).catch(error => {
 
             })
@@ -459,12 +459,20 @@ export default {
                                 </q-icon>
                             </div>
                             <q-separator class="q-mt-sm" />
-                            <div class="text-center q-mt-md">
-                                <q-img src="/front/images/empty.png" class="req-img-empty" />
-                                <div class="q-mt-xs text-grey-7">
-                                    درخواست جدیدی وجود ندارد
+                            <global_info_loading v-if="customer_requests_loading"></global_info_loading>
+                            <div v-else>
+                                <div v-if="customer_requests.length">
+
+                                </div>
+                                <div v-else class="text-center q-mt-md">
+                                    <q-img src="/front/images/empty.png" class="req-img-empty" />
+                                    <div class="q-mt-xs text-grey-7">
+                                        درخواست جدیدی وجود ندارد
+                                    </div>
                                 </div>
                             </div>
+
+
                         </q-card-section>
                     </q-card>
                     <q-card class="q-mt-md rounded-borders q-mt-md">
