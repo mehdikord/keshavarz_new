@@ -142,6 +142,8 @@ export default {
                 </div>
                 <div class="q-mt-lg">
                     <a referrerpolicy='origin' target='_blank' href='https://trustseal.enamad.ir/u?id=392965&code=aaNhobh3KdXmTZ9y8UNknp9dZGZ8t5Fo'><img referrerpolicy='origin' src='https://trustseal.enamad.ir/logo.aspx?id=392965&code=aaNhobh3KdXmTZ9y8UNknp9dZGZ8t5Fo' alt='' style='cursor:pointer' code='aaNhobh3KdXmTZ9y8UNknp9dZGZ8t5Fo'></a>
+
+                    <img referrerpolicy='origin' id = 'rgvjfukznbqejxlzjxlzjzpe' style = 'cursor:pointer' onclick = 'window.open("https://logo.samandehi.ir/Verify.aspx?id=362117&p=xlaogvkauiwkrfthrfthjyoe", "Popup","toolbar=no, scrollbars=no, location=no, statusbar=no, menubar=no, resizable=0, width=450, height=630, top=30")' alt = 'logo-samandehi' src = 'https://logo.samandehi.ir/logo.aspx?id=362117&p=qftiwlbqodrfnbpdnbpdyndt' />
                 </div>
 
             </div>
