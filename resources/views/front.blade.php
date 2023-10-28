@@ -9,7 +9,7 @@
 
     <link rel="icon" href="logo.png">
     <link rel="stylesheet" href="{{asset('front/css/font.css')}}">
-
+    <meta name="samandehi" content="983590231">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="description" content="My description here">
 
