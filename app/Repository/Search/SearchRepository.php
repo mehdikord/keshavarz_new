@@ -27,7 +27,7 @@ class SearchRepository implements SearchInterface
         $users->whereHas('implements',function ($implement)use($request){
             $implement->where('implement_id',$request->implement_id);
         });
-        $land = auth()->user()->lands()->where('id',$request->user_land_id);
+        $land = auth()->user()->lands()->where('id',$request->user_land_id)->first;
         $result=[];
         $make_request=null;
         foreach ($users->get() as $user){
