@@ -30,32 +30,37 @@ class SearchRepository implements SearchInterface
         $land = auth()->user()->lands()->where('id',$request->user_land_id)->first;
         $result=[];
         $make_request=null;
-        foreach ($users->get() as $user){
-            $dis = location_distance(json_decode($user->search_location),$request->location);
-            if ($dis <= $user->search_range){
-                $user_implement = $user->implements()->where('implement_id',$request->implement_id)->first();
-                $phone = null;
-                $result[]=[
-                    'dis' => $dis,
-                    'price_type' => $user_implement->implement->price_type,
-                    'price' => $user_implement->price,
-                    'implement' => [
-                        'id' => $user_implement->implement_id,
-                        'name' => $user_implement->implement->name,
-                        'code' => $user_implement->implement->code,
-                        'image' => $user_implement->implement->image,
-                        'category' => $user_implement->implement->category ?? null,
-                    ],
-                    'user'=>[
-                        'id'=>$user->id,
-                        'name'=>$user->name,
-                        'phone' => $phone,
-                        'image'=>$user->image,
-                    ]
+        if ($land && $land->location){
 
-                ];
+            foreach ($users->get() as $user){
+                $dis = location_distance(json_decode($user->search_location),$request->location);
+                if ($dis <= $user->search_range){
+                    $user_implement = $user->implements()->where('implement_id',$request->implement_id)->first();
+                    $phone = null;
+                    $result[]=[
+                        'dis' => $dis,
+                        'price_type' => $user_implement->implement->price_type,
+                        'price' => $user_implement->price,
+                        'implement' => [
+                            'id' => $user_implement->implement_id,
+                            'name' => $user_implement->implement->name,
+                            'code' => $user_implement->implement->code,
+                            'image' => $user_implement->implement->image,
+                            'category' => $user_implement->implement->category ?? null,
+                        ],
+                        'user'=>[
+                            'id'=>$user->id,
+                            'name'=>$user->name,
+                            'phone' => $phone,
+                            'image'=>$user->image,
+                        ]
+
+                    ];
+                }
             }
+
         }
+
         if (count($result)){
             $make_request = Request::create([
                 'user_id' => auth()->id(),
@@ -64,7 +69,9 @@ class SearchRepository implements SearchInterface
             ]);
             $make_request->update(['code' => core_random_code($make_request->id,16)]);
         }
-        log_search_store(auth('users')->id(),$request->implement_id,$request->location,count($result));
+
+//        log_search_store(auth('users')->id(),$request->implement_id,$request->location,count($result));
+
         $make_request->load('implement');
         return response_success([
             'result' => $result,
