@@ -9,6 +9,7 @@ Route::prefix('auth')->group(function (){
 });
 
 Route::middleware(['auth:users'])->group(function (){
+
     Route::prefix('profile')->group(function (){
 
         Route::get('',[\App\Http\Controllers\User\Profile\ProfileController::class,'me']);
@@ -98,9 +99,8 @@ Route::middleware(['auth:users'])->group(function (){
 
             Route::post('',[\App\Http\Controllers\Search\SearchingController::class,'search_providers_request_send']);
             Route::get('pending',[\App\Http\Controllers\Search\SearchingController::class,'search_providers_request_get_pending']);
-            Route::get('/users/{request}',[\App\Http\Controllers\Search\SearchingController::class,'search_providers_request_users']);
-
-
+            Route::get('users/{request}',[\App\Http\Controllers\Search\SearchingController::class,'search_providers_request_users']);
+            Route::delete('cancel/{request}',[\App\Http\Controllers\Search\SearchingController::class,'search_providers_request_cancel']);
 
         });
 

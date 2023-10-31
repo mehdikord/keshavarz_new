@@ -30,10 +30,17 @@ class SearchRepository implements SearchInterface
         $land = auth()->user()->lands()->where('id',$request->user_land_id)->first();
         $result=[];
         $make_request=null;
+
         if ($land && $land->location){
-            $location = explode(',',json_decode($land->location, false, 512, JSON_THROW_ON_ERROR));
+            //check doing same request
+            if (auth('users')->user()->customer_requests()->where('user_land_id',$land->id)->where('implement_id',$request->implement_id)->where('status','pending')->exists()){
+                return response_custom_error('درحال حاضر درخواستی با این اطلاعات در انتظار تایید خدمات دهنده میباشد !');
+            }
+
+
+                $location = explode(',',json_decode($land->location, false, 512, JSON_THROW_ON_ERROR));
             foreach ($users->get() as $user){
-                $dis = location_distance(json_decode($user->search_location),$location);
+                $dis = location_distance(json_decode($user->search_location, false, 512, JSON_THROW_ON_ERROR),$location);
                 if ($dis <= $user->search_range){
                     $user_implement = $user->implements()->where('implement_id',$request->implement_id)->first();
                     $phone = null;
@@ -60,15 +67,16 @@ class SearchRepository implements SearchInterface
             }
 
         }
-
         if (count($result)){
             $make_request = Request::create([
                 'user_id' => auth()->id(),
+                'user_land_id' => $land->id,
                 'implement_id' => $request->implement_id,
                 'location' => json_encode($request->location, JSON_THROW_ON_ERROR),
             ]);
             $make_request->update(['code' => core_random_code($make_request->id,16)]);
             $make_request->load('implement');
+            $make_request->load('land');
 
         }
 
@@ -90,10 +98,14 @@ class SearchRepository implements SearchInterface
             if (Request_User::where('request_id',$get_req->id)->where('user_implement_id',$user_implement->id)->exists()){
                 return response_custom_error('قبلا برای این کاربر درخواست ارسال کرده اید');
             }
+            $location = explode(',',json_decode($get_req->land->location, false, 512, JSON_THROW_ON_ERROR));
+            $dis = location_distance(json_decode($get_user->search_location, false, 512, JSON_THROW_ON_ERROR),$location);
             $req_user = $get_req->users()->create([
                 'user_id' => $get_user->id,
                 'user_implement_id' => $user_implement->id,
                 'price' => $user_implement->price,
+                'distance' => $dis,
+
             ]);
             return response_success($req_user);
         }
@@ -109,10 +121,24 @@ class SearchRepository implements SearchInterface
 
     }
 
+    public function search_providers_request_cancel($request)
+    {
+        if ($request->user_id != auth('users')->id()){
+            return response_custom_error('Unauthorized');
+        }
+        if ($request->status != 'pending'){
+            return response_custom_error('این درخواست از حالت انتظار خارح شده است');
+        }
+        $request->users()->delete();
+        $request->delete();
+        return response_success('درخواست مورد نظر باموفقیت لغو گردید');
+    }
+
     public function search_providers_request_get_pending()
     {
         $data = auth('users')->user()->customer_requests()->where('status','pending');
         $data->with('implement');
+        $data->with('land');
         $data->withCount('users');
         return response_success($data->get());
     }

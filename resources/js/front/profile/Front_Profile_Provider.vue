@@ -9,17 +9,30 @@ export default {
         'request_waiting_item' : Front_Profile_Provider_Request_Waiting_Item,
     },
     mounted() {
+        if (this.AuthUserCheck()){
+            this.GetNewRequests();
+        }
 
     },
     data(){
         return{
-
+            new_requests_loading:true,
+            new_requests:[],
 
         }
     },
     methods:{
         ...mapActions([
+            "UserProviderPending"
         ]),
+
+        GetNewRequests(){
+            this.UserProviderPending().then(res => {
+                this.new_requests = res.data.result;
+                this.new_requests_loading=false
+            })
+
+        }
 
     },
     computed :{

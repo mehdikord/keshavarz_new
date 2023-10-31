@@ -47,6 +47,11 @@ class SearchingController extends Controller
         return $this->repository->search_providers_request_users($request);
     }
 
+    public function search_providers_request_cancel(\App\Models\Request $request)
+    {
+        return $this->repository->search_providers_request_cancel($request);
+    }
+
     public function search_providers_request_get_pending()
     {
         return $this->repository->search_providers_request_get_pending();

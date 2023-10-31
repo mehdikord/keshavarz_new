@@ -33,7 +33,6 @@ export default {
     },
     data(){
         return{
-            errors:[],
             show_form:true,
             authDialog:false,
             show_map:false,
@@ -81,6 +80,18 @@ export default {
             check_customer : 0,
             customer_requests_loading:true,
             customer_requests:[],
+            errors:[],
+            AddDialog:false,
+            add_loading:false,
+            cancel_loading:false,
+            add:{
+                title:null,
+                description:null,
+                area:null,
+                image:null,
+                location:[],
+
+            },
         }
     },
 
@@ -89,13 +100,39 @@ export default {
             "ImplementsCategoriesSelectIndex",
             "ImplementsSelectIndex",
             "LandsUserSelectIndex",
+            "LandsUserStore",
             "SearchStart",
             "ProfilesUserCheckCustomer",
             "SearchProviderRequestUsers",
             "UserCustomerPending",
 
         ]),
+        AddItem(){
+            if (!this.add.location.length){
+                return this.NotifyError("موقعیت جغرافیایی انتخاب نشده است")
+            }
+            this.add.area = this.$filters.persianDigitsToEnglish(this.add.area)
+            this.add_loading=true;
+            this.LandsUserStore(this.add).then(res => {
+                this.add_loading=false;
+                this.add=[];
+                this.AddDialog=false;
+                this.Get_Lands();
+                return this.NotifySuccess(res.data.message);
+            }).catch(error => {
+                this.add_loading=false;
+                if (error.response.status === 409) {
+                    this.NotifyError(error.response.data.error);
+                }else if (error.response.status === 422) {
+                    this.NotifyError("اطلاعات وارد شده ناقص است")
+                    return this.errors = error.response.data
+                }else {
+                    return this.NotifyServerError();
+                }
 
+            })
+
+        },
         Get_Categories(){
                 this.loading_select_category=true;
                 this.ImplementsCategoriesSelectIndex().then(res => {
@@ -146,6 +183,13 @@ export default {
                 this.NotifySuccess("جستجو خدمات باموفقیت انجام شد")
                 this.GetCustomerRequests()
             }).catch(error=>{
+
+                this.search_loading=false;
+                if (error.response.status === 409) {
+                    return this.NotifyError(error.response.data.error);
+                }
+
+
                 return this.NotifyServerError()
             })
 
@@ -186,9 +230,9 @@ export default {
         },
         Map_Marker(e){
             if (e.coords){
-                this.location=[];
-                this.location.push(e.coords[1]);
-                this.location.push(e.coords[0]);
+                this.location = [];
+                this.add.location.push(e.coords[1]);
+                this.add.location.push(e.coords[0]);
             }
         },
         getLocation() {
@@ -267,6 +311,19 @@ export default {
                     return this.NotifyServerError();
                 })
             }
+            this.GetCustomerRequests();
+
+        },
+        CancelRequestUsers(item){
+           if (this.search_request.id === item){
+               localStorage.removeItem('keshavarz_search_result');
+               this.search_result=[];
+               this.request_users=[];
+               this.show_form=true;
+           }
+            this.GetCustomerRequests();
+
+            return this.NotifySuccess("درخواست مورد نظر باموفقیت حذف گردید");
         },
         UpdateRequestUsers(data){
             this.request_users.push(data)
@@ -280,8 +337,7 @@ export default {
 
             })
 
-        }
-
+        },
 
 
 
@@ -444,6 +500,76 @@ export default {
                                 </q-select>
                             </div>
                             <div class="form-box">
+                                <q-btn @click="AddDialog = true" class="q-mb-sm font-13" color="indigo" glossy dense icon="fas fa-plus q-mr-xs">افزودن زمین جدید</q-btn>
+                                <q-dialog position="top"  v-model="AddDialog" >
+                                    <q-card class="add-land-card">
+                                        <q-card-section class="bg-teal-8 text-white">
+                                            <strong class="add-land-title">
+                                                افزودن زمین جدید به لیست
+                                            </strong>
+                                        </q-card-section>
+                                        <q-card-section class="q-mt-sm">
+                                            <q-input
+                                                label="نام زمین شما"
+                                                outlined
+                                                v-model="add.title"
+                                                color="green-8"
+                                                dense
+                                                :error="this.MixinValidationCheck(errors,'title')"
+                                            >
+                                                <template v-slot:error>
+                                                    <Error_Validation :errors="this.MixinValidation(errors,'title')"></Error_Validation>
+                                                </template>
+                                            </q-input>
+                                            <q-input
+                                                label="مساحت زمین ( به مترمربع )"
+                                                outlined
+                                                v-model="add.area"
+                                                color="green-8"
+                                                dense
+                                                :error="this.MixinValidationCheck(errors,'area')"
+
+                                            >
+                                                <template v-slot:error>
+                                                    <Error_Validation :errors="this.MixinValidation(errors,'area')"></Error_Validation>
+                                                </template>
+                                            </q-input>
+
+                                            <q-file  dense color="green-8" outlined v-model="add.image" label="عکس زمین ( اختیاری )" :error="this.MixinValidationCheck(errors,'image')">
+                                                <template v-slot:prepend>
+                                                    <q-icon name="fas fa-image" />
+                                                </template>
+                                                <template v-slot:error>
+                                                    <Error_Validation :errors="this.MixinValidation(errors,'image')"></Error_Validation>
+                                                </template>
+
+                                            </q-file>
+                                            <strong class="text-indigo">انتخاب موقعیت جغرافیایی زمین</strong>
+                                            <div  class="map q-mt-sm">
+                                                <NeshanMap
+                                                    mapKey="web.eaf4d6d0f42a400bb9583fbd8496947f"
+                                                    :center="{ latitude: 36.83951508755615, longitude: 54.43313598632812 }"
+                                                    :zoom="10"
+                                                    hide-layers
+                                                    :hide-search-container="true"
+                                                    @on-click="Map_Marker"
+                                                />
+                                            </div>
+                                            <div class="text-center q-mt-sm">
+                                                <span>موقعیت جغرافیایی : </span>
+                                                <strong v-if="!add.location.length" class="text-red"> انتخاب نشده</strong>
+                                                <strong v-else class="text-positive"> انتخاب شده</strong>
+                                            </div>
+
+                                        </q-card-section>
+                                        <div class="text-right q-mb-md q-px-md">
+                                            <q-btn v-close-popup glossy color="red-7" class="q-mr-sm add-land-btn" icon-right="fas fa-times q-ml-xs">بستن</q-btn>
+
+                                            <q-btn @click="AddItem" :loading="add_loading" glossy color="green-7" class="add-land-btn" icon-right="fas fa-check q-ml-xs">افزودن زمین</q-btn>
+                                        </div>
+
+                                    </q-card>
+                                </q-dialog>
                                 <q-select
                                     outlined
                                     color="green-7"
@@ -535,8 +661,8 @@ export default {
                             <div v-else>
                                 <div v-if="customer_requests.length">
                                     <div class="row justify-center">
-                                        <div v-for="request in customer_requests" class="col-md-6">
-                                            <search_request_waiting :request="request"></search_request_waiting>
+                                        <div v-for="request in customer_requests" class="col-md-4">
+                                            <search_request_waiting :request="request" @CancelRequest="(data) => CancelRequestUsers(data)"></search_request_waiting>
                                         </div>
                                     </div>
                                 </div>
@@ -595,8 +721,8 @@ export default {
                             <q-card-section>
                                 <div v-if="customer_requests.length">
                                     <div class="row justify-center">
-                                        <div v-for="request in customer_requests" class="col-md-6">
-                                            <search_request_waiting :request="request"></search_request_waiting>
+                                        <div v-for="request in customer_requests" class="col-md-4 col-sm-6 col-xs-12 q-px-sm q-mb-md ">
+                                            <search_request_waiting :request="request" @CancelRequest="(data) => CancelRequestUsers(data)"></search_request_waiting>
                                         </div>
                                     </div>
                                 </div>
@@ -729,10 +855,6 @@ export default {
     font-size: 15px;
     font-weight: 600;
 }
-.map{
-    width: 100%;
-    height: 400px;
-}
 .title{
     font-size: 18px;
 }
@@ -766,6 +888,29 @@ export default {
 }
 .not-found-image{
     width: 150px;
+}
+
+.add-land-title{
+    font-size: 17px;
+}
+.add-land-btn{
+    font-size: 14px;
+}
+.add-land-card{
+    max-width: 1024px;
+    width: 900px;
+}
+.map{
+    width: 100%;
+    height: 300px;
+}
+.area-title{
+    font-size: 13px;
+    font-weight: 450;
+}
+.area-value{
+    font-size: 16px;
+    font-weight: 600;
 }
 
 @media only screen and (max-width: 600px) {
@@ -816,6 +961,23 @@ export default {
     .req-title{
         font-size: 13px;
     }
-
+    .add-land-title{
+        font-size: 15px;
+    }
+    .add-land-btn{
+        font-size: 14px;
+    }
+    .map{
+        width: 100%;
+        height: 250px;
+    }
+    .area-title{
+        font-size: 12px;
+        font-weight: 450;
+    }
+    .area-value{
+        font-size: 15px;
+        font-weight: 600;
+    }
 }
 </style>

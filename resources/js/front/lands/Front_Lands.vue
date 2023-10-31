@@ -385,7 +385,7 @@ export default {
 }
 .map{
     width: 100%;
-    height: 400px;
+    height: 300px;
 }
 .area-title{
     font-size: 13px;

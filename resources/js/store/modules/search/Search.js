@@ -11,7 +11,7 @@ export default {
                 axios.get('searches').then((result ) => {
                     resolve(result);
                 }).catch(error => {
-                    reject();
+                    reject(error);
                 })
             } )
         },
@@ -20,7 +20,7 @@ export default {
                 axios.delete('searches/'+item).then((result ) => {
                     resolve(result);
                 }).catch(error => {
-                    reject();
+                    reject(error);
                 })
             } )
         },
@@ -38,7 +38,7 @@ export default {
                 axios.get('users/search/providers/profile/'+item).then((result ) => {
                     resolve(result);
                 }).catch(error => {
-                    reject();
+                    reject(error);
                 })
             } )
         },
@@ -47,7 +47,7 @@ export default {
                 axios.get('users/search/providers/gallery/'+item).then((result ) => {
                     resolve(result);
                 }).catch(error => {
-                    reject();
+                    reject(error);
                 })
             } )
         },
@@ -66,6 +66,15 @@ export default {
                     resolve(result);
                 }).catch(error => {
                     reject();
+                })
+            } )
+        },
+        SearchProviderRequestCancel(_,item){
+            return new Promise((resolve,reject) => {
+                axios.delete('users/search/requests/cancel/'+item).then((result ) => {
+                    resolve(result);
+                }).catch(error => {
+                    reject(error);
                 })
             } )
         },

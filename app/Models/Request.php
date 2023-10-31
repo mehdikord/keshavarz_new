@@ -33,6 +33,10 @@ class Request extends Model
         return $this->belongsTo(User::class,'provider');
     }
 
+    public function land()
+    {
+        return $this->belongsTo(User_Land::class,'user_land_id');
+    }
     public function users(): HasMany
     {
         return $this->hasMany(Request_User::class,'request_id');
