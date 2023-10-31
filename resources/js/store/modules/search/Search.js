@@ -29,7 +29,7 @@ export default {
                 axios.post('users/search/providers',items).then((result ) => {
                     resolve(result);
                 }).catch(error => {
-                    reject();
+                    reject(error);
                 })
             } )
         },

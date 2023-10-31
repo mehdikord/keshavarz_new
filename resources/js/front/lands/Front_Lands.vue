@@ -37,7 +37,7 @@ export default {
         ]),
         Map_Marker(e){
             if (e.coords){
-                console.log(e.coords)
+                this.location = [];
                 this.add.location.push(e.coords[1]);
                 this.add.location.push(e.coords[0]);
             }
@@ -71,7 +71,6 @@ export default {
                 }else if (error.response.status === 422) {
                     this.NotifyError("اطلاعات وارد شده ناقص است")
                     return this.errors = error.response.data
-
                 }else {
                     return this.NotifyServerError();
                 }

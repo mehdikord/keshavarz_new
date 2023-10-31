@@ -23,7 +23,7 @@ class SearchProvidersRequest extends FormRequest
     {
 
         return [
-            'location' => 'required',
+            'user_land_id' => 'required|exists:user_lands,id',
             'implement_id' => 'required|exists:implements,id'
             ];
     }

@@ -27,13 +27,13 @@ class SearchRepository implements SearchInterface
         $users->whereHas('implements',function ($implement)use($request){
             $implement->where('implement_id',$request->implement_id);
         });
-        $land = auth()->user()->lands()->where('id',$request->user_land_id)->first;
+        $land = auth()->user()->lands()->where('id',$request->user_land_id)->first();
         $result=[];
         $make_request=null;
         if ($land && $land->location){
-
+            $location = explode(',',json_decode($land->location, false, 512, JSON_THROW_ON_ERROR));
             foreach ($users->get() as $user){
-                $dis = location_distance(json_decode($user->search_location),$request->location);
+                $dis = location_distance(json_decode($user->search_location),$location);
                 if ($dis <= $user->search_range){
                     $user_implement = $user->implements()->where('implement_id',$request->implement_id)->first();
                     $phone = null;
@@ -68,11 +68,12 @@ class SearchRepository implements SearchInterface
                 'location' => json_encode($request->location, JSON_THROW_ON_ERROR),
             ]);
             $make_request->update(['code' => core_random_code($make_request->id,16)]);
+            $make_request->load('implement');
+
         }
 
 //        log_search_store(auth('users')->id(),$request->implement_id,$request->location,count($result));
 
-        $make_request->load('implement');
         return response_success([
             'result' => $result,
             'request' => $make_request
