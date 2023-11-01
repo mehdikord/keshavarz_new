@@ -661,7 +661,7 @@ export default {
                             <div v-else>
                                 <div v-if="customer_requests.length">
                                     <div class="row justify-center">
-                                        <div v-for="request in customer_requests" class="col-md-4">
+                                        <div v-for="request in customer_requests" class="col-md-4 col-sm-6 col-xs-12 q-px-sm q-mb-md">
                                             <search_request_waiting :request="request" @CancelRequest="(data) => CancelRequestUsers(data)"></search_request_waiting>
                                         </div>
                                     </div>

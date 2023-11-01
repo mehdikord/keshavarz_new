@@ -123,20 +123,23 @@ export default {
                                         </q-popup-proxy>
                                     </q-icon>
                                 </div>
-                                <div class="text-center text-grey-8">
-                                </div>
-
-<!--                                <div class="text-center q-mt-xs">-->
-<!--                                    <q-img src="/front/images/empty.png" class="req-img-empty" />-->
-<!--                                    <div class="q-mt-xs text-grey-8">-->
-<!--                                        درخواست جدیدی وجود ندارد-->
-<!--                                    </div>-->
-<!--                                </div>-->
-                                <div class="row justify-center q-mt-lg">
-                                    <div class="col-lg-4">
-                                        <request_waiting_item></request_waiting_item>
+                                <global_info_loading v-if="new_requests_loading"></global_info_loading>
+                                <template v-else>
+                                    <div v-if="!new_requests.length" class="text-center q-mt-xs">
+                                        <q-img src="/front/images/empty.png" class="req-img-empty" />
+                                        <div class="q-mt-xs text-grey-8">
+                                            درخواست جدیدی وجود ندارد
+                                        </div>
                                     </div>
-                                </div>
+
+                                    <div v-else class="row justify-center q-mt-lg">
+                                        <div v-for="request in new_requests" class="col-md-4 col-sm-6 col-xs-12 q-px-sm q-mb-md">
+                                            <request_waiting_item :request="request"></request_waiting_item>
+                                        </div>
+                                    </div>
+                                </template>
+
+
                             </q-card-section>
                         </q-card>
                     </div>

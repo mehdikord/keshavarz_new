@@ -69,7 +69,7 @@ export default {
                        {{request.land.title}}
                    </span>
                </div>
-               <q-separator class="q-mt-xs q-mb-xs" />
+               <q-separator class="q-mt-sm q-mb-sm" />
 
                <div>
                    <q-img class="rounded-borders land-img" v-if="request.implement.image" :src="request.implement.image" />
@@ -78,7 +78,7 @@ export default {
                        {{request.implement.name}}
                    </span>
                </div>
-               <q-separator class="q-mt-xs q-mb-xs" />
+               <q-separator class="q-mt-sm q-mb-sm" />
                <div>
                    <q-img class="rounded-borders land-img"  src="/front/images/user-group.png" />
                    <span class="land-title q-ml-sm text-grey-8">
@@ -86,7 +86,7 @@ export default {
                        خدمات دهنده در انتظار تایید
                    </span>
                </div>
-               <q-separator class="q-mt-xs q-mb-sm" />
+               <q-separator class="q-mt-sm q-mb-sm" />
                 <div class="text-center">
                     <q-btn @click="CancelCustomerRequest(request.id)" :loading="cancel_loading" class="cancel-btn" color="red" icon="fas fa-times q-mr-xs">لغو این درخواست</q-btn>
                 </div>
@@ -97,8 +97,8 @@ export default {
 
 <style scoped>
 .land-img{
-    width: 50px;
-    height: 50px;
+    width: 40px;
+    height: 40px;
 }
 .land-title{
     font-size: 13px;

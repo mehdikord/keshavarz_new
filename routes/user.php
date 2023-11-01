@@ -73,6 +73,7 @@ Route::middleware(['auth:users'])->group(function (){
 
         Route::prefix('requests')->group(function (){
             Route::get('pending',[\App\Http\Controllers\User\Requests\RequestController::class,'pending']);
+            Route::get('accept/{request}',[\App\Http\Controllers\User\Requests\RequestController::class,'accept']);
 
         });
 

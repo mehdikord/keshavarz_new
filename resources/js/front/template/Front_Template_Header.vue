@@ -42,6 +42,13 @@ export default {
                 <q-item-section class="text-white menu-text">صفحه اصلی</q-item-section>
             </q-item>
             <q-separator  />
+            <q-item clickable v-ripple :to="{name:'plans'}" class="menu-padding">
+                <q-item-section avatar >
+                    <q-icon color="yellow-7"  name="fas fa-id-card-clip font-26" />
+                </q-item-section>
+                <q-item-section class="text-white menu-text">دریافت اشتراک</q-item-section>
+            </q-item>
+            <q-separator/>
             <q-item clickable v-ripple :to="{name:'news'}" class="menu-padding">
                 <q-item-section avatar >
                     <q-icon color="yellow-7" name="fas fa-newspaper font-26" />
@@ -49,13 +56,7 @@ export default {
                 <q-item-section class="text-white menu-text">خبرنامه کشاورزی</q-item-section>
             </q-item>
             <q-separator  />
-            <q-item clickable v-ripple :to="{name:'pages_about'}" class="menu-padding">
-                <q-item-section avatar >
-                    <q-icon color="yellow-7"  name="fas fa-info-circle font-26" />
-                </q-item-section>
-                <q-item-section class="text-white menu-text">درباره کشاورز</q-item-section>
-            </q-item>
-            <q-separator/>
+
             <q-item clickable v-ripple :to="{name:'implements_request'}" class="menu-padding">
                 <q-item-section avatar >
                     <q-icon color="yellow-7"  name="fas fa-star font-26" />
@@ -63,6 +64,14 @@ export default {
                 <q-item-section class="text-white menu-text">درخواست ثبت ادوات</q-item-section>
             </q-item>
             <q-separator/>
+            <q-item clickable v-ripple :to="{name:'pages_about'}" class="menu-padding">
+                <q-item-section avatar >
+                    <q-icon color="yellow-7"  name="fas fa-info-circle font-26" />
+                </q-item-section>
+                <q-item-section class="text-white menu-text">درباره کشاورز</q-item-section>
+            </q-item>
+            <q-separator/>
+
             <q-item clickable v-ripple :to="{name:'pages_contact'}" class="menu-padding">
                 <q-item-section avatar >
                     <q-icon color="yellow-7"  name="fas fa-headset font-26" />

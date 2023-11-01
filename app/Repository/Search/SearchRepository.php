@@ -27,7 +27,7 @@ class SearchRepository implements SearchInterface
         $users->whereHas('implements',function ($implement)use($request){
             $implement->where('implement_id',$request->implement_id);
         });
-        $land = auth()->user()->lands()->where('id',$request->user_land_id)->first();
+        $land = auth('users')->user()->lands()->where('id',$request->user_land_id)->first();
         $result=[];
         $make_request=null;
 
@@ -37,8 +37,7 @@ class SearchRepository implements SearchInterface
                 return response_custom_error('درحال حاضر درخواستی با این اطلاعات در انتظار تایید خدمات دهنده میباشد !');
             }
 
-
-                $location = explode(',',json_decode($land->location, false, 512, JSON_THROW_ON_ERROR));
+            $location = explode(',',json_decode($land->location, false, 512, JSON_THROW_ON_ERROR));
             foreach ($users->get() as $user){
                 $dis = location_distance(json_decode($user->search_location, false, 512, JSON_THROW_ON_ERROR),$location);
                 if ($dis <= $user->search_range){

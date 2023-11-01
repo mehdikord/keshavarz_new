@@ -14,12 +14,17 @@ class Request_User extends Model
     public const STATUS_PENDING = 'pending';
     public const STATUS_ACCEPT = 'accept';
     public const STATUS_REJECT = 'reject';
+    public const STATUS_FAILED = 'failed';
 
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class,'user_id');
     }
 
+    public function request(): BelongsTo
+    {
+        return $this->belongsTo(Request::class,'request_id');
+    }
     public function user_implement(): BelongsTo
     {
         return $this->belongsTo(User_Implement::class,'user_implement_id');
