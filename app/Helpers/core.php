@@ -36,7 +36,7 @@ function core_random_code($unique = 1, $count = 10): string
 
 function helpers_auth_make($phone): void
 {
-    if (env('APP_DEBUG')){
+    if (env('APP_ENV') === 'local'){
         $code = 123456;
     }else{
         $code = random_int(100000,999999);
@@ -46,7 +46,10 @@ function helpers_auth_make($phone): void
         'code' => $code,
         'updated_at' => \Carbon\Carbon::now(),
     ]);
-    sms_kavenegar_pattern($phone,'keshavarz-auth',$code);
+    if (env('APP_ENV') !== 'local'){
+        sms_kavenegar_pattern($phone,'keshavarz-auth',$code);
+
+    }
 
 }
 

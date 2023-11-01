@@ -112,7 +112,7 @@ export default {
                         </div>
                     <div class="q-mt-md">
                         <q-card class="shadow-4">
-                            <q-card-section>
+                            <q-card-section class="mobile-padding">
                                 <div class="text-center">
                                     <strong class="text-red req-title">درخواست های در انتظار تایید</strong>
                                     <q-icon name="fas fa-question-circle q-ml-sm font-20" class="text-indigo cursor-pointer">
@@ -131,7 +131,6 @@ export default {
                                             درخواست جدیدی وجود ندارد
                                         </div>
                                     </div>
-
                                     <div v-else class="row justify-center q-mt-lg">
                                         <div v-for="request in new_requests" class="col-md-4 col-sm-6 col-xs-12 q-px-sm q-mb-md">
                                             <request_waiting_item :request="request"></request_waiting_item>
@@ -181,6 +180,10 @@ export default {
 
 
 @media only screen and (max-width: 600px) {
+    .mobile-padding{
+        padding-left: 1px;
+        padding-right: 1px;
+    }
     .menu-img{
         width: 40px;
     }

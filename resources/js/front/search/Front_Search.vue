@@ -645,7 +645,7 @@ export default {
 
                 <template v-if="show_form">
                     <q-card class="q-mt-md rounded-borders">
-                        <q-card-section>
+                        <q-card-section class="mobile-paddoing">
                             <div class="text-center">
                                 <strong class="text-teal-7 req-title">درخواست های در انتظار تایید</strong>
                                 <q-icon name="fas fa-question-circle q-ml-sm font-20" class="text-indigo cursor-pointer">
@@ -676,7 +676,7 @@ export default {
                         </q-card-section>
                     </q-card>
                     <q-card class="q-mt-md rounded-borders q-mt-md">
-                        <q-card-section>
+                        <q-card-section class="mobile-padding">
                             <div class="text-center">
                                 <strong class="text-grey-9 req-title">درخواست های تایید شده</strong>
                                 <q-icon name="fas fa-question-circle q-ml-sm font-20" class="text-indigo cursor-pointer">
@@ -718,7 +718,7 @@ export default {
                             </div>
                         </template>
                         <q-card>
-                            <q-card-section>
+                            <q-card-section class="mobile-padding">
                                 <div v-if="customer_requests.length">
                                     <div class="row justify-center">
                                         <div v-for="request in customer_requests" class="col-md-4 col-sm-6 col-xs-12 q-px-sm q-mb-md ">
@@ -755,7 +755,7 @@ export default {
                             </div>
                         </template>
                         <q-card>
-                            <q-card-section>
+                            <q-card-section class="mobile-padding">
                                 <div class="text-center q-mt-md">
                                     <q-img src="/front/images/empty.png" class="req-img-empty" />
                                     <div class="q-mt-xs text-grey-7">
@@ -848,9 +848,6 @@ export default {
     width: 60px;
 }
 
-.image-dialog{
-    width: 860px;
-}
 .search-text{
     font-size: 15px;
     font-weight: 600;
@@ -874,14 +871,7 @@ export default {
     padding: 10px 40px;
     font-size: 14px;
 }
-.result-title{
-    font-size: 14px;
-    font-weight: 500;
-}
-.result-info{
-    font-size: 15px;
-    font-weight: 550;
-}
+
 .location-select{
     font-size: 15px;
     font-weight: 550;
@@ -904,16 +894,13 @@ export default {
     width: 100%;
     height: 300px;
 }
-.area-title{
-    font-size: 13px;
-    font-weight: 450;
-}
-.area-value{
-    font-size: 16px;
-    font-weight: 600;
-}
+
 
 @media only screen and (max-width: 600px) {
+    .mobile-padding{
+        padding-left: 1px;
+        padding-right: 1px;
+    }
     .not-found-image{
         width: 100px;
     }
@@ -943,21 +930,12 @@ export default {
         padding: 10px 40px;
         font-size: 12px;
     }
-    .result-title{
-        font-size: 14px;
-        font-weight: 500;
-    }
-    .result-info{
-        font-size: 13px;
-        font-weight: 550;
-    }
+
     .location-select{
         font-size: 14px;
         font-weight: 550;
     }
-    .research{
-        font-size: 11px;
-    }
+
     .req-title{
         font-size: 13px;
     }
@@ -971,13 +949,6 @@ export default {
         width: 100%;
         height: 250px;
     }
-    .area-title{
-        font-size: 12px;
-        font-weight: 450;
-    }
-    .area-value{
-        font-size: 15px;
-        font-weight: 600;
-    }
+
 }
 </style>

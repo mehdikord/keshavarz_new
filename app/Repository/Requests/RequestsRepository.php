@@ -22,11 +22,13 @@ class RequestsRepository implements RequestsInterface
         if ($request->user_id != auth('users')->id()){
             return response_custom_error('Unauthorized');
         }
-
         //check other
-        if ($request->request->users()->where('status',Request_User::STATUS_ACCEPT)->exists()){
+        if ($request->request()->users()->where('status',Request_User::STATUS_ACCEPT)->exists()){
             return response_custom_error('این درخواست توسط خدمات دهنده دیگری پذیرفته شده است');
         }
+        $request->request()->users()->where('status','pending')->update(['status' => 'failed']);
+        $request->update(['status' => 'accept']);
+
 
     }
 
