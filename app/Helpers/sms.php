@@ -26,9 +26,9 @@ function sms_kavenegar_message($phone,$message){
 
     try{
         $kavenegar = new \Kavenegar\KavenegarApi(config('kavenegar.apikey'));
-        $sender = "10008663";		//This is the Sender number	//The body of SMS
+        $sender = "";		//This is the Sender number	//The body of SMS
 
-        $receptor = array((string)$phone);			//Receptors numbers
+        $receptor = array($phone);			//Receptors numbers
 
         $result = $kavenegar->Send($sender,$receptor,$message);
         if($result){
