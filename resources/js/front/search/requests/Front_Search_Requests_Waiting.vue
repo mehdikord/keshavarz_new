@@ -83,8 +83,9 @@ export default {
                    <q-img class="rounded-borders land-img"  src="/front/images/user-group.png" />
                    <span class="land-title q-ml-sm text-grey-8">
                       <strong class="text-red q-mr-xs">{{request.users_count}}</strong>
-                       خدمات دهنده در انتظار تایید
+                       نفر در انتظار تایید
                    </span>
+                   <q-btn dense outline color="indigo" class="font-12 float-right q-mt-sm">مشاهده افراد</q-btn>
                </div>
                <q-separator class="q-mt-sm q-mb-sm" />
                 <div class="text-center">

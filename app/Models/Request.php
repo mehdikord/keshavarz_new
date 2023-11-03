@@ -18,6 +18,10 @@ class Request extends Model
     public const STATUS_CANCELED = 'canceled';
     public const STATUS_DONE = 'done';
 
+    protected $appends=[
+        'search_result_decode'
+    ];
+
     public function user()
     {
         return $this->belongsTo(User::class,'user_id');
@@ -40,5 +44,14 @@ class Request extends Model
     public function users(): HasMany
     {
         return $this->hasMany(Request_User::class,'request_id');
+    }
+
+    public function getSearchResultDecodeAttribute()
+    {
+        $data=[];
+        if ($this->search_result){
+            $data = json_decode($this->search_result, false, 512, JSON_THROW_ON_ERROR);
+        }
+        return $data;
     }
 }

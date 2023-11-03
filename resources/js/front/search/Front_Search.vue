@@ -11,14 +11,14 @@ export default {
       this.Get_Implements();
       if (this.AuthUserCheck()){
           this.Check_Customer();
-          if (localStorage.getItem('keshavarz_search_result')){
-              let search_data = JSON.parse(localStorage.getItem('keshavarz_search_result'))
-              this.search_result = search_data.result;
-              this.search_request = search_data.request;
-              this.show_form=false;
-          }
-          this.GetRequestUsers();
+          // if (localStorage.getItem('keshavarz_search_result')){
+          //     let search_data = JSON.parse(localStorage.getItem('keshavarz_search_result'))
+          //     this.search_result = search_data.result;
+          //     this.search_request = search_data.request;
+          //     this.show_form=false;
+          // }
           this.GetCustomerRequests();
+          this.GetRequestUsers();
           this.Get_Lands();
       }
 
@@ -178,7 +178,7 @@ export default {
                 this.search_result=res.data.result.result;
                 this.search_request=res.data.result.request;
                 this.search_expansion=false;
-                localStorage.setItem('keshavarz_search_result',JSON.stringify(res.data.result));
+                // localStorage.setItem('keshavarz_search_result',JSON.stringify(res.data.result));
                 this.search_loading=false;
                 this.NotifySuccess("جستجو خدمات باموفقیت انجام شد")
                 this.GetCustomerRequests()
@@ -276,12 +276,7 @@ export default {
                 };
             }
         },
-        SearchClear(){
-            localStorage.removeItem('keshavarz_search_result')
-            this.category_id=null;
-            this.implement_id=null;
-            this.show_form=true
-        },
+
         SortByKey(array, key, order) {
             return array.sort((a, b) => {
                 let comparison = 0;
@@ -311,7 +306,6 @@ export default {
                     return this.NotifyServerError();
                 })
             }
-            this.GetCustomerRequests();
 
         },
         CancelRequestUsers(item){
@@ -325,21 +319,25 @@ export default {
 
             return this.NotifySuccess("درخواست مورد نظر باموفقیت حذف گردید");
         },
-        UpdateRequestUsers(data){
-            this.request_users.push(data)
-        },
+
         GetCustomerRequests(){
             this.UserCustomerPending().then(res =>{
                 this.customer_requests=res.data.result;
+                if (this.customer_requests.length){
+                    this.GetRequestResult(res.data.result[0]);
+                }
                 this.customer_requests_loading=false;
-
             }).catch(error => {
 
             })
 
         },
-
-
+        GetRequestResult(request){
+            this.search_request = request;
+            this.GetRequestUsers();
+            this.search_result = request.search_result_decode
+            this.show_form=false;
+        }
 
     },
     computed:{
@@ -773,57 +771,58 @@ export default {
                             {{search_request.implement.name}}
                         </strong>
                     </div>
-                    <q-separator class="q-mt-md" />
-                    <q-banner v-if="check_customer === 0" rounded class="bg-yellow-8">
-                        <div class="text-center">
-                            <i class="fas fa-triangle-exclamation font-20 q-mr-sm fa-beat text-red-14"></i>
-                            <strong>برای ارسال درخواست باید اشتراک فعال خدمات گیرنده داشته باشید</strong>
-                        </div>
-                    </q-banner>
-                    <div class="q-mt-md">
-                        <global_search_loading v-if="search_loading"></global_search_loading>
-                        <template v-else>
-                            <template v-if="search_result">
-                                <div class="q-mb-md search-text text-indigo">
-                                    <strong>{{ search_result.length }}</strong> کاربر برای ارائه این خدمت یافت شد
-                                </div>
-                                <div class="q-mb-lg">
-                                    <strong>مرتب سازی نتایج بر اساس :</strong>
-                                    <div class="q-mt-md">
-                                        <q-select
-                                            filled
-                                            rounded
-                                            color="indigo"
-                                            transition-show="flip-up"
-                                            transition-hide="flip-down"
-                                            v-model="filter_select"
-                                            label="انتخاب ترتیب نمایش"
-                                            :options="filter_options"
-                                            emit-value
-                                            map-options
-                                            @change="Do_Filter"
-                                            behavior="menu"
-                                        >
-                                        </q-select>
-                                    </div>
-                                </div>
-
-                                <search_profile v-for="user in search_result" :user="user" :check_customer="check_customer" :users="request_users" :request_id="search_request.id" @GetReqUsers="(data) => GetRequestUsers(data)" class="q-mb-md"></search_profile>
-                            </template >
+                    <template v-if="search_request">
+                        <q-separator class="q-mt-md" />
+                        <q-banner v-if="check_customer === 0" rounded class="bg-yellow-8">
+                            <div class="text-center">
+                                <i class="fas fa-triangle-exclamation font-20 q-mr-sm fa-beat text-red-14"></i>
+                                <strong>برای ارسال درخواست باید اشتراک فعال خدمات گیرنده داشته باشید</strong>
+                            </div>
+                        </q-banner>
+                        <div  class="q-mt-md">
+                            <global_search_loading v-if="search_loading"></global_search_loading>
                             <template v-else>
-                                <div class="text-center ">
-                                    <q-img class="not-found-image q-mt-md q-mb-lg" src="/front/images/search-not-found.png"></q-img>
-                                    <br>
-                                    <strong class="text-indigo">
-                                        درحال حاضر هیچ کاربری برای ارائه خدمت مورد نظر شما یافت نشد
-                                    </strong>
-                                </div>
+                                <template v-if="search_result.length">
+                                    <div class="q-mb-md search-text text-indigo">
+                                        <strong>{{ search_result.length }}</strong> کاربر برای ارائه این خدمت یافت شد
+                                    </div>
+                                    <div class="q-mb-lg">
+                                        <strong>مرتب سازی نتایج بر اساس :</strong>
+                                        <div class="q-mt-md">
+                                            <q-select
+                                                filled
+                                                rounded
+                                                color="indigo"
+                                                transition-show="flip-up"
+                                                transition-hide="flip-down"
+                                                v-model="filter_select"
+                                                label="انتخاب ترتیب نمایش"
+                                                :options="filter_options"
+                                                emit-value
+                                                map-options
+                                                @change="Do_Filter"
+                                                behavior="menu"
+                                            >
+                                            </q-select>
+                                        </div>
+                                    </div>
+
+                                    <search_profile v-for="user in search_result" :user="user" :check_customer="check_customer" :users="request_users" :request_id="search_request.id" @GetReqUsers="GetRequestUsers" class="q-mb-md"></search_profile>
+                                </template >
+                                <template v-else>
+                                    <div class="text-center ">
+                                        <q-img class="not-found-image q-mt-md q-mb-lg" src="/front/images/search-not-found.png"></q-img>
+                                        <br>
+                                        <strong class="text-indigo">
+                                            درحال حاضر هیچ کاربری برای ارائه خدمت مورد نظر شما یافت نشد
+                                        </strong>
+                                    </div>
+                                </template>
+
                             </template>
 
-                        </template>
-
-                    </div>
-
+                        </div>
+                    </template>
                 </template>
 
             </div>

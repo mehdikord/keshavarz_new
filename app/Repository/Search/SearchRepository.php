@@ -72,6 +72,7 @@ class SearchRepository implements SearchInterface
                 'user_land_id' => $land->id,
                 'implement_id' => $request->implement_id,
                 'location' => json_encode($request->location, JSON_THROW_ON_ERROR),
+                'search_result' => json_encode($result, JSON_THROW_ON_ERROR),
             ]);
             $make_request->update(['code' => core_random_code($make_request->id,16)]);
             $make_request->load('implement');
