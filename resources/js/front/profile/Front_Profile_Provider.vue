@@ -146,6 +146,38 @@ export default {
                             </q-card-section>
                         </q-card>
                     </div>
+                    <div class="q-mt-md">
+                        <q-card class="shadow-4">
+                            <q-card-section class="mobile-padding">
+                                <div class="text-center">
+                                    <strong class=" req-title">درخواست های تایید شده</strong>
+                                    <q-icon name="fas fa-question-circle q-ml-sm font-20" class="text-indigo cursor-pointer">
+                                        <q-popup-proxy :offset="[90,10]">
+                                            <q-banner class="bg-indigo-6 text-white">
+
+                                            </q-banner>
+                                        </q-popup-proxy>
+                                    </q-icon>
+                                </div>
+                                <global_info_loading v-if="new_requests_loading"></global_info_loading>
+                                <template v-else>
+                                    <div v-if="!new_requests.length" class="text-center q-mt-xs">
+                                        <q-img src="/front/images/empty.png" class="req-img-empty" />
+                                        <div class="q-mt-xs text-grey-8">
+                                            درخواست جدیدی وجود ندارد
+                                        </div>
+                                    </div>
+                                    <div v-else class="row justify-center q-mt-lg">
+                                        <div v-for="request in new_requests" class="col-md-4 col-sm-6 col-xs-12 q-px-sm q-mb-md">
+                                            <request_waiting_item @AcceptRequest="AcceptNewRequest" :request="request"></request_waiting_item>
+                                        </div>
+                                    </div>
+                                </template>
+
+
+                            </q-card-section>
+                        </q-card>
+                    </div>
 
                 </template>
             </div>

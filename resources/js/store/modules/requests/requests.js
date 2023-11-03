@@ -15,6 +15,17 @@ export default {
             } )
         },
 
+        UserCustomerWorking(){
+            return new Promise((resolve,reject) => {
+                axios.get('users/search/requests/working').then((result) => {
+                    resolve(result);
+                }).catch(error => {
+                    reject(error);
+                })
+            } )
+        },
+
+
         UserProviderPending(){
             return new Promise((resolve,reject) => {
                 axios.get('users/provider/requests/pending').then((result) => {

@@ -34,7 +34,7 @@ class Request extends Model
 
     public function provider(): BelongsTo
     {
-        return $this->belongsTo(User::class,'provider');
+        return $this->belongsTo(User::class,'provider_id');
     }
 
     public function land()

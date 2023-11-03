@@ -56,4 +56,9 @@ class SearchingController extends Controller
     {
         return $this->repository->search_providers_request_get_pending();
     }
+
+    public function search_providers_request_get_working()
+    {
+        return $this->repository->search_providers_request_get_working();
+    }
 }

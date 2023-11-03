@@ -4,6 +4,9 @@ import {mapActions} from "vuex";
 export default {
     name: "Front_Search_Profile",
     props:['user','check_customer','request_id','users'],
+    created() {
+        // console.log(this.users)
+    },
     data(){
         return{
             request_loading:[],
@@ -38,10 +41,11 @@ export default {
 
         },
         CheckUserExists(user){
+
             let find=null;
             if (this.users.length){
                 this.users.forEach(item => {
-                    if (item.user_id === user){
+                    if (item.user_id === user && item.request_id === this.request_id){
                         find = item
                     }
                 })
@@ -59,6 +63,7 @@ export default {
 
     <q-card class="bg-grey-1 rounded">
         <q-card-section class="q-pa-xs">
+            {{users}}
             <div class="row items-center">
                 <div class="col-lg-2 col-sm-3 col-xs-3 q-pa-sm mobile-padding text-center">
                     <q-img  src="/front/images/farmer.png" class="image" />

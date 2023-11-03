@@ -4,6 +4,7 @@ import NeshanMap from "@neshan-maps-platform/vue3-openlayers"
 import Front_Search_Profile from "@/front/search/Front_Search_Profile.vue";
 import Front_Skeleton_Provider from "../skeleton/Front_Skeleton_Provider.vue";
 import Front_Search_Requests_Waiting from "./requests/Front_Search_Requests_Waiting.vue";
+import Front_Search_Requests_Working from "./requests/Front_Search_Requests_Working.vue";
 export default {
     name: "Front_Search",
     mounted() {
@@ -18,7 +19,7 @@ export default {
           //     this.show_form=false;
           // }
           this.GetCustomerRequests();
-          this.GetRequestUsers();
+          this.GetCustomerWorkingRequests();
           this.Get_Lands();
       }
 
@@ -29,6 +30,7 @@ export default {
         'search_profile' : Front_Search_Profile,
         'skeleton_provider' : Front_Skeleton_Provider,
         'search_request_waiting' : Front_Search_Requests_Waiting,
+        'search_request_working' : Front_Search_Requests_Working,
 
     },
     data(){
@@ -80,6 +82,8 @@ export default {
             check_customer : 0,
             customer_requests_loading:true,
             customer_requests:[],
+            customer_working_requests_loading:true,
+            customer_working_requests:[],
             errors:[],
             AddDialog:false,
             add_loading:false,
@@ -105,6 +109,7 @@ export default {
             "ProfilesUserCheckCustomer",
             "SearchProviderRequestUsers",
             "UserCustomerPending",
+            "UserCustomerWorking",
 
         ]),
         AddItem(){
@@ -288,6 +293,7 @@ export default {
                 return order === 'desc' ? comparison * -1 : comparison;
             });
         },
+
         Check_Customer(){
             if (this.AuthUserCheck()){
                 this.ProfilesUserCheckCustomer().then(res => {
@@ -298,16 +304,21 @@ export default {
             }
 
         },
-        GetRequestUsers(){
-            if (this.search_request){
-                this.SearchProviderRequestUsers(this.search_request.id).then(res => {
-                    this.request_users = res.data.result;
-                }).catch(error => {
-                    return this.NotifyServerError();
-                })
-            }
+
+        GetCustomerRequests(){
+
+            this.UserCustomerPending().then(res =>{
+                this.customer_requests=res.data.result;
+                if (this.customer_requests.length){
+                    this.GetRequestResult(res.data.result[0]);
+                }
+                this.customer_requests_loading=false;
+            }).catch(error => {
+
+            })
 
         },
+
         CancelRequestUsers(item){
            if (this.search_request.id === item){
                localStorage.removeItem('keshavarz_search_result');
@@ -320,26 +331,39 @@ export default {
             return this.NotifySuccess("درخواست مورد نظر باموفقیت حذف گردید");
         },
 
-        GetCustomerRequests(){
-            this.UserCustomerPending().then(res =>{
-                this.customer_requests=res.data.result;
-                if (this.customer_requests.length){
-                    this.GetRequestResult(res.data.result[0]);
-                }
-                this.customer_requests_loading=false;
-            }).catch(error => {
-
-            })
-
-        },
         GetRequestResult(request){
             this.search_request = request;
             this.GetRequestUsers();
             this.search_result = request.search_result_decode
             this.show_form=false;
-        }
+        },
+
+        GetRequestUsers(){
+            if (this.search_request){
+                this.SearchProviderRequestUsers(this.search_request.id).then(res => {
+                    this.request_users = res.data.result;
+                }).catch(error => {
+                    return this.NotifyServerError();
+                })
+            }
+        },
+
+        // Working Request
+        GetCustomerWorkingRequests(){
+            this.UserCustomerWorking().then(res =>{
+                this.customer_working_requests=res.data.result;
+                console.log(this.customer_working_requests)
+                this.customer_working_requests_loading=false;
+            }).catch(error => {
+
+            })
+
+        },
+
 
     },
+
+
     computed:{
         Get_Select_Name(){
             if (this.category_id){
@@ -686,10 +710,20 @@ export default {
                                 </q-icon>
                             </div>
                             <q-separator class="q-mt-sm" />
-                            <div class="text-center q-mt-md">
-                                <q-img src="/front/images/empty.png" class="req-img-empty" />
-                                <div class="q-mt-xs text-grey-7">
-                                    درخواست جدیدی وجود ندارد
+                            <global_info_loading v-if="customer_working_requests_loading"></global_info_loading>
+                            <div v-else>
+                                <div v-if="customer_working_requests.length">
+                                    <div class="row justify-center q-mt-md">
+                                        <div v-for="request in customer_working_requests" class="col-md-4 col-sm-6 col-xs-12 q-px-sm q-mb-md">
+                                            <search_request_working :request="request" @CancelRequest="(data) => CancelRequestUsers(data)"></search_request_working>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div v-else class="text-center q-mt-md">
+                                    <q-img src="/front/images/empty.png" class="req-img-empty" />
+                                    <div class="q-mt-xs text-grey-7">
+                                        درخواست جدیدی وجود ندارد
+                                    </div>
                                 </div>
                             </div>
                         </q-card-section>
@@ -720,7 +754,7 @@ export default {
                                 <div v-if="customer_requests.length">
                                     <div class="row justify-center">
                                         <div v-for="request in customer_requests" class="col-md-4 col-sm-6 col-xs-12 q-px-sm q-mb-md ">
-                                            <search_request_waiting :request="request" @CancelRequest="(data) => CancelRequestUsers(data)"></search_request_waiting>
+                                            <search_request_waiting @ChangeSearchData="(data) => GetRequestResult(data)" :request="request" @CancelRequest="(data) => CancelRequestUsers(data)"></search_request_waiting>
                                         </div>
                                     </div>
                                 </div>
@@ -754,12 +788,23 @@ export default {
                         </template>
                         <q-card>
                             <q-card-section class="mobile-padding">
-                                <div class="text-center q-mt-md">
-                                    <q-img src="/front/images/empty.png" class="req-img-empty" />
-                                    <div class="q-mt-xs text-grey-7">
-                                        درخواست جدیدی وجود ندارد
+                                <global_info_loading v-if="customer_working_requests_loading"></global_info_loading>
+                                <div v-else>
+                                    <div v-if="customer_working_requests.length">
+                                        <div class="row justify-center q-mt-sm">
+                                            <div v-for="request in customer_working_requests" class="col-md-4 col-sm-6 col-xs-12 q-px-sm q-mb-md">
+                                                <search_request_working :request="request" @CancelRequest="(data) => CancelRequestUsers(data)"></search_request_working>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div v-else class="text-center q-mt-md">
+                                        <q-img src="/front/images/empty.png" class="req-img-empty" />
+                                        <div class="q-mt-xs text-grey-7">
+                                            درخواست جدیدی وجود ندارد
+                                        </div>
                                     </div>
                                 </div>
+
                             </q-card-section>
                         </q-card>
                     </q-expansion-item>

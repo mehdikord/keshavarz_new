@@ -143,6 +143,18 @@ class SearchRepository implements SearchInterface
         return response_success($data->get());
     }
 
+    public function search_providers_request_get_working()
+    {
+        $data = auth('users')->user()->customer_requests()->where('status','working');
+        $data->with('implement');
+        $data->with('land');
+        $data->with('provider',function ($provider){
+            $provider->select(['id','name','phone','profile']);
+        });
+        return response_success($data->get());
+    }
+
+
     public function provider_profile($user)
     {
         $implements = [];

@@ -85,7 +85,7 @@ export default {
                       <strong class="text-red q-mr-xs">{{request.users_count}}</strong>
                        نفر در انتظار تایید
                    </span>
-                   <q-btn dense outline color="indigo" class="font-12 float-right q-mt-sm">مشاهده افراد</q-btn>
+                   <q-btn @click="this.$emit('ChangeSearchData',request)" dense outline color="indigo" class="font-12 float-right q-mt-sm">مشاهده افراد</q-btn>
                </div>
                <q-separator class="q-mt-sm q-mb-sm" />
                 <div class="text-center">

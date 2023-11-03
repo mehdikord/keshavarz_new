@@ -100,6 +100,7 @@ Route::middleware(['auth:users'])->group(function (){
 
             Route::post('',[\App\Http\Controllers\Search\SearchingController::class,'search_providers_request_send']);
             Route::get('pending',[\App\Http\Controllers\Search\SearchingController::class,'search_providers_request_get_pending']);
+            Route::get('working',[\App\Http\Controllers\Search\SearchingController::class,'search_providers_request_get_working']);
             Route::get('users/{request}',[\App\Http\Controllers\Search\SearchingController::class,'search_providers_request_users']);
             Route::delete('cancel/{request}',[\App\Http\Controllers\Search\SearchingController::class,'search_providers_request_cancel']);
 
