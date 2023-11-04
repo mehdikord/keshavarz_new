@@ -36,6 +36,24 @@ export default {
             } )
         },
 
+        UserProviderWorking(){
+            return new Promise((resolve,reject) => {
+                axios.get('users/provider/requests/working').then((result) => {
+                    resolve(result);
+                }).catch(error => {
+                    reject(error);
+                })
+            } )
+        },
+        UserProviderSetDone(_,item){
+            return new Promise((resolve,reject) => {
+                axios.get('users/provider/requests/set-done/'+item).then((result) => {
+                    resolve(result);
+                }).catch(error => {
+                    reject(error);
+                })
+            } )
+        },
         UserProviderRequestAccept(_,item){
             return new Promise((resolve,reject) => {
                 axios.get('users/provider/requests/accept/'+item).then((result) => {

@@ -2,28 +2,34 @@
 import {mapActions} from "vuex";
 import Front_Profile_Provider_Request_Waiting_Item
     from "./provider/requests/Front_Profile_Provider_Request_Waiting_Item.vue";
+import Front_Profile_Provider_Request_Working_Item
+    from "./provider/requests/Front_Profile_Provider_Request_Working_Item.vue";
 
 export default {
     name: "Front_Profile_Provider",
     components : {
         'request_waiting_item' : Front_Profile_Provider_Request_Waiting_Item,
+        'request_working_item' : Front_Profile_Provider_Request_Working_Item,
     },
     mounted() {
         if (this.AuthUserCheck()){
             this.GetNewRequests();
+            this.GetWorkingRequests();
         }
-
     },
     data(){
         return{
             new_requests_loading:true,
             new_requests:[],
+            new_working_requests_loading:true,
+            new_working_requests:[],
 
         }
     },
     methods:{
         ...mapActions([
-            "UserProviderPending"
+            "UserProviderPending",
+            "UserProviderWorking"
         ]),
 
         GetNewRequests(){
@@ -33,10 +39,21 @@ export default {
             })
 
         },
+
+        GetWorkingRequests(){
+            this.UserProviderWorking().then(res => {
+                this.new_working_requests = res.data.result;
+                this.new_working_requests_loading=false;
+
+            })
+
+        },
+
         AcceptNewRequest(){
             this.GetNewRequests();
             this.NotifySuccess("درخواست مورد نظر پذیرفته و اطلاعات تماس شما برای درخواست دهنده ارسال گردید");
-        }
+            this.GetWorkingRequests();
+        },
 
     },
     computed :{
@@ -159,17 +176,17 @@ export default {
                                         </q-popup-proxy>
                                     </q-icon>
                                 </div>
-                                <global_info_loading v-if="new_requests_loading"></global_info_loading>
+                                <global_info_loading v-if="new_working_requests_loading"></global_info_loading>
                                 <template v-else>
-                                    <div v-if="!new_requests.length" class="text-center q-mt-xs">
+                                    <div v-if="!new_working_requests.length" class="text-center q-mt-xs">
                                         <q-img src="/front/images/empty.png" class="req-img-empty" />
                                         <div class="q-mt-xs text-grey-8">
                                             درخواست جدیدی وجود ندارد
                                         </div>
                                     </div>
                                     <div v-else class="row justify-center q-mt-lg">
-                                        <div v-for="request in new_requests" class="col-md-4 col-sm-6 col-xs-12 q-px-sm q-mb-md">
-                                            <request_waiting_item @AcceptRequest="AcceptNewRequest" :request="request"></request_waiting_item>
+                                        <div v-for="request in new_working_requests" class="col-md-4 col-sm-6 col-xs-12 q-px-sm q-mb-md">
+                                            <request_working_item @SetDoneEmit="GetWorkingRequests" :request="request"></request_working_item>
                                         </div>
                                     </div>
                                 </template>

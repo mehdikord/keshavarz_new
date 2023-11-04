@@ -2,7 +2,10 @@
 namespace App\Repository\Requests;
 
 use App\Interfaces\Requests\RequestsInterface;
+use App\Models\Request;
 use App\Models\Request_User;
+use Carbon\Carbon;
+use function Laravel\Prompts\select;
 
 class RequestsRepository implements RequestsInterface
 {
@@ -16,6 +19,22 @@ class RequestsRepository implements RequestsInterface
         $data->with('user_implement.implement');
         return response_success($data->get());
     }
+
+    public function provider_working()
+    {
+        $data = Request::where("provider_id",auth('users')->id())
+        ->where('status',Request::STATUS_WORKING)
+        ->with('user',function ($user){
+        $user->select(['id','name','phone','profile']);})
+        ->with('implement')
+        ->with('land')
+        ->select(['id','implement_id','user_id','price','provider_id','code','user_land_id','created_at','updated_at']);
+
+
+        return response_success($data->get());
+    }
+
+
 
     public function provider_accept($request)
     {
@@ -39,6 +58,15 @@ class RequestsRepository implements RequestsInterface
         sms_kavenegar_message($request->request->user->phone,$sms);
         return response_success([],'درخواست با موفقیت پذیرفته شد');
 
+    }
+
+    public function provider_st_done($request)
+    {
+        if ($request->provider_id != auth('users')->id()){
+            return response_custom_error('Unauthorized');
+        }
+        $request->update(['status' => Request::STATUS_DONE,'done_at' => Carbon::now()]);
+        return response_success('','کار در حال انجام مورد نظر با موفقیت پایان یافت');
     }
 
 }

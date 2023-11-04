@@ -63,7 +63,6 @@ export default {
 
     <q-card class="bg-grey-1 rounded">
         <q-card-section class="q-pa-xs">
-            {{users}}
             <div class="row items-center">
                 <div class="col-lg-2 col-sm-3 col-xs-3 q-pa-sm mobile-padding text-center">
                     <q-img  src="/front/images/farmer.png" class="image" />
