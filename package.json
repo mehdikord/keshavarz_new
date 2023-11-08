@@ -10,6 +10,7 @@
     "@vdcrea/vue-leaflet": "gitlab:vdcrea/vue-leaflet",
     "@vitejs/plugin-vue": "^4.2.1",
     "moment-jalaali": "^0.10.0",
+    "num2persian": "^3.2.2",
     "postcss-rtlcss": "^4.0.6",
     "quasar": "^2.11.10",
     "register-service-worker": "^1.7.2",

@@ -21,6 +21,7 @@ import Front_Global_Info_Loading from "./front/globals/Front_Global_Info_Loading
 import axios from "axios";
 import moment from 'moment-jalaali';
 import Front_Global_Images_Lands from "./front/globals/Front_Global_Images_Lands.vue";
+import Num2persian from 'num2persian';
 
 
 
@@ -159,6 +160,13 @@ App.mixin({
 // ++++++++++ Global Filters ++++++++++
 
 App.config.globalProperties.$filters = {
+
+    numtopersian(number){
+        if (number){
+            return Num2persian(number) + ' تومان';
+
+        }
+    },
     date(value,format) {
         return moment(value).format(format='jYYYY/jM/jD')
     },

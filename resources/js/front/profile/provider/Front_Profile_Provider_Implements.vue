@@ -1,5 +1,6 @@
 <script>
 import {mapActions} from "vuex";
+import Num2persian from 'num2persian';
 
 export default {
     name: "Front_Profile_Provider_Implements",
@@ -7,6 +8,8 @@ export default {
         if (this.AuthUserCheck()){
             this.GetUserImplement();
         }
+
+
     },
     data(){
         return {
@@ -309,6 +312,9 @@ export default {
                                             color="green-7"
                                         >
                                         </q-input>
+                                        <div>
+                                            {{ this.$filters.numtopersian(price) }}
+                                        </div>
                                     </div>
                                     <span class="forms-title text-indigo q-mb-sm">افزودن اطلاعات اختیاری : </span>
                                     <div class="q-mt-sm">

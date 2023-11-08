@@ -88,7 +88,7 @@ export default {
                         <span class="info-title text-green-7">قیمت : </span>
                         <span class="info-text text-dark">
                             <strong class="text-red">{{this.$filters.numbers(user.price)}}</strong>
-                            <span class="currency">تومان</span>
+                            <span class="currency">( {{ this.$filters.numtopersian(user.price) }} )</span>
                             /
                             <span>{{user.price_type}}</span>
                         </span>
@@ -125,7 +125,7 @@ export default {
     width: 100px;
 }
 .currency{
-    font-size: 12px;
+    font-size: 13px;
     margin-left: 4px;
 }
 .btn-box{
@@ -164,7 +164,7 @@ export default {
         width: 65px;
     }
     .currency{
-        font-size: 10px;
+        font-size: 12px;
         margin-left: 4px;
     }
     .btn-box{

@@ -143,7 +143,7 @@ export default {
                         <q-btn @click="AddDialog = true" class="add-btn" color="teal-8" text-color="white" rounded glossy icon="fas fa-plus q-mr-sm">افزودن زمین جدید</q-btn>
                         <q-dialog position="top"  v-model="AddDialog" >
 
-                            <q-card class="add-land-card">
+                            <q-card class="add-land-card">+
                                 <q-card-section class="bg-teal-8 text-white">
                                     <strong class="add-land-title">
                                         افزودن زمین جدید به لیست
@@ -191,7 +191,7 @@ export default {
                                             mapKey="web.eaf4d6d0f42a400bb9583fbd8496947f"
                                             :center="{ latitude: 36.83951508755615, longitude: 54.43313598632812 }"
                                             :zoom="10"
-                                            hide-layers
+
                                             :hide-search-container="true"
                                             @on-click="Map_Marker"
                                         />
@@ -236,7 +236,7 @@ export default {
                                                 </div>
                                                 <div class="q-mt-xs">
                                                     <span class="area-title text-grey-8">مساحت : </span>
-                                                    <span class="area-value q-ml-xs text-red">44000</span>
+                                                    <span class="area-value q-ml-xs text-red">{{this.$filters.numbers(item.area)}}</span>
                                                     <span class="q-ml-xs">متر</span>
                                                 </div>
                                                 <div class="q-mt-xs">
