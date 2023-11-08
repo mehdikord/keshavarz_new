@@ -37,7 +37,7 @@ export default {
         ]),
         Map_Marker(e){
             if (e.coords){
-                this.location = [];
+                this.add.location = [];
                 this.add.location.push(e.coords[1]);
                 this.add.location.push(e.coords[0]);
             }
@@ -241,7 +241,7 @@ export default {
                                                 </div>
                                                 <div class="q-mt-xs">
                                                     <span class="area-title text-grey-8">تعداد خدمات : </span>
-                                                    <strong class="q-ml-xs text-teal-8">5</strong>
+                                                    <strong class="q-ml-xs text-teal-8"> 0 </strong>
                                                 </div>
                                                 <div class="text-right">
                                                     <q-btn @click="EditDialog[item.id] = true" icon="fas fa-edit" class="font-10" glossy dense color="blue-8"></q-btn>

@@ -235,7 +235,7 @@ export default {
         },
         Map_Marker(e){
             if (e.coords){
-                this.location = [];
+                this.add.location = [];
                 this.add.location.push(e.coords[1]);
                 this.add.location.push(e.coords[0]);
             }
