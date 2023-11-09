@@ -13,7 +13,8 @@ export default {
     },
     methods:{
         ...mapActions([
-            "UserProviderRequestAccept"
+            "UserProviderRequestAccept",
+            "UserProviderRequestReject"
         ]),
         AcceptRequest(){
             this.$q.dialog({
@@ -47,6 +48,39 @@ export default {
                 // console.log('I am triggered on both OK and Cancel')
             })
 
+
+        },
+        RejectRequest(){
+            this.$q.dialog({
+                title: 'هشدار !',
+                message: 'آیا اطمینان دارید این درخواست رد شود ؟',
+                ok: {
+                    push: true,
+                    color:'green-9',
+                },
+                cancel: {
+                    push: true,
+                    color: 'negative'
+                },
+                persistent: true
+            }).onOk(() => {
+
+                this.accept_loading=true;
+                this.UserProviderRequestReject(this.request.id).then(res => {
+                    this.$emit('AcceptRequest');
+                    this.accept_loading=false;
+                }).catch(error => {
+                    this.accept_loading=false;
+                    if (error.response.status === 409) {
+                        this.NotifyError(error.response.data.error);
+                    }
+                })
+
+            }).onCancel(() => {
+                // console.log('>>>> Cancel')
+            }).onDismiss(() => {
+                // console.log('I am triggered on both OK and Cancel')
+            })
 
         }
 

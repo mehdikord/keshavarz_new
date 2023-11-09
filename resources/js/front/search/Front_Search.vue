@@ -338,6 +338,7 @@ export default {
             this.show_form=false;
         },
 
+
         GetRequestUsers(){
             if (this.search_request){
                 this.SearchProviderRequestUsers(this.search_request.id).then(res => {
@@ -715,7 +716,7 @@ export default {
                                 <div v-if="customer_working_requests.length">
                                     <div class="row justify-center q-mt-md">
                                         <div v-for="request in customer_working_requests" class="col-md-4 col-sm-6 col-xs-12 q-px-sm q-mb-md">
-                                            <search_request_working :request="request" @CancelRequest="(data) => CancelRequestUsers(data)"></search_request_working>
+                                            <search_request_working :request="request" @CancelRequest="GetCustomerWorkingRequests"></search_request_working>
                                         </div>
                                     </div>
                                 </div>
@@ -793,7 +794,7 @@ export default {
                                     <div v-if="customer_working_requests.length">
                                         <div class="row justify-center q-mt-sm">
                                             <div v-for="request in customer_working_requests" class="col-md-4 col-sm-6 col-xs-12 q-px-sm q-mb-md">
-                                                <search_request_working :request="request" @CancelRequest="(data) => CancelRequestUsers(data)"></search_request_working>
+                                                <search_request_working :request="request" @CancelRequest="GetCustomerWorkingRequests"></search_request_working>
                                             </div>
                                         </div>
                                     </div>

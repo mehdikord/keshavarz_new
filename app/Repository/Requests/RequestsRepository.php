@@ -60,6 +60,20 @@ class RequestsRepository implements RequestsInterface
 
     }
 
+    public function provider_reject($request)
+    {
+        if ($request->user_id != auth('users')->id()){
+            return response_custom_error('Unauthorized');
+        }
+
+        $request->update(['status' => 'reject']);
+
+        return response_success([],'درخواست رد شد');
+
+    }
+
+
+
     public function provider_st_done($request)
     {
         if ($request->provider_id != auth('users')->id()){

@@ -10,45 +10,47 @@ export default {
         }
 
     },
-    ...mapActions([
-        "SearchProviderRequestCancel"
+    methods:{
+        ...mapActions([
+            "SearchProviderRequestCancel"
 
-    ]),
-    CancelCustomerRequest(item){
-        this.$q.dialog({
-            title: 'هشدار !',
-            message: 'آیا مطمئن هستید این درخواست لغو گردد ؟',
-            ok: {
-                push: true,
-                color:'green-9',
-            },
-            cancel: {
-                push: true,
-                color: 'negative'
-            },
-            persistent: true
-        }).onOk(() => {
+        ]),
+        CancelCustomerRequest(item){
+            this.$q.dialog({
+                title: 'هشدار !',
+                message: 'آیا مطمئن هستید این درخواست لغو گردد ؟',
+                ok: {
+                    push: true,
+                    color:'green-9',
+                },
+                cancel: {
+                    push: true,
+                    color: 'negative'
+                },
+                persistent: true
+            }).onOk(() => {
 
-            this.cancel_loading=true;
-            this.SearchProviderRequestCancel(item).then(res => {
+                this.cancel_loading=true;
+                this.SearchProviderRequestCancel(item).then(res => {
+                    this.$emit('CancelRequest',item);
+                    this.cancel_loading=false;
+                }).catch(error => {
+                    this.cancel_loading=false;
+                    if (error.response.status === 409) {
+                        this.NotifyError(error.response.data.error);
+                    }
+                })
 
-                this.$emit('CancelRequest',item);
-                this.cancel_loading=false;
-            }).catch(error => {
-                this.cancel_loading=false;
-                if (error.response.status === 409) {
-                    this.NotifyError(error.response.data.error);
-                }
+            }).onCancel(() => {
+                // console.log('>>>> Cancel')
+            }).onDismiss(() => {
+                // console.log('I am triggered on both OK and Cancel')
             })
 
-        }).onCancel(() => {
-            // console.log('>>>> Cancel')
-        }).onDismiss(() => {
-            // console.log('I am triggered on both OK and Cancel')
-        })
 
-
+        }
     }
+
 
 
 }
@@ -56,7 +58,7 @@ export default {
 
 <template>
     <q-card square>
-        <q-card-section >
+        <q-card-section class="q-pb-xs">
             <div>
                 <div>
                     <q-img class="rounded-borders land-img" v-if="request.land.image" :src="request.land.image" />
@@ -95,6 +97,10 @@ export default {
                        {{request.provider.name}} - <span class="land-title text-teal">{{request.provider.phone}}</span>
                    </span>
                     <q-btn :href="'tel:'+request.provider.phone" icon="fas fa-phone q-mr-xs" dense glossy color="green-6" class="font-13 float-right q-mt-sm" style="padding-right: 10px;padding-left: 10px">تماس</q-btn>
+                </div>
+                <q-separator class="q-mt-sm q-mb-sm" />
+                <div class="text-center">
+                    <q-btn @click="CancelCustomerRequest(request.id)" :loading="cancel_loading" class="cancel-btn" color="red" icon="fas fa-times q-mr-xs">لغو این درخواست</q-btn>
                 </div>
 
             </div>

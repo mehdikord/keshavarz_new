@@ -31,6 +31,11 @@ class RequestController extends Controller
         return $this->repository->provider_accept($request);
     }
 
+    public function reject(Request_User $request)
+    {
+        return $this->repository->provider_reject($request);
+    }
+
     public function set_done(\App\Models\Request $request)
     {
         return $this->repository->provider_st_done($request);

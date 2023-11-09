@@ -126,9 +126,9 @@ class SearchRepository implements SearchInterface
         if ($request->user_id != auth('users')->id()){
             return response_custom_error('Unauthorized');
         }
-        if ($request->status != 'pending'){
-            return response_custom_error('این درخواست از حالت انتظار خارح شده است');
-        }
+//        if ($request->status != 'pending'){
+//            return response_custom_error('این درخواست از حالت انتظار خارح شده است');
+//        }
         $request->users()->delete();
         $request->delete();
         return response_success('درخواست مورد نظر باموفقیت لغو گردید');

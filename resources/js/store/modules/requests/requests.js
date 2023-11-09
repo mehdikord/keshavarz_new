@@ -64,6 +64,16 @@ export default {
             } )
         },
 
+        UserProviderRequestReject(_,item){
+            return new Promise((resolve,reject) => {
+                axios.get('users/provider/requests/reject/'+item).then((result) => {
+                    resolve(result);
+                }).catch(error => {
+                    reject(error);
+                })
+            } )
+        },
+
     }
 
 }

@@ -76,6 +76,7 @@ Route::middleware(['auth:users'])->group(function (){
             Route::get('working',[\App\Http\Controllers\User\Requests\RequestController::class,'working']);
             Route::get('set-done/{request}',[\App\Http\Controllers\User\Requests\RequestController::class,'set_done']);
             Route::get('accept/{request}',[\App\Http\Controllers\User\Requests\RequestController::class,'accept']);
+            Route::get('reject/{request}',[\App\Http\Controllers\User\Requests\RequestController::class,'reject']);
 
         });
 
