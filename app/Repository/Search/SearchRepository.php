@@ -130,7 +130,7 @@ class SearchRepository implements SearchInterface
 //            return response_custom_error('این درخواست از حالت انتظار خارح شده است');
 //        }
         $request->users()->delete();
-        $request->delete();
+        $request->update(['provider_id' => null,'status' => Request::STATUS_CANCELED]);
         return response_success('درخواست مورد نظر باموفقیت لغو گردید');
     }
 

@@ -154,7 +154,7 @@ export default {
                                     </div>
                                     <div v-else class="row justify-center q-mt-lg">
                                         <div v-for="request in new_requests" class="col-md-4 col-sm-6 col-xs-12 q-px-sm q-mb-md">
-                                            <request_waiting_item @AcceptRequest="AcceptNewRequest" :request="request"></request_waiting_item>
+                                            <request_waiting_item @RejectRequest="GetNewRequests" @AcceptRequest="AcceptNewRequest" :request="request"></request_waiting_item>
                                         </div>
                                     </div>
                                 </template>

@@ -8,6 +8,7 @@ export default {
         return {
             accept_loading:false,
             cancel_loading:false,
+            reject_loading:false,
             cancel_message:null,
         }
     },
@@ -65,12 +66,13 @@ export default {
                 persistent: true
             }).onOk(() => {
 
-                this.accept_loading=true;
+                this.reject_loading=true;
                 this.UserProviderRequestReject(this.request.id).then(res => {
-                    this.$emit('AcceptRequest');
-                    this.accept_loading=false;
+                    this.$emit('RejectRequest');
+                    this.NotifySuccess(res.data.message);
+                    this.reject_loading=false;
                 }).catch(error => {
-                    this.accept_loading=false;
+                    this.reject_loading=false;
                     if (error.response.status === 409) {
                         this.NotifyError(error.response.data.error);
                     }
@@ -136,7 +138,7 @@ export default {
 
                 </div>
                 <div class="col-6 q-pl-xs">
-                    <q-btn class="for-btn" color="red-6" icon-right="fas fa-times q-ml-xs" glossy dense style="width: 100%">رد درخواست</q-btn>
+                    <q-btn @click="RejectRequest" class="for-btn" color="red-6" icon-right="fas fa-times q-ml-xs" glossy dense style="width: 100%">رد درخواست</q-btn>
 
                 </div>
 
