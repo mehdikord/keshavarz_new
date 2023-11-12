@@ -13,9 +13,12 @@ export default {
       return{
           loading:true,
           add_loading:false,
+          edit_loading:false,
           items:[],
           AddDialog:false,
           EditDialog:[],
+          EditImage:[],
+          EditLocation:[],
           add:{
               title:null,
               description:null,
@@ -32,6 +35,7 @@ export default {
         ...mapActions([
             "LandsUserIndex",
             "LandsUserStore",
+            "LandsUserUpdate",
             "LandsUserEdit",
             "LandsUserDelete",
         ]),
@@ -40,6 +44,13 @@ export default {
                 this.add.location = [];
                 this.add.location.push(e.coords[1]);
                 this.add.location.push(e.coords[0]);
+            }
+        },
+        Map_MarkerEdit(e){
+            if (e.coords){
+                this.EditLocation = [];
+                this.EditLocation.push(e.coords[1]);
+                this.EditLocation.push(e.coords[0]);
             }
         },
 
@@ -78,6 +89,35 @@ export default {
             })
 
         },
+
+        EditItem(item){
+            this.edit_loading=true;
+            console.log(this.EditLocation)
+            let data={
+                "id" : item.id,
+                "title" : item.title,
+                "area" : item.area,
+                "image" : this.EditImage[item.id],
+                "location" : this.EditLocation,
+            };
+            this.LandsUserUpdate(item).then(res => {
+                this.GetItems();
+                this.NotifySuccess("اطلاعات زمین بروزرسانی شد")
+
+            }).catch(error => {
+                this.add_loading=false;
+                if (error.response.status === 409) {
+                    this.NotifyError(error.response.data.error);
+                }else if (error.response.status === 422) {
+                    this.NotifyError("اطلاعات وارد شده ناقص است")
+                    return this.errors = error.response.data
+                }else {
+                    return this.NotifyServerError();
+                }
+            })
+
+        },
+
         DeleteItem(id){
 
             this.$q.dialog({
@@ -107,6 +147,12 @@ export default {
             }).onDismiss(() => {
                 // console.log('I am triggered on both OK and Cancel')
             })
+        },
+
+        SetEditLocation(item){
+            let replace = item.location.slice(1);
+             replace = replace.slice(0, replace.length - 1);
+            this.EditLocation = replace.split(',');
         }
 
 
@@ -244,7 +290,7 @@ export default {
                                                     <strong class="q-ml-xs text-teal-8"> 0 </strong>
                                                 </div>
                                                 <div class="text-right">
-                                                    <q-btn @click="EditDialog[item.id] = true" icon="fas fa-edit" class="font-10" glossy dense color="blue-8"></q-btn>
+                                                    <q-btn @click="EditDialog[item.id] = true ; SetEditLocation(item)" icon="fas fa-edit" class="font-10" glossy dense color="blue-8"></q-btn>
                                                     <q-dialog position="top" v-model="EditDialog[item.id]" >
 
                                                         <q-card class="add-land-card">
@@ -257,7 +303,7 @@ export default {
                                                                 <q-input
                                                                     label="نام زمین شما"
                                                                     outlined
-                                                                    v-model="add.title"
+                                                                    v-model="item.title"
                                                                     color="green-8"
                                                                     dense
                                                                     :error="this.MixinValidationCheck(errors,'title')"
@@ -269,7 +315,7 @@ export default {
                                                                 <q-input
                                                                     label="مساحت زمین ( به مترمربع )"
                                                                     outlined
-                                                                    v-model="add.area"
+                                                                    v-model="item.area"
                                                                     color="green-8"
                                                                     dense
                                                                     :error="this.MixinValidationCheck(errors,'area')"
@@ -280,7 +326,10 @@ export default {
                                                                     </template>
                                                                 </q-input>
 
-                                                                <q-file  dense color="green-8" outlined v-model="add.image" label="عکس زمین ( اختیاری )" :error="this.MixinValidationCheck(errors,'image')">
+                                                                <q-banner class="bg-yellow-9 text-dark q-mb-sm">
+                                                                    فقط در صورت ویرایش تصویر فعلی ، فایل جدید را انتخاب کنید
+                                                                </q-banner>
+                                                                <q-file  dense color="green-8" outlined v-model="EditImage[item.id]" label="عکس زمین ( اختیاری )" :error="this.MixinValidationCheck(errors,'image')">
                                                                     <template v-slot:prepend>
                                                                         <q-icon name="fas fa-image" />
                                                                     </template>
@@ -297,12 +346,12 @@ export default {
                                                                         :zoom="10"
                                                                         hide-layers
                                                                         :hide-search-container="true"
-                                                                        @on-click="Map_Marker"
+                                                                        @on-click="Map_MarkerEdit"
                                                                     />
                                                                 </div>
                                                                 <div class="text-center q-mt-sm">
                                                                     <span>موقعیت جغرافیایی : </span>
-                                                                    <strong v-if="!add.location.length" class="text-red"> انتخاب نشده</strong>
+                                                                    <strong v-if="!EditLocation" class="text-red"> انتخاب نشده</strong>
                                                                     <strong v-else class="text-positive"> انتخاب شده</strong>
                                                                 </div>
 
@@ -310,13 +359,12 @@ export default {
                                                             <div class="text-right q-mb-md q-px-md">
                                                                 <q-btn v-close-popup glossy color="red-7" class="q-mr-sm add-land-btn" icon-right="fas fa-times q-ml-xs">بستن</q-btn>
 
-                                                                <q-btn @click="AddItem" :loading="add_loading" glossy color="green-7" class="add-land-btn" icon-right="fas fa-check q-ml-xs">افزودن زمین</q-btn>
+                                                                <q-btn @click="EditItem(item)" :loading="edit_loading" glossy color="green-7" class="add-land-btn" icon-right="fas fa-check q-ml-xs">ویرایش زمین</q-btn>
                                                             </div>
 
                                                         </q-card>
 
                                                     </q-dialog>
-
 
                                                     <q-btn @click="DeleteItem(item.id)" icon="fas fa-trash" class="font-10" glossy dense color="red q-ml-sm" ></q-btn>
                                                 </div>

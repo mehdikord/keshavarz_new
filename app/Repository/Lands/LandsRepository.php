@@ -31,12 +31,21 @@ class LandsRepository implements LandsInterface
         return response_success($item,'زمین شما با موفقیت اضافه شد');
 
 
-
     }
 
     public function user_update($item,$request)
     {
-
+        if ($item->user_id !== auth('users')->id()){
+            return response_custom_error('access denied');
+        }
+        (new MediaService())->update_model_image($request,$item,'image','users/lands');
+        $item->update([
+            'title' => $request->title,
+            'description' => $request->description,
+            'area' => $request->area,
+            'location' => json_encode($request->location, JSON_THROW_ON_ERROR),
+        ]);
+        return response_success($item,'زمین شما با موفقیت ویرایش شد');
     }
 
     public function user_delete($item)
