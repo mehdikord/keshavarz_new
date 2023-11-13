@@ -38,11 +38,16 @@ class LandsRepository implements LandsInterface
         if ($item->user_id !== auth('users')->id()){
             return response_custom_error('access denied');
         }
-        (new MediaService())->update_model_image($request,$item,'image','users/lands');
+
+        $image=$item->image;
+        if ($request->file('image')){
+            $image = (new MediaService())->store_image($request->file('image'),'users/lands');
+        }
         $item->update([
             'title' => $request->title,
             'description' => $request->description,
             'area' => $request->area,
+            'image' => $image,
             'location' => json_encode($request->location, JSON_THROW_ON_ERROR),
         ]);
         return response_success($item,'زمین شما با موفقیت ویرایش شد');

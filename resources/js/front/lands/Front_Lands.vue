@@ -100,10 +100,10 @@ export default {
                 "image" : this.EditImage[item.id],
                 "location" : this.EditLocation,
             };
-            this.LandsUserUpdate(item).then(res => {
+            this.LandsUserUpdate(data).then(res => {
                 this.GetItems();
                 this.NotifySuccess("اطلاعات زمین بروزرسانی شد")
-
+                this.EditDialog[item.id] = false;
             }).catch(error => {
                 this.add_loading=false;
                 if (error.response.status === 409) {
