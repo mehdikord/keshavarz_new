@@ -22,12 +22,13 @@ export default {
 
             <q-btn  flat round icon="fas fa-list" @click="toggleLeftDrawer" />
 
-            <q-toolbar-title class="text-right">
-                <strong class="text-yellow-8 q-mr-sm page-title">کشاورز</strong>
-                <q-avatar>
-                    <img src="/logo.png">
-                </q-avatar>
-
+            <q-toolbar-title class="text-right" >
+                <router-link :to="{name : 'index'}">
+                    <strong class="text-yellow-8 q-mr-sm page-title">کشاورز</strong>
+                    <q-avatar>
+                        <img src="/logo.png">
+                    </q-avatar>
+                </router-link>
             </q-toolbar-title>
 
         </q-toolbar>
