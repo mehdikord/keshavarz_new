@@ -17,7 +17,9 @@ export default defineConfig({
 
             }
         }),
-        quasar(),
+        quasar({
+
+        }),
         VitePWA({
             registerType: 'autoUpdate',
         }),

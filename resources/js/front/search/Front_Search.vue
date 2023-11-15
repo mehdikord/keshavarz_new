@@ -12,16 +12,11 @@ export default {
       this.Get_Implements();
       if (this.AuthUserCheck()){
           this.Check_Customer();
-          // if (localStorage.getItem('keshavarz_search_result')){
-          //     let search_data = JSON.parse(localStorage.getItem('keshavarz_search_result'))
-          //     this.search_result = search_data.result;
-          //     this.search_request = search_data.request;
-          //     this.show_form=false;
-          // }
           this.GetCustomerRequests();
           this.GetCustomerWorkingRequests();
           this.Get_Lands();
       }
+
 
 
     },
@@ -269,18 +264,6 @@ export default {
                     break;
             }
         },
-        markersIconCallback(point) {
-            if (point.isReverseMarker) {
-                return {
-                    src: "https://img.icons8.com/fluency/344/find-clinic.png"
-                };
-            } else {
-                return {
-                    src: "https://img.icons8.com/fluency/344/find-clinic.png",
-                    iconScale: 0.05
-                };
-            }
-        },
 
         SortByKey(array, key, order) {
             return array.sort((a, b) => {
@@ -336,6 +319,7 @@ export default {
             this.GetRequestUsers();
             this.search_result = request.search_result_decode
             this.show_form=false;
+            this.ScrollToResult();
         },
 
 
@@ -360,6 +344,14 @@ export default {
             })
 
         },
+
+        ScrollToResult(){
+            const elementToScrollTo = this.$refs.forscroll;
+            elementToScrollTo.scrollIntoView({
+                behavior: 'smooth', // Adds smooth scrolling
+                block: 'start', // Scrolls to the top of the element
+            });
+        }
 
 
     },
@@ -433,6 +425,7 @@ export default {
             </template>
             <div v-else class="q-mt-lg">
                 <q-expansion-item
+
                     v-model="search_expansion"
                     class="shadow-4 overflow-hidden"
                     style="border-radius: 5px"
@@ -829,12 +822,12 @@ export default {
                             <global_search_loading v-if="search_loading"></global_search_loading>
                             <template v-else>
                                 <template v-if="search_result.length">
-                                    <div class="q-mb-md search-text text-indigo">
+                                    <div class="q-mb-md search-text text-indigo" ref="forscroll">
                                         <strong>{{ search_result.length }}</strong> کاربر برای ارائه این خدمت یافت شد
                                     </div>
-                                    <div class="q-mb-lg">
+                                    <div class="q-mb-lg" >
                                         <strong>مرتب سازی نتایج بر اساس :</strong>
-                                        <div class="q-mt-md">
+                                        <div class="q-mt-md" >
                                             <q-select
                                                 filled
                                                 rounded

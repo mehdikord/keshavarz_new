@@ -67,6 +67,9 @@ class SearchRepository implements SearchInterface
 
         }
         if (count($result)){
+            //Remove old requests without pending user
+            auth('users')->user()->customer_requests()->whereDoesntHave('users')->delete();
+
             $make_request = Request::create([
                 'user_id' => auth()->id(),
                 'user_land_id' => $land->id,

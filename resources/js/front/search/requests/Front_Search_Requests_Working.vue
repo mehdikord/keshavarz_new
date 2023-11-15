@@ -22,6 +22,8 @@ export default {
                 ok: {
                     push: true,
                     color:'green-9',
+                    title:'بله'
+
                 },
                 cancel: {
                     push: true,

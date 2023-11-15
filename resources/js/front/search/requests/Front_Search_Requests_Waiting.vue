@@ -27,6 +27,7 @@ export default {
                     push: true,
                     color: 'negative'
                 },
+
                 persistent: true
             }).onOk(() => {
 

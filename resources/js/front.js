@@ -26,7 +26,9 @@ import Num2persian from 'num2persian';
 
 
 
+
 const App=createApp(Front_Template);
+
 App.use(Quasar, {
     plugins: {
         Notify,
@@ -35,6 +37,7 @@ App.use(Quasar, {
     }, // import Quasar plugins and add here
     iconSet: quasarIconSet,
     lang: quasarLang,
+
     config: {
 
         brand: {
@@ -44,8 +47,10 @@ App.use(Quasar, {
         },
         notify: {}, // default set of options for Notify Quasar plugin
 
+
     }
 })
+
 App.use(Store)
 App.use(Front)
 window.Helper = Helper
