@@ -134,6 +134,38 @@
                         />
                     </q-td>
                 </template>
+
+                <template v-slot:body-cell-lands="props">
+                    <q-td :props="props">
+                        <q-btn @click="ShowLandDialog[props.row.id]=true" size="sm" glossy color="purple-8" ><span class="font-13 q-mr-sm">{{props.row.lands.length}}</span> - مشاهده</q-btn>
+                    </q-td>
+                    <q-dialog
+                        v-model="ShowLandDialog[props.row.id]"
+                        transition-show="scale"
+                        transition-hide="scale"
+                        position="top"
+                    >
+                        <q-card style="max-width: 900px;width: 760px">
+                            <q-card-section class="bg-purple-8 text-white">
+                                <strong>لیست زمین های {{props.row.name}}  </strong>
+                            </q-card-section>
+                            <q-card-section >
+
+
+
+                            </q-card-section>
+
+                            <q-card-actions align="right">
+                                <q-btn  label="بستن" color="red" v-close-popup />
+
+                            </q-card-actions>
+                        </q-card>
+                    </q-dialog>
+
+
+
+
+                </template>
                 <template v-slot:body-cell-referrals="props">
                     <q-td :props="props">
                         <q-chip color="indigo" text-color="white" size="sm">{{props.row.referrals_count}}</q-chip>
@@ -186,6 +218,7 @@ export default {
             provinces:[],
             provinces_select:[],
             cities_select:[],
+            ShowLandDialog:[],
             add:{
                 name:null,
                 province_id:null,
@@ -250,6 +283,14 @@ export default {
                     label: 'وضعیت حساب',
                     align: 'left',
                     field: row => row.is_active,
+                    sortable: true
+                },
+                {
+                    name:'lands',
+                    required: true,
+                    label: 'زمین ها',
+                    align: 'left',
+                    field: row => row.referrals_count,
                     sortable: true
                 },
                 {

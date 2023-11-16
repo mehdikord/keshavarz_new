@@ -51,7 +51,7 @@ class UsersRepository implements UsersInterface
     //Members
     public function members_index()
     {
-        return response_success(User::OrderbyDesc('id')->withCount('referrals')->get());
+        return response_success(User::OrderbyDesc('id')->withCount('referrals')->with('lands')->get());
     }
 
     public function members_store($request)
