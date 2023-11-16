@@ -82,6 +82,15 @@ export default {
             </div>
             <q-separator class="q-mt-sm q-mb-sm" />
             <div>
+                <q-img class="rounded-borders land-img" src="/front/images/calendar.png" />
+                <span class="land-title q-ml-sm">
+                       <q-chip dense class="land-title" v-for="date in request.dates_decode">
+                           {{date}}
+                       </q-chip>
+                   </span>
+            </div>
+            <q-separator class="q-mt-sm q-mb-sm" />
+            <div>
                 <q-img class="rounded-borders land-img" v-if="request.user.profile" :src="request.user.profile" />
                 <q-img class="rounded-borders land-img" v-else src="/front/images/farmer.png" />
                 <span class="text-grey-9 q-ml-sm implement-title">
@@ -121,9 +130,16 @@ export default {
 .for-btn{
     font-size: 13px;
 }
+.land-title{
+    font-size: 13px;
+    font-weight: 500;
+}
 
 @media only screen and (max-width: 600px) {
-
+    .land-title{
+        font-size: 12px;
+        font-weight: 400;
+    }
     .land-img{
         width: 35px;
         height: 35px;

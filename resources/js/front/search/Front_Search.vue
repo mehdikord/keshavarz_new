@@ -5,6 +5,7 @@ import Front_Search_Profile from "@/front/search/Front_Search_Profile.vue";
 import Front_Skeleton_Provider from "../skeleton/Front_Skeleton_Provider.vue";
 import Front_Search_Requests_Waiting from "./requests/Front_Search_Requests_Waiting.vue";
 import Front_Search_Requests_Working from "./requests/Front_Search_Requests_Working.vue";
+import moment from "moment-jalaali";
 export default {
     name: "Front_Search",
     mounted() {
@@ -50,6 +51,9 @@ export default {
             request_users:[],
             search_request:null,
             map_zoom:{ latitude: 36.83951508755615, longitude: 54.43313598632812 },
+            date:[],
+            now_time:moment().format('jYYYY/jM/jD'),
+
             filter_options : [
                 {
                     label: 'تصادفی',
@@ -173,8 +177,11 @@ export default {
             if (!this.implement_id){
                 return this.NotifyError("ادوات برای جستجو انتخاب نشده")
             }
+            if (!this.date.length){
+                return this.NotifyError("حداقل یک تاریخ برای انجام کار انتخاب کنید")
+            }
             this.search_loading=true;
-            this.SearchStart({implement_id : this.implement_id,user_land_id:this.user_land_id}).then(res => {
+            this.SearchStart({implement_id : this.implement_id,user_land_id:this.user_land_id,dates:this.date}).then(res => {
                 this.search_result=res.data.result.result;
                 this.search_request=res.data.result.request;
                 this.search_expansion=false;
@@ -441,6 +448,7 @@ export default {
                         <q-card-section>
                             <div class="form-box">
                                 <q-select
+                                    dense
                                     outlined
                                     color="green-7"
                                     transition-show="flip-up"
@@ -480,6 +488,7 @@ export default {
                             <div class="form-box">
                                 <q-select
                                     outlined
+                                    dense
                                     color="green-7"
                                     transition-show="flip-up"
                                     transition-hide="flip-down"
@@ -516,7 +525,7 @@ export default {
                                 </q-select>
                             </div>
                             <div class="form-box">
-                                <q-btn @click="AddDialog = true" class="q-mb-sm font-13" color="indigo" glossy dense icon="fas fa-plus q-mr-xs">افزودن زمین جدید</q-btn>
+                                <q-btn @click="AddDialog = true" class="q-mb-sm font-12" color="indigo" glossy dense icon="fas fa-plus q-mr-xs">افزودن زمین جدید</q-btn>
                                 <q-dialog position="top"  v-model="AddDialog" >
                                     <q-card class="add-land-card">
                                         <q-card-section class="bg-teal-8 text-white">
@@ -588,6 +597,7 @@ export default {
                                 </q-dialog>
                                 <q-select
                                     outlined
+                                    dense
                                     color="green-7"
                                     transition-show="flip-up"
                                     transition-hide="flip-down"
@@ -623,34 +633,30 @@ export default {
                                     </template>
                                 </q-select>
                             </div>
-                            <div v-show="false">
-                                <div class="map-text text-center text-indigo">
-                                    با استفاده از نقشه زیر ، موقعیت مکانی زمین خود را انتخاب کنید تا ما بتوانیم نزدیک ترین خدمات را برای شما پیدا کنیم
-                                </div>
-                                <div class="text-center q-mt-lg">
-                                    <q-btn @click="show_map=!show_map" glossy rounded color="indigo" class="open-map-btn">باز کردن نقشه</q-btn>
-                                </div>
-                                <div v-show="location.length" class="q-mt-md text-positive text-center location-select">
-                                    <q-icon name="fas fa-check"/>
-                                    <span class="q-ml-sm">مختصات انتخاب شده است</span>
-                                </div>
-                                <div class="q-mt-md q-mb-md">
-                                    <div v-if="show_map" class="map">
-                                        <NeshanMap
-                                            mapKey="web.eaf4d6d0f42a400bb9583fbd8496947f"
-                                            :center="{ latitude: 36.83951508755615, longitude: 54.43313598632812 }"
-                                            :zoom="10"
-                                            hide-layers
-                                            hide-search-container
-                                            @on-click="Map_Marker"
-                                        />
-                                    </div>
+                            <div class="form-box">
+
+                                <div class="q-mb-sm">
+                                    <q-icon name="fas fa-question-circle q-ml-sm font-20" class="text-indigo cursor-pointer float-left">
+                                        <q-popup-proxy :offset="[90,10]">
+                                            <q-banner class="bg-indigo-6 text-white">
+                                                تاریخ های موردنظر خود را برای انجام کار انتخاب کنید تا خدمات دهندگانی که در این زمان قادر به انجام کار هستند جستجو شوند
+                                            </q-banner>
+                                        </q-popup-proxy>
+                                    </q-icon>
+                                   <span class="q-ml-sm"> انتخاب تاریخ های انجام کار</span>
 
                                 </div>
-                                <div class="q-mt-lg q-mb-lg">
-                                    <q-separator/>
-                                </div>
+
+                                <PersianDatePicker
+                                    multiple
+                                    :min="now_time"
+                                    inputClass="date-picker"
+                                    v-model="date"
+                                    placeholder="برای انتخاب تاریخ از تقویم کلیک کنید"
+                                />
                             </div>
+
+
 
                             <div class="text-center q-mt-xl">
                                 <q-btn @click="Do_Search" glossy rounded color="green"  class="open-map-btn" icon="fas fa-search q-mr-sm"> جستجو خدمات کشاورزی </q-btn>
@@ -872,6 +878,11 @@ export default {
 </template>
 
 <style scoped>
+.date-picker{
+    padding-top: 20px!important;
+    width: 50px!important;
+}
+
 .new-search-header{
     font-size: 15px;
     font-weight: 600;

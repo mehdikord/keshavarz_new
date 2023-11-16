@@ -185,6 +185,7 @@ export default {
                     </q-banner>
                 </template>
                 <template v-else>
+
                     <div>
                         <q-btn @click="AddDialog = true" class="add-btn" color="teal-8" text-color="white" rounded glossy icon="fas fa-plus q-mr-sm">افزودن زمین جدید</q-btn>
                         <q-dialog position="top"  v-model="AddDialog" >
@@ -381,7 +382,6 @@ export default {
 
 
                     </div>
-
 
 
                 </template>

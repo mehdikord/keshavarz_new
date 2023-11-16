@@ -93,6 +93,15 @@ export default {
                 </div>
                 <q-separator class="q-mt-sm q-mb-sm" />
                 <div>
+                    <q-img class="rounded-borders land-img" src="/front/images/calendar.png" />
+                    <span class="land-title q-ml-sm">
+                       <q-chip dense class="land-title" v-for="date in request.dates_decode">
+                           {{date}}
+                       </q-chip>
+                   </span>
+                </div>
+                <q-separator class="q-mt-sm q-mb-sm" />
+                <div>
                     <q-img class="rounded-borders land-img" v-if="request.provider.profile" :src="request.provider.profile" />
                     <q-img class="rounded-borders land-img" v-else src="/front/images/user.png" />
                     <span class="provider-title q-ml-sm">

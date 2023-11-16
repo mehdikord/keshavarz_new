@@ -81,6 +81,16 @@ export default {
                </div>
                <q-separator class="q-mt-sm q-mb-sm" />
                <div>
+                   <q-img class="rounded-borders land-img" src="/front/images/calendar.png" />
+                   <span class="land-title q-ml-sm">
+                       <q-chip dense class="land-title" v-for="date in request.dates_decode">
+                           {{date}}
+                       </q-chip>
+                   </span>
+               </div>
+               <q-separator class="q-mt-sm q-mb-sm" />
+
+               <div>
                    <q-img class="rounded-borders land-img"  src="/front/images/user-group.png" />
                    <span class="land-title q-ml-sm text-grey-8">
                       <strong class="text-red q-mr-xs">{{request.users_count}}</strong>
@@ -88,6 +98,8 @@ export default {
                    </span>
                    <q-btn @click="this.$emit('ChangeSearchData',request)" dense outline color="indigo" class="font-12 float-right q-mt-sm">مشاهده افراد</q-btn>
                </div>
+
+
                <q-separator class="q-mt-sm q-mb-sm" />
                 <div class="text-center">
                     <q-btn @click="CancelCustomerRequest(request.id)" :loading="cancel_loading" class="cancel-btn" color="red" icon="fas fa-times q-mr-xs">لغو این درخواست</q-btn>

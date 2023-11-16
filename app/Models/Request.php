@@ -19,7 +19,7 @@ class Request extends Model
     public const STATUS_DONE = 'done';
 
     protected $appends=[
-        'search_result_decode'
+        'search_result_decode','dates_decode'
     ];
 
     public function user()
@@ -51,6 +51,15 @@ class Request extends Model
         $data=[];
         if ($this->search_result){
             $data = json_decode($this->search_result, false, 512, JSON_THROW_ON_ERROR);
+        }
+        return $data;
+    }
+
+    public function getDatesDecodeAttribute()
+    {
+        $data=[];
+        if ($this->dates){
+            $data = json_decode($this->dates, false, 512, JSON_THROW_ON_ERROR);
         }
         return $data;
     }
