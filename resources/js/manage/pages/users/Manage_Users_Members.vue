@@ -1,4 +1,4 @@
-<template>
+                                                  <template>
     <q-card flat bordered>
 
         <q-card-section class="bg-blue-grey-14 text-white q-pb-lg">
@@ -145,13 +145,12 @@
                         transition-hide="scale"
                         position="top"
                     >
-                        <q-card style="max-width: 900px;width: 760px">
+                        <q-card style="max-width: 1024px;width: 960px">
                             <q-card-section class="bg-purple-8 text-white">
                                 <strong>لیست زمین های {{props.row.name}}  </strong>
                             </q-card-section>
                             <q-card-section >
-
-
+                                <lands_table :lands="props.row.lands" />
 
                             </q-card-section>
 
@@ -197,11 +196,15 @@
 <script>
 import {mapActions} from "vuex";
 import Manage_Users_Members_Edit from "./Manage_Users_Members_Edit.vue";
+import Manage_Lands_Item from "@/manage/pages/lands/Manage_Lands_Item.vue";
+import Manage_Lands_Table from "@/manage/pages/lands/Manage_Lands_Table.vue";
 
 export default {
     name: "Manage_Users_Members",
     components:{
       'member_edit' : Manage_Users_Members_Edit,
+        'land_item' : Manage_Lands_Item,
+        'lands_table' : Manage_Lands_Table,
     },
     mounted() {
         this.GetItems();
