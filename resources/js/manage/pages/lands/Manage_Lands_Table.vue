@@ -41,7 +41,7 @@ export default {
                     required: true,
                     label: 'دریافت خدمات',
                     align: 'left',
-                    field: row => row.description,
+                    field: row => row.requests_count,
                     sortable: true
                 },
 

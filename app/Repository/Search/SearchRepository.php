@@ -10,7 +10,11 @@ class SearchRepository implements SearchInterface
 {
     public function index()
     {
-        return response_success(Search::with('user')->with('implement')->get());
+        $data = Request::query();
+
+        $data->with('user')->with('implement')->with('provider')->with('land');
+
+        return response_success($data->get());
     }
 
     public function delete($item)
@@ -19,6 +23,8 @@ class SearchRepository implements SearchInterface
         return response_success(true,'item deleted success');
     }
 
+
+    //Users
 
     public function search_providers($request)
     {

@@ -188,7 +188,7 @@ export default {
                     ]
                 },
                 {
-                    title : "جستجو های ادوات",
+                    title : "درخواست ها",
                     link : "searches",
                     icon  : "mdi-magnify-expand",
                     subs:[

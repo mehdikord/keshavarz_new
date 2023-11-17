@@ -23,43 +23,35 @@
                 <template v-slot:loading>
                     <Global_Loading></Global_Loading>
                 </template>
-                <template v-slot:body-cell-user_image="props">
-                    <q-td :props="props">
-                        <Global_Show_Image :image="props.row.user.profile"></Global_Show_Image>
-                    </q-td>
-                </template>
                 <template v-slot:body-cell-user="props">
                     <q-td :props="props">
-                        <strong class="text-purple-9">
-                            {{props.row.user.name}}
-                        </strong>
+                        <Global_Show_Image :image="props.row.user.profile"></Global_Show_Image>
+                        <span class="q-ml-xs">{{props.row.user.name}}</span>
                     </q-td>
                 </template>
                 <template v-slot:body-cell-implement="props">
                     <q-td :props="props">
-                        <strong class="text-red">
-                            {{props.row.implement.name}}
-                        </strong>
+                        <Global_Show_Image :image="props.row.implement.image"></Global_Show_Image>
+                        <span class="q-ml-xs">{{props.row.implement.name}}</span>
                     </q-td>
                 </template>
-                <template v-slot:body-cell-location="props">
+                <template v-slot:body-cell-area="props">
                     <q-td :props="props">
-                        <q-btn color="indigo">مشاهده</q-btn>
+                        <template v-if="props.row.land">
+                            <strong class="text-red-8">{{this.$filters.numbers(props.row.land.area)}}</strong>
+                            <span class="q-mr-xs">m</span>
+                        </template>
                     </q-td>
                 </template>
-                <template v-slot:body-cell-result="props">
-                    <q-td :props="props">
-                        <q-chip color="green-7" text-color="white">{{props.row.result}}</q-chip>
-                    </q-td>
-                </template>
-                <template v-slot:body-cell-tools="props">
-                    <q-td :props="props">
-                        <q-btn @click="DeleteItem(props.row.id)" glossy color="red-9" size="sm" icon="mdi-delete" class="q-mx-xs">
-                            <q-tooltip class="bg-grey-9">حذف این آیتم</q-tooltip>
-                        </q-btn>
-                    </q-td>
 
-                </template>
+<!--                <template v-slot:body-cell-tools="props">-->
+<!--                    <q-td :props="props">-->
+<!--                        <q-btn @click="DeleteItem(props.row.id)" glossy color="red-9" size="sm" icon="mdi-delete" class="q-mx-xs">-->
+<!--                            <q-tooltip class="bg-grey-9">حذف این آیتم</q-tooltip>-->
+<!--                        </q-btn>-->
+<!--                    </q-td>-->
+
+<!--                </template>-->
 
 
             </q-table>
@@ -89,22 +81,6 @@ export default {
             dialog_message:[],
             item_columns:[
                 {
-                    name:'id',
-                    required: true,
-                    label: 'ID',
-                    align: 'left',
-                    field: row => row.id,
-                    sortable: true
-                },
-                {
-                    name:'user_image',
-                    required: true,
-                    label: 'تصویر کاربر',
-                    align: 'left',
-                    field: row => row.user,
-                    sortable: true
-                },
-                {
                     name:'user',
                     required: true,
                     label: 'کاربر',
@@ -115,15 +91,15 @@ export default {
                 {
                     name:'implement',
                     required: true,
-                    label: 'نام دستگاه',
+                    label: 'ادوات',
                     align: 'left',
                     field: row => row.implement,
                     sortable: true
                 },
                 {
-                    name:'location',
+                    name:'area',
                     required: true,
-                    label: 'لوکیشن',
+                    label: 'متراژ زمین',
                     align: 'left',
                     field: row => row.location,
                     sortable: true
@@ -131,9 +107,25 @@ export default {
                 {
                     name:'result',
                     required: true,
-                    label: 'تعداد نتایج',
+                    label: 'خدمات دهنده',
                     align: 'left',
-                    field: row => row.result,
+                    field: row => row.provider,
+                    sortable: true
+                },
+                {
+                    name:'result',
+                    required: true,
+                    label: 'نتایج جستجو',
+                    align: 'left',
+                    field: row => row.search_result_decode,
+                    sortable: true
+                },
+                {
+                    name:'result',
+                    required: true,
+                    label: 'وضعیت',
+                    align: 'left',
+                    field: row => row.status,
                     sortable: true
                 },
                 {
