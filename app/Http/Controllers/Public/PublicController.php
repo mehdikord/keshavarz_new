@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Interfaces\Faqs\FaqsInterface;
 use App\Interfaces\Plans\PlansInterface;
 use App\Models\Province;
+use App\Models\Slider;
 use Illuminate\Http\Request;
 
 class PublicController extends Controller
@@ -24,6 +25,10 @@ class PublicController extends Controller
         return response_success(Province::with('cities')->get());
     }
 
+    public function slider()
+    {
+        return response_success(Slider::where('is_active',true)->orderBy('num','ASC')->get());
+    }
 
     public function plans_customer()
     {

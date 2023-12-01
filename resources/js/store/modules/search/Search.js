@@ -60,6 +60,15 @@ export default {
                 })
             } )
         },
+        SearchProviderRequestUserCancel(_,items){
+            return new Promise((resolve,reject) => {
+                axios.post('users/search/requests/user/cancel',items).then((result ) => {
+                    resolve(result);
+                }).catch(error => {
+                    reject(error);
+                })
+            } )
+        },
         SearchProviderRequestUsers(_,item){
             return new Promise((resolve,reject) => {
                 axios.get('users/search/requests/users/'+item).then((result ) => {

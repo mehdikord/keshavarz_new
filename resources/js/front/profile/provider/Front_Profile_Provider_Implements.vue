@@ -308,6 +308,7 @@ export default {
                                         <q-input
                                             :label="'قیمت خدمت قابل ارائه - '+ implement_price +' (تومان) '"
                                             outlined
+                                            type="number"
                                             v-model="price"
                                             color="green-7"
                                         >
@@ -397,6 +398,7 @@ export default {
                                                                     <q-input
                                                                         :label="'قیمت خدمت قابل ارائه - '+ implement.implement.price_type +' (تومان) '"
                                                                         outlined
+                                                                        type="number"
                                                                         v-model="implement.price"
                                                                         color="green-7"
                                                                     >

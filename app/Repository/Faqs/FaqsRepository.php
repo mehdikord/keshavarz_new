@@ -9,13 +9,14 @@ class FaqsRepository implements FaqsInterface
 {
     public function index()
     {
-        return response_success(Faq::OrderbyDesc('id')->get());
+        return response_success(Faq::orderBy('num','ASC')->get());
     }
 
     public function store($request)
     {
         $item = Faq::create([
             'title' => $request->title,
+            'num' => $request->num,
             'question' => $request->question,
             'answer' => $request->answer,
         ]);
@@ -26,6 +27,7 @@ class FaqsRepository implements FaqsInterface
     {
         $item->update([
             'title' => $request->title,
+            'num' => $request->num,
             'question' => $request->question,
             'answer' => $request->answer,
         ]);

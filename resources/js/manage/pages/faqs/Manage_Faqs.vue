@@ -20,6 +20,11 @@
                                 <Error_Validation :errors="this.MixinValidation(errors,'title')"></Error_Validation>
                             </template>
                         </q-input>
+                        <q-input v-model="add.num"  lazy-rules type="number" outlined label="ترتیب نمایش" color="primary" class="q-my-xs" :error="this.MixinValidationCheck(errors,'num')">
+                            <template v-slot:error>
+                                <Error_Validation :errors="this.MixinValidation(errors,'num')"></Error_Validation>
+                            </template>
+                        </q-input>
                         <q-input v-model="add.question"  lazy-rules type="textarea" outlined label="سوال" color="primary" class="q-my-xs" :error="this.MixinValidationCheck(errors,'question')">
                             <template v-slot:error>
                                 <Error_Validation :errors="this.MixinValidation(errors,'question')"></Error_Validation>
@@ -86,6 +91,11 @@
                                         <Error_Validation :errors="this.MixinValidation(errors,'title')"></Error_Validation>
                                     </template>
                                 </q-input>
+                                <q-input v-model="props.row.num" lazy-rules type="number" outlined label="ترتیب نمایش" color="primary" class="q-my-xs" :error="this.MixinValidationCheck(errors,'num')">
+                                    <template v-slot:error>
+                                        <Error_Validation :errors="this.MixinValidation(errors,'num')"></Error_Validation>
+                                    </template>
+                                </q-input>
                                 <q-input v-model="props.row.question"  lazy-rules type="textarea" outlined label="سوال" color="primary" class="q-my-xs" :error="this.MixinValidationCheck(errors,'question')">
                                     <template v-slot:error>
                                         <Error_Validation :errors="this.MixinValidation(errors,'question')"></Error_Validation>
@@ -139,12 +149,14 @@ export default {
                 title:null,
                 question:null,
                 answer:null,
+                num:1,
 
             },
             add_empty:{
                 title:null,
                 question:null,
                 answer:null,
+                num:1,
 
             },
             item_columns:[
@@ -178,6 +190,14 @@ export default {
                     label: 'پاسخ',
                     align: 'left',
                     field: row => row.answer,
+                    sortable: true
+                },
+                {
+                    name:'num',
+                    required: true,
+                    label: 'ترتیب',
+                    align: 'left',
+                    field: row => row.num,
                     sortable: true
                 },
                 {

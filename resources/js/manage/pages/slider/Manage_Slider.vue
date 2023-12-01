@@ -33,7 +33,11 @@
                                 <q-icon name="mdi-close" @click.stop.prevent="add.image = null" class="cursor-pointer" />
                             </template>
                         </q-file>
-
+                        <q-input v-model="add.num"  lazy-rules type="number" outlined label="ترتیب نمایش" color="primary" class="q-my-xs" :error="this.MixinValidationCheck(errors,'num')">
+                            <template v-slot:error>
+                                <Error_Validation :errors="this.MixinValidation(errors,'num')"></Error_Validation>
+                            </template>
+                        </q-input>
                     </q-card-section>
 
                     <q-card-actions align="right">
@@ -98,6 +102,11 @@
                                 <q-input v-model="props.row.link"  lazy-rules type="text" outlined label="لینک اسلایدر" color="primary" class="q-my-xs" :error="this.MixinValidationCheck(errors,'link')">
                                     <template v-slot:error>
                                         <Error_Validation :errors="this.MixinValidation(errors,'link')"></Error_Validation>
+                                    </template>
+                                </q-input>
+                                <q-input v-model="props.row.num"  lazy-rules type="number" outlined label="ترتیب نمایش" color="primary" class="q-my-xs" :error="this.MixinValidationCheck(errors,'num')">
+                                    <template v-slot:error>
+                                        <Error_Validation :errors="this.MixinValidation(errors,'num')"></Error_Validation>
                                     </template>
                                 </q-input>
 
@@ -186,11 +195,13 @@ export default {
                 title:null,
                 image:null,
                 link:null,
+                num:1,
             },
             add_empty:{
                 title:null,
                 image:null,
                 link:null,
+                num:1,
             },
             edit_image:[],
             item_columns:[
@@ -224,6 +235,14 @@ export default {
                     label: 'لینک اسلایدر',
                     align: 'left',
                     field: row => row.link,
+                    sortable: true
+                },
+                {
+                    name:'num',
+                    required: true,
+                    label: 'ترتیب نمایش',
+                    align: 'left',
+                    field: row => row.num,
                     sortable: true
                 },
                 {

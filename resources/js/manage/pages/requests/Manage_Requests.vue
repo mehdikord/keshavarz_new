@@ -26,9 +26,16 @@
 
                 <template v-slot:body-cell-user="props">
                     <q-td :props="props">
-                        <strong class="text-indigo">
-                            {{props.row.user.name}}
-                        </strong>
+                        <template v-if="props.row.user">
+                            <span class="text-indigo">
+                                {{props.row.user.name}}
+                            </span>
+                            -
+                            <strong>
+                                {{props.row.user.phone}}
+                            </strong>
+                        </template>
+
                     </q-td>
                 </template>
                 <template v-slot:body-cell-type="props">

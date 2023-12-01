@@ -61,4 +61,10 @@ class SearchingController extends Controller
     {
         return $this->repository->search_providers_request_get_working();
     }
+
+    public function search_providers_request_user_cancel(SearchRequestSendRequest $request)
+    {
+        return $this->repository->search_providers_request_user_cancel($request);
+
+    }
 }

@@ -1,5 +1,7 @@
 <?php
 
+use App\Models\User_Customer_Plan;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -13,7 +15,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 Route::get('test',function (){
-   return Hash::make(123456);
+
 
 
 });

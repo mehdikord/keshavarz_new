@@ -102,6 +102,9 @@ class SearchRepository implements SearchInterface
     public function search_providers_request_send($request)
     {
         $get_req = Request::find($request->request_id);
+        if ($get_req->user_id != auth('users')->id()){
+            return response_unauthorized();
+        }
         $get_user = User::find($request->user_id);
         $user_implement = $get_user->implements()->where('implement_id',$get_req->implement_id)->first();
         if ($user_implement){
@@ -120,6 +123,19 @@ class SearchRepository implements SearchInterface
             return response_success($req_user);
         }
     }
+
+    public function search_providers_request_user_cancel($request){
+
+        $get_req = Request::find($request->request_id);
+        $get_user = User::find($request->user_id);
+        if ($get_req->user_id != auth('users')->id()){
+            return response_unauthorized();
+        }
+
+        $get_req->users()->where('user_id',$get_user->id)->where('status','pending')->delete();
+        return response_success('','درخواست به کاربر مورد نظر لغو گردید');
+    }
+
 
     public function search_providers_request_users($request)
     {

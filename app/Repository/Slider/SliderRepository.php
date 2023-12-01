@@ -22,6 +22,7 @@ class SliderRepository implements SliderInterface
 
         $item = Slider::create([
             'title' => $request->title,
+            'num' => $request->num,
             'image' => $image,
             'link' => $request->link,
         ]);
@@ -32,6 +33,7 @@ class SliderRepository implements SliderInterface
     {
         $item->update([
             'title' => $request->title,
+            'num' => $request->num,
             'link' => $request->link,
         ]);
         return response_success($item);

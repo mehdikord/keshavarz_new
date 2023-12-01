@@ -17,6 +17,7 @@ Route::prefix('implements')->group(function (){
 });
 
 Route::get('provinces',[\App\Http\Controllers\Public\PublicController::class,'provinces']);
+Route::get('slider',[\App\Http\Controllers\Public\PublicController::class,'slider']);
 
 Route::prefix('plans')->group(function (){
 

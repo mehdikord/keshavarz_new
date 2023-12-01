@@ -6,6 +6,7 @@ export default {
     name: "Front_index",
     created() {
       this.GetNews();
+      this.GetSlider();
     },
     components : {
         'skeleton_news' : Front_Skeleton_News,
@@ -15,7 +16,9 @@ export default {
         return{
             slide:1,
             news:[],
-            news_loading:false,
+            slider:[],
+            news_loading:true,
+            slider_loading:true,
         }
     },
     methods : {
@@ -28,6 +31,15 @@ export default {
                 this.news_loading=false;
                 return this.NotifyServerError();
             })
+        },
+        GetSlider(){
+            axios.get('public/slider').then(res => {
+                this.slider = res.data.result;
+                this.slider_loading=false;
+            }).catch(error => {
+                this.slider_loading=false;
+                return this.NotifyServerError();
+            })
         }
     }
 }
@@ -38,22 +50,25 @@ export default {
         <div class="col-lg-9 col-sm-12 col-xs-12 ">
             <div class="row items-center">
                 <div class="col-md-12 col-sm-12 col-xs-12 q-px-sm mobile-padding">
-                  <q-carousel
-                      class="for-slider rounded-borders"
-                      animated
-                      v-model="slide"
-                      navigation
-                      infinite
-                      :autoplay="true"
-                      arrows
-                      transition-prev="slide-right"
-                      transition-next="slide-left"
-                  >
-                      <q-carousel-slide :name="1" img-src="https://www.pixelstalk.net/wp-content/uploads/images1/Windmill-farm-wallpaper-hd.jpg" />
-                      <q-carousel-slide :name="2" img-src="https://www.pixelstalk.net/wp-content/uploads/images1/Farm-landscape-hd-wallpapers.jpg" />
-                      <q-carousel-slide :name="3" img-src="https://www.pixelstalk.net/wp-content/uploads/images1/Images-Farm-Free-download.jpg" />
-                      <q-carousel-slide :name="4" img-src="https://www.pixelstalk.net/wp-content/uploads/images1/Best-Farm-Images.jpg" />
-                  </q-carousel>
+                    <global_info_loading v-if="slider_loading"></global_info_loading>
+                    <q-carousel
+                        v-else
+                        class="for-slider rounded-borders"
+                        animated
+                        v-model="slide"
+                        navigation
+                        infinite
+                        :autoplay="true"
+                        arrows
+                        transition-prev="slide-right"
+                        transition-next="slide-left"
+                    >
+
+                        <q-carousel-slide  v-for="item in slider" :name="item.id" :img-src="item.image" />
+
+
+                    </q-carousel>
+
               </div>
             </div>
             <div class="col-lg-12 q-mt-md q-px-sm row mobile-padding">

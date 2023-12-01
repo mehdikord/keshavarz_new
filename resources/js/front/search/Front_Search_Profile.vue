@@ -10,13 +10,15 @@ export default {
     data(){
         return{
             request_loading:[],
+            cancel_loading:false,
         }
 
     },
 
     methods:{
         ...mapActions([
-            "SearchProviderRequestSend"
+            "SearchProviderRequestSend",
+            "SearchProviderRequestUserCancel",
         ]),
         SendRequest(){
             this.request_loading[this.user.user.id] = true;
@@ -31,6 +33,30 @@ export default {
 
             }).catch(error => {
                 this.request_loading[this.user.user.id] = false;
+                if (error.response.status === 409) {
+                    return this.NotifyError(error.response.data.error);
+                }
+                return this.NotifyServerError();
+
+            })
+
+
+        },
+        CancelRequest(){
+            this.cancel_loading=true;
+            let items = {
+                "request_id" : this.request_id,
+                "user_id" : this.user.user.id
+            }
+            this.SearchProviderRequestUserCancel(items).then(res => {
+                this.NotifySuccess(res.data.message);
+                this.$emit('GetReqUsers',res.data.result);
+                this.cancel_loading=false;
+                this.request_loading[this.user.user.id] = false;
+
+            }).catch(error => {
+                this.cancel_loading=false;
+
                 if (error.response.status === 409) {
                     return this.NotifyError(error.response.data.error);
                 }
@@ -96,7 +122,12 @@ export default {
                     <div class="btn-box">
 
                         <template v-if="CheckUserExists(user.user.id)">
-                            <q-btn v-if="CheckUserExists(user.user.id).status === 'pending'" color="yellow-9" text-color="dark" disable class="float-right info-btn q-ml-sm" icon="fas fa-spinner fa-spin q-mr-xs">در انتظار تایید</q-btn>
+                            <template v-if="CheckUserExists(user.user.id).status === 'pending'" >
+                                <q-btn @click="CancelRequest" title="لغو درخواست" :loading="cancel_loading" color="red" icon="fas fa-times" dense class="float-right q-ml-sm"></q-btn>
+                                <q-btn color="yellow-9" text-color="dark" disable class="float-right info-btn q-ml-sm" icon="fas fa-spinner fa-spin q-mr-xs">در انتظار تایید</q-btn>
+
+                            </template>
+
                             <q-btn v-if="CheckUserExists(user.user.id).status === 'reject'" color="red" disable class="float-right info-btn q-ml-sm" icon="fas fa-times q-mr-xs">رد شده</q-btn>
                         </template>
 
