@@ -1,10 +1,13 @@
 <script>
 // import NeshanMap from "@neshan-maps-platform/vue3-openlayers";
 import {mapActions} from "vuex";
+import Front_Global_Map from "../../globals/Front_Global_Map.vue";
 
 export default {
     name: "Front_Profile_Provider_Range",
-    components: {},
+    components:{
+        'global_map' : Front_Global_Map,
+    },
     mounted() {
         if (this.AuthUserCheck()){
             this.GetProfile();
@@ -18,6 +21,7 @@ export default {
             location:[],
             location_loading:false,
             show_map:false,
+            marker:[54.42974568989692,36.83880762411505],
         }
     },
     methods:{
@@ -38,7 +42,7 @@ export default {
                 this.user = res.data.result;
                 this.range= this.user.search_range
                 if (this.user.search_location){
-                    this.location= this.user.search_location
+                    this.marker= JSON.parse( this.user.search_location)
                 }
             }).catch(error => {
                 return this.NotifyServerError();
@@ -128,25 +132,9 @@ export default {
                             <div class="info-subtitle-small q-mt-xs q-mb-mb text-grey-7">
                                 موقعیت جغرافیایی شما که محدوده فعالیت تعیین شما توسط شما از آن نقطعه محاسبه میشود
                             </div>
-                            <div class="text-center q-mt-md">
-                                <q-btn @click="show_map=!show_map" color="indigo" class="open-map-btn" glossy rounded>باز کردن نقشه</q-btn>
-                            </div>
-                            <div v-show="location.length" class="q-mt-md text-green-8 text-center location-select">
-                                <q-icon name="fas fa-check"/>
-                                <span class="q-ml-sm">مختصات انتخاب شده است</span>
-                            </div>
                             <div class="q-mt-md q-mb-md">
-                                <div v-if="show_map" class="map">
-                                    <NeshanMap
-                                        mapKey="web.eaf4d6d0f42a400bb9583fbd8496947f"
-                                        :center="{ latitude: 36.83951508755615, longitude: 54.43313598632812 }"
-                                        :zoom="10"
-                                        hide-layers
-                                        :hide-search-container="true"
-                                        @on-click="Map_Marker"
-
-                                    />
-                                </div>
+                                <global_map @UpdateLocation="(e) => {this.location = e}"  :marker="marker" />
+                                {{marker}}
                             </div>
                         </div>
                         <q-separator class="q-mt-lg"/>

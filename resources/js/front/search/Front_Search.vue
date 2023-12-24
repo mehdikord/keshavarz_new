@@ -5,6 +5,7 @@ import Front_Skeleton_Provider from "../skeleton/Front_Skeleton_Provider.vue";
 import Front_Search_Requests_Waiting from "./requests/Front_Search_Requests_Waiting.vue";
 import Front_Search_Requests_Working from "./requests/Front_Search_Requests_Working.vue";
 import moment from "moment-jalaali";
+import Front_Global_Map from "../globals/Front_Global_Map.vue";
 export default {
     name: "Front_Search",
     mounted() {
@@ -23,6 +24,8 @@ export default {
         'skeleton_provider' : Front_Skeleton_Provider,
         'search_request_waiting' : Front_Search_Requests_Waiting,
         'search_request_working' : Front_Search_Requests_Working,
+        'global_map' : Front_Global_Map,
+
 
     },
     data(){
@@ -566,26 +569,14 @@ export default {
 
                                             </q-file>
                                             <strong class="text-indigo">انتخاب موقعیت جغرافیایی زمین</strong>
-                                            <div  class="map q-mt-sm">
-                                                <NeshanMap
-                                                    mapKey="web.eaf4d6d0f42a400bb9583fbd8496947f"
-                                                    :center="{ latitude: 36.83951508755615, longitude: 54.43313598632812 }"
-                                                    :zoom="10"
-                                                    hide-layers
-                                                    :hide-search-container="true"
-                                                    @on-click="Map_Marker"
-                                                />
-                                            </div>
-                                            <div class="text-center q-mt-sm">
-                                                <span>موقعیت جغرافیایی : </span>
-                                                <strong v-if="!add.location.length" class="text-red"> انتخاب نشده</strong>
-                                                <strong v-else class="text-positive"> انتخاب شده</strong>
-                                            </div>
+                                            <global_map @UpdateLocation="(e) => {this.add.location = e}"
+                                                        :marker="[54.42974568989692,36.83880762411505]"
+                                                        class="q-mt-md"></global_map>
+
 
                                         </q-card-section>
                                         <div class="text-right q-mb-md q-px-md">
                                             <q-btn v-close-popup glossy color="red-7" class="q-mr-sm add-land-btn" icon-right="fas fa-times q-ml-xs">بستن</q-btn>
-
                                             <q-btn @click="AddItem" :loading="add_loading" glossy color="green-7" class="add-land-btn" icon-right="fas fa-check q-ml-xs">افزودن زمین</q-btn>
                                         </div>
 

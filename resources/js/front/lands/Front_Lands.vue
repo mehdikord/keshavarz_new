@@ -48,20 +48,6 @@ export default {
             "LandsUserEdit",
             "LandsUserDelete",
         ]),
-        // Map_Marker(e){
-        //     if (e.coords){
-        //         this.add.location = [];
-        //         this.add.location.push(e.coords[1]);
-        //         this.add.location.push(e.coords[0]);
-        //     }
-        // },
-        // Map_MarkerEdit(e){
-        //     if (e.coords){
-        //         this.EditLocation = [];
-        //         this.EditLocation.push(e.coords[1]);
-        //         this.EditLocation.push(e.coords[0]);
-        //     }
-        // },
 
         GetItems(){
             this.LandsUserIndex().then(res => {
@@ -113,6 +99,7 @@ export default {
                 this.GetItems();
                 this.NotifySuccess("اطلاعات زمین بروزرسانی شد")
                 this.EditDialog[item.id] = false;
+                this.edit_loading=false;
             }).catch(error => {
                 this.add_loading=false;
                 if (error.response.status === 409) {
@@ -338,13 +325,9 @@ export default {
 
                                                                 </q-file>
                                                                 <strong class="text-indigo">انتخاب موقعیت جغرافیایی زمین</strong>
-                                                                <div  class="map q-mt-sm">
-                                                                </div>
-                                                                <div class="text-center q-mt-sm">
-                                                                    <span>موقعیت جغرافیایی : </span>
-                                                                    <strong v-if="!EditLocation" class="text-red"> انتخاب نشده</strong>
-                                                                    <strong v-else class="text-positive"> انتخاب شده</strong>
-                                                                </div>
+                                                                <global_map @UpdateLocation="(e) => {this.EditLocation = e}" :marker="EditLocation" class="q-mt-md"></global_map>
+
+
 
                                                             </q-card-section>
                                                             <div class="text-right q-mb-md q-px-md">
