@@ -11,7 +11,6 @@
         <MapboxGeolocateControl />
     </MapboxMap>
     <div class="q-mt-sm">
-<!--        <q-btn @click="GetUserLocation" dense color="primary">لوکیشن من</q-btn>-->
 
     </div>
 
@@ -27,7 +26,7 @@ export default {
         MapboxMap,MapboxMarker,MapboxGeolocateControl
     },
     mounted() {
-        this.marker = this.location;
+        this.location = this.marker
     },
     props:['marker'],
     data(){
