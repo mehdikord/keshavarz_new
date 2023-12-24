@@ -12,7 +12,7 @@
     </MapboxMap>
     <div class="q-mt-sm">
         <q-btn @click="GetUserLocation" dense color="primary">لوکیشن من</q-btn>
-        {{location_get}}
+
     </div>
 
 
