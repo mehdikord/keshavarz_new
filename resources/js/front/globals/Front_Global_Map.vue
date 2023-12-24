@@ -12,6 +12,7 @@
     </MapboxMap>
     <div class="q-mt-sm">
         <q-btn @click="GetUserLocation" dense color="primary">لوکیشن من</q-btn>
+        {{location_get}}
     </div>
 
 
@@ -29,6 +30,7 @@ export default {
     data(){
       return {
           location:[],
+          location_get:null
       }
     },
     methods : {
@@ -40,7 +42,7 @@ export default {
                 navigator.geolocation.getCurrentPosition(
                     (position) => {
                         // Retrieve latitude and longitude
-                        this.location = {
+                        this.location_get = {
                             latitude: position.coords.latitude,
                             longitude: position.coords.longitude,
                         };
