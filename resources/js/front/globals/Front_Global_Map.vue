@@ -8,7 +8,7 @@
         access-token="pk.eyJ1IjoibWVoZGlrb3JkIiwiYSI6ImNqeGV1YTdvcjA2aGwzem1kc20xeGhoa2oifQ.-T82K8jlG9RDkzAY42haiw"
         map-style="mapbox://styles/mapbox/satellite-streets-v12">
         <MapboxMarker :color="'red'" @mb-dragend="ChangeLocation" :draggable="true" :lng-lat="location" />
-        <MapboxGeolocateControl @mb-trackuserlocationend="GetUserLocation" />
+        <MapboxGeolocateControl @mb-trackuserlocationgeolocate="GetUserLocation"  />
     </MapboxMap>
     <div class="q-mt-md">
         {{location_get}}
