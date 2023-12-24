@@ -1,20 +1,15 @@
 <template>
 
-    <MapboxMap
+    <MapboxMap v-if="location.length"
         class="q-mt-md"
         style="height: 400px"
         :zoom="8"
-        :center="[54.79042804024746,36.8523525341774]"
+        :center="location"
         access-token="pk.eyJ1IjoibWVoZGlrb3JkIiwiYSI6ImNqeGV1YTdvcjA2aGwzem1kc20xeGhoa2oifQ.-T82K8jlG9RDkzAY42haiw"
         map-style="mapbox://styles/mapbox/satellite-streets-v12">
         <MapboxMarker :color="'red'" @mb-dragend="ChangeLocation" :draggable="true" :lng-lat="location" />
-        <MapboxGeolocateControl @mb-trackuserlocationgeolocate="GetUserLocation"  />
+        <MapboxGeolocateControl  />
     </MapboxMap>
-    <div class="q-mt-md">
-        {{location_get}}
-    </div>
-
-
 </template>
 
 <script>
@@ -32,16 +27,14 @@ export default {
     data(){
       return {
           location:[],
-          location_get:null
       }
     },
     methods : {
         ChangeLocation(e){
             this.location=[e.target._lngLat.lng,e.target._lngLat.lat]
+            this.$emit('UpdateLocation',this.location)
         },
-        GetUserLocation(e){
-            this.location_get = e;
-        }
+
 
 
     }

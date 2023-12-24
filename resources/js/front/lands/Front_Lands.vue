@@ -230,7 +230,6 @@ export default {
                                         color="green-8"
                                         dense
                                         :error="this.MixinValidationCheck(errors,'area')"
-
                                     >
                                         <template v-slot:error>
                                             <Error_Validation :errors="this.MixinValidation(errors,'area')"></Error_Validation>
@@ -247,8 +246,7 @@ export default {
 
                                     </q-file>
                                     <strong class="text-indigo">انتخاب موقعیت جغرافیایی زمین</strong>
-                                    <global_map :marker="[54.79042804024746,36.8523525341774]" class="q-mt-md"></global_map>
-
+                                    <global_map @UpdateLocation="(e) => {this.add.location = e}" :marker="[54.42974568989692,36.83880762411505]" class="q-mt-md"></global_map>
                                 </q-card-section>
                                 <div class="text-right q-mb-md q-px-md">
                                     <q-btn v-close-popup glossy color="red-7" class="q-mr-sm add-land-btn" icon-right="fas fa-times q-ml-xs">بستن</q-btn>
