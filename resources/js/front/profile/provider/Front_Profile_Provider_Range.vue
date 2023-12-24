@@ -134,7 +134,6 @@ export default {
                             </div>
                             <div class="q-mt-md q-mb-md">
                                 <global_map @UpdateLocation="(e) => {this.location = e}"  :marker="marker" />
-                                {{marker}}
                             </div>
                         </div>
                         <q-separator class="q-mt-lg"/>
