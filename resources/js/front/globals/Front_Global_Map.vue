@@ -42,10 +42,8 @@ export default {
                 navigator.geolocation.getCurrentPosition(
                     (position) => {
                         // Retrieve latitude and longitude
-                        this.location_get = {
-                            latitude: position.coords.latitude,
-                            longitude: position.coords.longitude,
-                        };
+                        this.location=[position.coords.longitude,position.coords.latitude]
+
                     },
                     (error) => {
                         console.error("Error getting location:", error);
