@@ -1,10 +1,10 @@
 <script>
-import NeshanMap from "@neshan-maps-platform/vue3-openlayers";
+// import NeshanMap from "@neshan-maps-platform/vue3-openlayers";
 import {mapActions} from "vuex";
 
 export default {
     name: "Front_Profile_Provider_Range",
-    components: {NeshanMap},
+    components: {},
     mounted() {
         if (this.AuthUserCheck()){
             this.GetProfile();

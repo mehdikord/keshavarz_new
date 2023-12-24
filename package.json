@@ -5,13 +5,10 @@
     "dev": "vite"
   },
   "dependencies": {
-    "@mapbox/mapbox-gl-geocoder": "^5.0.1",
-    "@neshan-maps-platform/vue3-openlayers": "^1.0.6",
     "@quasar/extras": "^1.16.3",
     "@studiometa/vue-mapbox-gl": "^2.2.0",
-    "@vdcrea/vue-leaflet": "gitlab:vdcrea/vue-leaflet",
     "@vitejs/plugin-vue": "^4.2.1",
-    "mapbox-gl": "^2.15.0",
+    "mapbox-gl": "^3.0.1",
     "moment-jalaali": "^0.10.0",
     "num2persian": "^3.2.2",
     "postcss-rtlcss": "^4.0.6",

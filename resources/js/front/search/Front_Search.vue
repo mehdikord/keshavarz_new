@@ -1,6 +1,5 @@
 <script>
 import {mapActions} from "vuex";
-import NeshanMap from "@neshan-maps-platform/vue3-openlayers"
 import Front_Search_Profile from "@/front/search/Front_Search_Profile.vue";
 import Front_Skeleton_Provider from "../skeleton/Front_Skeleton_Provider.vue";
 import Front_Search_Requests_Waiting from "./requests/Front_Search_Requests_Waiting.vue";
@@ -18,11 +17,8 @@ export default {
           this.Get_Lands();
       }
 
-
-
     },
     components: {
-        NeshanMap,
         'search_profile' : Front_Search_Profile,
         'skeleton_provider' : Front_Skeleton_Provider,
         'search_request_waiting' : Front_Search_Requests_Waiting,

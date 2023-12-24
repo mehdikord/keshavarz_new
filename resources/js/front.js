@@ -10,7 +10,6 @@ import quasarIconSet from 'quasar/icon-set/fontawesome-v6';
 import quasarLang from 'quasar/lang/fa-IR';
 import 'quasar/dist/quasar.css';
 import '@quasar/extras/fontawesome-v6/fontawesome-v6.css'
-import  '@neshan-maps-platform/vue3-openlayers/dist/style.css'
 import {mapActions, mapGetters} from "vuex";
 import Front_Global_Images_Categories from "./front/globals/Front_Global_Images_Categories.vue";
 import Front_Global_Images_Implements from "./front/globals/Front_Global_Images_Implements.vue";
@@ -22,8 +21,7 @@ import axios from "axios";
 import moment from 'moment-jalaali';
 import Front_Global_Images_Lands from "./front/globals/Front_Global_Images_Lands.vue";
 import Num2persian from 'num2persian';
-
-
+// import Front_Global_Map from "./front/globals/Front_Global_Map.vue";
 
 
 
@@ -53,6 +51,8 @@ App.use(Quasar, {
 
 App.use(Store)
 App.use(Front)
+
+
 window.Helper = Helper
 
 // ++++++++++ Global Components ++++++++++
@@ -62,6 +62,7 @@ App.component("global_image_lands",Front_Global_Images_Lands)
 App.component("global_search_loading",Front_Global_Search_Loading)
 App.component("global_info_loading",Front_Global_Info_Loading)
 App.component('Error_Validation',Error_Validation)
+// App.component('global_map',Front_Global_Map)
 App.component("PersianDatePicker",VuePersianDatetimePicker)
 
 
@@ -216,12 +217,7 @@ App.config.globalProperties.$filters = {
 
     return englishNumberStr;
 }
-
-
 }
 
 // ++++++++++++++++++++
-
-
-
 App.mount('#app')

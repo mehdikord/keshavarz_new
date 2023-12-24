@@ -1,11 +1,14 @@
 <script>
 
 import {mapActions} from "vuex";
-import NeshanMap from "@neshan-maps-platform/vue3-openlayers";
-
+import Front_Global_Map from "../globals/Front_Global_Map.vue";
 export default {
     name: "Front_Lands",
-    components: {NeshanMap},
+
+    components:{
+      'global_map' : Front_Global_Map,
+    },
+
     mounted() {
         this.GetItems();
     },
@@ -28,7 +31,13 @@ export default {
 
           },
           errors:[],
-
+          location: {
+              lng: 54.79042804024746,
+              lat: 36.8523525341774,
+              bearing: 0,
+              pitch: 0,
+              zoom: 9,
+          },
       }
     },
     methods :{
@@ -39,20 +48,20 @@ export default {
             "LandsUserEdit",
             "LandsUserDelete",
         ]),
-        Map_Marker(e){
-            if (e.coords){
-                this.add.location = [];
-                this.add.location.push(e.coords[1]);
-                this.add.location.push(e.coords[0]);
-            }
-        },
-        Map_MarkerEdit(e){
-            if (e.coords){
-                this.EditLocation = [];
-                this.EditLocation.push(e.coords[1]);
-                this.EditLocation.push(e.coords[0]);
-            }
-        },
+        // Map_Marker(e){
+        //     if (e.coords){
+        //         this.add.location = [];
+        //         this.add.location.push(e.coords[1]);
+        //         this.add.location.push(e.coords[0]);
+        //     }
+        // },
+        // Map_MarkerEdit(e){
+        //     if (e.coords){
+        //         this.EditLocation = [];
+        //         this.EditLocation.push(e.coords[1]);
+        //         this.EditLocation.push(e.coords[0]);
+        //     }
+        // },
 
         GetItems(){
             this.LandsUserIndex().then(res => {
@@ -153,6 +162,12 @@ export default {
             let replace = item.location.slice(1);
              replace = replace.slice(0, replace.length - 1);
             this.EditLocation = replace.split(',');
+        },
+
+        MapMarketDrag(e){
+            // console.log(e.target._lngLat)
+            this.add.location=[e.target._lngLat['lat'],e.target._lngLat['lng']];
+            console.log(this.add.location)
         }
 
 
@@ -185,12 +200,11 @@ export default {
                     </q-banner>
                 </template>
                 <template v-else>
-
                     <div>
                         <q-btn @click="AddDialog = true" class="add-btn" color="teal-8" text-color="white" rounded glossy icon="fas fa-plus q-mr-sm">افزودن زمین جدید</q-btn>
-                        <q-dialog position="top"  v-model="AddDialog" >
+                        <q-dialog position="top"  v-model="AddDialog">
 
-                            <q-card class="add-land-card">+
+                            <q-card class="add-land-card">
                                 <q-card-section class="bg-teal-8 text-white">
                                     <strong class="add-land-title">
                                         افزودن زمین جدید به لیست
@@ -233,21 +247,7 @@ export default {
 
                                     </q-file>
                                     <strong class="text-indigo">انتخاب موقعیت جغرافیایی زمین</strong>
-                                    <div  class="map q-mt-sm">
-                                        <NeshanMap
-                                            mapKey="web.eaf4d6d0f42a400bb9583fbd8496947f"
-                                            :center="{ latitude: 36.83951508755615, longitude: 54.43313598632812 }"
-                                            :zoom="10"
-
-                                            :hide-search-container="true"
-                                            @on-click="Map_Marker"
-                                        />
-                                    </div>
-                                    <div class="text-center q-mt-sm">
-                                        <span>موقعیت جغرافیایی : </span>
-                                        <strong v-if="!add.location.length" class="text-red"> انتخاب نشده</strong>
-                                        <strong v-else class="text-positive"> انتخاب شده</strong>
-                                    </div>
+                                    <global_map :marker="[54.79042804024746,36.8523525341774]" class="q-mt-md"></global_map>
 
                                 </q-card-section>
                                 <div class="text-right q-mb-md q-px-md">
@@ -341,14 +341,6 @@ export default {
                                                                 </q-file>
                                                                 <strong class="text-indigo">انتخاب موقعیت جغرافیایی زمین</strong>
                                                                 <div  class="map q-mt-sm">
-                                                                    <NeshanMap
-                                                                        mapKey="web.eaf4d6d0f42a400bb9583fbd8496947f"
-                                                                        :center="{ latitude: 36.83951508755615, longitude: 54.43313598632812 }"
-                                                                        :zoom="10"
-                                                                        hide-layers
-                                                                        :hide-search-container="true"
-                                                                        @on-click="Map_MarkerEdit"
-                                                                    />
                                                                 </div>
                                                                 <div class="text-center q-mt-sm">
                                                                     <span>موقعیت جغرافیایی : </span>
@@ -391,7 +383,11 @@ export default {
 </template>
 
 <style scoped>
-
+.custom-marker {
+    padding: 1em;
+    background-color: #fff;
+    border-radius: 5px;
+}
 .land-image{
     width: 120px;
     height: 120px;
@@ -433,7 +429,7 @@ export default {
 }
 .map{
     width: 100%;
-    height: 300px;
+    height: 300px!important;
 }
 .area-title{
     font-size: 13px;
