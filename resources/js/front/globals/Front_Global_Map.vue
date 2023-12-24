@@ -7,11 +7,11 @@
         :center="[54.79042804024746,36.8523525341774]"
         access-token="pk.eyJ1IjoibWVoZGlrb3JkIiwiYSI6ImNqeGV1YTdvcjA2aGwzem1kc20xeGhoa2oifQ.-T82K8jlG9RDkzAY42haiw"
         map-style="mapbox://styles/mapbox/satellite-streets-v12">
-        <MapboxMarker :color="'red'" @mb-dragend="ChangeLocation" :draggable="true" :lng-lat="marker" />
-
+        <MapboxMarker :color="'red'" @mb-dragend="ChangeLocation" :draggable="true" :lng-lat="location" />
+        <MapboxGeolocateControl />
     </MapboxMap>
     <div class="q-mt-sm">
-        <q-btn @click="GetUserLocation" dense color="primary">لوکیشن من</q-btn>
+<!--        <q-btn @click="GetUserLocation" dense color="primary">لوکیشن من</q-btn>-->
 
     </div>
 
@@ -25,6 +25,9 @@ import { MapboxMap, MapboxMarker,MapboxGeolocateControl } from '@studiometa/vue-
 export default {
     components :{
         MapboxMap,MapboxMarker,MapboxGeolocateControl
+    },
+    mounted() {
+        this.marker = this.location;
     },
     props:['marker'],
     data(){
