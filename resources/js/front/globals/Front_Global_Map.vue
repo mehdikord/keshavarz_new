@@ -8,10 +8,10 @@
         access-token="pk.eyJ1IjoibWVoZGlrb3JkIiwiYSI6ImNqeGV1YTdvcjA2aGwzem1kc20xeGhoa2oifQ.-T82K8jlG9RDkzAY42haiw"
         map-style="mapbox://styles/mapbox/satellite-streets-v12">
         <MapboxMarker :color="'red'" @mb-dragend="ChangeLocation" :draggable="true" :lng-lat="location" />
-        <MapboxGeolocateControl />
+        <MapboxGeolocateControl @mb-trackuserlocationend="GetUserLocation" />
     </MapboxMap>
-    <div class="q-mt-sm">
-
+    <div class="q-mt-md">
+        {{location_get}}
     </div>
 
 
@@ -40,20 +40,7 @@ export default {
             this.location=[e.target._lngLat.lng,e.target._lngLat.lat]
         },
         GetUserLocation(e){
-            if ("geolocation" in navigator) {
-                navigator.geolocation.getCurrentPosition(
-                    (position) => {
-                        // Retrieve latitude and longitude
-                        this.location=[position.coords.longitude,position.coords.latitude]
-
-                    },
-                    (error) => {
-                        console.error("Error getting location:", error);
-                    }
-                );
-            } else {
-                console.error("Geolocation not available.");
-            }
+            this.location_get = e;
         }
 
 
