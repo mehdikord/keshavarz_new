@@ -45,7 +45,7 @@ class SearchRepository implements SearchInterface
 
             $location = explode(',',json_decode($land->location, false, 512, JSON_THROW_ON_ERROR));
             foreach ($users->get() as $user){
-                $dis = location_distance(json_decode($user->search_location, false, 512, JSON_THROW_ON_ERROR),$location);
+                $dis = location_distance($user->search_location,$location);
                 if ($dis <= $user->search_range){
                     $user_implement = $user->implements()->where('implement_id',$request->implement_id)->first();
                     $phone = null;
@@ -112,7 +112,7 @@ class SearchRepository implements SearchInterface
                 return response_custom_error('قبلا برای این کاربر درخواست ارسال کرده اید');
             }
             $location = explode(',',json_decode($get_req->land->location, false, 512, JSON_THROW_ON_ERROR));
-            $dis = location_distance(json_decode($get_user->search_location, false, 512, JSON_THROW_ON_ERROR),$location);
+            $dis = location_distance($get_user->search_location,$location);
             $req_user = $get_req->users()->create([
                 'user_id' => $get_user->id,
                 'user_implement_id' => $user_implement->id,
