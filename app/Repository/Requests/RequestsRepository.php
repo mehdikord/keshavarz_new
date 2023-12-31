@@ -54,8 +54,9 @@ class RequestsRepository implements RequestsInterface
             'status' => 'working',
         ]);
         //Send sms
-        $sms = "کاربر گرامی درخواست ".$request->request->implement->name." برای زمین : ".$request->request->land->title." توسط ".auth('users')->user()->name." (".auth('users')->user()->phone.") پذیرفته شد.";
-        sms_kavenegar_message($request->request->user->phone,$sms);
+//        $sms = "کاربر گرامی درخواست ".$request->request->implement->name." برای زمین : ".$request->request->land->title." توسط ".auth('users')->user()->name." (".auth('users')->user()->phone.") پذیرفته شد.";
+//        sms_kavenegar_message($request->request->user->phone,$sms);
+        sms_kavenegar_pattern($request->request->user->phone,'keshavarz-accept-request',$request->request->implement->name);
         return response_success([],'درخواست با موفقیت پذیرفته شد');
 
     }

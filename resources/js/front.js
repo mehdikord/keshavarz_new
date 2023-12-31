@@ -23,10 +23,7 @@ import Front_Global_Images_Lands from "./front/globals/Front_Global_Images_Lands
 import Num2persian from 'num2persian';
 // import Front_Global_Map from "./front/globals/Front_Global_Map.vue";
 
-
-
 const App=createApp(Front_Template);
-
 App.use(Quasar, {
     plugins: {
         Notify,
@@ -73,9 +70,11 @@ App.component("PersianDatePicker",VuePersianDatetimePicker)
 App.mixin({
     beforeCreate() {
         this.$store.commit('AuthUserSync');
+
     },
     created() {
         axios.defaults.headers.common['Authorization'] ="Bearer "+this.UserToken
+
 
 
 
@@ -218,6 +217,16 @@ App.config.globalProperties.$filters = {
     return englishNumberStr;
 }
 }
-
+if ('serviceWorker' in navigator) {
+    window.addEventListener('load', () => {
+        navigator.serviceWorker.register('/service-worker.js').then(registration => {
+            console.log('ServiceWorker registration successful with scope: ', registration.scope);
+        }, err => {
+            console.log('ServiceWorker registration failed: ', err);
+        }).catch(err => {
+            console.log(err);
+        });
+    });
+}
 // ++++++++++++++++++++
 App.mount('#app')

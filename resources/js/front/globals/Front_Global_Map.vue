@@ -5,6 +5,7 @@
         style="height: 400px"
         :zoom="8"
         :center="location"
+        language="en"
         access-token="pk.eyJ1IjoibWVoZGlrb3JkIiwiYSI6ImNqeGV1YTdvcjA2aGwzem1kc20xeGhoa2oifQ.-T82K8jlG9RDkzAY42haiw"
         map-style="mapbox://styles/mapbox/satellite-streets-v12">
         <MapboxMarker :color="'red'" @mb-dragend="ChangeLocation" :draggable="true" :lng-lat="location" />

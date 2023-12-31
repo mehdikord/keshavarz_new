@@ -7,6 +7,7 @@ export default {
     created() {
       this.GetNews();
       this.GetSlider();
+      this.listenForChanges();
     },
     components : {
         'skeleton_news' : Front_Skeleton_News,
@@ -40,7 +41,30 @@ export default {
                 this.slider_loading=false;
                 return this.NotifyServerError();
             })
+        },
+
+        listenForChanges() {
+
+            Echo.channel('news-channel')
+                .listen('my-eventv', post => {
+                    if (! ('Notification' in window)) {
+                        alert('Web Notification is not supported');
+                        return;
+                    }
+                    Notification.requestPermission( permission => {
+                        let notification = new Notification('Awesome Website', {
+                            body: post,
+                            // optional image url
+                        });
+                        // link to page on clicking the notification
+                        notification.onclick = () => {
+                            window.open(window.location.href);
+                        };
+                    });
+                })
         }
+
+
     }
 }
 </script>

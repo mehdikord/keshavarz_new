@@ -15,7 +15,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 Route::get('test',function (){
-
+    return event(new \App\Events\NewNewsEvent('test'));
 
 
 });
