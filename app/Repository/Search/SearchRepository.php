@@ -43,7 +43,7 @@ class SearchRepository implements SearchInterface
                 return response_custom_error('درحال حاضر درخواستی با این اطلاعات در انتظار تایید خدمات دهنده میباشد !');
             }
 
-            $location = explode(',',json_decode($land->location, false, 512, JSON_THROW_ON_ERROR));
+            $location = $land->location;
             foreach ($users->get() as $user){
                 $dis = location_distance($user->search_location,$location);
                 if ($dis <= $user->search_range){

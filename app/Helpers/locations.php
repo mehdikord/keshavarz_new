@@ -14,7 +14,6 @@ function location_distance($from,$to){
     $miles = $dist * 60 * 1.1515;
     $kilo = ($miles * 1.609344);
     return round($kilo);
-
 }
 
 function location_random(){
