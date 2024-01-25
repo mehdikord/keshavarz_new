@@ -13,6 +13,7 @@ function location_distance($from,$to){
     $dist = rad2deg($dist);
     $miles = $dist * 60 * 1.1515;
     $kilo = ($miles * 1.609344);
+
     return round($kilo);
 }
 
