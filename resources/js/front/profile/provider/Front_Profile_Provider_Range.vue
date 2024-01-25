@@ -41,9 +41,9 @@ export default {
             this.ProfilesUserMe().then(res => {
                 this.user = res.data.result;
                 this.range= this.user.search_range
-                if (this.user.search_location){
-                    this.marker= JSON.parse( this.user.search_location)
-                }
+                // if (this.user.search_location){
+                //     this.marker= JSON.parse( this.user.search_location)
+                // }
             }).catch(error => {
                 return this.NotifyServerError();
             })
