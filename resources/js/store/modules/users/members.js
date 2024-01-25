@@ -42,6 +42,15 @@ export default {
                 })
             } )
         },
+        UserMembersTrashed(){
+            return new Promise((resolve,reject) => {
+                axios.get('users/members/trashed').then((result) => {
+                    resolve(result);
+                }).catch(error => {
+                    reject(error);
+                })
+            } )
+        },
         UserMembersDChangeStatus(_,item){
             return new Promise((resolve,reject) => {
                 axios.get('users/members/activation/'+item).then((result) => {

@@ -58,6 +58,11 @@ class UserController extends Controller
         return $this->repository->members_show($user);
     }
 
+    public function members_trashed()
+    {
+
+    }
+
     public function members_invoices(User $user)
     {
         return $this->repository->members_invoices($user);

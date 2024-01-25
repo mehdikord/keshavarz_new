@@ -26,7 +26,10 @@ export default {
         },
         ProfilesUserRangeUpdate(_,item){
             return new Promise((resolve,reject) => {
-                axios.post('users/provider/range',item).then((result ) => {
+                let data = new  FormData();
+                if (item.range){data.append('range',item.range)}
+                if (item.location){data.append('location',item.location)}
+                axios.post('users/provider/range',data).then((result ) => {
                     resolve(result);
                 }).catch(error => {
                     reject(error);

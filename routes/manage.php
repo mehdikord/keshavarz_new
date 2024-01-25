@@ -43,6 +43,7 @@ Route::middleware('auth:admin')->group(function (){
 
        Route::group(['prefix' => 'members','as' => 'members.'],function (){
             Route::get('',[\App\Http\Controllers\Manage\Users\UserController::class,'members_index'])->name('index');
+            Route::get('trashed',[\App\Http\Controllers\Manage\Users\UserController::class,'members_trashed'])->name('trashed');
             Route::post('',[\App\Http\Controllers\Manage\Users\UserController::class,'members_store'])->name('store');
            Route::get('{user}',[\App\Http\Controllers\Manage\Users\UserController::class,'members_show'])->name('show');
            Route::get('invoices/{user}',[\App\Http\Controllers\Manage\Users\UserController::class,'members_invoices']);

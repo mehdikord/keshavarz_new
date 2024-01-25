@@ -105,6 +105,13 @@ class UsersRepository implements UsersInterface
         return response_success($item);
     }
 
+    public function members_trashed()
+    {
+        return response_success(User::OrderbyDesc('id')->withCount('referrals')->with(['lands' => function($land){
+            $land->withCount('requests');
+        }])->onlyTrashed());
+    }
+
     public function members_invoices($item)
     {
         return response_success($item->invoices()->with('admin')->with('provider_plan')->with('customer_plan')->get());

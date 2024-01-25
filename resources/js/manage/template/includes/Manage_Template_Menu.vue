@@ -63,7 +63,12 @@ export default {
                         {
                             title : "مشتریان",
                             link : "users_members",
-                            icon  : "mdi-bluetooth",
+                            icon  : "mdi-account-group",
+                        },
+                        {
+                            title : "مشتریان حذف شده",
+                            link : "users_members",
+                            icon  : "mdi-account-remove",
                         },
 
                     ]
