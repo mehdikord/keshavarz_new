@@ -15,7 +15,6 @@ use Illuminate\Support\Facades\Route;
 |
 */
 Route::get('test',function (){
-    return meli_send_sms('mehdikord','09117926950');
 
 });
 Route::get('management', function () {
