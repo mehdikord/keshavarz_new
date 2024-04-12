@@ -1,6 +1,7 @@
 <script>
 import Front_Skeleton_News from "../skeleton/Front_Skeleton_News.vue";
 import Front_News_Item from "../news/Front_News_Item.vue";
+import Front_Index_Weather from "./Front_Index_Weather.vue";
 
 export default {
     name: "Front_index",
@@ -11,7 +12,8 @@ export default {
     },
     components : {
         'skeleton_news' : Front_Skeleton_News,
-        'news_item' : Front_News_Item
+        'news_item' : Front_News_Item,
+        'index_weather' : Front_Index_Weather,
     },
     data(){
         return{
@@ -72,29 +74,10 @@ export default {
 <template>
     <div class="row justify-center">
         <div class="col-lg-9 col-sm-12 col-xs-12 ">
-            <div class="row items-center">
-                <div class="col-md-12 col-sm-12 col-xs-12 q-px-sm mobile-padding">
-                    <global_info_loading v-if="slider_loading"></global_info_loading>
-                    <q-carousel
-                        v-else
-                        class="for-slider rounded-borders"
-                        animated
-                        v-model="slide"
-                        navigation
-                        infinite
-                        :autoplay="true"
-                        arrows
-                        transition-prev="slide-right"
-                        transition-next="slide-left"
-                    >
-
-                        <q-carousel-slide  v-for="item in slider" :name="item.id" :img-src="item.image" />
-
-
-                    </q-carousel>
-
-              </div>
+            <div class="col-lg-12  q-px-sm mobile-padding">
+                <index_weather></index_weather>
             </div>
+
             <div class="col-lg-12 q-mt-md q-px-sm row mobile-padding">
                 <div class="col-xl-3 col-lg-3 col-md-6 col-sm-6 col-xs-6 q-px-xs q-mb-sm">
                     <router-link :to="{name:'search'}">

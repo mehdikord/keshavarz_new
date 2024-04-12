@@ -19,6 +19,7 @@ use App\Interfaces\Requests\RequestsInterface;
 use App\Interfaces\Search\SearchInterface;
 use App\Interfaces\Slider\SliderInterface;
 use App\Interfaces\Users\UsersInterface;
+use App\Interfaces\Weather\WeatherInterface;
 use App\Repository\Auth\AuthRepository;
 use App\Repository\Brands\BrandsRepository;
 use App\Repository\Categories\CategoriesRepository;
@@ -36,6 +37,7 @@ use App\Repository\Requests\RequestsRepository;
 use App\Repository\Search\SearchRepository;
 use App\Repository\Slider\SliderRepository;
 use App\Repository\Users\UsersRepository;
+use App\Repository\Weather\WeatherRepository;
 use Illuminate\Support\ServiceProvider;
 
 class RepositoryInterfaceServiceProvider extends ServiceProvider
@@ -62,6 +64,7 @@ class RepositoryInterfaceServiceProvider extends ServiceProvider
         $this->app->bind(DashboardInterface::class,DashboardRepository::class);
         $this->app->bind(LandsInterface::class,LandsRepository::class);
         $this->app->bind(RequestsInterface::class,RequestsRepository::class);
+        $this->app->bind(WeatherInterface::class,WeatherRepository::class);
 
     }
 

@@ -124,6 +124,9 @@ class SearchRepository implements SearchInterface
                 'distance' => $dis,
 
             ]);
+            $sms_message = sms_generator('provider_request',[$user_implement->implement->name]);
+            sms_meli_send($sms_message,auth('users')->user()->phone);
+
             return response_success($req_user);
         }
     }

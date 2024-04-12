@@ -2,6 +2,7 @@
 use Illuminate\Support\Facades\Route;
 
 
+
 Route::prefix('news')->group(function (){
 
     Route::get('',[\App\Http\Controllers\Public\NewsController::class,'index']);
@@ -32,7 +33,14 @@ Route::prefix('contacts')->group(function (){
     Route::post('message',[\App\Http\Controllers\Public\ContactController::class,'send_message']);
 
 });
+
 Route::prefix('faqs')->group(function (){
 
     Route::get('',[\App\Http\Controllers\Public\PublicController::class,'faqs']);
+});
+
+Route::prefix('weathers')->group(function (){
+   Route::post('current',[\App\Http\Controllers\Public\WeatherController::class,'current']);
+
+
 });

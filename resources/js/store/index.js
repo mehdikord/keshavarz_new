@@ -111,6 +111,7 @@ const store = createStore({
         },
 
     },
+
     actions : {
         Auth_Manage_Login(state,item){
             state.commit('AuthManageLogin',item)
