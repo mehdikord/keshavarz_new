@@ -79,11 +79,18 @@ class SearchRepository implements SearchInterface
             //Remove old requests without pending user
             auth('users')->user()->customer_requests()->whereDoesntHave('users')->delete();
 
+            //get area
+            $area = $land->area;
+            if ($request->filled('area')){
+                $area = $request->area;
+            }
+
             $make_request = Request::create([
                 'user_id' => auth()->id(),
                 'user_land_id' => $land->id,
                 'implement_id' => $request->implement_id,
                 'location' => json_encode($request->location, JSON_THROW_ON_ERROR),
+                'area' => $area,
                 'search_result' => json_encode($result, JSON_THROW_ON_ERROR),
                 'dates' => json_encode($request->dates, JSON_THROW_ON_ERROR)
             ]);

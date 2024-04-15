@@ -68,6 +68,10 @@ export default {
                     <span class="land-title q-ml-sm text-grey-8">
                        {{request.land.title}}
                    </span>
+                    <q-chip class="font-12 q-ml-sm" color="green-3">
+                        {{this.$filters.numbers(request.area)}}
+                        متر مربع
+                    </q-chip>
                 </div>
                 <q-separator class="q-mt-sm q-mb-sm" />
 

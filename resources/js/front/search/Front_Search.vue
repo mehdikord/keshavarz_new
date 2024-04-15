@@ -36,6 +36,7 @@ export default {
             category_id: null,
             implement_id: null,
             user_land_id: null,
+            area: null,
             location: [],
             category_name: null,
             implement_name: null,
@@ -180,7 +181,7 @@ export default {
                 return this.NotifyError("حداقل یک تاریخ برای انجام کار انتخاب کنید")
             }
             this.search_loading=true;
-            this.SearchStart({implement_id : this.implement_id,user_land_id:this.user_land_id,dates:this.date}).then(res => {
+            this.SearchStart({implement_id : this.implement_id,user_land_id:this.user_land_id,dates:this.date,area:this.area}).then(res => {
                 this.search_result=res.data.result.result;
                 this.search_request=res.data.result.request;
                 this.search_expansion=false;
@@ -189,7 +190,6 @@ export default {
                 this.NotifySuccess("جستجو خدمات باموفقیت انجام شد")
                 this.GetCustomerRequests()
             }).catch(error=>{
-
                 this.search_loading=false;
                 if (error.response.status === 409) {
                     return this.NotifyError(error.response.data.error);
@@ -619,6 +619,27 @@ export default {
                                     <template v-slot:error>
                                     </template>
                                 </q-select>
+                            </div>
+                            <div class="form-box">
+                                <q-input
+                                    label="متراژ کار"
+                                    outlined
+                                    type="number"
+                                    v-model="area"
+                                    color="green-8"
+                                    dense
+                                    :error="this.MixinValidationCheck(errors,'area')"
+                                >
+                                    <template v-slot:error>
+                                        <Error_Validation :errors="this.MixinValidation(errors,'area')"></Error_Validation>
+                                    </template>
+                                    <template v-slot:hint>
+                                        <p class="text-red font-12">
+                                            اگر متراژ کار را وارد نکنید ، کل مساحت زمین برای کار در نظرگرفته میشود
+                                        </p>
+                                    </template>
+                                </q-input>
+
                             </div>
                             <div class="form-box">
 

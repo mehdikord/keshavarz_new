@@ -28,7 +28,7 @@ class RequestsRepository implements RequestsInterface
         $user->select(['id','name','phone','profile']);})
         ->with('implement')
         ->with('land')
-        ->select(['id','implement_id','user_id','price','provider_id','code','user_land_id','dates','created_at','updated_at']);
+        ->select(['id','implement_id','user_id','price','provider_id','code','area','user_land_id','dates','created_at','updated_at']);
 
 
         return response_success($data->get());

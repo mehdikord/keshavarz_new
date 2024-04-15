@@ -102,6 +102,10 @@ export default {
                 <span class="implement-title q-ml-sm text-indigo">
                    {{request.user_implement.implement.name}}
                </span>
+                <q-chip class="font-12 q-ml-sm" color="green-3">
+                    {{this.$filters.numbers(request.request.area)}}
+                    متر مربع
+                </q-chip>
             </div>
             <q-separator class="q-mt-sm q-mb-sm" />
             <div>

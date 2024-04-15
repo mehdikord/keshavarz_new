@@ -76,7 +76,8 @@ export default {
                     /
                 </strong>
                 <span class="implement-title">
-                    {{request.land.area}} متر
+                    {{this.$filters.numbers(request.area)}}
+                     متر
                 </span>
 
             </div>

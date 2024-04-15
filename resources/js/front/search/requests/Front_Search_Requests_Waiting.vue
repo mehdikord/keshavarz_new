@@ -66,9 +66,14 @@ export default {
                <div>
                    <q-img class="rounded-borders land-img" v-if="request.land.image" :src="request.land.image" />
                    <q-img class="rounded-borders land-img" v-else src="/front/images/land-default.png" />
-                   <span class="land-title q-ml-sm text-grey-8">
+                   <span class="land-title q-ml-sm text-grey-10">
                        {{request.land.title}}
                    </span>
+                   <q-chip class="font-12 q-ml-sm" color="green-3">
+                       {{this.$filters.numbers(request.area)}}
+                       متر مربع
+                   </q-chip>
+
                </div>
                <q-separator class="q-mt-sm q-mb-sm" />
 

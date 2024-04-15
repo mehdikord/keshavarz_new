@@ -31,21 +31,21 @@ export default {
                 lat: 36.845532,
                 lng: 54.432568,
             }
-            if ("geolocation" in navigator) {
-                navigator.geolocation.getCurrentPosition(
-                    (position) => {
-                        this.location = {
-                            lat: position.coords.latitude,
-                            lng: position.coords.longitude,
-                        };
-                    },
-                    (error) => {
-                        alert("Unable to retrieve your location");
-                    }
-                );
-            } else {
-                alert("Geolocation is not supported by this browser.");
-            }
+            // if ("geolocation" in navigator) {
+            //     navigator.geolocation.getCurrentPosition(
+            //         (position) => {
+            //             this.location = {
+            //                 lat: position.coords.latitude,
+            //                 lng: position.coords.longitude,
+            //             };
+            //         },
+            //         (error) => {
+            //             alert("Unable to retrieve your location");
+            //         }
+            //     );
+            // } else {
+            //     alert("Geolocation is not supported by this browser.");
+            // }
         },
 
     }
