@@ -45,6 +45,8 @@ export default {
                     کافیست اطلاعت مورد نیاز را به دقت وارد کرده و دکمه جستجو را بزنید و در وقت خود صرفه جویی کنید !
                 </p>
             </div>
+            <q-separator class="q-mt-sm q-mb-sm"/>
+
             <div class="q-mt-xl">
                 <template v-if="news_loading">
                     <template v-for="i in 3">

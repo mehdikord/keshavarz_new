@@ -74,9 +74,7 @@ export default {
 <template>
     <div class="row justify-center">
         <div class="col-lg-9 col-sm-12 col-xs-12 ">
-            <div class="col-lg-12  q-px-sm mobile-padding">
-                <index_weather></index_weather>
-            </div>
+
 
             <div class="col-lg-12 q-mt-md q-px-sm row mobile-padding">
                 <div class="col-xl-3 col-lg-3 col-md-6 col-sm-6 col-xs-6 q-px-xs q-mb-sm">
@@ -126,9 +124,10 @@ export default {
 
             </div>
             <div class="col-lg-12 q-mt-xl q-px-sm mobile-padding">
-                <div class="q-mt-lg q-mb-lg news-title font-iransans text-green-8">
+                <div class="q-mt-lg q-mb-lg news-title font-iransans text-green-8 text-center">
                     آخرین اخبار حوزه کشاورزی
                 </div>
+                <q-separator class="q-mt-sm q-mb-sm"/>
                 <div class="row">
                     <template v-if="news_loading">
                         <template v-for="i in 3">
@@ -149,10 +148,8 @@ export default {
                         </div>
                     </template>
                 </div>
-                <div class="text-center news-all ">
-                    <router-link class="text-red-6" :to="{name : 'news'}">
-                        مشاهده همه خبر ها
-                    </router-link>
+                <div class="text-center news-all">
+                    <q-btn :to="{name : 'news'}" color="green-8 q-pa-sm q-px-md news-all" glossy>مشاهده همه خبر ها </q-btn>
                 </div>
             </div>
             <div class="col-12">
@@ -199,8 +196,8 @@ export default {
 .news-all{
     margin-top: 18px;
     margin-bottom: 30px;
-    font-size: 20px;
-    font-weight: 600;
+    font-size: 16px;
+    font-weight: 500;
 }
 
 @media only screen and (max-width: 600px) {
@@ -210,8 +207,8 @@ export default {
         height: 200px;
     }
     .news-title{
-        font-size: 18px;
-        font-weight: 600;
+        font-size: 14px;
+        font-weight: 500;
     }
     .mobile-padding{
         padding: 0 0 !important;
