@@ -74,7 +74,9 @@ export default {
 <template>
     <div class="row justify-center">
         <div class="col-lg-9 col-sm-12 col-xs-12 ">
-
+            <div class="col-lg-12 q-mt-md q-px-sm row mobile-padding">
+                <q-img src="img/banner-1.png" ></q-img>
+            </div>
 
             <div class="col-lg-12 q-mt-md q-px-sm row mobile-padding">
                 <div class="col-xl-3 col-lg-3 col-md-6 col-sm-6 col-xs-6 q-px-xs q-mb-sm">
