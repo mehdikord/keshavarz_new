@@ -150,6 +150,7 @@ export default {
                 </div>
                 <div class="text-center news-all">
                     <q-btn :to="{name : 'news'}" color="green-8 q-pa-sm q-px-md news-all" glossy>مشاهده همه خبر ها </q-btn>
+
                 </div>
             </div>
             <div class="col-12">
@@ -182,7 +183,7 @@ export default {
     height: 465px;
 }
 .news-title{
-    font-size: 22px;
+    font-size: 20px;
     font-weight: 600;
 }
 .item-box{
@@ -197,7 +198,7 @@ export default {
     margin-top: 18px;
     margin-bottom: 30px;
     font-size: 16px;
-    font-weight: 500;
+    font-weight: 600;
 }
 
 @media only screen and (max-width: 600px) {
@@ -207,8 +208,8 @@ export default {
         height: 200px;
     }
     .news-title{
-        font-size: 14px;
-        font-weight: 500;
+        font-size: 16px;
+        font-weight: 600;
     }
     .mobile-padding{
         padding: 0 0 !important;
@@ -227,7 +228,7 @@ export default {
     .news-all{
         margin-top: 15px;
         margin-bottom: 25px;
-        font-size: 18px;
+        font-size: 13px;
         font-weight: 600;
     }
 
