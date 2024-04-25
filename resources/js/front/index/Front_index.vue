@@ -78,7 +78,7 @@ export default {
                 <q-img src="img/banner-1.png" ></q-img>
             </div>
 
-            <div class="col-lg-12 q-mt-md q-px-sm row mobile-padding">
+            <div class="col-lg-12 q-mt-lg q-px-sm row mobile-padding">
                 <div class="col-xl-3 col-lg-3 col-md-6 col-sm-6 col-xs-6 q-px-xs q-mb-sm">
                     <router-link :to="{name:'search'}">
                         <q-card class=" cursor-pointer">
