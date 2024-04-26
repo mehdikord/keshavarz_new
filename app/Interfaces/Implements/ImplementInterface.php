@@ -48,6 +48,7 @@ interface ImplementInterface
 
     public function implement_show($item);
 
+    public function implement_specials($request);
 
 
 }

@@ -28,9 +28,14 @@ class ImplementController extends Controller
 
     public function implements_show(Implement $implement)
     {
-
         return $this->repository->implement_show($implement);
+    }
 
+    public function implements_specials(Request $request)
+    {
+
+        return $this->repository->implement_specials($request);
 
     }
+
 }

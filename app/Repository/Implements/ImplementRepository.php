@@ -29,6 +29,7 @@ class ImplementRepository implements ImplementInterface
             'price_type' => $request->price_type,
             'image' => $image,
             'long_description' => $request->description,
+            'is_special' => $request->is_special,
         ]);
         return response_success($item);
     }
@@ -40,6 +41,7 @@ class ImplementRepository implements ImplementInterface
             'implement_category_id' => $request->implement_category_id,
             'price_type' => $request->price_type,
             'long_description' => $request->description,
+            'is_special' => $request->is_special,
         ]);
         return response_success($item);
     }
@@ -168,8 +170,6 @@ class ImplementRepository implements ImplementInterface
 
 
 
-
-
     public function implement_index()
     {
         $data=Implement::query();
@@ -185,6 +185,17 @@ class ImplementRepository implements ImplementInterface
          $item->load('forms');
          $item->load('forms.form');
         return response_success($item);
+
+    }
+
+    public function implement_specials($request)
+    {
+        if (!$request->filled('count')){
+            $request->merge(['count' => 2]);
+        }
+        $data = Implement::where('is_special',true)->inRandomOrder()->take($request->count);
+        $data->select(['id','name','image','long_description']);
+        return response_success($data->get());
 
     }
 

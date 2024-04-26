@@ -64,6 +64,19 @@ export default {
             } )
         },
 
+        ImplementsPublicSpecials(_,item){
+            return new Promise((resolve,reject) => {
+                if (!item){
+                    item='';
+                }
+                axios.get('public/implements/specials?count='+item).then((result) => {
+                    resolve(result);
+                }).catch(error => {
+                    reject(error);
+                })
+            } )
+        },
+
         ManageImplementsIndex(){
             return new Promise((resolve,reject) => {
                 axios.get('implements').then((result) => {

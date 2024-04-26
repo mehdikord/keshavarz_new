@@ -77,6 +77,21 @@
                             </template>
                         </q-input>
 
+                        <q-select
+                            class="q-my-xs"
+                            outlined
+                            transition-show="flip-up"
+                            transition-hide="flip-down"
+                            v-model="add.commenting"
+                            label="دستگاه ویژه است ؟"
+                            :options="is_special_options"
+                            emit-value
+                            map-options
+                            behavior="menu"
+                        >
+                        </q-select>
+
+
                     </q-card-section>
 
                     <q-card-actions align="right">
@@ -122,6 +137,11 @@
                 <template v-slot:body-cell-search_count="props">
                     <q-td :props="props">
                         <q-chip color="orange-10" text-color="white" >{{props.row.search_count}}</q-chip>
+                    </q-td>
+                </template>
+                <template v-slot:body-cell-is_special="props">
+                    <q-td :props="props">
+                        <Global_Status :status="props.row.is_special"></Global_Status>
                     </q-td>
                 </template>
                 <template v-slot:body-cell-tools="props">
@@ -204,6 +224,21 @@
                                         <Error_Validation :errors="this.MixinValidation(errors,'description')"></Error_Validation>
                                     </template>
                                 </q-input>
+
+
+                                <q-select
+                                    class="q-my-xs"
+                                    outlined
+                                    transition-show="flip-up"
+                                    transition-hide="flip-down"
+                                    v-model="props.row.is_special"
+                                    label="دستگاه ویژه است ؟"
+                                    :options="is_special_options"
+                                    emit-value
+                                    map-options
+                                    behavior="menu"
+                                >
+                                </q-select>
 
                             </q-card-section>
 
@@ -333,6 +368,7 @@ export default {
                 price_type:null,
                 image:null,
                 description:null,
+                is_special:0,
             },
             add_empty:{
                 name:null,
@@ -340,6 +376,8 @@ export default {
                 price_type:null,
                 image:null,
                 description:null,
+                is_special:0,
+
             },
             edit_image:[],
             item_columns:[
@@ -401,13 +439,32 @@ export default {
                     sortable: true
                 },
                 {
+                    name:'is_special',
+                    required: true,
+                    label: 'ویژه',
+                    align: 'left',
+                    field: row => row.is_special,
+                    sortable: true
+                },
+                {
                     name:'tools',
                     required: true,
                     label: 'تنظیمات',
                     align: 'left',
 
                 },
-            ]
+            ],
+            is_special_options : [
+                {
+                    label:"بله",
+                    value :1,
+                },
+                {
+                    label:"خیر",
+                    value :0,
+                }
+            ],
+
         }
     },
     methods:{
@@ -456,6 +513,7 @@ export default {
         },
         EditItem(item){
             this.loading_add=true;
+            item.image=null;
             this.ManageImplementsEdit(item).then(res => {
                 this.loading_add=false;
                 this.items = this.items.filter(item_get =>{
