@@ -220,6 +220,9 @@ class PlansRepository implements PlansInterface
                 $this->new_customer_plan($plan,$invoice);
             }
             DB::commit();
+            sms_kavenegar_pattern($invoice->user->phone,'keshavarz-buy-plan',$plan->title);
+
+
             return redirect("plans/pay/result?type=success");
         }
         return redirect("plans/pay/result?type=failed");

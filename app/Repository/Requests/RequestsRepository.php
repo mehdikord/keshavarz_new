@@ -57,8 +57,10 @@ class RequestsRepository implements RequestsInterface
 //        $sms = "کاربر گرامی درخواست ".$request->request->implement->name." برای زمین : ".$request->request->land->title." توسط ".auth('users')->user()->name." (".auth('users')->user()->phone.") پذیرفته شد.";
 //        sms_kavenegar_message($request->request->user->phone,$sms);
 //        sms_kavenegar_pattern($request->request->user->phone,'keshavarz-accept-request',$request->request->implement->name);
-        $sms_message = sms_generator('provider_accept_request',[$request->request->implement->name,auth('users')->user()->name]);
-        sms_meli_send($sms_message,auth('users')->user()->phone);
+//        $sms_message = sms_generator('provider_accept_request',[$request->request->implement->name,auth('users')->user()->name]);
+
+//        sms_meli_send($sms_message,auth('users')->user()->phone);
+        sms_kavenegar_pattern(auth('users')->user()->phone,'keshavarz-provider-accept-request',$request->request->implement->name,auth('users')->user()->name);
         return response_success([],'درخواست با موفقیت پذیرفته شد');
 
     }
@@ -69,8 +71,10 @@ class RequestsRepository implements RequestsInterface
             return response_custom_error('Unauthorized');
         }
         $request->update(['status' => 'reject']);
-        $sms_message = sms_generator('sms_messages',[$request->request->implement->name,auth('users')->user()->name]);
-        sms_meli_send($sms_message,auth('users')->user()->phone);
+//        $sms_message = sms_generator('sms_messages',[$request->request->implement->name,auth('users')->user()->name]);
+//        sms_meli_send($sms_message,auth('users')->user()->phone);
+        sms_kavenegar_pattern(auth('users')->user()->phone,'keshavarz-provider-reject-request',$request->request->implement->name,auth('users')->user()->name);
+
         return response_success([],'درخواست رد شد');
 
     }
