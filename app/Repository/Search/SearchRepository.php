@@ -132,9 +132,9 @@ class SearchRepository implements SearchInterface
 
             ]);
             $sms_message = sms_generator('provider_request',[$user_implement->implement->name]);
-            sms_meli_send($sms_message,auth('users')->user()->phone);
-
+            sms_kavenegar_message($get_user->phone,$sms_message);
             return response_success($req_user);
+
         }
     }
 

@@ -159,7 +159,6 @@
                             <q-tooltip class="bg-grey-9">حذف آیتم</q-tooltip>
                         </q-btn>
                     </q-td>
-
                     <q-dialog
                         v-model="dialog_edit[props.row.id]"
                         transition-show="scale"

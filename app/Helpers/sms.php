@@ -24,46 +24,57 @@ function sms_kavenegar_pattern($phone,$template,$token,$token2=null,$token3=null
 }
 function sms_kavenegar_message($phone,$message){
 
+    try{
+        $kavenegar = new \Kavenegar\KavenegarApi(config('kavenegar.apikey'));
+        $sender = "2000500666";		//This is the Sender number	//The body of SMS
 
+        $receptor = array($phone);			//Receptors numbers
 
-//    try{
-//        $kavenegar = new \Kavenegar\KavenegarApi(config('kavenegar.apikey'));
-//        $sender = "";		//This is the Sender number	//The body of SMS
-//
-//        $receptor = array($phone);			//Receptors numbers
-//
-//        $result = $kavenegar->Send($sender,$receptor,$message);
-//        if($result){
-//            return true;
-//        }
-//    }
-//    catch(\Kavenegar\Exceptions\ApiException $e){
-//        // در صورتی که خروجی وب سرویس 200 نباشد این خطا رخ می دهد
-//        echo $e->errorMessage();
-//    }
-//    catch(\Kavenegar\Exceptions\HttpException $e){
-//        // در زمانی که مشکلی در برقرای ارتباط با وب سرویس وجود داشته باشد این خطا رخ می دهد
-//        return $e->errorMessage();
-//    }catch(\Exception $ex){
-//        // در صورت بروز خطایی دیگر
-//        return $ex->getMessage();
-//    }
+        $result = $kavenegar->Send($sender,$receptor,$message);
+        if($result){
+            return true;
+        }
+    }
+    catch(\Kavenegar\Exceptions\ApiException $e){
+        // در صورتی که خروجی وب سرویس 200 نباشد این خطا رخ می دهد
+        echo $e->errorMessage();
+    }
+    catch(\Kavenegar\Exceptions\HttpException $e){
+        // در زمانی که مشکلی در برقرای ارتباط با وب سرویس وجود داشته باشد این خطا رخ می دهد
+        return $e->errorMessage();
+    }catch(\Exception $ex){
+        // در صورت بروز خطایی دیگر
+        return $ex->getMessage();
+    }
 }
 
 function sms_meli_send($message,$phone)
 {
-    $data=array('username' =>config('melipayamak.username'), 'password'=>config('melipayamak.password'), 'to' =>$phone, 'from' => "50002710026950", "text" =>$message);
-    $post_data = http_build_query($data);
-    $handle = curl_init('https://rest.payamak-panel.com/api/SendSMS/SendSMS');
-    curl_setopt($handle, CURLOPT_HTTPHEADER, array(
-        'content-type' => 'application/x-www-form-urlencoded'
-    ));
-    curl_setopt($handle, CURLOPT_RETURNTRANSFER, true);
-    curl_setopt($handle, CURLOPT_SSL_VERIFYHOST, false);
-    curl_setopt($handle, CURLOPT_SSL_VERIFYPEER, false);
-    curl_setopt($handle, CURLOPT_POST, true);
-    curl_setopt($handle, CURLOPT_POSTFIELDS, $post_data);
-    $response = curl_exec($handle);
+    $message.="\n لغو۱۱";
+    $url = 'https://console.melipayamak.com/api/send/advanced/00e8ca0836574062b2ddb748fae2f5c9';
+    $data = array('from' => '50002710026950', 'to' => [$phone],
+        'text' => $message, 'udh' => '');
+    $data_string = json_encode($data);
+    $ch = curl_init($url);
+    curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "POST");
+    curl_setopt($ch, CURLOPT_POSTFIELDS, $data_string);
+
+// Next line makes the request absolute insecure
+    curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+// Use it when you have trouble installing local issuer certificate
+// See https://stackoverflow.com/a/31830614/1743997
+
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+    curl_setopt($ch, CURLOPT_HTTPHEADER,
+        array('Content-Type: application/json',
+            'Content-Length: ' . strlen($data_string))
+    );
+    $result = curl_exec($ch);
+    curl_close($ch);
+// to debug
+// if(curl_errno($ch)){
+//     echo 'Curl error: ' . curl_error($ch);
+// }
 }
 function sms_generator($key,$data=[])
 {

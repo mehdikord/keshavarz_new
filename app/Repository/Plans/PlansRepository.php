@@ -220,8 +220,8 @@ class PlansRepository implements PlansInterface
                 $this->new_customer_plan($plan,$invoice);
             }
             DB::commit();
-            sms_kavenegar_pattern($invoice->user->phone,'keshavarz-buy-plan',$plan->title);
-
+            $sms_message = sms_generator('buy_plan',$plan->title);
+            sms_meli_send($sms_message,$invoice->user->phone);
 
             return redirect("plans/pay/result?type=success");
         }
@@ -332,6 +332,12 @@ class PlansRepository implements PlansInterface
                 $this->new_provider_plan($plan,$invoice);
             }
             DB::commit();
+
+            //Send sms
+
+            $sms_message = sms_generator('buy_plan',$plan->title);
+            sms_meli_send($sms_message,$invoice->user->phone);
+
             return redirect("plans/pay/result?type=success");
         }
         return redirect("plans/pay/result?type=failed");
