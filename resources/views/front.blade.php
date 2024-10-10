@@ -21,14 +21,54 @@
 </head>
 
 <body>
+<button id="installButton" style="display: none;margin-top: 300px">Install App</button>
+
 <div id="app">
-    <button id="installButton" style="display: none;">Install App</button>
 
 
 
 </div>
 
 <script>
+
+    if ('serviceWorker' in navigator) {
+        window.addEventListener('load', () => {
+            navigator.serviceWorker.register('/service-worker.js')
+                .then(registration => {
+                    console.log('Service Worker registered with scope: ', registration.scope);
+                })
+                .catch(error => {
+                    console.error('Service Worker registration failed: ', error);
+                });
+        });
+    }
+
+
+    let deferredPrompt;
+
+    window.addEventListener('beforeinstallprompt', (e) => {
+        // جلوگیری از نمایش خودکار پیشنهاد نصب
+        e.preventDefault();
+        deferredPrompt = e;
+
+        // نمایش یک دکمه برای نصب برنامه
+        const installButton = document.getElementById('installButton');
+        installButton.style.display = 'block';
+
+        installButton.addEventListener('click', () => {
+            installButton.style.display = 'none';
+            deferredPrompt.prompt();
+            deferredPrompt.userChoice.then((choiceResult) => {
+                if (choiceResult.outcome === 'accepted') {
+                    console.log('User accepted the install prompt');
+                } else {
+                    console.log('User dismissed the install prompt');
+                }
+                deferredPrompt = null;
+            });
+        });
+    });
+
 
 
 

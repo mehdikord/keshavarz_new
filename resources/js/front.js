@@ -24,44 +24,6 @@ import Num2persian from 'num2persian';
 // import Front_Global_Map from "./front/globals/Front_Global_Map.vue";
 
 
-if ('serviceWorker' in navigator) {
-    window.addEventListener('load', () => {
-        navigator.serviceWorker.register('/service-worker.js')
-            .then(registration => {
-                console.log('Service Worker registered with scope: ', registration.scope);
-            })
-            .catch(error => {
-                console.error('Service Worker registration failed: ', error);
-            });
-    });
-}
-
-
-let deferredPrompt;
-
-window.addEventListener('beforeinstallprompt', (e) => {
-    // جلوگیری از نمایش خودکار پیشنهاد نصب
-    e.preventDefault();
-    deferredPrompt = e;
-
-    // نمایش یک دکمه برای نصب برنامه
-    const installButton = document.getElementById('installButton');
-    installButton.style.display = 'block';
-
-    installButton.addEventListener('click', () => {
-        installButton.style.display = 'none';
-        deferredPrompt.prompt();
-        deferredPrompt.userChoice.then((choiceResult) => {
-            if (choiceResult.outcome === 'accepted') {
-                console.log('User accepted the install prompt');
-            } else {
-                console.log('User dismissed the install prompt');
-            }
-            deferredPrompt = null;
-        });
-    });
-});
-
 
 
 const App=createApp(Front_Template);
@@ -258,16 +220,6 @@ App.config.globalProperties.$filters = {
     return englishNumberStr;
 }
 }
-if ('serviceWorker' in navigator) {
-    window.addEventListener('load', () => {
-        navigator.serviceWorker.register('/service-worker.js').then(registration => {
-            console.log('ServiceWorker registration successful with scope: ', registration.scope);
-        }, err => {
-            console.log('ServiceWorker registration failed: ', err);
-        }).catch(err => {
-            console.log(err);
-        });
-    });
-}
+
 // ++++++++++++++++++++
 App.mount('#app')
