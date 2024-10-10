@@ -61,7 +61,7 @@ export default defineComponent({
     },
     data(){
         return{
-            app_dialog:true,
+            app_dialog:false,
         }
     }
 
