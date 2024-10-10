@@ -51,6 +51,7 @@ class ProfileRepository implements ProfileInterface
 
     public function range_update($request)
     {
+
         auth()->user()->update([
             'search_range' => $request->range,
             'search_location' => json_encode($request->location, JSON_THROW_ON_ERROR),
