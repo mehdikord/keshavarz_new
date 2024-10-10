@@ -22,6 +22,7 @@
 
 <body>
 <div id="app">
+    <button id="installButton" style="display: none;">Install App</button>
 
 
 
