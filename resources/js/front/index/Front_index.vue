@@ -11,9 +11,6 @@ export default {
       this.GetSlider();
       this.listenForChanges();
     },
-    mounted() {
-        this.$OneSignal.Slidedown
-    },
     components : {
         'skeleton_news' : Front_Skeleton_News,
         'news_item' : Front_News_Item,
