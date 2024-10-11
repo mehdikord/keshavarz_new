@@ -14,6 +14,7 @@
     <meta name="description" content="My description here">
     <link href="https://api.mapbox.com/mapbox-gl-js/v3.0.1/mapbox-gl.css" rel="stylesheet">
     <script src="https://api.mapbox.com/mapbox-gl-js/v3.0.1/mapbox-gl.js"></script>
+    <script src="{{asset('OneSignalSDKWorker.js')}}"></script>
     <link rel="manifest" href="{{asset('manifest.json')}}">
 
     @vite(['resources/js/front.js'])

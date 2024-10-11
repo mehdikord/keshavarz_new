@@ -1,5 +1,7 @@
 import {createApp} from "vue";
 import VuePersianDatetimePicker from 'vue3-persian-datetime-picker';
+import OneSignalVuePlugin from '@onesignal/onesignal-vue3'
+
 
 import Store from "./store";
 import './bootstrap-front';
@@ -222,4 +224,7 @@ App.config.globalProperties.$filters = {
 }
 
 // ++++++++++++++++++++
+App.use(OneSignalVuePlugin, {
+    appId: '36696480-c8be-47ae-9260-e3c1b452a78a',
+})
 App.mount('#app')
