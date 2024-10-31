@@ -9,3 +9,13 @@ self.addEventListener('activate', event => {
 self.addEventListener('fetch', event => {
     // Custom caching logic or fallback for offline
 });
+
+self.addEventListener('push', function(event) {
+    const data = event.data.json();
+    event.waitUntil(
+        self.registration.showNotification(data.title, {
+            body: data.message,
+            icon: '/icon.png'
+        })
+    );
+});
