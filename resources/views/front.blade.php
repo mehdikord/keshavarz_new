@@ -44,32 +44,40 @@
     }
 
 
-    // let deferredPrompt;
-    //
-    // window.addEventListener('beforeinstallprompt', (e) => {
-    //     // جلوگیری از نمایش خودکار پیشنهاد نصب
-    //     e.preventDefault();
-    //     deferredPrompt = e;
-    //
-    //     // نمایش یک دکمه برای نصب برنامه
-    //     const installButton = document.getElementById('installButton');
-    //     installButton.style.display = 'block';
-    //
-    //     installButton.addEventListener('click', () => {
-    //         installButton.style.display = 'none';
-    //         deferredPrompt.prompt();
-    //         deferredPrompt.userChoice.then((choiceResult) => {
-    //             if (choiceResult.outcome === 'accepted') {
-    //                 console.log('User accepted the install prompt');
-    //             } else {
-    //                 console.log('User dismissed the install prompt');
-    //             }
-    //             deferredPrompt = null;
-    //         });
-    //     });
-    // });
+    function urlBase64ToUint8Array(base64String) {
+        const padding = '='.repeat((4 - base64String.length % 4) % 4);
+        const base64 = (base64String + padding)
+            .replace(/\-/g, '+')
+            .replace(/_/g, '/');
+        const rawData = window.atob(base64);
+        const outputArray = new Uint8Array(rawData.length);
+
+        for (let i = 0; i < rawData.length; ++i) {
+            outputArray[i] = rawData.charCodeAt(i);
+        }
+        return outputArray;
+    }
 
 
+    navigator.serviceWorker.register('/service-worker.js')
+        .then(function(registration) {
+            return registration.pushManager.subscribe({
+                userVisibleOnly: true,
+                applicationServerKey: urlBase64ToUint8Array("BCkZ8aTpqm7--yIrP-IjrlUfUOdN-cINUM7WjJosY-q0xTAT_aPTcnfFfmIYgZsPxOvSYsdp3aLRcZBEVnYyF7w"), // یا کلید عمومی VAPID که مستقیما وارد کردید
+            });
+        })
+        .then(function(subscription) {
+            // ارسال اطلاعات اشتراک به سرور
+            // axios.post('/api/subscribe', subscription);
+            console.log({
+                endpoint: subscription.endpoint,
+                publicKey: subscription.keys.p256dh,
+                authToken: subscription.keys.auth
+            })
+        })
+        .catch(function(error) {
+            console.error('Subscription failed:', error);
+        });
 
 
 </script>

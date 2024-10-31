@@ -79,18 +79,6 @@ export default {
     <div class="row justify-center">
         <div class="col-lg-9 col-sm-12 col-xs-12 ">
 
-
-
-            <GoogleMap
-                api-key=""
-                style="width: 100%; height: 500px"
-                :center="{ lat: 40.689247, lng: -74.044502 }"
-                :zoom="15"
-            >
-                <Marker :options="{ position: center }" />
-            </GoogleMap>
-
-
             <div class="col-lg-12 q-mt-md q-px-sm row mobile-padding">
                 <q-img src="img/banner-1.png" class="rounded-borders"></q-img>
             </div>

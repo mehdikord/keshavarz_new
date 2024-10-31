@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Public;
 use App\Http\Controllers\Controller;
 use App\Interfaces\News\NewsInterface;
 use Illuminate\Http\Request;
+use Minishlink\WebPush\Subscription;
 use Minishlink\WebPush\VAPID;
 
 class NewsController extends Controller
@@ -19,11 +20,16 @@ class NewsController extends Controller
 
     public function index()
     {
+//        $subscription = Subscription::find($request->input('subscription_id'));
+        $message = json_encode([
+            'title' => $request->input('title'),
+            'body' => $request->input('body'),
+        ], JSON_THROW_ON_ERROR);
 
-        $vapidKeys = VAPID::createVapidKeys();
-        return $vapidKeys;
+        app(\NotificationService::class)->sendNotification($subscription, $message);
 
-        return $this->repository->index();
+        return response()->json(['message' => 'Notification sent']);
+//        return $this->repository->index();
     }
 
     public function latest()
@@ -32,6 +38,12 @@ class NewsController extends Controller
         return $this->repository->latest();
 
     }
+
+    public function send(Request $request)
+    {
+
+    }
+
 
 
 }
