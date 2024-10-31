@@ -63,7 +63,7 @@
         .then(function(registration) {
             return registration.pushManager.subscribe({
                 userVisibleOnly: true,
-                applicationServerKey: urlBase64ToUint8Array("BCkZ8aTpqm7--yIrP-IjrlUfUOdN-cINUM7WjJosY-q0xTAT_aPTcnfFfmIYgZsPxOvSYsdp3aLRcZBEVnYyF7w"), // یا کلید عمومی VAPID که مستقیما وارد کردید
+                applicationServerKey: urlBase64ToUint8Array("BIVr-kL5NdbUc46_TdS9PyppX05H7OMFsNrOcwdV02w4VFT7F1NbJtID2sN9EcWemP4MBNibavHLKyepDMmutOw"), // یا کلید عمومی VAPID که مستقیما وارد کردید
             });
         })
         .then(function(subscription) {
