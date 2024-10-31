@@ -5,7 +5,6 @@ namespace App\Http\Controllers\Public;
 use App\Http\Controllers\Controller;
 use App\Interfaces\News\NewsInterface;
 use Illuminate\Http\Request;
-use Jose\Component\Core\Util\ECKey;
 use Minishlink\WebPush\VAPID;
 
 class NewsController extends Controller
@@ -21,7 +20,7 @@ class NewsController extends Controller
     public function index()
     {
 
-        $vapidKeys = ECKey::createECKey('P-256');
+        $vapidKeys = VAPID::createVapidKeys();
         return $vapidKeys;
 
         return $this->repository->index();
