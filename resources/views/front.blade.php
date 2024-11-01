@@ -29,6 +29,7 @@
 
 </div>
 
+<script src="{{asset('service-worker.js')}}" ></script>
 <script>
     function urlBase64ToUint8Array(base64String) {
         const padding = '='.repeat((4 - base64String.length % 4) % 4);
@@ -54,7 +55,6 @@
                     console.error('Service Worker registration failed: ', error);
                 });
         });
-
 
         navigator.serviceWorker.register('/service-worker.js')
             .then(function(registration) {
