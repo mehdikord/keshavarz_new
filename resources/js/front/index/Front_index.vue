@@ -3,7 +3,6 @@ import Front_Skeleton_News from "../skeleton/Front_Skeleton_News.vue";
 import Front_News_Item from "../news/Front_News_Item.vue";
 import Front_Index_Weather from "./Front_Index_Weather.vue";
 import Front_Index_Implements from "./Front_Index_Implements.vue";
-import { GoogleMap, Marker } from 'vue3-google-map'
 export default {
     name: "Front_index",
     created() {
@@ -16,8 +15,6 @@ export default {
         'news_item' : Front_News_Item,
         'index_weather' : Front_Index_Weather,
         'index_implements' : Front_Index_Implements,
-        GoogleMap: GoogleMap,
-        Marker: Marker,
     },
     data(){
         return{
@@ -174,8 +171,7 @@ export default {
                 <div class="q-mt-lg">
                     <div class="row justify-center">
                         <div class="col-md-3">
-                            <a referrerpolicy='origin' target='_blank' href='https://trustseal.enamad.ir/u?id=392965&code=aaNhobh3KdXmTZ9y8UNknp9dZGZ8t5Fo'><img referrerpolicy='origin' src='https://trustseal.enamad.ir/logo.aspx?id=392965&code=aaNhobh3KdXmTZ9y8UNknp9dZGZ8t5Fo' alt='' style='cursor:pointer' code='aaNhobh3KdXmTZ9y8UNknp9dZGZ8t5Fo'></a>
-                        </div>
+                            <a referrerpolicy='origin' target='_blank' href='https://trustseal.enamad.ir/?id=392965&Code=4NsvcDFVvk7EF8ZCBY9OKC3cC7CqTnQ8'><img referrerpolicy='origin' src='https://trustseal.enamad.ir/logo.aspx?id=392965&Code=4NsvcDFVvk7EF8ZCBY9OKC3cC7CqTnQ8' alt='' style='cursor:pointer' code='4NsvcDFVvk7EF8ZCBY9OKC3cC7CqTnQ8'></a>                        </div>
                         <div class="col-md-3">
                             <img referrerpolicy='origin' id = 'rgvjfukznbqejxlzjxlzjzpe' style = 'cursor:pointer' onclick = 'window.open("https://logo.samandehi.ir/Verify.aspx?id=362117&p=xlaogvkauiwkrfthrfthjyoe", "Popup","toolbar=no, scrollbars=no, location=no, statusbar=no, menubar=no, resizable=0, width=450, height=630, top=30")' alt = 'logo-samandehi' src = 'https://logo.samandehi.ir/logo.aspx?id=362117&p=qftiwlbqodrfnbpdnbpdyndt' />
                         </div>
