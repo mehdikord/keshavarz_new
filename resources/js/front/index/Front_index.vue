@@ -3,7 +3,7 @@ import Front_Skeleton_News from "../skeleton/Front_Skeleton_News.vue";
 import Front_News_Item from "../news/Front_News_Item.vue";
 import Front_Index_Weather from "./Front_Index_Weather.vue";
 import Front_Index_Implements from "./Front_Index_Implements.vue";
-
+import { GoogleMap, Marker } from 'vue3-google-map'
 export default {
     name: "Front_index",
     created() {
@@ -16,6 +16,8 @@ export default {
         'news_item' : Front_News_Item,
         'index_weather' : Front_Index_Weather,
         'index_implements' : Front_Index_Implements,
+        GoogleMap: GoogleMap,
+        Marker: Marker,
     },
     data(){
         return{
@@ -76,6 +78,7 @@ export default {
 <template>
     <div class="row justify-center">
         <div class="col-lg-9 col-sm-12 col-xs-12 ">
+
             <div class="col-lg-12 q-mt-md q-px-sm row mobile-padding">
                 <q-img src="img/banner-1.png" class="rounded-borders"></q-img>
             </div>

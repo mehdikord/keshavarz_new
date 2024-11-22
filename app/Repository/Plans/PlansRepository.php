@@ -179,7 +179,6 @@ class PlansRepository implements PlansInterface
                 auth('users')->user()->email,
                 $invoice->title,
             );
-
             if ($pay && $pay['Status'] == 100){
                 $invoice->update(['gateway_id' => $pay['Authority'] ]);
                 DB::commit();

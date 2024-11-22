@@ -8,14 +8,16 @@
         language="en"
         access-token="pk.eyJ1IjoibWVoZGlrb3JkIiwiYSI6ImNqeGV1YTdvcjA2aGwzem1kc20xeGhoa2oifQ.-T82K8jlG9RDkzAY42haiw"
         map-style="mapbox://styles/mapbox/satellite-streets-v12">
-        <MapboxMarker :color="'red'" @mb-dragend="ChangeLocation" :draggable="true" :lng-lat="location" />
+        <MapboxMarker :color="'red'" @mb-dragend="ChangeLocation" :draggable="true" :lng-lat="location" >
+
+        </MapboxMarker>
         <MapboxGeolocateControl  />
+
     </MapboxMap>
 </template>
 
 <script>
 import { MapboxMap, MapboxMarker,MapboxGeolocateControl } from '@studiometa/vue-mapbox-gl';
-
 
 export default {
     components :{
