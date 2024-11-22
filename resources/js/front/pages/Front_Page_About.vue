@@ -26,7 +26,13 @@ export default {
                 </p>
             </div>
             <div class="q-mt-lg text-center">
-                <q-img class="ab-image" src="/front/images/about-bg.svg"></q-img>
+                <q-img class="ab-image" src="/front/images/about-bg.svg" width="80%"></q-img>
+                <div class="q-mt-md">
+                    <strong class="">
+                        تمامی حقوق این وبسایت متعلق به شرکت مهندسی برق صعنتی و نوآوری الکتریکی کیانمهر میباشد
+                    </strong>
+                </div>
+
             </div>
         </div>
     </div>
