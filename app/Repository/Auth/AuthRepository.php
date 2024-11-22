@@ -3,6 +3,7 @@ namespace App\Repository\Auth;
 
 use App\Interfaces\Auth\AuthInterface;
 use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 
 class AuthRepository implements AuthInterface
@@ -29,6 +30,7 @@ class AuthRepository implements AuthInterface
         }
         $user = User::where('phone',$request->phone)->first();
         if (empty($user)){
+
             $referral_by = null;
             if ($request->filled('referral')){
                 $referral = User::where('phone',$request->referral)->first();
@@ -39,6 +41,16 @@ class AuthRepository implements AuthInterface
                 'phone' => $request->phone,
                 'referral_by' => $referral_by
             ]);
+            $now = Carbon::now();
+            $end = $now->addMonths(12);
+            $user->customer_plans()->create([
+                'title' => 'اشتراک خوش آمد گویی یکسانه',
+                'access' => 12,
+                'is_active' => true,
+                'start_at' => Carbon::now(),
+                'end_at' => $end
+            ]);
+            $user->update(['is_customer' => 1]);
         }
         helpers_auth_make($request->phone);
         return response_success(['phone' => $request->phone],'پیام تائید هویت باموفقیت ارسال شد');
