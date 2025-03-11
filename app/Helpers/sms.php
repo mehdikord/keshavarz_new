@@ -25,15 +25,17 @@ function sms_kavenegar_pattern($phone,$template,$token,$token2=null,$token3=null
 function sms_kavenegar_message($phone,$message){
 
     try{
-        $kavenegar = new \Kavenegar\KavenegarApi(config('kavenegar.apikey'));
-        $sender = "2000500666";		//This is the Sender number	//The body of SMS
+        if (env('APP_ENV') !== 'local') {
+            $kavenegar = new \Kavenegar\KavenegarApi(config('kavenegar.apikey'));
+            $sender = "200030003040";		//This is the Sender number	//The body of SMS
+            $receptor = array($phone);			//Receptors numbers
 
-        $receptor = array($phone);			//Receptors numbers
-
-        $result = $kavenegar->Send($sender,$receptor,$message);
-        if($result){
-            return true;
+            $result = $kavenegar->Send($sender,$receptor,$message);
+            if($result){
+                return true;
+            }
         }
+
     }
     catch(\Kavenegar\Exceptions\ApiException $e){
         // در صورتی که خروجی وب سرویس 200 نباشد این خطا رخ می دهد

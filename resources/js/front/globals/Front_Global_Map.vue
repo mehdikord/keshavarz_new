@@ -1,5 +1,4 @@
 <template>
-
     <MapboxMap v-if="location.length"
         class="q-mt-md"
         style="height: 400px"
@@ -9,10 +8,8 @@
         access-token="pk.eyJ1IjoibWVoZGlrb3JkIiwiYSI6ImNqeGV1YTdvcjA2aGwzem1kc20xeGhoa2oifQ.-T82K8jlG9RDkzAY42haiw"
         map-style="mapbox://styles/mapbox/satellite-streets-v12">
         <MapboxMarker :color="'red'" @mb-dragend="ChangeLocation" :draggable="true" :lng-lat="location" >
-
         </MapboxMarker>
         <MapboxGeolocateControl  />
-
     </MapboxMap>
 </template>
 
@@ -37,10 +34,6 @@ export default {
             this.location=[e.target._lngLat.lng,e.target._lngLat.lat]
             this.$emit('UpdateLocation',this.location)
         },
-
-
-
     }
 };
-
 </script>

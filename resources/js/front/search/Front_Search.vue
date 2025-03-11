@@ -77,7 +77,7 @@ export default {
                 }
             ],
             filter_select : 'random',
-            search_expansion:false,
+            search_expansion:true,
             check_customer : 0,
             customer_requests_loading:true,
             customer_requests:[],

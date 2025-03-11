@@ -43,10 +43,16 @@ class SearchRepository implements SearchInterface
                 return response_custom_error('درحال حاضر درخواستی با این اطلاعات در انتظار تایید خدمات دهنده میباشد !');
             }
 
-            $location = explode(',',json_decode($land->location, false, 512, JSON_THROW_ON_ERROR));
+            $location = json_decode($land->location, false, 512, JSON_THROW_ON_ERROR);
+            if ($location->lat && $location->lng){
+                $location = [$location->lat, $location->lng];
+            }
 
             foreach ($users->get() as $user){
-                $user_location = explode(',', json_decode($user->search_location, false, 512, JSON_THROW_ON_ERROR));
+                $user_location =  json_decode($user->search_location, false, 512, JSON_THROW_ON_ERROR);
+                if ($user_location->lat && $user_location->lng){
+                    $user_location = [$user_location->lat, $user_location->lng];
+                }
                 $dis = location_distance($user_location,$location);
 
                 if ($dis <= $user->search_range){
@@ -121,15 +127,21 @@ class SearchRepository implements SearchInterface
             if (Request_User::where('request_id',$get_req->id)->where('user_implement_id',$user_implement->id)->exists()){
                 return response_custom_error('قبلا برای این کاربر درخواست ارسال کرده اید');
             }
-            $location = explode(',',json_decode($get_req->land->location, false, 512, JSON_THROW_ON_ERROR));
-            $user_location = explode(',',json_decode($get_user->search_location, false, 512, JSON_THROW_ON_ERROR));
+            $location = json_decode($get_req->land->location, false, 512, JSON_THROW_ON_ERROR);
+            if ($location->lat && $location->lng){
+                $location = [$location->lat, $location->lng];
+            }
+            $user_location = json_decode($get_user->search_location, false, 512, JSON_THROW_ON_ERROR);
+            if ($user_location->lat && $user_location->lng){
+                $user_location = [$user_location->lat, $user_location->lng];
+            }
+
             $dis = location_distance($user_location,$location);
             $req_user = $get_req->users()->create([
                 'user_id' => $get_user->id,
                 'user_implement_id' => $user_implement->id,
                 'price' => $user_implement->price,
                 'distance' => $dis,
-
             ]);
             $sms_message = sms_generator('provider_request',[$user_implement->implement->name]);
             sms_kavenegar_message($get_user->phone,$sms_message);
@@ -213,6 +225,8 @@ class SearchRepository implements SearchInterface
             'phone' => $phone,
             'image' => $user->profile,
             'bio' => $user->bio,
+            'province' => $user->province,
+            'city' => $user->city,
         ];
         foreach ($user->implements()->with('implement')->with('forms')->get() as $implement){
 

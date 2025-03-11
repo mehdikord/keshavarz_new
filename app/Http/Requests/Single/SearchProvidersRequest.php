@@ -25,7 +25,7 @@ class SearchProvidersRequest extends FormRequest
         return [
             'user_land_id' => 'required|exists:user_lands,id',
             'implement_id' => 'required|exists:implements,id',
-            'dates' => 'required'
+            'date' => 'required'
             ];
     }
     public function failedValidation(Validator $validator)

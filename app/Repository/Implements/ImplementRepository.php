@@ -2,6 +2,7 @@
 namespace App\Repository\Implements;
 
 
+use App\Http\Resources\Implements\Categories\ImplementCategoriesShortResource;
 use App\Interfaces\Implements\ImplementInterface;
 use App\Models\Faq;
 use App\Models\Form;
@@ -78,7 +79,8 @@ class ImplementRepository implements ImplementInterface
 
     public function categories_index()
     {
-        return response_success(Implement_Category::orderBy('num','ASC')->withCount('implements')->get());
+        $data = Implement_Category::orderBy('num','ASC')->withCount('implements');
+        return response_success(ImplementCategoriesShortResource::collection($data->get()));
     }
 
     public function categories_store($request)
