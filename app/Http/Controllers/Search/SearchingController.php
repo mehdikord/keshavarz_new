@@ -42,6 +42,12 @@ class SearchingController extends Controller
 
     }
 
+    public function search_providers_request_show(\App\Models\Request $request)
+    {
+        return $this->repository->search_providers_request_show($request);
+
+    }
+
     public function search_providers_request_users(\App\Models\Request $request)
     {
         return $this->repository->search_providers_request_users($request);
@@ -60,6 +66,22 @@ class SearchingController extends Controller
     public function search_providers_request_get_working()
     {
         return $this->repository->search_providers_request_get_working();
+    }
+
+    public function search_providers_request_get_done()
+    {
+        return $this->repository->search_providers_request_get_done();
+    }
+
+    public function search_providers_request_get_canceled()
+    {
+        return $this->repository->search_providers_request_get_canceled();
+    }
+
+    public function search_providers_request_get_actives()
+    {
+        return $this->repository->search_providers_request_get_actives();
+
     }
 
     public function search_providers_request_user_cancel(SearchRequestSendRequest $request)

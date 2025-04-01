@@ -348,7 +348,6 @@ export default {
             }).catch(error => {
 
             })
-
         },
 
         ScrollToResult(){
@@ -861,6 +860,7 @@ export default {
                                     </div>
 
                                     <search_profile v-for="user in search_result" :user="user" :check_customer="check_customer" :users="request_users" :request_id="search_request.id" @GetReqUsers="GetRequestUsers" class="q-mb-md"></search_profile>
+
                                 </template >
                                 <template v-else>
                                     <div class="text-center ">

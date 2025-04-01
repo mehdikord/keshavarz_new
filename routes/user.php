@@ -105,9 +105,13 @@ Route::middleware(['auth:users'])->group(function (){
             Route::post('',[\App\Http\Controllers\Search\SearchingController::class,'search_providers_request_send']);
             Route::get('pending',[\App\Http\Controllers\Search\SearchingController::class,'search_providers_request_get_pending']);
             Route::get('working',[\App\Http\Controllers\Search\SearchingController::class,'search_providers_request_get_working']);
+            Route::get('done',[\App\Http\Controllers\Search\SearchingController::class,'search_providers_request_get_done']);
+            Route::get('canceled',[\App\Http\Controllers\Search\SearchingController::class,'search_providers_request_get_canceled']);
+            Route::get('actives',[\App\Http\Controllers\Search\SearchingController::class,'search_providers_request_get_actives']);
             Route::post('user/cancel',[\App\Http\Controllers\Search\SearchingController::class,'search_providers_request_user_cancel']);
             Route::get('users/{request}',[\App\Http\Controllers\Search\SearchingController::class,'search_providers_request_users']);
             Route::delete('cancel/{request}',[\App\Http\Controllers\Search\SearchingController::class,'search_providers_request_cancel']);
+            Route::get('{request}',[\App\Http\Controllers\Search\SearchingController::class,'search_providers_request_show']);
 
         });
 

@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Public;
 use App\Http\Controllers\Controller;
 use App\Interfaces\Faqs\FaqsInterface;
 use App\Interfaces\Plans\PlansInterface;
+use App\Models\City;
 use App\Models\Province;
 use App\Models\Slider;
 use Illuminate\Http\Request;
@@ -43,6 +44,15 @@ class PublicController extends Controller
     public function faqs()
     {
         return $this->faq_repository->index();
+    }
+
+    public function cities(Request $request)
+    {
+        $data = City::query();
+        if ($request->filled('name')) {
+            $data->where('name', 'like', '%' . $request->get('name') . '%');
+        }
+        return response_success($data->get());
     }
 
 

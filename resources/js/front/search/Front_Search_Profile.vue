@@ -67,7 +67,6 @@ export default {
 
         },
         CheckUserExists(user){
-
             let find=null;
             if (this.users.length){
                 this.users.forEach(item => {

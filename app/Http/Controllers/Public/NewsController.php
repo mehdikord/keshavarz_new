@@ -21,17 +21,9 @@ class NewsController extends Controller
 
     public function index()
     {
-//        $subscription = Subscription::find($request->input('subscription_id'));
-        $service = new NotificationService();
-        $message = json_encode([
-            'title' => 'test',
-            'body' => 'hi',
-        ], JSON_THROW_ON_ERROR);
 
-        $service->sendNotification($message);
 
-        return response()->json(['message' => 'Notification sent']);
-//        return $this->repository->index();
+        return $this->repository->index();
     }
 
     public function latest()

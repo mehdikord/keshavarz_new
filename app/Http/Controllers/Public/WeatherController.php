@@ -21,5 +21,11 @@ class WeatherController extends Controller
 
     }
 
+    public function exclude(Request $request)
+    {
+        return $this->repository->exclude($request);
+
+    }
+
 
 }

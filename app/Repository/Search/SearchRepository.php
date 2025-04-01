@@ -95,7 +95,7 @@ class SearchRepository implements SearchInterface
                 'user_id' => auth()->id(),
                 'user_land_id' => $land->id,
                 'implement_id' => $request->implement_id,
-                'location' => json_encode($request->location, JSON_THROW_ON_ERROR),
+                'location' => $land->location,
                 'area' => $area,
                 'search_result' => json_encode($result, JSON_THROW_ON_ERROR),
                 'dates' => json_encode($request->dates, JSON_THROW_ON_ERROR)
@@ -150,6 +150,18 @@ class SearchRepository implements SearchInterface
         }
     }
 
+    public function search_providers_request_show($request)
+    {
+        if ($request->user_id != auth('users')->id()){
+            return response_custom_error('Unauthorized');
+        }
+        $request->load('implement');
+        $request->load('land');
+        $request->load('users');
+        $request->load('provider');
+        return response_success($request);
+    }
+
     public function search_providers_request_user_cancel($request){
 
         $get_req = Request::find($request->request_id);
@@ -188,7 +200,7 @@ class SearchRepository implements SearchInterface
 
     public function search_providers_request_get_pending()
     {
-        $data = auth('users')->user()->customer_requests()->where('status','pending');
+        $data = auth('users')->user()->customer_requests()->where('status',Request::STATUS_PENDING);
         $data->with('implement');
         $data->with('land');
         $data->withCount('users');
@@ -197,13 +209,47 @@ class SearchRepository implements SearchInterface
 
     public function search_providers_request_get_working()
     {
-        $data = auth('users')->user()->customer_requests()->where('status','working');
+        $data = auth('users')->user()->customer_requests()->where('status',Request::STATUS_WORKING);
         $data->with('implement');
         $data->with('land');
         $data->with('provider',function ($provider){
             $provider->select(['id','name','phone','profile']);
         });
         return response_success($data->get());
+    }
+
+    public function search_providers_request_get_done()
+    {
+        $data = auth('users')->user()->customer_requests()->where('status',Request::STATUS_DONE);
+        $data->with('implement');
+        $data->with('land');
+        $data->with('provider',function ($provider){
+            $provider->select(['id','name','phone','profile']);
+        });
+        return response_success($data->get());
+    }
+
+    public function search_providers_request_get_canceled()
+    {
+        $data = auth('users')->user()->customer_requests()->where('status',Request::STATUS_CANCELED);
+        $data->with('implement');
+        $data->with('land');
+        $data->with('provider',function ($provider){
+            $provider->select(['id','name','phone','profile']);
+        });
+        return response_success($data->get());
+    }
+
+    public function search_providers_request_get_actives()
+    {
+        $data = auth('users')->user()->customer_requests()->whereIn('status',[Request::STATUS_PENDING,Request::STATUS_WORKING]);
+        $data->with('implement');
+        $data->with('land');
+        $data->with('provider',function ($provider){
+            $provider->select(['id','name','phone','profile']);
+        });
+        return response_success($data->get());
+
     }
 
 

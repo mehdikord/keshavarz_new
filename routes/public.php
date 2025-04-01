@@ -10,6 +10,7 @@ Route::prefix('news')->group(function (){
 
 });
 
+
 Route::prefix('implements')->group(function (){
     Route::get('categories',[\App\Http\Controllers\Public\ImplementController::class,'categories']);
     Route::get('specials',[\App\Http\Controllers\Public\ImplementController::class,'implements_specials']);
@@ -19,6 +20,7 @@ Route::prefix('implements')->group(function (){
 });
 
 Route::get('provinces',[\App\Http\Controllers\Public\PublicController::class,'provinces']);
+Route::get('cities',[\App\Http\Controllers\Public\PublicController::class,'cities']);
 Route::get('slider',[\App\Http\Controllers\Public\PublicController::class,'slider']);
 
 Route::prefix('plans')->group(function (){
@@ -42,6 +44,7 @@ Route::prefix('faqs')->group(function (){
 
 Route::prefix('weathers')->group(function (){
    Route::post('current',[\App\Http\Controllers\Public\WeatherController::class,'current']);
+   Route::post('exclude',[\App\Http\Controllers\Public\WeatherController::class,'exclude']);
 
 
 });
